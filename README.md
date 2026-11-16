@@ -2,11 +2,23 @@
 
 **Let an AI agent rewrite your frontend. Kane CLI runs the same plain-English tests on the old app and on the rewrite, and sends every difference back to the agent until the two behave the same.**
 
-[Live replay of the run](https://itssaharsh.github.io/ditto/) · [3-minute video](#video) · [The React port Claude wrote](https://github.com/itssaharsh/todomvc-react-port) · [How it works](docs/how-it-works.md)
+[Live replay of the run](https://itssaharsh.github.io/ditto/) · [The React port Claude wrote](https://github.com/itssaharsh/todomvc-react-port) · [How it works](docs/how-it-works.md) · [Testing](docs/testing.md)
 
 ![Ditto console: the Kane test file with screenshots of the old app and the rewrite for every step](docs/console.png)
 
-<!-- RESULTS -->
+## What happened when we ran it (16 Nov 2026, all real runs)
+
+| Step | Result |
+|---|---|
+| Kane designs the tests from the [TodoMVC spec](fixtures/app-spec.md) | **28 tests** from 9 use-cases, each step tagged with the acceptance criteria it checks |
+| Kane runs them on the official jQuery app (the oracle) | **18** pass and replay cleanly · **1** confirmed spec deviation: the jQuery app loses every todo on reload · 9 not verified (Kane judged the test or its recording unreliable) |
+| Claude Code (Sonnet 5.5) ports the app to React | **18/18 the same** on the first port: 17 pure replays of the jQuery recordings, 1 healed, **18.5 credits** |
+| Claude Code (Haiku 5.5, 40-turn budget) ports it again | **18/18 the same**: 22 of 24 Kane runs were pure replays, **7.4 credits** for the whole check |
+| A refactor in a Claude Code session, guarded by the Stop hook | Claude said "it type-checks, but I haven't run it in a browser"; Kane replayed all 18 behaviours before it could stop: **18/18, stop allowed** |
+| Spec gaps: what the spec asks and the old app never did | Kane ran those 5 tests on the port: **3 failed** (one a confirmed difference: "reloading does not restore the saved todo"). Claude Code added localStorage persistence from Kane's findings; Kane re-checked: **3/3 pass**, and the 18 parity behaviours still **18/18** |
+
+The whole TodoMVC case used 151 Kane runs (80 pure replays) and about 2,300 credits, most of it recording the oracle once.
+
 
 ## The idea: the old app is the test oracle
 
@@ -21,10 +33,11 @@ Ditto turns "nothing changed for users" into something you can check:
 
 ## For judges (60 seconds)
 
-1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on the behaviour Claude Code got wrong first: Kane's red screenshot of the rewrite, Claude's fix, the same step green.
+1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on the behaviour Kane caught on the rewrite: the old app failing it, Kane's red screenshot of the port (round 2), Claude's fix, the same step green.
 2. Click any chip under **Try these**, or any row in **All behaviours**: every screenshot is Kane's, from the recorded run. Click a screenshot to enlarge it.
 3. **Kane said → Claude did** (right rail) is the closed loop, round by round. **What each round did** lists every commit.
-4. Try both apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/) and [Claude's React port](https://itssaharsh.github.io/ditto/port/).
+4. Press **Watch the whole run in 60 seconds** to see it happen in order, or switch to the Haiku 5.5 run.
+5. Try the apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/), [the Sonnet port](https://itssaharsh.github.io/ditto/port/) (reload it: your todos stay) and [the Haiku port](https://itssaharsh.github.io/ditto/port-haiku/).
 
 To run it on your machine, see [Run it](#run-it).
 
