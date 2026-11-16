@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // ditto: let an AI agent rewrite your frontend; Kane CLI runs the same plain-English tests on both apps until they match.
-import { existsSync, mkdirSync, readFileSync, copyFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from './engine/config.js';
 import { designSuite } from './engine/design.js';
 import { DittoLoop } from './engine/loop.js';
+import { serveConsole } from './engine/apps.js';
 import { importDesigned, loadSuite } from './engine/suite.js';
 import type { CaseFile } from './engine/case.js';
 
@@ -24,7 +25,11 @@ function help(): void {
   ditto loop [--only a,b]       Record, let Claude Code port the app, replay on the port, fix until parity
        [--skip-port]            ...resume with the port that already exists
   ditto check                   Replay the suite on the current rewrite once (no agent)
+  ditto ui [--port 4747]        Open the console (live while a loop runs)
   ditto status                  Print the parity table for the current case
+  ditto hook install            Make your interactive Claude Code session in the rewrite repo
+                                check with Ditto (Kane) before it is allowed to stop
+  ditto hook stop               (called by the Stop hook) block the stop while behaviour differs
 
   Options: --config <file> (default ditto.config.json)`);
 }
@@ -43,6 +48,25 @@ async function main(): Promise<void> {
     const copied = importDesigned(store, cfg.abs(cfg.suite));
     console.log(`\n${copied.length} tests in ${cfg.suite}`);
     return;
+  }
+
+  if (cmd === 'ui') {
+    const dist = cfg.abs('web/dist');
+    if (!existsSync(join(dist, 'index.html'))) {
+      console.log('Build the console first: npm run web:build');
+      process.exitCode = 2;
+      return;
+    }
+    const port = Number(flag('port') ?? 4747);
+    await serveConsole(dist, cfg.abs(cfg.casesDir), port);
+    console.log(`Ditto console: http://127.0.0.1:${port}/?case=${cfg.case}  (Ctrl-C to stop)`);
+    return new Promise<void>(() => {});
+  }
+
+  if (cmd === 'hook') {
+    const sub = argv[1];
+    if (sub === 'install') return installHook(cfg.abs(cfg.rewrite.repo), cfg.root, cfg.abs(flag('config') ?? 'ditto.config.json'));
+    if (sub === 'stop') return hookStop();
   }
 
   if (cmd === 'status') {
@@ -81,6 +105,49 @@ async function main(): Promise<void> {
   }
   help();
   process.exitCode = 2;
+}
+
+function installHook(repo: string, root: string, configFile: string): void {
+  const dir = join(repo, '.claude');
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, 'settings.json');
+  const settings = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, any>) : {};
+  const command = `cd ${JSON.stringify(root)} && npx tsx src/cli.ts hook stop --config ${JSON.stringify(configFile)}`;
+  settings.hooks ??= {};
+  settings.hooks.Stop = [{ hooks: [{ type: 'command', command, timeout: 1800 }] }];
+  writeFileSync(file, JSON.stringify(settings, null, 2) + '\n');
+  console.log(`Stop hook written to ${file}.\nOpen Claude Code in ${repo}; each time it tries to finish, Kane replays the legacy behaviours first.`);
+}
+
+async function hookStop(): Promise<void> {
+  const input = await new Promise<string>((ok) => {
+    let data = '';
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', (c) => (data += c));
+    process.stdin.on('end', () => ok(data));
+  });
+  let payload: Record<string, unknown> = {};
+  try {
+    payload = JSON.parse(input || '{}');
+  } catch {
+    /* ignore */
+  }
+  const cfg = loadConfig(flag('config') ?? 'ditto.config.json');
+  const stateFile = join(cfg.abs(cfg.workDir), 'hook-blocks.json');
+  const state = existsSync(stateFile) ? (JSON.parse(readFileSync(stateFile, 'utf8')) as { session?: string; blocks: number }) : { blocks: 0 };
+  if (state.session !== payload.session_id) Object.assign(state, { session: payload.session_id, blocks: 0 });
+  const loop = new DittoLoop(cfg, { log: (l) => console.error(l) });
+  const res = await loop.hookCheck();
+  if (res.ok || state.blocks >= 4) {
+    state.blocks = 0;
+    writeFileSync(stateFile, JSON.stringify(state));
+    const msg = res.ok ? res.message : `${res.message}\n\nDitto stopped blocking after 4 rounds; a person should look at what still differs.`;
+    process.stdout.write(JSON.stringify({ systemMessage: msg }));
+    return;
+  }
+  state.blocks += 1;
+  writeFileSync(stateFile, JSON.stringify(state));
+  process.stdout.write(JSON.stringify({ decision: 'block', reason: res.message }));
 }
 
 function printStatus(c: CaseFile): void {

@@ -75,3 +75,29 @@ export function sh(cmd: string, cwd: string, timeoutMs = 300_000): Promise<Shell
     });
   });
 }
+
+/** Serve the built console with the live cases/ folder mounted at /cases (for `ditto ui`). */
+export function serveConsole(webDist: string, casesDir: string, port: number, host = '127.0.0.1'): Promise<Server> {
+  const roots: [string, string][] = [
+    ['/cases/', resolve(casesDir)],
+    ['/', resolve(webDist)],
+  ];
+  const server = createServer((req, res) => {
+    const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0].split('#')[0]);
+    for (const [prefix, root] of roots) {
+      if (!urlPath.startsWith(prefix)) continue;
+      let file = normalize(join(root, urlPath.slice(prefix.length - 1)));
+      if (!file.startsWith(root)) break;
+      if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
+      if (!existsSync(file)) continue;
+      res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream', 'cache-control': 'no-store' });
+      createReadStream(file).pipe(res);
+      return;
+    }
+    res.writeHead(404, { 'content-type': 'text/plain' }).end('not found');
+  });
+  return new Promise((ok, fail) => {
+    server.once('error', fail);
+    server.listen(port, host, () => ok(server));
+  });
+}

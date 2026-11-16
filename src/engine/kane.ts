@@ -10,7 +10,7 @@ export type Outcome =
   | 'mismatch' // Kane confirmed the app does not behave as the test says (result 740)
   | 'test_issue' // Kane blamed the test itself, not the app (result 710 / automation_bug)
   | 'fail' // failed without a confirmed classification
-  | 'error'; // Kane did not start (exit 2) or crashed
+  | 'error'; // Kane did not start, crashed, or hit an environment problem (e.g. the browser dropped)
 
 export interface KaneVerdict {
   confirmed?: boolean;
@@ -201,6 +201,7 @@ export function foldStream(events: Record<string, unknown>[], exitCode: number):
   else if (passed) outcome = 'pass';
   else if (resultCode === 740 || (verdict?.family === 'application_issue' && verdict.confirmed !== false)) outcome = 'mismatch';
   else if (resultCode === 710 || verdict?.family === 'automation_bug') outcome = 'test_issue';
+  else if (verdict?.family === 'environment_issue' || (resultCode !== undefined && resultCode >= 500 && resultCode < 600)) outcome = 'error';
   else outcome = 'fail';
   if (exitCode === 2 && !lastEnd) outcome = 'error';
 

@@ -61,3 +61,14 @@ test('parses a Kane-designed test file with criteria links', () => {
   assert.deepEqual(t.steps[1].verifies, ['ac-1', 'ac-3']);
   assert.equal(t.steps[1].heading, 'Step 2');
 });
+
+test('a browser that dropped mid-run is an environment error, not an app difference', () => {
+  const r = foldStream(
+    [
+      { type: 'run_end', status: 'failed', result_code: 510, verdict: { family: 'environment_issue', confirmed: false } },
+      { type: 'test_md_summary', overall_status: 'failed', steps: { author_decisions: 1 } },
+    ],
+    1,
+  );
+  assert.equal(r.outcome, 'error');
+});

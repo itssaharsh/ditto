@@ -113,7 +113,7 @@ export class DittoLoop {
       bugDetection: 'continue',
       maxSteps: 25,
       timeoutS: 900,
-      variables: { start_url: url },
+      variables: { ...(this.cfg.variables ?? {}), start_url: url },
       local: side === 'rewrite',
       assetsDir: this.rec.assetsDir(test.id, stamp),
       assetsRel: `assets/${test.id}/${stamp}`,
@@ -160,6 +160,10 @@ export class DittoLoop {
       // A recorded pass replays from cache; anything else authors.
       const phase = prev?.outcome === 'pass' ? 'replay' : 'author';
       let s = await this.kane(t, 'legacy', 0, phase);
+      if (s.outcome === 'error' || s.outcome === 'fail') {
+        this.rec.event({ kind: 'decision', round: 0, test: t.id, said: `Kane could not finish: ${s.oneLiner ?? s.reason ?? s.outcome}`, did: 'Ran it again' });
+        s = await this.kane(t, 'legacy', 0, 'author');
+      }
       if (s.outcome === 'test_issue') {
         this.rec.event({ kind: 'decision', round: 0, test: t.id, said: `Kane blamed the test, not the app: ${s.oneLiner ?? s.reason ?? ''}`, did: 'Ran it once more from scratch' });
         s = await this.kane(t, 'legacy', 0, 'author');
@@ -275,6 +279,7 @@ export class DittoLoop {
   /** Replay the legacy recording on the rewrite; only re-author (heal) when the pure replay misses. */
   private async checkOne(t: SuiteTest, n: number): Promise<RunSummary> {
     let s = await this.kane(t, 'rewrite', n, 'replay');
+    if (s.outcome === 'error') s = await this.kane(t, 'rewrite', n, 'replay');
     if (s.outcome !== 'pass' && this.creditsLeft()) {
       this.rec.event({
         kind: 'decision',
@@ -284,6 +289,7 @@ export class DittoLoop {
         did: 'Let Kane re-author the missed steps on the new markup and judge again',
       });
       s = await this.kane(t, 'rewrite', n, 'heal');
+      if (s.outcome === 'error') s = await this.kane(t, 'rewrite', n, 'heal');
     }
     return s;
   }
@@ -372,6 +378,45 @@ export class DittoLoop {
     });
     if (res.sessionId) this.agentSession = res.sessionId;
     await this.finishAgentTurn(n, res, `Round ${n}: fix ${failing.length} behaviour(s) Kane flagged\n\n${failing.map((t) => `- ${t.title}`).join('\n')}`);
+  }
+
+  // ---------- Hook mode: an interactive Claude Code session asks Ditto before it stops ----------
+
+  /** Build, replay every oracle behaviour on the rewrite, and return what still differs. */
+  async hookCheck(): Promise<{ ok: boolean; message: string; round: number }> {
+    await this.startApps();
+    try {
+      const n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n)) + 1;
+      const round = this.newRound(n);
+      round.agent = { kind: 'fix', round: n, prompt: '(your interactive Claude Code session)', startedAt: now(), filesChanged: [] };
+      const repo = this.cfg.abs(this.cfg.rewrite.repo);
+      const names = await sh('git status --porcelain', repo);
+      round.agent.filesChanged = names.output.split('\n').map((l) => l.slice(3).trim()).filter(Boolean);
+      this.rec.event({ kind: 'agent_end', round: n, summary: 'Claude Code (interactive) says it is done; Ditto checks before it stops.', filesChanged: round.agent.filesChanged });
+      const build = await sh(this.cfg.rewrite.build, repo, 600_000);
+      round.build = { ok: build.code === 0, output: build.code === 0 ? undefined : build.output.slice(-1500) };
+      if (build.code !== 0) {
+        this.rec.event({ kind: 'decision', round: n, test: '-', said: 'The port does not build', did: 'Blocked the stop and sent the build error back' });
+        return { ok: false, round: n, message: `Ditto: the build fails, so Kane cannot check behaviour yet.\n\n${build.output.slice(-2500)}` };
+      }
+      await this.ensureRewriteServed();
+      const failing = await this.check(n, this.oraclePassing());
+      const total = this.oraclePassing().length;
+      if (!failing.length) {
+        this.rec.data.status = 'parity';
+        this.rec.event({ kind: 'note', text: `Parity: all ${total} behaviours that hold on the legacy app hold on the rewrite.` });
+        return { ok: true, round: n, message: `Ditto: parity ${total}/${total}. Kane replayed every legacy behaviour on your port.` };
+      }
+      for (const t of failing) {
+        const s = this.latest(t.id, n);
+        this.rec.event({ kind: 'decision', round: n, test: t.id, said: s?.verdict?.oneLiner ?? s?.oneLiner ?? s?.reason ?? 'behaviour differs', did: 'Blocked the stop and sent it back to the Claude Code session' });
+      }
+      this.rec.data.status = 'fixing';
+      return { ok: false, round: n, message: `Ditto (parity ${total - failing.length}/${total}):\n${this.feedback(failing, n)}` };
+    } finally {
+      this.rec.save();
+      this.stopApps();
+    }
   }
 
   // ---------- Everything ----------

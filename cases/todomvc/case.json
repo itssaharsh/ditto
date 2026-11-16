@@ -1,0 +1,1079 @@
+{
+ "id": "todomvc",
+ "title": "TodoMVC: jQuery → React, ported by Claude Code",
+ "createdAt": "2026-11-16T13:04:51.048Z",
+ "updatedAt": "2026-11-16T13:04:51.125Z",
+ "status": "recording",
+ "apps": {
+  "legacy": {
+   "label": "jQuery",
+   "url": "http://127.0.0.1:7001/",
+   "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+   "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+   "label": "React",
+   "url": "http://127.0.0.1:7002/",
+   "framework": "React 19 + TypeScript + Vite (written by Claude Code)"
+  }
+ },
+ "suite": {
+  "name": "todomvc",
+  "designedBy": "Kane CLI (context ingest → extract → design tests)",
+  "tests": [
+   {
+    "id": "active-route-displays-only-active-todos",
+    "file": "suites/todomvc/active-route-displays-only-active-todos_test.md",
+    "title": "Active route displays only active todos",
+    "summary": "With a known active todo and a known completed todo, navigate to #/active and prove that only the active item belongs to the displayed view.",
+    "assuranceId": "t-20",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and, on the TodoMVC todo page, establish an active todo titled {{active_todo_title}} and a completed todo titled {{completed_todo_title}} using the new-todo input and each todo's completion checkbox.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the TodoMVC page's footer filter links, navigate to Active (#/active), then assert the Active filter link has the `selected` class.",
+      "verifies": [
+       "ac-37"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the Active view's todo list, inspect the displayed todo titles and completion states, then assert every displayed todo is active, {{active_todo_title}} is present, and {{completed_todo_title}} is absent.",
+      "verifies": [
+       "ac-36",
+       "ac-38",
+       "ac-40"
+      ]
+     }
+    ],
+    "sha256": "bf5ff87f08a2293092d6f4e73ffad20ffdfb685d027ac070ba4a6b2f41b89537"
+   },
+   {
+    "id": "blank-new-todo-submissions-do-not-add-a-todo",
+    "file": "suites/todomvc/blank-new-todo-submissions-do-not-add-a-todo_test.md",
+    "title": "Blank new-todo submissions do not add a todo",
+    "summary": "Pressing Enter with empty or whitespace-only new-todo input leaves the todo list without a new item.",
+    "assuranceId": "t-6",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and load the todo app, then assert the new-todo input at the top of the page is the active focused element.",
+      "verifies": [
+       "ac-11"
+      ]
+     },
+     {
+      "heading": "Step 2",
+      "text": "capture baseline: number of todos in the all-todos list before pressing Enter",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the todo app's new-todo input at the top, enter three spaces and press Enter, then assert the all-todos list still has exactly the captured baseline number of items.",
+      "verifies": [
+       "ac-15"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "capture baseline: number of todos in the all-todos list before pressing Enter",
+      "verifies": []
+     },
+     {
+      "heading": "Step 5",
+      "text": "In the todo app's new-todo input at the top, empty the input and press Enter, then assert the all-todos list still has exactly the latest captured baseline number of items.",
+      "verifies": [
+       "ac-15"
+      ]
+     }
+    ],
+    "sha256": "a5a41a8329e2882f6c15ee8f9da2613798acca1030257ed3d63ba588afba2a49"
+   },
+   {
+    "id": "blur-saves-a-trimmed-todo-title",
+    "file": "suites/todomvc/blur-saves-a-trimmed-todo-title_test.md",
+    "title": "Blur saves a trimmed todo title",
+    "summary": "A nonblank edited title is trimmed and committed when the input loses focus.",
+    "assuranceId": "t-4",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, create a todo titled 'Review proposal' using the new-todo input at the top of the todo app.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the todo list, double-click the newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "In that todo's edit input, enter '  Review contract  ' and move focus away from the input, then assert the item no longer has the editing class and its displayed title equals 'Review contract'.",
+      "verifies": [
+       "ac-2",
+       "ac-9"
+      ]
+     }
+    ],
+    "sha256": "1c96d36978c45e42f23e71c8c258d948b92da358dd42528ccf9f220758fee1dd"
+   },
+   {
+    "id": "checking-an-active-todo-removes-it-from-the-active-list",
+    "file": "suites/todomvc/checking-an-active-todo-removes-it-from-the-active-list_test.md",
+    "title": "Checking an Active todo removes it from the Active list",
+    "summary": "Checking a visible active todo removes it from the Active filtered list without losing its completed state.",
+    "assuranceId": "t-8",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, remove any existing todos with their item remove controls, then create two active todos titled 'Assurance active A' and 'Assurance active B' using the new-todo input.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo app's Active filter, check 'Assurance active A', then assert 'Assurance active A' is absent from the Active list and the mark-all checkbox remains unchecked.",
+      "verifies": [
+       "ac-20",
+       "ac-18"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "Return to the All filter and inspect 'Assurance active A', then assert its checkbox is checked and its parent li has the completed class.",
+      "verifies": [
+       "ac-16",
+       "ac-17"
+      ]
+     },
+     {
+      "heading": "Step 5",
+      "text": "Reload the todo app's All list and inspect the localStorage todo record for 'Assurance active A', then assert its stored completed value is true.",
+      "verifies": [
+       "ac-19"
+      ]
+     }
+    ],
+    "sha256": "259c47a0fc3286ed87bbfe2de8a8575fa8ef30e49ded51ade4b23cd4ee9b2e34"
+   },
+   {
+    "id": "clear-completed-preserves-active-todos-in-a-mixed-list",
+    "file": "suites/todomvc/clear-completed-preserves-active-todos-in-a-mixed-list_test.md",
+    "title": "Clear completed preserves active todos in a mixed list",
+    "summary": "With at least one active and at least one completed todo, clear completed tasks without losing active tasks, leaving mark-all unchecked and the clear action hidden.",
+    "assuranceId": "t-17",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All list and establish a mixed list containing an active todo titled {{active_todo_title}} and a completed todo titled {{completed_todo_title}}.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, use Clear completed, then assert no completed todos remain, the active todo titled {{active_todo_title}} remains, the Mark all as complete checkbox is unchecked, and Clear completed is hidden.",
+      "verifies": [
+       "ac-32",
+       "ac-33",
+       "ac-34",
+       "ac-35"
+      ]
+     }
+    ],
+    "sha256": "b4dd23169ad9e64fc83a75cb64160595771668792d9a05a1a9ec132ca4e8b959"
+   },
+   {
+    "id": "clear-completed-resets-mark-all-after-all-todos-are",
+    "file": "suites/todomvc/clear-completed-resets-mark-all-after-all-todos-are_test.md",
+    "title": "Clear completed resets mark-all after all todos are completed",
+    "summary": "With all todos completed and mark-all checked, clear them and observe the mark-all state reset.",
+    "assuranceId": "t-18",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All list and establish at least one todo titled {{completed_todo_title}} with every todo completed and Mark all as complete checked.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, use Clear completed, then assert no completed todos remain, Mark all as complete is unchecked, and Clear completed is hidden.",
+      "verifies": [
+       "ac-32",
+       "ac-34",
+       "ac-35"
+      ]
+     }
+    ],
+    "sha256": "c6f7f752dc571a22bdb50c60504912b4d316dc87c2a5eabd16ed6b59499e5a23"
+   },
+   {
+    "id": "clear-completed-unchecks-mark-all",
+    "file": "suites/todomvc/clear-completed-unchecks-mark-all_test.md",
+    "title": "Clear completed unchecks mark-all",
+    "summary": "With all todos completed and mark-all checked, click Clear completed; the mark-all checkbox's checked state clears.",
+    "assuranceId": "t-13",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open the todo application at {{start_url}} and show the All todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the application, create todos named 'Clear alpha' and 'Clear beta' if they are not already present.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the All list, check the 'Mark all as complete' checkbox so every existing todo is completed.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "On the All list, use 'Clear completed' and inspect the 'Mark all as complete' checkbox's DOM checked state even if the empty list hides the main section, then assert that checkbox is unchecked.",
+      "verifies": [
+       "ac-23"
+      ]
+     }
+    ],
+    "sha256": "3189d39f2394883878ed1bb534d909765d5c1c1ebf9770bd53bf15efdd8f2fd5"
+   },
+   {
+    "id": "completed-route-displays-only-completed-todos",
+    "file": "suites/todomvc/completed-route-displays-only-completed-todos_test.md",
+    "title": "Completed route displays only completed todos",
+    "summary": "With a known active todo and a known completed todo, navigate to #/completed and prove that only the completed item belongs to the displayed view.",
+    "assuranceId": "t-21",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and, on the TodoMVC todo page, establish an active todo titled {{active_todo_title}} and a completed todo titled {{completed_todo_title}} using the new-todo input and each todo's completion checkbox.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the TodoMVC page's footer filter links, navigate to Completed (#/completed), then assert the Completed filter link has the `selected` class.",
+      "verifies": [
+       "ac-37"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the Completed view's todo list, inspect the displayed todo titles and completion states, then assert every displayed todo is completed, {{completed_todo_title}} is present, and {{active_todo_title}} is absent.",
+      "verifies": [
+       "ac-36",
+       "ac-39",
+       "ac-41"
+      ]
+     }
+    ],
+    "sha256": "ce92e5742a566498ed2093d94b44740c6eb9175f3cc41a2eb50b56f9751fa5f6"
+   },
+   {
+    "id": "completed-todos-leave-the-active-counter-at-zero",
+    "file": "suites/todomvc/completed-todos-leave-the-active-counter-at-zero_test.md",
+    "title": "Completed todos leave the active counter at zero",
+    "summary": "Prove a known completed todo does not count as active, while a nonempty list keeps the footer visible.",
+    "assuranceId": "t-26",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All view so the complete todo list is visible.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the app, create a todo named {{completed_todo_title}}.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the All view, mark all todos complete with the mark-all checkbox, then assert the footer counter reads '0 items', its number is inside a <strong> element, and zero equals the independently counted unchecked todo rows in the All list.",
+      "verifies": [
+       "ac-49",
+       "ac-50",
+       "ac-51"
+      ]
+     }
+    ],
+    "sha256": "88b6cf1e51b5dc245d058bd30b6f67740e99e54fbf41f533ecab56a3c4ecdcfe"
+   },
+   {
+    "id": "completing-the-last-active-todo-checks-mark-all",
+    "file": "suites/todomvc/completing-the-last-active-todo-checks-mark-all_test.md",
+    "title": "Completing the last active todo checks mark-all",
+    "summary": "Checking the last active todo leaves it in All, gives it completed styling, checks mark-all, and saves its state.",
+    "assuranceId": "t-10",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, remove any existing todos with their item remove controls, then create two todos titled 'Assurance last active' and 'Assurance already complete' using the new-todo input and check only 'Assurance already complete'.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo app's All list, check 'Assurance last active', then assert its checkbox is checked, its parent li has the completed class, and the mark-all checkbox is checked.",
+      "verifies": [
+       "ac-16",
+       "ac-17",
+       "ac-18"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "Reload the todo app's All list and inspect the localStorage todo record for 'Assurance last active', then assert its stored completed value is true.",
+      "verifies": [
+       "ac-19"
+      ]
+     }
+    ],
+    "sha256": "b981d703dd09915e6a0fc58bf1f4bd80f4bf897fc33466090b35f0ee211036c7"
+   },
+   {
+    "id": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+    "file": "suites/todomvc/deleting-a-completed-todo-removes-it-from-all-after-reload_test.md",
+    "title": "Deleting a completed todo removes it from All after reload",
+    "summary": "With a completed todo visible in the Completed filter, use its hovered remove button to delete it and confirm it does not return after reload.",
+    "assuranceId": "t-16",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, establish two todos named 'Assurance completed delta' and 'Assurance active epsilon', removing pre-existing todos through the app's controls if needed; mark 'Assurance completed delta' complete.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo app's Completed filter, hover over 'Assurance completed delta', then assert its `.destroy` remove button appears.",
+      "verifies": [
+       "ac-28"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "On the Completed filter, remove 'Assurance completed delta' through its revealed button, then assert it is absent from that list.",
+      "verifies": [
+       "ac-26"
+      ]
+     },
+     {
+      "heading": "Step 5",
+      "text": "Reload the todo app and open its All list, then assert 'Assurance completed delta' remains absent from the list.",
+      "verifies": [
+       "ac-27"
+      ]
+     }
+    ],
+    "sha256": "58bfa1959cf06f47f196225e27baddb3be80c7aadce1f4fd4ff17449e28baec2"
+   },
+   {
+    "id": "deleting-one-active-todo-preserves-its-neighbour",
+    "file": "suites/todomvc/deleting-one-active-todo-preserves-its-neighbour_test.md",
+    "title": "Deleting one active todo preserves its neighbour",
+    "summary": "With two active todos visible in All, hover and remove one named todo; establish that the distinct other todo survives, including after reload.",
+    "assuranceId": "t-14",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, establish a two-item active fixture containing only 'Assurance target alpha' and 'Assurance neighbour beta', removing pre-existing todos through the app's controls if needed.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the All list, hover over 'Assurance target alpha', then assert its `.destroy` remove button appears.",
+      "verifies": [
+       "ac-28"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "On the All list, remove 'Assurance target alpha' using that todo's revealed button, then assert 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' remains visible.",
+      "verifies": [
+       "ac-26",
+       "ac-29"
+      ]
+     },
+     {
+      "heading": "Step 5",
+      "text": "Reload the todo app's All list, then assert 'Assurance target alpha' is still absent from the list.",
+      "verifies": [
+       "ac-27"
+      ]
+     }
+    ],
+    "sha256": "97bd87d1d96b92c19d1b5c8476b17e5b0b02db6c0ddc2127a4617e3fbf17d21c"
+   },
+   {
+    "id": "deleting-the-last-todo-hides-the-empty-list-containers",
+    "file": "suites/todomvc/deleting-the-last-todo-hides-the-empty-list-containers_test.md",
+    "title": "Deleting the last todo hides the empty-list containers",
+    "summary": "Remove the sole active todo in All, leaving no todos and the specified hidden main and footer; check deletion persists after reload.",
+    "assuranceId": "t-15",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, establish a sole active todo named 'Assurance sole gamma', removing pre-existing todos through the app's controls if needed.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the All list, hover over 'Assurance sole gamma', then assert its `.destroy` remove button appears.",
+      "verifies": [
+       "ac-28"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "On the All list, remove 'Assurance sole gamma' through its revealed button, then assert that todo is absent, `#main` is hidden and `#footer` is hidden.",
+      "verifies": [
+       "ac-26",
+       "ac-30",
+       "ac-31"
+      ]
+     },
+     {
+      "heading": "Step 5",
+      "text": "Reload the todo app's All list, then assert 'Assurance sole gamma' remains absent.",
+      "verifies": [
+       "ac-27"
+      ]
+     }
+    ],
+    "sha256": "66b33e6cc7b1e4360097b5a7b931d0c8593d9cda389c73f4ddf0d6e594b69942"
+   },
+   {
+    "id": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+    "file": "suites/todomvc/empty-edited-titles-destroy-the-todo-on-enter-or-blur_test.md",
+    "title": "Empty edited titles destroy the todo on Enter or blur",
+    "summary": "Empty and whitespace-only edited titles destroy the todo rather than saving it, whether the edit ends on Enter or blur.",
+    "assuranceId": "t-1",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, create a todo titled 'Review proposal' using the new-todo input at the top of the todo app.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the todo list, double-click the newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the 'Review proposal' edit input, clear the title and press Enter, then assert the edited todo item no longer exists in the list.",
+      "verifies": [
+       "ac-6"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "In the new-todo input, create a todo titled 'Review proposal' for the whitespace-only Enter case.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 5",
+      "text": "In the todo list, double-click that newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 6",
+      "text": "In that 'Review proposal' edit input, replace the title with three spaces and press Enter, then assert the edited todo item no longer exists in the list.",
+      "verifies": [
+       "ac-6"
+      ]
+     },
+     {
+      "heading": "Step 7",
+      "text": "In the new-todo input, create a todo titled 'Review proposal' for the empty-title blur case.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 8",
+      "text": "In the todo list, double-click that newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 9",
+      "text": "In that 'Review proposal' edit input, clear the title and move focus away from the input, then assert the edited todo item no longer exists in the list.",
+      "verifies": [
+       "ac-6"
+      ]
+     },
+     {
+      "heading": "Step 10",
+      "text": "In the new-todo input, create a todo titled 'Review proposal' for the whitespace-only blur case.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 11",
+      "text": "In the todo list, double-click that newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 12",
+      "text": "In that 'Review proposal' edit input, replace the title with three spaces and move focus away from the input, then assert the edited todo item no longer exists in the list.",
+      "verifies": [
+       "ac-6"
+      ]
+     }
+    ],
+    "sha256": "3e612530c421fc3088f418068772a6ec7d4504098fdcd15ce24ccf43f149bda5"
+   },
+   {
+    "id": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+    "file": "suites/todomvc/enter-appends-trimmed-todo-and-clears-new-todo-input_test.md",
+    "title": "Enter appends trimmed todo and clears new-todo input",
+    "summary": "With a nonblank title, Enter appends its trimmed value to the list and clears the new-todo input.",
+    "assuranceId": "t-5",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and load the todo app, then assert the new-todo input at the top of the page is the active focused element.",
+      "verifies": [
+       "ac-11"
+      ]
+     },
+     {
+      "heading": "Step 2",
+      "text": "capture baseline: number of todos in the all-todos list before pressing Enter",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the todo app's new-todo input at the top, enter '  Buy milk  ' and press Enter, then assert the all-todos list has exactly one more item than the captured baseline, its newly appended item displays 'Buy milk' as a nonempty trimmed title, and the new-todo input is empty.",
+      "verifies": [
+       "ac-10",
+       "ac-12",
+       "ac-13",
+       "ac-14"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "capture baseline: number of todos in the all-todos list before pressing Enter",
+      "verifies": []
+     },
+     {
+      "heading": "Step 5",
+      "text": "In the todo app's new-todo input at the top, enter 'Call home' and press Enter, then assert the all-todos list has exactly one more item than the latest captured baseline, its newly appended item displays 'Call home' as a nonempty trimmed title, and the new-todo input is empty.",
+      "verifies": [
+       "ac-10",
+       "ac-12",
+       "ac-13",
+       "ac-14"
+      ]
+     }
+    ],
+    "sha256": "8265f73fba7901f55d22d526451ec3dbb94db1a20b9a25b34dc93cea9632e9df"
+   },
+   {
+    "id": "enter-saves-a-trimmed-todo-title",
+    "file": "suites/todomvc/enter-saves-a-trimmed-todo-title_test.md",
+    "title": "Enter saves a trimmed todo title",
+    "summary": "A nonblank edited title is trimmed and committed when Enter ends editing.",
+    "assuranceId": "t-3",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, create a todo titled 'Review proposal' using the new-todo input at the top of the todo app.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the todo list, double-click the newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "In that todo's edit input, enter '  Review contract  ' and press Enter, then assert the item no longer has the editing class and its displayed title equals 'Review contract'.",
+      "verifies": [
+       "ac-2",
+       "ac-8"
+      ]
+     }
+    ],
+    "sha256": "e640f75306fe36736c40c9f35f58892e02c4e757234c2d57f5912167e7230c59"
+   },
+   {
+    "id": "escape-discards-a-todo-title-edit",
+    "file": "suites/todomvc/escape-discards-a-todo-title-edit_test.md",
+    "title": "Escape discards a todo title edit",
+    "summary": "Escape leaves editing mode without applying the changed title.",
+    "assuranceId": "t-2",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, create a todo titled 'Review proposal' using the new-todo input at the top of the todo app.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the todo list, double-click the newly created 'Review proposal' item's label to edit it, then assert its item has the editing class, its focused edit input contains 'Review proposal', and its other controls are hidden.",
+      "verifies": [
+       "ac-1",
+       "ac-3",
+       "ac-4",
+       "ac-5"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "In that todo's edit input, replace the title with 'Review contract' and press Escape, then assert the item's editing class is absent and its displayed title remains 'Review proposal'.",
+      "verifies": [
+       "ac-2",
+       "ac-7"
+      ]
+     }
+    ],
+    "sha256": "722a91162e3cf5307093c516832cdcbdaaf4b018dab19594e3c735bffcc88377"
+   },
+   {
+    "id": "hide-clear-completed-without-completed-todos",
+    "file": "suites/todomvc/hide-clear-completed-without-completed-todos_test.md",
+    "title": "Hide Clear completed without completed todos",
+    "summary": "With no completed todos, confirm the clear action is hidden whether active todos remain or the list is empty.",
+    "assuranceId": "t-19",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All list and leave no completed todos by clearing any that already exist.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, establish an active todo titled {{active_todo_title}} without completing it, then assert Clear completed is hidden.",
+      "verifies": [
+       "ac-35"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo app's All list, remove all remaining active todos so the list is empty, then assert Clear completed is hidden.",
+      "verifies": [
+       "ac-35"
+      ]
+     }
+    ],
+    "sha256": "f8681ec1fdae8314e646b83bf2d47c34137c59f634c96ef2b1d943b5dea768f7"
+   },
+   {
+    "id": "hide-main-and-footer-with-zero-todos",
+    "file": "suites/todomvc/hide-main-and-footer-with-zero-todos_test.md",
+    "title": "Hide main and footer with zero todos",
+    "summary": "With no todos, the main list and footer are hidden, independent of the route's displayed matching subset.",
+    "assuranceId": "t-22",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the TodoMVC todo page's All view (#/) so all existing todos are visible.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the TodoMVC All view, remove every existing todo through each item's remove control until no todos exist, then assert `#main` and `#footer` are hidden.",
+      "verifies": [
+       "ac-42",
+       "ac-43"
+      ]
+     }
+    ],
+    "sha256": "fff1ecc700097e2e25eb9a0f6d7721ddff5941a0e4d7a6419dd449bf15f6bc24"
+   },
+   {
+    "id": "mark-all-checks-every-todo-in-all",
+    "file": "suites/todomvc/mark-all-checks-every-todo-in-all_test.md",
+    "title": "Mark-all checks every todo in All",
+    "summary": "In All, check mark-all with at least one active todo and another completed todo; every existing todo becomes complete.",
+    "assuranceId": "t-11",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open the todo application at {{start_url}} and show the All todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the application, create todos named 'Bulk alpha' and 'Bulk beta' if they are not already present.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the All list, leave 'Bulk alpha' active and mark 'Bulk beta' completed using its item checkbox.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "In the All list, check the 'Mark all as complete' checkbox, then assert every existing todo in All is completed and its item checkbox is checked.",
+      "verifies": [
+       "ac-22"
+      ]
+     }
+    ],
+    "sha256": "e54cf7c12c3ac05ac6b885aabdacb3ad6936068f8df47acecd27a2c7df20c1c0"
+   },
+   {
+    "id": "mark-all-reactivates-every-completed-todo",
+    "file": "suites/todomvc/mark-all-reactivates-every-completed-todo_test.md",
+    "title": "Mark-all reactivates every completed todo",
+    "summary": "In All, uncheck mark-all when all todos are complete; every existing todo becomes active.",
+    "assuranceId": "t-12",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open the todo application at {{start_url}} and show the All todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the application, create todos named 'Restore alpha' and 'Restore beta' if they are not already present.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the All list, set the 'Mark all as complete' checkbox to checked so the existing todos are complete.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "On the All list, uncheck 'Mark all as complete', then assert every existing todo in All is active and its item checkbox is unchecked.",
+      "verifies": [
+       "ac-22"
+      ]
+     }
+    ],
+    "sha256": "2753843483cafd97a68975f9cc7558b3ce2aef19ac3ad3d8674e4944076fc9de"
+   },
+   {
+    "id": "new-todo-input-receives-focus-on-page-load",
+    "file": "suites/todomvc/new-todo-input-receives-focus-on-page-load_test.md",
+    "title": "New-todo input receives focus on page load",
+    "summary": "Show that loading the app focuses the new-todo input at the top of the page.",
+    "assuranceId": "t-7",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and load the todo app, then assert the new-todo input at the top of the page is the active focused element.",
+      "verifies": [
+       "ac-11"
+      ]
+     }
+    ],
+    "sha256": "2977c86ab651590a1557ebe7bef860685cc4b96af2fdcbba909a1755361a0e0c"
+   },
+   {
+    "id": "one-active-todo-displays-a-singular-counter",
+    "file": "suites/todomvc/one-active-todo-displays-a-singular-counter_test.md",
+    "title": "One active todo displays a singular counter",
+    "summary": "Prove the singular label and active count when exactly one todo remains unfinished.",
+    "assuranceId": "t-27",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All view so the complete todo list is visible.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the app, create a todo named {{completed_todo_title}}.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the All view, mark all todos complete with the mark-all checkbox.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "In the new-todo input at the top of the app, create an unfinished todo named {{active_todo_title}}, then assert the footer counter reads '1 item', its number is inside a <strong> element, and one equals the independently counted unchecked todo rows in the All list.",
+      "verifies": [
+       "ac-49",
+       "ac-50",
+       "ac-51"
+      ]
+     }
+    ],
+    "sha256": "c9288a1e9ef8c0e6afbde6e92ad357db4db8760839592f4948c69be657532909"
+   },
+   {
+    "id": "reload-does-not-restore-todo-editing-mode",
+    "file": "suites/todomvc/reload-does-not-restore-todo-editing-mode_test.md",
+    "title": "Reload does not restore todo editing mode",
+    "summary": "Enter editing mode for an already saved todo and reload before saving an edit; establish that editing mode does not resume.",
+    "assuranceId": "t-25",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and navigate to the todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo list, create an active todo titled {{active_todo_title}} and locate that saved item.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the saved {{active_todo_title}} item, enter title editing mode without saving a new title.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "Reload the todo list page while that item is in editing mode, then assert {{active_todo_title}} is displayed in its saved active state without editing mode.",
+      "verifies": [
+       "ac-44",
+       "ac-45",
+       "ac-48"
+      ]
+     }
+    ],
+    "sha256": "61c6f2d65c030c3402d8d6d7cf0267daa61404b75690f63795df39817d9c687a"
+   },
+   {
+    "id": "reload-retains-a-completed-todo-and-its-stored-state",
+    "file": "suites/todomvc/reload-retains-a-completed-todo-and-its-stored-state_test.md",
+    "title": "Reload retains a completed todo and its stored state",
+    "summary": "Create a todo, complete it, reload, and establish that the saved title and completed state return, with the change dynamically stored under the framework-specific todo name.",
+    "assuranceId": "t-23",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and navigate to the todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo list, create a todo titled {{completed_todo_title}}, then assert localStorage contains todo data reflecting the newly saved title under a todo name in the `todos-[framework]` format for this implementation.",
+      "verifies": [
+       "ac-46",
+       "ac-47"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo list, mark the {{completed_todo_title}} item complete, then assert the stored todo data reflects its completed state.",
+      "verifies": [
+       "ac-46"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "Reload the todo list page, then assert {{completed_todo_title}} is displayed with the completed state.",
+      "verifies": [
+       "ac-44",
+       "ac-45"
+      ]
+     }
+    ],
+    "sha256": "2f8f0067967c8047e698b1b370898d8e8363898ab89c48eff74c77e9a5ac3afe"
+   },
+   {
+    "id": "reload-retains-a-newly-created-active-todo",
+    "file": "suites/todomvc/reload-retains-a-newly-created-active-todo_test.md",
+    "title": "Reload retains a newly created active todo",
+    "summary": "Create an active todo, reload, and establish its saved title and active completion state are retained in localStorage.",
+    "assuranceId": "t-24",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and navigate to the todo list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo list, create a todo titled {{active_todo_title}}, then assert localStorage contains todo data reflecting the newly saved title under a todo name in the `todos-[framework]` format for this implementation.",
+      "verifies": [
+       "ac-46",
+       "ac-47"
+      ]
+     },
+     {
+      "heading": "Step 3",
+      "text": "Reload the todo list page, then assert {{active_todo_title}} is displayed in its saved active state.",
+      "verifies": [
+       "ac-44",
+       "ac-45"
+      ]
+     }
+    ],
+    "sha256": "d3ced7c1513df1dd555be60f789ee4123fbbbbe601e68d60d731fce4184e9bfe"
+   },
+   {
+    "id": "two-active-todos-display-a-plural-counter",
+    "file": "suites/todomvc/two-active-todos-display-a-plural-counter_test.md",
+    "title": "Two active todos display a plural counter",
+    "summary": "Prove plural wording and the numeric count with two unfinished todos.",
+    "assuranceId": "t-28",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "At {{start_url}}, open the todo app's All view so the complete todo list is visible.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the new-todo input at the top of the app, create a todo named {{active_todo_title}}.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "In the All view, mark all todos complete with the mark-all checkbox.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 4",
+      "text": "In the new-todo input at the top of the app, create an unfinished todo named {{completed_todo_title}}.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 5",
+      "text": "In the All view, reactivate the just-completed todo named {{active_todo_title}} using its item checkbox, then assert the footer counter reads '2 items', its number is inside a <strong> element, and two equals the independently counted unchecked todo rows in the All list.",
+      "verifies": [
+       "ac-49",
+       "ac-50",
+       "ac-51"
+      ]
+     }
+    ],
+    "sha256": "54aa485a9004e27939e2259d9e48f967de52ecdb6c70ca807b30aa0c93377fd6"
+   },
+   {
+    "id": "unchecking-a-completed-todo-removes-it-from-the-completed",
+    "file": "suites/todomvc/unchecking-a-completed-todo-removes-it-from-the-completed_test.md",
+    "title": "Unchecking a Completed todo removes it from the Completed list",
+    "summary": "Unchecking a visible completed todo removes it from Completed and causes mark-all to clear when all were previously checked.",
+    "assuranceId": "t-9",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and reach the todo app's All list.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "On the todo app's All list, remove any existing todos with their item remove controls, then create two todos titled 'Assurance completed A' and 'Assurance completed B' using the new-todo input and check each todo so both are completed.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 3",
+      "text": "On the todo app's Completed filter, uncheck 'Assurance completed A', then assert 'Assurance completed A' is absent from the Completed list and the mark-all checkbox is unchecked.",
+      "verifies": [
+       "ac-21",
+       "ac-18"
+      ]
+     },
+     {
+      "heading": "Step 4",
+      "text": "Return to the All filter and inspect 'Assurance completed A', then assert its checkbox is unchecked and its parent li does not have the completed class.",
+      "verifies": [
+       "ac-16",
+       "ac-17"
+      ]
+     },
+     {
+      "heading": "Step 5",
+      "text": "Reload the todo app's All list and inspect the localStorage todo record for 'Assurance completed A', then assert its stored completed value is false.",
+      "verifies": [
+       "ac-19"
+      ]
+     }
+    ],
+    "sha256": "797cdf5e66018ee51921ca53ea9eb0cd607c6f1025612aa1f8062f6f7c371bab"
+   }
+  ]
+ },
+ "oracle": {},
+ "rounds": [],
+ "events": [
+  {
+   "kind": "note",
+   "text": "Recording 28 behaviours on the legacy app (jQuery).",
+   "t": "2026-11-16T13:04:51.107Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "legacy",
+   "test": "active-route-displays-only-active-todos",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T13:04:51.109Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "legacy",
+   "test": "blank-new-todo-submissions-do-not-add-a-todo",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T13:04:51.119Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "legacy",
+   "test": "blur-saves-a-trimmed-todo-title",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T13:04:51.125Z"
+  }
+ ],
+ "totals": {
+  "kaneRuns": 0,
+  "credits": 0,
+  "agentCostUsd": 0,
+  "replays": 0
+ }
+}

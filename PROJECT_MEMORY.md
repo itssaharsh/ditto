@@ -15,6 +15,8 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - `--local` = no upload / no write-back (keeps the legacy recording intact while replaying on the rewrite). `--push` fails under OAuth.
 - `--override-start-url` retargets a replay; replay on another build re-checked the assertion and failed with 740 where behaviour differed.
 - Kane design: 9 use-cases from the TodoMVC spec; ~15–20 credits and ~1 min per use-case for 3–4 tests.
+- Kane's design declares extra variables (`active_todo_title`, `completed_todo_title` in `.testmuai/variables/assurance.json`, names only). Without values Kane types empty text and blames the test (710). Values live in `ditto.config.json` → `variables`.
+- A Chrome flake shows as `result_code 510` / `verdict.family environment_issue`: retry, never count it as a difference.
 - Recordings (`output-*/.internal/`) and evidence `result.yaml` contain the account email + org id: never publish; `.gitignore` covers them.
 - Evidence pack zip: `tests/<stem>/steps/<i>-0-<i>/{step.json,screenshot.jpg,annotated.png,failure.yaml}`, `logs/0-console.ndjson`.
 
@@ -37,7 +39,7 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 | Vercel | MCP | needs team-access approval | GitHub Pages instead |
 
 ## Credits log
-- 16 Nov: probes ≈ 49; assurance ingest+design ≈ 135; escape test author 42 + replays 0.
+- 16 Nov: probes ≈ 49; assurance ingest+design ≈ 200 (28 tests); escape test author 42; first oracle attempt aborted (missing variables) ≈ 120. Balance 10,697 at 13:06 UTC.
 
 ## Failed approaches
 - `testmd run --push` under OAuth; split verify step (710); Playwright MCP browser (no Chrome) → use kane-chrome wrapper.

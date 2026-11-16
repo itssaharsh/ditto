@@ -9,6 +9,8 @@ export interface DittoConfig {
   legacy: { label: string; framework: string; dir: string; port: number; source?: string };
   rewrite: { label: string; framework: string; repo: string; build: string; dist: string; port: number; source?: string };
   agent: { model?: string; portPrompt: string; maxTurnsPort?: number; maxTurnsFix?: number };
+  /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */
+  variables?: Record<string, string>;
   parallel: number;
   maxRounds: number;
   creditCap: number;
