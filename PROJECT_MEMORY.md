@@ -44,5 +44,12 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 ## Failed approaches
 - `testmd run --push` under OAuth; split verify step (710); Playwright MCP browser (no Chrome) → use kane-chrome wrapper.
 
+## Checkpoint (16 Nov ~13:25 UTC)
+- Oracle `ditto record` running in background (log `.ditto-work/record.log`); a chained background job starts `ditto loop` when it ends (log `.ditto-work/loop.log`).
+- Console served by `ditto ui` on 127.0.0.1:4747 (nohup); legacy app on 7001 (python http.server, nohup).
+- Repo pushed to github.com/itssaharsh/ditto (master). `cases/` not committed yet (commit after the loop).
+- Port repo will be `../todomvc-react-port` (created by the loop).
+- TodoMVC implementations for `ditto scan` are sparse-cloned in `.ditto-work/impls/todomvc/examples/*/dist`.
+
 ## Next actions
 See `TASKS.md`.
