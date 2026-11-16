@@ -30,6 +30,15 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 ## Now
 - [x] Hand-off message to the user
 
+## Improvements round (user asked for more, 16 Nov ~19:20 UTC)
+- [x] README: 24 s GIF hero, 30-second summary, judges' path first, CI badge (GitHub Actions: typecheck + 17 tests + build, green)
+- [x] `ditto report` (PR-ready Markdown; docs/report-example*.md); Ditto's trust rules as a Kane policy (policies/ditto-parity.yaml, lints clean)
+- [x] Console: 'Every recorded run' section; unlisted cases; rewrites can be a deployed URL (`rewrite.url`); /port-broken/ published via publishAs
+- [~] Scan of official TodoMVCs (react → vue → svelte → angular) via `ditto check` with ditto.impl-*.config.json; runner .ditto-work/run-scan.sh, logs .ditto-work/scan-*.log
+- [ ] After the scan: `ditto index`, prune-case on each impl case, `npx tsx scripts/validate-evidence.ts` (validate + policy verdicts), README section on the official implementations, publish
+- [ ] Try-it flow (ditto.try.config.json: deployed jQuery vs deployed broken build, `--only` escape + counter tests): run it, then add the README section only if it works
+- [ ] Re-record the video (adds the 'official' segment from the index), update drafts, memory, hand-off
+
 ## Hand-off to the user (only they can)
 - [ ] Upload the video to YouTube (unlisted is fine), add the link to README and the submission
 - [ ] Two public posts (drafts in hackathon-idea/kanecli-online-nov/launch-drafts.md)
