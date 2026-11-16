@@ -70,7 +70,7 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - Kane screenshots a key press before its effect lands: show what Kane was doing under each frame.
 - Python Playwright (foldcheck) needs `LD_LIBRARY_PATH=$HOME/.local/lib/kane-chrome/lib` on this machine.
 
-## Red-team 2 (16 Nov ~20:00 UTC, hackathon-idea/kanecli-online-nov/redteam-2.md)
+## Red-team 2 (16 Nov ~18:00 UTC, hackathon-idea/kanecli-online-nov/redteam-2.md)
 - Scores: Ships 8, Verified 6.5, Closed loop 8.5, Craft 7. Biggest risk: on the broken build Kane's replays of `mark-all-checks` and `two-active-todos` FAILED AT THEIR CHECKS (bug 3's effect, Kane described it), but adaptive heal re-authored steps and passed them; Ditto took the healed pass. So "Kane caught all 3" was overstated: 2 confirmed directly, bug 3 only after round 1 via the counter test.
 - Fixed: engine rule (loop.ts checkOne): a healed pass after a replay failed at a check (`reason ~ assertion_failed`) needs a fresh authored run to agree (`failedAtCheck`). Claims reworded ("Kane's findings led Claude Code to all 3"), card shows how the 18 were last checked, table marks "healed past a failed check", Escape note says Kane blamed the check (710), oracle 21→18 explained (replay-verified passes + confirm-twice failures), fixer transcript audit (24 tool calls, 0 touching the answer key; scripts/audit-fixer.ts), status --loop, LICENSE, OG card.
 - Re-check DONE (case todomvc-recheck, worktree ../todomvc-react-port-broken at a150b02, port 7005): new rule → 6 confirmed differences (was 2), 1 unclear (was 3), 11 same; all 3 planted bugs in one check; 37 Kane runs, 539 credits. Refused heals: mark-all-checks → fresh mismatch, two-active → fresh mismatch, mark-all-reactivates → fresh pass (legit heal). Published as 4th tab; mutation case has followUp link.
@@ -78,15 +78,15 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - `ditto index` used to construct the loop (which saved cases/todomvc/case.json, bumping updatedAt); now runs before the loop opens a case.
 - Kane replays vary between runs on the same build (completed-route passed in round 0, failed on re-check replay).
 
-## Evidence integrity (16 Nov ~21:40 UTC)
+## Evidence integrity (16 Nov ~19:10 UTC)
 - `kane-cli evidence validate --json` is local and free (~2.5 s per pack). scripts/validate-evidence.ts: 300/301 packs valid (L1); the invalid one is the 13:06 UTC oracle run whose browser died before step 1 (logged as error, never counted). docs/evidence-validation.json.
 
-## Checkpoint (16 Nov ~21:15 UTC): ready for the user's hand-off
+## Checkpoint (16 Nov ~19:05 UTC): ready for the user's hand-off
 - Video: qa/video/ditto-demo.mp4 (169 s; segments trimmed of page loads), thumbnail qa/video/thumbnail.png (git-ignored; re-record with `node scripts/video/record.mjs`).
 - TestMu Slack (#kane-cli-hacakathon C0BS5K131NU, #general) read with the user's OK: no Nov rule changes; previous edition used a SurveyMonkey form and extended its deadline once. Nothing posted.
-- Kane credits 5,575 left at 21:15 UTC (11,127 on 16 Nov morning). Waiting on the user: YouTube upload, two posts, form, kaneclihack.sh registration; add the video link to README when given.
+- Kane credits 5,575 left at ~19:05 UTC (11,127 on 16 Nov morning). Waiting on the user: YouTube upload, two posts, form, kaneclihack.sh registration; add the video link to README when given.
 
-## Checkpoint (16 Nov ~19:30 UTC)
+## Checkpoint (16 Nov ~17:45 UTC)
 - Everything committed and pushed; site redeployed with the mutation case as default; fold check PASS on the live URL.
 - Running: Kane self-test of the redeployed console (scripts/selftest-console.ts → qa/console-selftest.json, then copy to docs/).
 - Next: re-record the video, fresh red-team + scorecard, launch drafts, hand-off message.

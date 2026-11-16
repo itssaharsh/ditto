@@ -1181,3 +1181,51 @@ nav.cases a.on {
 .followup b {
   color: var(--ink);
 }
+
+/* every recorded run */
+.runs {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.run {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--r-block);
+  background: var(--surf-2);
+  text-decoration: none;
+  color: var(--ink2);
+  font-size: 14px;
+}
+.run:hover {
+  background: #e4ecf6;
+}
+.run.on {
+  background: var(--hl2);
+}
+.run b {
+  color: var(--ink);
+}
+.run i {
+  font-style: normal;
+  font-weight: 700;
+}
+.run.ok i {
+  color: var(--ok-ink);
+}
+.run.bad i {
+  color: var(--bad-ink);
+}
+.runs-h {
+  font: 700 17px var(--body);
+  margin: 10px 0 2px;
+}
+@media (max-width: 760px) {
+  .run {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

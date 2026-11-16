@@ -681,3 +681,56 @@ export function MutationsBlock({ c, d }: { c: CaseFile; d: Derived }) {
     </section>
   );
 }
+
+export interface RunIndexEntry {
+  id: string;
+  title: string;
+  tab?: string;
+  planted?: number;
+  differ?: number;
+  unlisted?: boolean;
+  rewrite: string;
+  status: string;
+  matched: number;
+  total: number;
+  fixRounds: number;
+}
+
+/** Every recorded run, so the ones kept out of the switcher (e.g. other official implementations) are one click away. */
+export function RunsBlock({ runs, current }: { runs: RunIndexEntry[]; current: string }) {
+  if (runs.length < 2) return null;
+  const agentRuns = runs.filter((r) => !r.unlisted);
+  const others = runs.filter((r) => r.unlisted);
+  const result = (r: RunIndexEntry) =>
+    r.status === 'parity'
+      ? `${r.matched}/${r.total} the same${r.fixRounds ? ` after ${r.fixRounds} fix ${r.fixRounds === 1 ? 'round' : 'rounds'}` : ''}`
+      : `${r.matched}/${r.total} the same · ${r.differ ?? r.total - r.matched} confirmed different`;
+  const table = (rows: RunIndexEntry[]) => (
+    <div className="runs" role="table">
+      {rows.map((r) => (
+        <a key={r.id} role="row" href={`?case=${r.id}`} className={`run ${r.id === current ? 'on' : ''} ${r.status === 'parity' ? 'ok' : 'bad'}`}>
+          <b role="cell">{r.tab ?? r.title}</b>
+          <span role="cell">{r.rewrite}</span>
+          <i role="cell">{result(r)}</i>
+        </a>
+      ))}
+    </div>
+  );
+  return (
+    <section className="block" id="runs" aria-labelledby="runh">
+      <h2 id="runh">Every recorded run</h2>
+      <p className="lead">All judged by the same 18 Kane recordings of the old jQuery app.</p>
+      {table(agentRuns)}
+      {others.length > 0 && (
+        <>
+          <h3 className="runs-h">Other official TodoMVC implementations, written by people</h3>
+          <p className="lead">
+            Not agent rewrites: the same recordings replayed on implementations from tastejs/todomvc. A confirmed difference here is a real difference
+            between two official implementations.
+          </p>
+          {table(others)}
+        </>
+      )}
+    </section>
+  );
+}
