@@ -29,6 +29,8 @@ function help(): void {
        [--skip-port]            ...resume with the port that already exists
   ditto check                   Replay the suite on the current rewrite once (no agent)
   ditto spec-gaps               Behaviours the old app never met: Kane checks them on the rewrite, Claude implements them
+  ditto fix                     Continue from the recorded check: send what still differs to Claude Code, round by round
+  ditto mutate [--count 3]      Mutation check: a second agent breaks the rewrite on purpose; does Kane catch it?
   ditto ui [--port 4747]        Open the console (live while a loop runs)
   ditto status                  Print the parity table for the current case
   ditto scan [--targets a,b]    Replay the reference recordings on other builds (e.g. every TodoMVC framework)
@@ -124,6 +126,18 @@ async function main(): Promise<void> {
   }
   if (cmd === 'loop') {
     const data = await loop.run({ skipPort: has('skip-port') });
+    writeCasesIndex(cfg.abs(cfg.casesDir));
+    printStatus(data);
+    return;
+  }
+  if (cmd === 'fix') {
+    const data = await loop.resumeFix();
+    writeCasesIndex(cfg.abs(cfg.casesDir));
+    printStatus(data);
+    return;
+  }
+  if (cmd === 'mutate') {
+    const data = await loop.mutate(Number(flag('count') ?? 3));
     writeCasesIndex(cfg.abs(cfg.casesDir));
     printStatus(data);
     return;

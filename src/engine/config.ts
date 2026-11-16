@@ -12,6 +12,8 @@ export interface DittoConfig {
   agent: { model?: string; portPrompt: string; maxTurnsPort?: number; maxTurnsFix?: number };
   /** The behaviour the console opens on when none needed a fix. */
   namedExample?: string;
+  /** One line shown under the console's title for this case. */
+  note?: string;
   /** Reuse the oracle (recordings and results) of another case instead of recording the legacy app again. */
   oracleCase?: string;
   /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */

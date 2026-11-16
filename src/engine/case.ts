@@ -36,7 +36,7 @@ export interface RunSummary {
 
 export interface AgentTurn {
   /** port: the rewrite · fix: Ditto sent Kane's findings · hook: your own session, checked by the Stop hook · spec: closing a spec gap */
-  kind: 'port' | 'fix' | 'hook' | 'spec';
+  kind: 'port' | 'fix' | 'hook' | 'spec' | 'mutate';
   round: number;
   sessionId?: string;
   model?: string;
@@ -66,7 +66,7 @@ export type CaseEvent =
   | { t: string; kind: 'kane_start'; side: AppSide; test: string; round: number; mode: RunSummary['mode'] }
   | { t: string; kind: 'kane_step'; side: AppSide; test: string; round: number; step: number; status: string; remark: string }
   | { t: string; kind: 'kane_end'; side: AppSide; test: string; round: number; outcome: Outcome; oneLiner?: string }
-  | { t: string; kind: 'agent_start'; round: number; agentKind: 'port' | 'fix' | 'hook' | 'spec'; prompt: string }
+  | { t: string; kind: 'agent_start'; round: number; agentKind: 'port' | 'fix' | 'hook' | 'spec' | 'mutate'; prompt: string }
   | { t: string; kind: 'agent_tool'; round: number; tool: string; detail: string }
   | { t: string; kind: 'agent_text'; round: number; text: string }
   | { t: string; kind: 'agent_end'; round: number; summary?: string; filesChanged: string[]; costUsd?: number }
@@ -87,6 +87,12 @@ export interface CaseFile {
   suite: { name: string; designedBy: string; spec?: string; variables?: Record<string, string>; tests: SuiteTest[] };
   /** The behaviour the console opens on when none needed a fix. */
   named?: string;
+  /** Mutation check: what the breaker session changed on purpose (written by it, revealed after the run). */
+  mutations?: string;
+  /** One line shown under the title, e.g. how this run differs from a plain port. */
+  note?: string;
+  /** A limit of this run found after it, by a person reading the diffs (shown as such, never as a Kane result). */
+  caveat?: string;
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];

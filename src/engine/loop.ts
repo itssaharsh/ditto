@@ -40,6 +40,7 @@ export class DittoLoop {
     this.rec.data.suite.variables = cfg.variables;
     this.rec.data.suite.spec = cfg.spec;
     if (cfg.namedExample) this.rec.data.named = cfg.namedExample;
+    if (cfg.note) this.rec.data.note = cfg.note;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -473,18 +474,23 @@ export class DittoLoop {
 
   feedback(failing: SuiteTest[], n: number): string {
     const lines: string[] = [];
+    const confirmed = failing.filter((t) => ['mismatch', 'fail'].includes(this.latest(t.id, n)?.outcome ?? ''));
+    const unsure = failing.filter((t) => !confirmed.includes(t));
     lines.push(
-      'Kane CLI ran the same plain-English behaviour tests on the legacy jQuery app (the reference) and on your React port in a real browser.',
-      `These ${failing.length} behaviour(s) pass on the legacy app but fail on your port:`,
+      'Kane CLI ran the same plain-English behaviour tests in a real browser on the legacy jQuery app (the reference) and on the React rewrite in this folder.',
+      `These ${failing.length} behaviour(s) pass on the legacy app but fail on the rewrite.` +
+        (unsure.length
+          ? ` For ${unsure.length} of them Kane could not tell whether the app or its own check was at fault; the legacy app passes the very same test, so check whether the rewrite behaves differently there.`
+          : ''),
       '',
     );
-    failing.forEach((t, i) => {
+    [...confirmed, ...unsure].forEach((t, i) => {
       const s = this.latest(t.id, n);
       const legacy = this.rec.data.oracle[t.id];
-      lines.push(`${i + 1}. ${t.title}${t.summary ? ` (${t.summary})` : ''}`);
+      lines.push(`${i + 1}. ${t.title}${t.summary ? ` (${t.summary})` : ''}${unsure.includes(t) ? ' [Kane unsure whose fault]' : ''}`);
       lines.push('   The test, step by step:');
       t.steps.forEach((st, j) => lines.push(`   - Step ${j + 1}: ${this.fillVars(st.text)}`));
-      if (s?.verdict?.oneLiner || s?.oneLiner) lines.push(`   Kane's verdict on your port: ${s?.verdict?.oneLiner ?? s?.oneLiner}`);
+      if (s?.verdict?.oneLiner || s?.oneLiner) lines.push(`   Kane's verdict on the rewrite: ${s?.verdict?.oneLiner ?? s?.oneLiner}`);
       if (s?.verdict?.rootCause) lines.push(`   Kane's root cause: ${s.verdict.rootCause}`);
       if (s?.reason) lines.push(`   Failed check: ${s.reason}`);
       if (s?.failureMessage && s.failureMessage !== s.reason) lines.push(`   Failure record: ${s.failureMessage}`);
@@ -495,13 +501,13 @@ export class DittoLoop {
         legacy?.shots.filter((x) => x.kind === 'screenshot' && Number(x.step.split('-')[1]) === mdStep).at(-1) ??
         legacy?.shots.filter((x) => x.kind === 'screenshot').at(-1);
       if (!Number.isNaN(mdStep)) lines.push(`   It went wrong in step ${mdStep + 1}.`);
-      if (shot) lines.push(`   Screenshot of your port at that step: ${this.feedbackFile(n, t.id, 'rewrite', shot.file)}`);
+      if (shot) lines.push(`   Screenshot of the rewrite at that step: ${this.feedbackFile(n, t.id, 'rewrite', shot.file)}`);
       if (legacyShot) lines.push(`   Screenshot of the legacy app at the same step: ${this.feedbackFile(n, t.id, 'legacy', legacyShot.file)}`);
-      if (s?.consoleErrors.length) lines.push(`   Browser console on your port: ${s.consoleErrors.slice(0, 4).join(' | ')}`);
+      if (s?.consoleErrors.length) lines.push(`   Browser console on the rewrite: ${s.consoleErrors.slice(0, 4).join(' | ')}`);
       lines.push('');
     });
     lines.push(
-      'Read the screenshots, compare with the legacy code, and fix the port so it behaves exactly like the legacy app for these behaviours.',
+      'Read the screenshots, compare with the legacy code, and fix the rewrite so it behaves exactly like the legacy app for these behaviours.',
       'Do not change anything unrelated. Run the build and make sure it passes.',
       'Finish with two or three sentences saying what you changed and why.',
     );
@@ -514,7 +520,16 @@ export class DittoLoop {
     const prompt = this.feedback(failing, n - 1);
     for (const t of failing) {
       const s = this.latest(t.id, n - 1);
-      this.rec.event({ kind: 'decision', round: n, test: t.id, said: s?.verdict?.oneLiner ?? s?.oneLiner ?? s?.reason ?? 'behaviour differs', did: `Sent to Claude Code with both screenshots (round ${n})` });
+      const sure = s?.outcome === 'mismatch' || s?.outcome === 'fail';
+      this.rec.event({
+        kind: 'decision',
+        round: n,
+        test: t.id,
+        said: s?.verdict?.oneLiner ?? s?.oneLiner ?? s?.reason ?? 'behaviour differs',
+        did: sure
+          ? `Sent to Claude Code with both screenshots (round ${n})`
+          : `Sent to Claude Code as "Kane unsure whose fault; the old app passes this test" (round ${n})`,
+      });
     }
     round.agent = { kind: 'fix', round: n, prompt, startedAt: now(), filesChanged: [] };
     this.rec.event({ kind: 'agent_start', round: n, agentKind: 'fix', prompt });
@@ -530,6 +545,72 @@ export class DittoLoop {
     });
     if (res.sessionId) this.agentSession = res.sessionId;
     await this.finishAgentTurn(n, res, `Round ${n}: fix ${failing.length} behaviour(s) Kane flagged\n\n${failing.map((t) => `- ${t.title}`).join('\n')}`);
+  }
+
+
+  /** Build, replay every oracle behaviour on the rewrite, and send confirmed differences back until parity. */
+  private async checkAndFix(scopeAll: SuiteTest[], promoteAtParity: boolean): Promise<void> {
+      let n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n));
+      if (!(await this.build(n))) {
+        this.rec.data.status = 'failed';
+        this.rec.event({ kind: 'note', text: 'The port does not build; stopping.' });
+        return;
+      }
+      let failing = await this.check(n, scopeAll);
+      // Every behaviour in scope passed and replayed cleanly on the old app, so a rewrite that still
+      // cannot pass it after replay, healing and fresh authoring is suspect even when Kane blames its check.
+      failing = [...failing, ...this.unclear(n).filter((t) => scopeAll.includes(t) && !failing.includes(t))];
+      await this.fixRounds(n, failing, scopeAll, promoteAtParity);
+  }
+
+  /** Continue from the recorded state: send what still differs (or is unclear) to the agent, round by round. */
+  async resumeFix(): Promise<CaseFile> {
+    await this.startApps();
+    try {
+      const n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n));
+      const scopeAll = this.oraclePassing();
+      const failing = scopeAll.filter((t) => this.latest(t.id, n)?.outcome !== 'pass');
+      this.agentSession = undefined;
+      if (!(await this.build(n))) return this.rec.data;
+      await this.fixRounds(n, failing, scopeAll, false);
+      return this.rec.data;
+    } finally {
+      this.rec.save();
+      this.stopApps();
+    }
+  }
+
+  private async fixRounds(start: number, failingIn: SuiteTest[], scopeAll: SuiteTest[], promoteAtParity: boolean): Promise<void> {
+      let n = start;
+      let failing = failingIn;
+      while (failing.length && n < start + this.cfg.maxRounds) {
+        if (!this.creditsLeft()) {
+          this.rec.event({ kind: 'note', text: `Stopped: the credit cap (${this.cfg.creditCap}) was reached.` });
+          break;
+        }
+        n += 1;
+        await this.fix(n, failing);
+        if (!(await this.build(n))) break;
+        const justChecked = failing;
+        await this.check(n, justChecked);
+        failing = justChecked.filter((t) => this.latest(t.id, n)?.outcome !== 'pass');
+        if (!failing.length) {
+          // A fix can break something that passed before: replay everything else once more (cheap).
+          const rest = scopeAll.filter((t) => !justChecked.includes(t));
+          await this.check(n, rest);
+          failing = rest.filter((t) => this.latest(t.id, n)?.outcome !== 'pass');
+        }
+      }
+      const stillUnclear = this.unclear(n);
+      const parity = !failing.length && !stillUnclear.length;
+      if (parity && promoteAtParity) await this.promote();
+      this.rec.data.status = parity ? 'parity' : 'stopped';
+      this.rec.event({
+        kind: 'note',
+        text: parity
+          ? `Parity: all ${scopeAll.length} behaviours that hold on the legacy app hold on the rewrite.`
+          : `Stopped after round ${n}: ${failing.length} behaviour(s) still differ and ${stillUnclear.length} have no clean verdict.`,
+      });
   }
 
   // ---------- Hand-over: the suite becomes the rewrite's own regression tests ----------
@@ -573,6 +654,52 @@ export class DittoLoop {
     if (!cur.includes('output-*/.internal')) writeFileSync(gi, cur + extra);
     await sh('git add -A && git commit -q -m "Add the Kane behaviour tests Ditto used as this port\u0027s regression suite" || true', repo);
     this.rec.event({ kind: 'note', text: `Copied the ${this.oraclePassing().length} tests into the rewrite repo (tests/kane) as its regression suite.` });
+  }
+
+  // ---------- Mutation check: does the oracle catch regressions? ----------
+
+  /**
+   * A breaker session changes the rewrite on purpose (subtle, user-visible regressions) and writes what it did to
+   * an answer key outside the repo. Kane replays the oracle; a fresh fixer session that never saw the breaker's
+   * conversation gets only Kane's findings. The answer key is revealed in the case afterwards.
+   */
+  async mutate(count: number): Promise<CaseFile> {
+    await this.startApps();
+    try {
+      const repo = this.cfg.abs(this.cfg.rewrite.repo);
+      const keyDir = this.cfg.abs(join(this.cfg.workDir, 'mutations', this.cfg.case));
+      mkdirSync(keyDir, { recursive: true });
+      const keyFile = join(keyDir, 'answer-key.md');
+      rmSync(keyFile, { force: true });
+      const round = this.newRound(0);
+      const prompt = [
+        `You are helping test a regression checker. In this React TodoMVC app, introduce exactly ${count} subtle behaviour regressions of the kind that slip into real ports and refactors.`,
+        'Each one must change something a user can notice in the browser, in a different feature (for example keyboard handling while editing, the item counter, filters, toggling, clearing, empty states).',
+        'Keep the build passing. Do not leave hints in code, comments or commit messages.',
+        `When done, write the list to ${keyFile}: one line per change, saying what a user would notice and which file you changed. Do not put the list anywhere in the repository.`,
+      ].join(' ');
+      round.agent = { kind: 'mutate', round: 0, prompt, startedAt: now(), filesChanged: [] };
+      this.rec.data.status = 'porting';
+      this.rec.event({ kind: 'agent_start', round: 0, agentKind: 'mutate', prompt });
+      const res = await runClaude({
+        cwd: repo,
+        prompt,
+        model: this.cfg.agent.model,
+        addDirs: [keyDir],
+        maxTurns: 40,
+        onTool: (tool, detail) => this.rec.event({ kind: 'agent_tool', round: 0, tool, detail }),
+      });
+      await this.finishAgentTurn(0, res, `Mutation check: ${count} deliberate regressions (listed in the Ditto case, not here)`);
+      this.rec.data.mutations = existsSync(keyFile) ? readFileSync(keyFile, 'utf8').slice(0, 4000) : undefined;
+      this.rec.event({ kind: 'note', text: `The breaker session changed ${count} behaviours on purpose. The fixer starts a new session and only sees Kane's findings.` });
+      // The fixer must not inherit the breaker's conversation.
+      this.agentSession = undefined;
+      await this.checkAndFix(this.oraclePassing(), false);
+      return this.rec.data;
+    } finally {
+      this.rec.save();
+      this.stopApps();
+    }
   }
 
   // ---------- Spec gaps: what the spec asks and the old app never did ----------
@@ -733,44 +860,7 @@ export class DittoLoop {
       } else {
         this.agentSession = [...this.rec.data.rounds].reverse().find((r) => r.agent?.sessionId)?.agent?.sessionId;
       }
-      let n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n));
-      if (!(await this.build(n))) {
-        this.rec.data.status = 'failed';
-        this.rec.event({ kind: 'note', text: 'The port does not build; stopping.' });
-        return this.rec.data;
-      }
-      let failing = await this.check(n, scopeAll);
-      while (failing.length && n < this.cfg.maxRounds) {
-        if (!this.creditsLeft()) {
-          this.rec.event({ kind: 'note', text: `Stopped: the credit cap (${this.cfg.creditCap}) was reached.` });
-          break;
-        }
-        n += 1;
-        await this.fix(n, failing);
-        if (!(await this.build(n))) break;
-        const justChecked = failing;
-        failing = await this.check(n, justChecked);
-        if (!failing.length) {
-          // A fix can break something that passed before: replay everything else once more (cheap).
-          failing = await this.check(n, scopeAll.filter((t) => !justChecked.includes(t)));
-        }
-      }
-      // Unclear results get one more chance before the verdict.
-      const unclear = this.unclear(n);
-      if (!failing.length && unclear.length && this.creditsLeft()) {
-        this.rec.event({ kind: 'note', text: `${unclear.length} behaviour(s) had no clean verdict on the rewrite; checking them once more.` });
-        failing = await this.check(n, unclear);
-      }
-      const stillUnclear = this.unclear(n);
-      const parity = !failing.length && !stillUnclear.length;
-      if (parity) await this.promote();
-      this.rec.data.status = parity ? 'parity' : 'stopped';
-      this.rec.event({
-        kind: 'note',
-        text: parity
-          ? `Parity: all ${scopeAll.length} behaviours that hold on the legacy app hold on the rewrite.`
-          : `Stopped after round ${n}: ${failing.length} behaviour(s) still differ and ${stillUnclear.length} have no clean verdict.`,
-      });
+      await this.checkAndFix(scopeAll, true);
       return this.rec.data;
     } finally {
       this.rec.save();
@@ -785,9 +875,13 @@ export function writeCasesIndex(casesDir: string): void {
     const c = JSON.parse(readFileSync(join(casesDir, id, 'case.json'), 'utf8')) as CaseFile;
     const oracle = c.suite.tests.filter((t) => c.oracle[t.id]?.outcome === 'pass');
     const latest = (tid: string) => [...c.rounds].sort((a, b) => a.n - b.n).reduce<RunSummary | undefined>((acc, r) => r.results[tid] ?? acc, undefined);
+    const planted = c.mutations ? c.mutations.split('\n').filter((l) => /^\s*\d+[.)]\s/.test(l)).length : 0;
+    const by = c.title.match(/ported by (.+)$/)?.[1];
     return {
       id,
       title: c.title,
+      tab: planted ? 'Bugs planted on purpose' : by ? `${by.replace(/^Claude /, '')} port` : c.title,
+      planted: planted || undefined,
       rewrite: c.apps.rewrite.framework,
       status: c.status,
       matched: oracle.filter((t) => latest(t.id)?.outcome === 'pass').length,
