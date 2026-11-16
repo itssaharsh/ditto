@@ -1,0 +1,18 @@
+hackathon-idea/
+prod-idea/
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.next/
+dist/
+.vercel/
+
+# Ditto runtime
+.ditto-work/
+**/.testmuai/
+**/output-*/.internal/
+*.evidence
+rewrite/node_modules/
