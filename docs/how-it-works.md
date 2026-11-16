@@ -34,7 +34,7 @@ No selectors, no framework code. The start URL is a variable (`{{start_url}}`), 
 
 Kane authors each test the first time (an AI works out the steps in the browser) and commits a recording. From then on the test **replays from cache in seconds at about zero credits**.
 
-When the legacy app fails a test, Ditto does not hide it. It lists it as a place where the old app already differs from its own spec, and leaves it out of parity (you decide what's right).
+When the legacy app fails a test, Ditto runs it once more before believing it: Kane's judgement can be wrong once, so a deviation of the reference has to reproduce. If it does, Ditto lists it as a place where the old app already differs from its own spec and leaves it out of parity (you decide what's right). If the second run passes, the behaviour stays in. Tests that Kane itself calls unreliable (`710`) or could not run (`510`) get another chance and are otherwise marked "not verified", never blamed on either app.
 
 ## 3. Port: Claude Code rewrites the app
 
@@ -52,7 +52,9 @@ kane-cli testmd run <test>_test.md --override-start-url <rewrite> --local --no-a
 - `--local` keeps the legacy recording untouched (nothing is written back or uploaded).
 - `--no-adaptive-heal` makes this a pure replay: if the new app behaves the same and keeps the same markup, it passes in seconds for about zero credits.
 
-If the pure replay misses, Ditto runs the same test again with Kane's adaptive healing on: Kane re-authors only the steps that missed on the new markup and judges again. A pass after healing means "different markup, same behaviour". A fail is a real difference.
+If the pure replay misses, Ditto runs the same test again with Kane's adaptive healing on: Kane re-authors only the steps that missed on the new markup and judges again. A pass after healing means "different markup, same behaviour". A fail is a real difference. If Kane still can't give a clean verdict, it authors the same test from scratch on the rewrite, without the legacy recording.
+
+Every rewrite run is also checked for where it went: if any step's page was on the legacy app's address (an absolute URL recorded in a step would do that), the run is not counted.
 
 ## 5. Route every Kane result (the closed loop)
 
