@@ -35,7 +35,8 @@ export interface RunSummary {
 }
 
 export interface AgentTurn {
-  kind: 'port' | 'fix';
+  /** port: the rewrite · fix: Ditto sent Kane's findings · hook: your own session, checked by the Stop hook · spec: closing a spec gap */
+  kind: 'port' | 'fix' | 'hook' | 'spec';
   round: number;
   sessionId?: string;
   model?: string;
@@ -63,7 +64,7 @@ export type CaseEvent =
   | { t: string; kind: 'kane_start'; side: AppSide; test: string; round: number; mode: RunSummary['mode'] }
   | { t: string; kind: 'kane_step'; side: AppSide; test: string; round: number; step: number; status: string; remark: string }
   | { t: string; kind: 'kane_end'; side: AppSide; test: string; round: number; outcome: Outcome; oneLiner?: string }
-  | { t: string; kind: 'agent_start'; round: number; agentKind: 'port' | 'fix'; prompt: string }
+  | { t: string; kind: 'agent_start'; round: number; agentKind: 'port' | 'fix' | 'hook' | 'spec'; prompt: string }
   | { t: string; kind: 'agent_tool'; round: number; tool: string; detail: string }
   | { t: string; kind: 'agent_text'; round: number; text: string }
   | { t: string; kind: 'agent_end'; round: number; summary?: string; filesChanged: string[]; costUsd?: number }
@@ -82,6 +83,8 @@ export interface CaseFile {
   status: 'recording' | 'porting' | 'checking' | 'fixing' | 'parity' | 'stopped' | 'failed';
   apps: Record<AppSide, { label: string; url: string; framework: string; source?: string }>;
   suite: { name: string; designedBy: string; spec?: string; variables?: Record<string, string>; tests: SuiteTest[] };
+  /** The behaviour the console opens on when none needed a fix. */
+  named?: string;
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];

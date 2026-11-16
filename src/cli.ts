@@ -28,6 +28,7 @@ function help(): void {
   ditto loop [--only a,b]       Record, let Claude Code port the app, replay on the port, fix until parity
        [--skip-port]            ...resume with the port that already exists
   ditto check                   Replay the suite on the current rewrite once (no agent)
+  ditto spec-gaps               Behaviours the old app never met: Kane checks them on the rewrite, Claude implements them
   ditto ui [--port 4747]        Open the console (live while a loop runs)
   ditto status                  Print the parity table for the current case
   ditto scan [--targets a,b]    Replay the reference recordings on other builds (e.g. every TodoMVC framework)
@@ -125,6 +126,12 @@ async function main(): Promise<void> {
     const data = await loop.run({ skipPort: has('skip-port') });
     writeCasesIndex(cfg.abs(cfg.casesDir));
     printStatus(data);
+    return;
+  }
+  if (cmd === 'spec-gaps') {
+    await loop.closeSpecGaps(Number(flag('rounds') ?? 3));
+    writeCasesIndex(cfg.abs(cfg.casesDir));
+    printStatus(loop.rec.data);
     return;
   }
   if (cmd === 'index') {
@@ -241,7 +248,7 @@ async function hookStop(): Promise<void> {
   const state = existsSync(stateFile) ? (JSON.parse(readFileSync(stateFile, 'utf8')) as { session?: string; blocks: number }) : { blocks: 0 };
   if (state.session !== payload.session_id) Object.assign(state, { session: payload.session_id, blocks: 0 });
   const loop = new DittoLoop(cfg, { log: (l) => console.error(l) });
-  const res = await loop.hookCheck();
+  const res = await loop.hookCheck(readTranscript(typeof payload.transcript_path === 'string' ? payload.transcript_path : undefined));
   if (res.ok || state.blocks >= 4) {
     state.blocks = 0;
     writeFileSync(stateFile, JSON.stringify(state));
@@ -252,6 +259,27 @@ async function hookStop(): Promise<void> {
   state.blocks += 1;
   writeFileSync(stateFile, JSON.stringify(state));
   process.stdout.write(JSON.stringify({ decision: 'block', reason: res.message }));
+}
+
+/** The request that started the session and Claude's latest message, from the Stop hook's transcript. */
+function readTranscript(path?: string): { request?: string; finalText?: string } {
+  if (!path || !existsSync(path)) return {};
+  let request: string | undefined;
+  let finalText: string | undefined;
+  for (const line of readFileSync(path, 'utf8').split('\n')) {
+    if (!line.trim()) continue;
+    let e: Record<string, any>;
+    try {
+      e = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    const content = e.message?.content;
+    const text = typeof content === 'string' ? content : Array.isArray(content) ? content.filter((b: any) => b?.type === 'text').map((b: any) => b.text).join('\n') : '';
+    if (e.type === 'user' && !request && text.trim() && !text.startsWith('Ditto')) request = text.trim().slice(0, 1200);
+    if (e.type === 'assistant' && text.trim()) finalText = text.trim().slice(0, 1200);
+  }
+  return { request, finalText };
 }
 
 function printStatus(c: CaseFile): void {

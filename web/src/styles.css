@@ -190,7 +190,14 @@ nav {
   color: var(--ink);
   font-weight: 600;
 }
+.sheet-head code {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
 .sheet-head span {
+  flex-shrink: 0;
   margin-left: auto;
   font: 500 12.5px var(--body);
   color: var(--ink3);
@@ -970,4 +977,14 @@ nav.cases a b {
 nav.cases a.on {
   background: var(--hl2);
   box-shadow: inset 0 0 0 1px #e9c84a, var(--lit);
+}
+
+.cq.hookq {
+  background: #eef3f9;
+  color: var(--ink2);
+}
+
+.status.s-spec-met {
+  background: #e6f0ff;
+  color: #1d4ea8;
 }

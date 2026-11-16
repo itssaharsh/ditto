@@ -33,5 +33,6 @@
     "active_todo_title": "Pay rent",
     "completed_todo_title": "Book the dentist"
   },
-  "oracleCase": "todomvc"
+  "oracleCase": "todomvc",
+  "namedExample": "escape-discards-a-todo-title-edit"
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { assetUrl, type BehaviourRow, type CaseFile, type Derived, type RunSummary } from './data';
-import { firstFailingRound, fmtDate, framesByStep, verdictText, type EvidenceShot, type StepFrame } from './model';
+import { firstFailingRound, fmtDate, framesByStep, roundLabel, verdictText, type EvidenceShot, type StepFrame } from './model';
 
 const REPO = 'https://github.com/itssaharsh/ditto';
 
@@ -87,12 +87,12 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
       <div className="sheet-head">
         <code>{row.test.id}_test.md</code>
         <span>
-          Designed by Kane from the spec · one file, run unchanged on both apps
+          Written by Kane from the spec · same file on both apps
           {row.legacy?.shareUrl && (
             <>
               {' · '}
               <a href={row.legacy.shareUrl} target="_blank" rel="noreferrer">
-                Kane's run in Test Manager
+                Test Manager ↗
               </a>
             </>
           )}
@@ -171,6 +171,7 @@ function StatusLine({ row }: { row: BehaviourRow }) {
     unclear: 'Kane could not get a clean verdict on the rewrite for this one, so it is not counted either way.',
     'legacy-differs': 'The old app itself fails this part of the spec, so it is not used to judge the rewrite.',
     unverified: 'Kane could not get a clean run of this test on the old app, so it is not counted.',
+    'spec-met': 'The old app never met this part of the spec. Kane found the gap on the rewrite too, and Claude closed it.',
     checking: 'Kane is running this test now.',
     waiting: 'Waiting for Kane.',
   };
@@ -220,9 +221,26 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
   return (
     <section className="card loop">
       <h2>Kane said → Claude did</h2>
-      {rounds.length === 0 && <p className="muted">No fix rounds yet.</p>}
+      {rounds.length === 0 && <p className="muted">Nothing to send back: every behaviour matched on the first port.</p>}
       {rounds.map((r) => {
-        const sent = d.loop.filter((e) => e.round === r.n && e.did.startsWith('Sent to Claude'));
+        if (r.agent?.kind === 'hook') {
+          const res = Object.values(r.results);
+          const same = res.filter((x) => x.outcome === 'pass').length;
+          const blocked = d.loop.filter((e) => e.round === r.n && e.did.startsWith('Blocked'));
+          return (
+            <div className="lr" key={r.n}>
+              <h3>Round {r.n} · Stop hook</h3>
+              <div className="cq hookq">
+                <b>You</b> {firstSentence(r.agent.prompt)}
+              </div>
+              <div className={blocked.length ? 'kq' : 'cq'}>
+                <b>Kane</b> replayed {res.length} legacy behaviours on the result: {same} the same.{' '}
+                {blocked.length ? `Stop blocked; ${blocked.length} sent back.` : 'Stop allowed.'}
+              </div>
+            </div>
+          );
+        }
+        const sent = d.loop.filter((e) => e.round === r.n && (e.did.startsWith('Sent to Claude') || e.did.startsWith('Sent the spec')));
         return (
           <div className="lr" key={r.n}>
             <h3>Round {r.n}</h3>
@@ -264,7 +282,7 @@ export function Behaviours({ c, d, selected, onPick }: { c: CaseFile; d: Derived
           <span role="columnheader">Old app</span>
           {rounds.map((n) => (
             <span role="columnheader" key={n}>
-              {n === 0 ? 'Port' : `Fix ${n}`}
+              {roundLabel(d.rounds.find((r) => r.n === n)!)}
             </span>
           ))}
         </div>
@@ -304,11 +322,26 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
           const credits = res.reduce((a, x) => a + (x.credits ?? 0), 0);
           return (
             <li key={r.n}>
-              <h3>{r.n === 0 ? 'Port' : `Fix round ${r.n}`}</h3>
+              <h3>
+                {r.n === 0
+                  ? 'Port'
+                  : r.agent?.kind === 'hook'
+                    ? `Your session, checked by the Stop hook (round ${r.n})`
+                    : r.agent?.kind === 'spec'
+                      ? `Spec gap round ${r.n}`
+                      : `Fix round ${r.n}`}
+              </h3>
               {r.agent && (
                 <p>
                   <b>Claude Code</b> ({r.agent.model ?? 'claude'}
-                  {r.agent.turns ? `, ${r.agent.turns} turns` : ''}) {r.agent.kind === 'port' ? 'ported the app' : 'fixed what Kane found'}
+                  {r.agent.turns ? `, ${r.agent.turns} turns` : ''}){' '}
+                  {r.agent.kind === 'port'
+                    ? 'ported the app'
+                    : r.agent.kind === 'hook'
+                      ? 'worked on your request, then tried to stop'
+                      : r.agent.kind === 'spec'
+                        ? 'implemented what the spec asks and the old app never did'
+                        : 'fixed what Kane found'}
                   {r.agent.filesChanged.length ? `, ${r.agent.filesChanged.length} files changed` : ''}
                   {r.agent.diffStat ? ` (${r.agent.diffStat})` : ''}.{' '}
                   {r.agent.commit && <code>commit {r.agent.commit}</code>}
@@ -317,7 +350,13 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
               {r.agent?.summary && <blockquote>{firstSentence(r.agent.summary)}</blockquote>}
               {r.agent?.prompt && (
                 <details className="sent">
-                  <summary>{r.agent.kind === 'port' ? 'The port request Ditto sent Claude Code' : 'What Ditto sent Claude Code (Kane’s findings)'}</summary>
+                  <summary>
+                    {r.agent.kind === 'port'
+                      ? 'The port request Ditto sent Claude Code'
+                      : r.agent.kind === 'hook'
+                        ? 'What you asked Claude Code'
+                        : 'What Ditto sent Claude Code (Kane’s findings)'}
+                  </summary>
                   <pre>{r.agent.prompt}</pre>
                 </details>
               )}

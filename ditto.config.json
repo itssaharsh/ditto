@@ -32,5 +32,6 @@
   "variables": {
     "active_todo_title": "Pay rent",
     "completed_todo_title": "Book the dentist"
-  }
+  },
+  "namedExample": "escape-discards-a-todo-title-edit"
 }

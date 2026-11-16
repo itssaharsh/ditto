@@ -4,7 +4,7 @@ import type { SuiteTest } from '../../src/engine/suite';
 
 export type { CaseEvent, CaseFile, Round, RunSummary, SuiteTest };
 
-export type RowStatus = 'match' | 'differs' | 'unclear' | 'legacy-differs' | 'unverified' | 'checking' | 'waiting';
+export type RowStatus = 'match' | 'differs' | 'unclear' | 'legacy-differs' | 'unverified' | 'spec-met' | 'checking' | 'waiting';
 
 export interface BehaviourRow {
   test: SuiteTest;
@@ -31,6 +31,7 @@ export interface Derived {
   matched: number;
   legacyDiffers: number;
   unverified: number;
+  specMet: number;
   rounds: Round[];
   loop: LoopEntry[];
   fixedRows: BehaviourRow[];
@@ -59,6 +60,8 @@ export function derive(c: CaseFile): Derived {
     if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail') && legacy.confirmed) status = 'legacy-differs';
     else if (legacy?.outcome === 'pass' && legacy.replayVerified === false) status = 'unverified';
     else if (legacy && legacy.outcome !== 'pass') status = 'unverified';
+    // A behaviour the old app never met, now met by the rewrite: a spec gap closed.
+    if ((status === 'legacy-differs' || status === 'unverified') && latest?.outcome === 'pass') status = 'spec-met';
     else if (latest?.outcome === 'pass') status = 'match';
     else if (latest && (latest.outcome === 'mismatch' || latest.outcome === 'fail')) status = 'differs';
     else if (latest) status = 'unclear';
@@ -76,6 +79,7 @@ export function derive(c: CaseFile): Derived {
     matched: oracleRows.filter((r) => r.latest?.outcome === 'pass').length,
     legacyDiffers: rows.filter((r) => r.status === 'legacy-differs').length,
     unverified: rows.filter((r) => r.status === 'unverified').length,
+    specMet: rows.filter((r) => r.status === 'spec-met').length,
     rounds,
     loop,
     fixedRows: rows.filter((r) => r.fixedInRound !== undefined),

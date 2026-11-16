@@ -139,7 +139,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
   const c = useMemo(() => (replay.t === null ? full : atTime(full, replay.t)), [full, replay.t]);
   const d: Derived = useMemo(() => derive(c), [c]);
   const [bParam, setB] = useParam('b');
-  const named = pickNamed(d.rows);
+  const named = pickNamed(d.rows, full.named);
   const following = replay.t !== null ? latestTest(c) : undefined;
   const selected: BehaviourRow | undefined = d.rows.find((r) => r.test.id === (following ?? bParam)) ?? named;
   const facts = caseFacts(c);
@@ -193,6 +193,11 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
               <span>
                 <b>{facts.rounds}</b> fix {facts.rounds === 1 ? 'round' : 'rounds'}
               </span>
+              {facts.hookChecks > 0 && (
+                <span>
+                  <b>{facts.hookChecks}</b> Stop-hook {facts.hookChecks === 1 ? 'check' : 'checks'}
+                </span>
+              )}
               <span>
                 <b>{facts.runs}</b> Kane runs: <b>{facts.replays}</b> pure replays, <b>{facts.heals}</b> healed, <b>{facts.authored}</b> authored
               </span>
@@ -221,7 +226,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
           <section className="card try">
             <h2>Try these</h2>
             <div className="chips">
-              {tryOrder(d.rows)
+              {tryOrder(d.rows, full.named)
                 .slice(0, 7)
                 .map((r) => (
                   <button

@@ -39,6 +39,7 @@ export class DittoLoop {
     this.rec.data.suite.tests = this.tests;
     this.rec.data.suite.variables = cfg.variables;
     this.rec.data.suite.spec = cfg.spec;
+    if (cfg.namedExample) this.rec.data.named = cfg.namedExample;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -572,19 +573,122 @@ export class DittoLoop {
     this.rec.event({ kind: 'note', text: `Copied the ${this.oraclePassing().length} tests into the rewrite repo (tests/kane) as its regression suite.` });
   }
 
+  // ---------- Spec gaps: what the spec asks and the old app never did ----------
+
+  /** Behaviours the old app fails (or Kane could not verify on it for reasons other than an unstable recording). */
+  specGaps(): SuiteTest[] {
+    return this.tests.filter((t) => {
+      const o = this.rec.data.oracle[t.id];
+      if (!o || o.outcome === 'pass' || o.outcome === 'error') return false;
+      return !(o.reason ?? '').startsWith('Recording did not replay cleanly');
+    });
+  }
+
+  async closeSpecGaps(maxRounds = 3): Promise<void> {
+    const gaps = this.specGaps();
+    if (!gaps.length) return this.log('No spec gaps: the old app passes every behaviour Kane designed.');
+    await this.startApps();
+    try {
+      let n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n)) + 1;
+      this.rec.event({ kind: 'note', text: `Checking ${gaps.length} behaviour(s) the old app never met against the rewrite, straight from the spec.` });
+      if (!(await this.build(n))) return;
+      const check = async (round: number, scope: SuiteTest[]) => {
+        const r = this.newRound(round);
+        this.rec.data.status = 'checking';
+        await this.pool(scope, this.cfg.parallel, async (t) => {
+          // No legacy recording exists for these: Kane authors them fresh on the rewrite.
+          r.results[t.id] = await this.kane(t, 'rewrite', round, 'fresh');
+          this.rec.save();
+        });
+        return scope.filter((t) => r.results[t.id]?.outcome !== 'pass');
+      };
+      let failing = await check(n, gaps);
+      let rounds = 0;
+      while (failing.length && rounds < maxRounds && this.creditsLeft()) {
+        rounds++;
+        n++;
+        const round = this.newRound(n);
+        const prompt = this.specFeedback(failing, n - 1);
+        for (const t of failing) {
+          const s = this.latest(t.id, n - 1);
+          this.rec.event({ kind: 'decision', round: n, test: t.id, said: s?.verdict?.oneLiner ?? s?.oneLiner ?? s?.reason ?? 'not met', did: `Sent the spec requirement to Claude Code with Kane's findings (round ${n})` });
+        }
+        round.agent = { kind: 'spec', round: n, prompt, startedAt: now(), filesChanged: [] };
+        this.rec.event({ kind: 'agent_start', round: n, agentKind: 'spec', prompt });
+        this.rec.data.status = 'fixing';
+        const res = await runClaude({
+          cwd: this.cfg.abs(this.cfg.rewrite.repo),
+          prompt,
+          model: this.cfg.agent.model,
+          addDirs: [this.cfg.abs(dirname(this.cfg.spec)), this.feedbackDir(n - 1)],
+          maxTurns: this.cfg.agent.maxTurnsFix ?? 60,
+          onTool: (tool, detail) => this.rec.event({ kind: 'agent_tool', round: n, tool, detail }),
+          onText: (text) => this.rec.event({ kind: 'agent_text', round: n, text: text.slice(0, 600) }),
+        });
+        if (res.sessionId) this.agentSession = res.sessionId;
+        await this.finishAgentTurn(n, res, `Close ${failing.length} spec gap(s) Kane found\n\n${failing.map((t) => `- ${t.title}`).join('\n')}`);
+        if (!(await this.build(n))) break;
+        failing = await check(n, failing);
+        // The parity set must still hold after the change: replay it (cheap).
+        const broken = await this.check(n, this.oraclePassing());
+        if (broken.length) {
+          this.rec.event({ kind: 'note', text: `${broken.length} parity behaviour(s) changed while closing spec gaps; they go into the next round.` });
+          failing = [...failing, ...broken];
+        }
+      }
+      this.rec.data.status = this.unclear().length || failing.some((t) => this.oraclePassing().includes(t)) ? 'stopped' : 'parity';
+      const closed = gaps.filter((t) => this.latest(t.id)?.outcome === 'pass').length;
+      this.rec.event({ kind: 'note', text: `Spec gaps: ${closed} of ${gaps.length} now met on the rewrite; parity ${this.matchedCount()}/${this.oraclePassing().length}.` });
+    } finally {
+      this.rec.save();
+      this.stopApps();
+    }
+  }
+
+  specFeedback(failing: SuiteTest[], n: number): string {
+    const lines: string[] = [
+      `The app's spec is ${this.cfg.abs(this.cfg.spec)}. Kane CLI designed plain-English tests from it and ran them in a real browser.`,
+      `These ${failing.length} behaviour(s) are required by the spec but fail on this app (the original jQuery app never met them either):`,
+      '',
+    ];
+    failing.forEach((t, i) => {
+      const s = this.latest(t.id, n);
+      lines.push(`${i + 1}. ${t.title}${t.summary ? ` (${t.summary})` : ''}`);
+      lines.push('   The test, step by step:');
+      t.steps.forEach((st, j) => lines.push(`   - Step ${j + 1}${st.verifies.length ? ` [${st.verifies.join(', ')}]` : ''}: ${this.fillVars(st.text)}`));
+      if (s?.verdict?.oneLiner || s?.oneLiner) lines.push(`   Kane's verdict: ${s?.verdict?.oneLiner ?? s?.oneLiner}`);
+      if (s?.reason) lines.push(`   Failed check: ${s.reason}`);
+      const shot = s?.shots.find((x) => x.status === 'failed') ?? s?.shots.at(-1);
+      if (shot) lines.push(`   Screenshot when it failed: ${this.feedbackFile(n, t.id, 'rewrite', shot.file)}`);
+      lines.push('');
+    });
+    lines.push(
+      'Read the relevant parts of the spec and implement what it requires, keeping every other behaviour exactly as it is.',
+      'Run the build and make sure it passes. Finish with two or three sentences saying what you changed.',
+    );
+    return lines.join('\n');
+  }
+
   // ---------- Hook mode: an interactive Claude Code session asks Ditto before it stops ----------
 
   /** Build, replay every oracle behaviour on the rewrite, and return what still differs. */
-  async hookCheck(): Promise<{ ok: boolean; message: string; round: number }> {
+  async hookCheck(session?: { request?: string; finalText?: string }): Promise<{ ok: boolean; message: string; round: number }> {
     await this.startApps();
     try {
       const n = Math.max(0, ...this.rec.data.rounds.map((r) => r.n)) + 1;
       const round = this.newRound(n);
-      round.agent = { kind: 'fix', round: n, prompt: '(your interactive Claude Code session)', startedAt: now(), filesChanged: [] };
+      round.agent = {
+        kind: 'hook',
+        round: n,
+        prompt: session?.request ?? '(your Claude Code session)',
+        summary: session?.finalText,
+        startedAt: now(),
+        filesChanged: [],
+      };
       const repo = this.cfg.abs(this.cfg.rewrite.repo);
       const names = await sh('git status --porcelain', repo);
       round.agent.filesChanged = names.output.split('\n').map((l) => l.slice(3).trim()).filter(Boolean);
-      this.rec.event({ kind: 'agent_end', round: n, summary: 'Claude Code (interactive) says it is done; Ditto checks before it stops.', filesChanged: round.agent.filesChanged });
+      this.rec.event({ kind: 'agent_end', round: n, summary: 'Claude Code says it is done; the Stop hook asks Ditto first.', filesChanged: round.agent.filesChanged });
       const build = await sh(this.cfg.rewrite.build, repo, 600_000);
       round.build = { ok: build.code === 0, output: build.code === 0 ? undefined : build.output.slice(-1500) };
       if (build.code !== 0) {

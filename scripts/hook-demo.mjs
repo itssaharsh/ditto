@@ -10,7 +10,7 @@ const cfg = JSON.parse(readFileSync('ditto.config.json', 'utf8'));
 const repo = resolve(cfg.rewrite.repo);
 const request =
   process.argv[2] ??
-  'Refactor the todo app so all todo state lives in one useReducer with typed actions, and simplify TodoItem so it no longer needs refs. Keep the behaviour the same.';
+  'Refactor this app for maintainability: move all todo state and actions into a useReducer-based useTodos hook, make TodoItem a fully controlled component without refs (keep the edit field in state only), and split the footer and the new-todo input into their own components. Keep the behaviour exactly the same.';
 
 mkdirSync('qa', { recursive: true });
 const log = createWriteStream('qa/hook-demo.jsonl');
@@ -18,7 +18,8 @@ const env = { ...process.env };
 delete env.ANTHROPIC_API_KEY;
 const args = ['-p', request, '--output-format', 'stream-json', '--verbose', '--permission-mode', 'acceptEdits', '--model', cfg.agent.model ?? 'sonnet',
   '--allowedTools', 'Read', 'Edit', 'Write', 'Glob', 'Grep', 'Bash(npm install:*)', 'Bash(npm run build:*)', 'Bash(npx tsc:*)',
-  '--setting-sources', 'project,local', '--strict-mcp-config', '--disable-slash-commands', '--max-turns', '80'];
+  '--setting-sources', 'project,local', '--strict-mcp-config', '--disable-slash-commands', '--max-turns', '80',
+  '--add-dir', resolve(cfg.workDir, 'feedback')];
 const child = spawn('claude', args, { cwd: repo, env, stdio: ['ignore', 'pipe', 'inherit'] });
 let buf = '';
 child.stdout.on('data', (c) => {
