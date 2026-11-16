@@ -54,6 +54,8 @@ export interface AgentTurn {
 
 export interface Round {
   n: number;
+  /** For rounds with no agent turn (e.g. a spec check). */
+  label?: string;
   agent?: AgentTurn;
   build?: { ok: boolean; output?: string };
   results: Record<string, RunSummary>;

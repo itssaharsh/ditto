@@ -328,7 +328,9 @@ export class DittoLoop {
     await sh('git add -A', repo);
     const stat = await sh('git diff --cached --stat', repo);
     const names = await sh('git diff --cached --name-only', repo);
-    await sh(`git commit -q -m ${JSON.stringify(commitMsg)} || true`, repo);
+    const msgFile = join(this.cfg.abs(this.cfg.workDir), `commit-msg-${n}.txt`);
+    writeFileSync(msgFile, commitMsg + '\n');
+    await sh(`git commit -q -F ${JSON.stringify(msgFile)} || true`, repo);
     const head = await sh('git rev-parse --short HEAD', repo);
     const a = round.agent!;
     a.endedAt = now();
@@ -340,7 +342,7 @@ export class DittoLoop {
     a.ok = res.ok;
     a.filesChanged = names.output.split('\n').map((s) => s.trim()).filter(Boolean).filter((f) => !f.startsWith('node_modules'));
     a.diffStat = stat.output.trim().split('\n').at(-1)?.trim();
-    a.commit = head.output.trim();
+    a.commit = head.output.trim().split('\n').filter((l) => /^[0-9a-f]{7,40}$/.test(l.trim())).at(-1)?.trim();
     this.rec.data.totals.agentCostUsd = Math.round((this.rec.data.totals.agentCostUsd + (res.costUsd ?? 0)) * 100) / 100;
     this.rec.event({ kind: 'agent_end', round: n, summary: a.summary, filesChanged: a.filesChanged, costUsd: res.costUsd });
     this.log(`agent round ${n}: ${res.ok ? 'done' : 'error'} · ${a.diffStat ?? ''} · $${res.costUsd?.toFixed(2) ?? '?'}`);
@@ -594,6 +596,7 @@ export class DittoLoop {
       if (!(await this.build(n))) return;
       const check = async (round: number, scope: SuiteTest[]) => {
         const r = this.newRound(round);
+        if (!r.agent) r.label = 'Spec check';
         this.rec.data.status = 'checking';
         await this.pool(scope, this.cfg.parallel, async (t) => {
           // No legacy recording exists for these: Kane authors them fresh on the rewrite.

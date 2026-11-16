@@ -60,7 +60,8 @@ export interface ShellResult {
 
 export function sh(cmd: string, cwd: string, timeoutMs = 300_000): Promise<ShellResult> {
   return new Promise((ok) => {
-    const child = spawn('bash', ['-lc', cmd], { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
+    // Not a login shell: profile scripts must not leak into captured output.
+    const child = spawn('bash', ['-c', cmd], { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '';
     const add = (c: Buffer) => {
       out += c.toString();

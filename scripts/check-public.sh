@@ -18,7 +18,8 @@ for p in "${patterns[@]}"; do
   [ ${#p} -ge 5 ] || continue
   if grep -rIl --exclude-dir=node_modules -F "$p" "${targets[@]}" 2>/dev/null | grep -v '^scripts/check-public.sh$'; then hits=1; fi
 done
-# Local home paths name the account too.
+# Local home paths name the account too (also partial ones like ".../<user>/").
+patterns+=("/$(basename "$HOME")/")
 if grep -rIl --exclude-dir=node_modules -F "$HOME/" "${targets[@]}" 2>/dev/null | grep -v '^scripts/check-public.sh$'; then hits=1; fi
 if [ $hits -ne 0 ]; then echo "check-public: personal data found in the files above" >&2; exit 1; fi
 echo "check-public: clean (${#patterns[@]} patterns, ${#targets[@]} targets)"

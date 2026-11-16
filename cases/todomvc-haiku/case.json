@@ -1,6 +1,6 @@
 {
  "id": "todomvc-haiku",
- "title": "TodoMVC: jQuery → React, ported by Claude Haiku 5.5",
+ "title": "TodoMVC: jQuery \u2192 React, ported by Claude Haiku 5.5",
  "createdAt": "2026-11-16T14:11:53.480Z",
  "updatedAt": "2026-11-16T14:25:14.217Z",
  "status": "parity",
@@ -19,7 +19,7 @@
  },
  "suite": {
   "name": "todomvc-haiku",
-  "designedBy": "Kane CLI (context ingest → extract → design tests)",
+  "designedBy": "Kane CLI (context ingest \u2192 extract \u2192 design tests)",
   "spec": "fixtures/app-spec.md",
   "tests": [
    {
@@ -1597,9 +1597,9 @@
     "family": "automation_bug",
     "category": "test_data_issue",
     "severity": "minor",
-    "rootCause": "The test expected a saved record for “Assurance last active,” but that required test data was not present in the browser storage it inspected. The available evidence does not show that the reload or the todo app caused the record to disappear.",
+    "rootCause": "The test expected a saved record for \u201cAssurance last active,\u201d but that required test data was not present in the browser storage it inspected. The available evidence does not show that the reload or the todo app caused the record to disappear.",
     "bugTitle": "Required todo storage fixture is missing",
-    "suggestion": "Set up or preserve the “Assurance last active” localStorage fixture before this check, and verify that the assertion reads the app’s actual storage format and key.",
+    "suggestion": "Set up or preserve the \u201cAssurance last active\u201d localStorage fixture before this check, and verify that the assertion reads the app\u2019s actual storage format and key.",
     "oneLiner": "The run could not verify the requested completed value because the expected saved todo record was not available after reload.",
     "confidence": 0.91,
     "culpritStep": "3-2"
@@ -1710,7 +1710,7 @@
    "outcome": "pass",
    "durationS": 342.1,
    "credits": 119.07,
-   "oneLiner": "removed the blank-titled “Review proposal” todo on the todo list",
+   "oneLiner": "removed the blank-titled \u201cReview proposal\u201d todo on the todo list",
    "reason": "Objective completed",
    "resultCode": 100,
    "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7J87W2Z52TDN5VMD25W1F0A/dashboard/share/US_Q3FB7GFCOFH1P8O7A1U9GLH49ZGGAR1PW9L9BZ5BE3IEJTRU9FDDWBP3JA7OBYAH?type=summary&agentView=true&fqdn=summary-page",
@@ -1820,7 +1820,7 @@
    "outcome": "pass",
    "durationS": 79.27000000000001,
    "credits": 18.37,
-   "oneLiner": "added “Call home” to the todo app",
+   "oneLiner": "added \u201cCall home\u201d to the todo app",
    "reason": "Objective completed",
    "resultCode": 100,
    "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7J887D8ZX7HN5YWNGJB9R72/dashboard/share/US_4OODBWGDI74EHY9L9VFHEUGUL36OPYSGDNMQS3VWV20WEU9CICB0IKJYQED3D2Q3?type=summary&agentView=true&fqdn=summary-page",
@@ -2306,7 +2306,7 @@
     "family": "automation_bug",
     "category": "config_issue",
     "severity": "minor",
-    "rootCause": "The saved todo is visible as “Book the dentist,” showing that the entry action worked. The failure came only from the storage check, with no storage output or application error proving that the app failed to save the item. The test's assumed `todos-[framework]` storage format is therefore unsupported by the supplied run evidence.",
+    "rootCause": "The saved todo is visible as \u201cBook the dentist,\u201d showing that the entry action worked. The failure came only from the storage check, with no storage output or application error proving that the app failed to save the item. The test's assumed `todos-[framework]` storage format is therefore unsupported by the supplied run evidence.",
     "bugTitle": "Todo storage-key assertion does not match implementation",
     "suggestion": "Inspect the actual localStorage entries for this build and update the test configuration/assertion to its supported storage key and data format. Keep the UI creation check as a separate verification.",
     "oneLiner": "The todo was created on screen, but the test expected a localStorage name or format that this implementation did not provide.",
@@ -2356,7 +2356,7 @@
     "family": "automation_bug",
     "category": "config_issue",
     "severity": "minor",
-    "rootCause": "The run successfully added “Pay rent” to the visible list, but the test then required the saved data to use a `todos-[framework]` localStorage name. The evidence does not show that this app is meant to use that naming format, so the failure is best explained by an overly specific test expectation rather than a broken todo action.",
+    "rootCause": "The run successfully added \u201cPay rent\u201d to the visible list, but the test then required the saved data to use a `todos-[framework]` localStorage name. The evidence does not show that this app is meant to use that naming format, so the failure is best explained by an overly specific test expectation rather than a broken todo action.",
     "bugTitle": "Storage assertion assumes an unsupported todo key format",
     "suggestion": "Update the test to discover this implementation's actual storage key and data shape, or validate persistence through a reload instead of requiring a framework-specific key name.",
     "oneLiner": "The todo was created, but the final check required a particular localStorage key name that was not established for this implementation.",
@@ -3419,7 +3419,7 @@
       "family": "automation_bug",
       "category": "agent_misstep",
       "severity": "minor",
-      "rootCause": "The recording contradicts its own goal: after unchecking “Mark all as complete,” it checks whether every item checkbox is checked instead of unchecked.",
+      "rootCause": "The recording contradicts its own goal: after unchecking \u201cMark all as complete,\u201d it checks whether every item checkbox is checked instead of unchecked.",
       "bugTitle": "Recorded assertion expects checked todos after unchecking",
       "suggestion": "Correct the recorded assertion to require each existing item to be active and its checkbox to be unchecked, then replay the test.",
       "oneLiner": "The live page shows both todos active with unchecked item circles, but the recorded check is looking for checked item checkboxes.",
@@ -3476,7 +3476,6 @@
     "prompt": "Port the legacy TodoMVC app in ~/contri/kane/fixtures/legacy-todomvc (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
     "startedAt": "2026-11-16T14:11:53.730Z",
     "filesChanged": [
-     "~/.profile: line 33: ~/vega/env: No such file or directory",
      "LICENSE-todomvc.md",
      "index.html",
      "package-lock.json",
@@ -3501,7 +3500,7 @@
     "summary": "The React port is in `~/contri/todomvc-react-port-haiku`. `npm install` and `npm run build` both succeed, and the build writes a static site to `dist/` with relative asset paths.\n\n**What's there**\n- `src/App.tsx` holds the app state, filter routing and the footer. `src/TodoItem.tsx` renders one row, and `src/todo.ts` has the id and pluralize helpers.\n- The three legacy stylesheets are copied unchanged into `src/styles/`, and the markup keeps the same class names so the look matches.\n- `vite.config.ts` sets `base: './'`.\n- The stack is React 19, TypeScript, and Vite 8. npm resolved TypeScript to `^7.0.2`, which is a newer major than you might expect, so flag it if you want to pin an older one.\n- I copied the TodoMVC license file across and dropped `base.js`, `jquery.min.js`, `handlebars.min.js` and `director.min.js`. `base.js` only added the \"learn\" bar (it needs a `learn.json` that isn't in the fixture), analytics for todomvc.com, and a redirect. None of that is app behaviour.\n\n**Legacy behaviour kept**\n- Todos live in memory only. The legacy `util.store` never persisted anything, so I didn't add storage.\n- The hash filter defaults to `#/all`, and clear-completed resets the view to All without changing the hash. That is a quirk of the original, so I kept it.\n- Every change refocuses the new-todo input, as the legacy `render()` did.\n- Editing commits on blur, Escape cancels, and an emptied title deletes the todo.\n- The `#appIsReady` marker div is still appended to ",
     "ok": true,
     "diffStat": "15 files changed, 2353 insertions(+)",
-    "commit": "~/.profile: line 33: ~/vega/env: No such file or directory\n31245cc"
+    "commit": "31245cc"
    },
    "build": {
     "ok": true
@@ -3511,7 +3510,7 @@
  "events": [
   {
    "kind": "note",
-   "text": "Using the oracle recorded for \"TodoMVC: jQuery → React, ported by Claude Code\" (2026-11-16): the same legacy app, tests and Kane recordings.",
+   "text": "Using the oracle recorded for \"TodoMVC: jQuery \u2192 React, ported by Claude Code\" (2026-11-16): the same legacy app, tests and Kane recordings.",
    "t": "2026-11-16T14:11:53.626Z"
   },
   {
@@ -3755,7 +3754,6 @@
    "round": 0,
    "summary": "The React port is in `~/contri/todomvc-react-port-haiku`. `npm install` and `npm run build` both succeed, and the build writes a static site to `dist/` with relative asset paths.\n\n**What's there**\n- `src/App.tsx` holds the app state, filter routing and the footer. `src/TodoItem.tsx` renders one row, and `src/todo.ts` has the id and pluralize helpers.\n- The three legacy stylesheets are copied unchanged into `src/styles/`, and the markup keeps the same class names so the look matches.\n- `vite.config.ts` sets `base: './'`.\n- The stack is React 19, TypeScript, and Vite 8. npm resolved TypeScript to `^7.0.2`, which is a newer major than you might expect, so flag it if you want to pin an older one.\n- I copied the TodoMVC license file across and dropped `base.js`, `jquery.min.js`, `handlebars.min.js` and `director.min.js`. `base.js` only added the \"learn\" bar (it needs a `learn.json` that isn't in the fixture), analytics for todomvc.com, and a redirect. None of that is app behaviour.\n\n**Legacy behaviour kept**\n- Todos live in memory only. The legacy `util.store` never persisted anything, so I didn't add storage.\n- The hash filter defaults to `#/all`, and clear-completed resets the view to All without changing the hash. That is a quirk of the original, so I kept it.\n- Every change refocuses the new-todo input, as the legacy `render()` did.\n- Editing commits on blur, Escape cancels, and an emptied title deletes the todo.\n- The `#appIsReady` marker div is still appended to ",
    "filesChanged": [
-    "~/.profile: line 33: ~/vega/env: No such file or directory",
     "LICENSE-todomvc.md",
     "index.html",
     "package-lock.json",
@@ -4092,7 +4090,7 @@
    "round": 0,
    "step": 15,
    "status": "passed",
-   "remark": "wait: Reloading the todo app’s All list",
+   "remark": "wait: Reloading the todo app\u2019s All list",
    "t": "2026-11-16T14:15:14.484Z"
   },
   {
@@ -4797,7 +4795,7 @@
    "round": 0,
    "step": 10,
    "status": "passed",
-   "remark": "click: Removing Assurance target alpha using the revealed × button",
+   "remark": "click: Removing Assurance target alpha using the revealed \u00d7 button",
    "t": "2026-11-16T14:16:21.287Z"
   },
   {
@@ -4897,7 +4895,7 @@
    "round": 0,
    "step": 9,
    "status": "passed",
-   "remark": "click: Clicking remove (×) for Assurance sole gamma",
+   "remark": "click: Clicking remove (\u00d7) for Assurance sole gamma",
    "t": "2026-11-16T14:16:30.895Z"
   },
   {
@@ -5434,7 +5432,7 @@
    "test": "deleting-the-last-todo-hides-the-empty-list-containers",
    "round": 0,
    "outcome": "test_issue",
-   "oneLiner": "The replay’s reported assertion failure is not supported by the displayed empty-list state.",
+   "oneLiner": "The replay\u2019s reported assertion failure is not supported by the displayed empty-list state.",
    "t": "2026-11-16T14:17:43.994Z"
   },
   {
@@ -5789,7 +5787,7 @@
    "round": 0,
    "step": 9,
    "status": "passed",
-   "remark": "click: Clicking remove (×) for Assurance sole gamma",
+   "remark": "click: Clicking remove (\u00d7) for Assurance sole gamma",
    "t": "2026-11-16T14:18:08.445Z"
   },
   {
@@ -6580,7 +6578,7 @@
    "round": 0,
    "step": 9,
    "status": "passed",
-   "remark": "click: Clicking × to remove the Pay rent todo so the list is empty",
+   "remark": "click: Clicking \u00d7 to remove the Pay rent todo so the list is empty",
    "t": "2026-11-16T14:19:26.121Z"
   },
   {
@@ -6819,7 +6817,7 @@
    "round": 0,
    "step": 9,
    "status": "passed",
-   "remark": "click: Clicking remove (×) for Assurance sole gamma",
+   "remark": "click: Clicking remove (\u00d7) for Assurance sole gamma",
    "t": "2026-11-16T14:19:58.964Z"
   },
   {
@@ -7183,7 +7181,7 @@
    "round": 0,
    "step": 8,
    "status": "passed",
-   "remark": "click: Clicking the active todo’s item checkbox to reactivate it in All view",
+   "remark": "click: Clicking the active todo\u2019s item checkbox to reactivate it in All view",
    "t": "2026-11-16T14:20:46.461Z"
   },
   {
@@ -7212,7 +7210,7 @@
    "test": "mark-all-reactivates-every-completed-todo",
    "round": 0,
    "outcome": "test_issue",
-   "oneLiner": "The page shows both existing todos active with unchecked item circles, but the replay’s analysis checked whether they were checked.",
+   "oneLiner": "The page shows both existing todos active with unchecked item circles, but the replay\u2019s analysis checked whether they were checked.",
    "t": "2026-11-16T14:20:49.211Z"
   },
   {
@@ -7789,5 +7787,6 @@
   "agentCostUsd": 0.04,
   "replays": 22,
   "heals": 2
- }
+ },
+ "named": "escape-discards-a-todo-title-edit"
 }

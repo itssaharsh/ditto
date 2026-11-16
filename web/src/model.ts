@@ -72,8 +72,9 @@ export function tryOrder(rows: BehaviourRow[], named?: string): BehaviourRow[] {
   return [...rows].sort((a, b) => rank(a) - rank(b) || (a.fixedInRound ?? 99) - (b.fixedInRound ?? 99));
 }
 
-export function roundLabel(r: { n: number; agent?: { kind: string } }): string {
+export function roundLabel(r: { n: number; label?: string; agent?: { kind: string } }): string {
   if (r.n === 0) return 'Port';
+  if (!r.agent && r.label) return r.label;
   if (r.agent?.kind === 'hook') return `Stop hook ${r.n}`;
   if (r.agent?.kind === 'spec') return `Spec ${r.n}`;
   return `Fix ${r.n}`;

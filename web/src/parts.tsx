@@ -323,7 +323,9 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
           return (
             <li key={r.n}>
               <h3>
-                {r.n === 0
+                {!r.agent && r.label
+                  ? `${r.label} (round ${r.n})`
+                  : r.n === 0
                   ? 'Port'
                   : r.agent?.kind === 'hook'
                     ? `Your session, checked by the Stop hook (round ${r.n})`
