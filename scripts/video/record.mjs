@@ -68,6 +68,7 @@ const scrollTo = (page, sel, offset = -90) =>
 const mut = JSON.parse(readFileSync('cases/todomvc-mutation/case.json', 'utf8'));
 const planted = (mut.mutations.match(/^\s*\d+[.)]\s/gm) ?? []).length;
 const fixRounds = mut.rounds.filter((r) => r.agent?.kind === 'fix').length;
+void fixRounds;
 
 // 1. Title
 await clip('title', async (page) => {
@@ -110,17 +111,43 @@ await clip('lesson', async (page) => {
   await caption(page, `Same broken build, re-checked with that rule: ${rcDiffer} behaviours confirmed different instead of 2. All 3 planted bugs, in one check.`);
   await wait(page, 6500);
   if (clean?.status === 'parity') {
-    await caption(page, 'And on the clean port the same rule still says 18 of 18 the same: no false alarm.');
-    await wait(page, 4000);
+    await caption(page, 'On the clean port the same rule still says 18 of 18: no false alarm.');
+    await wait(page, 3500);
   }
 });
+
+// 3c. A real bug in code written by people, and an independent answer key
+const key = existsSync('docs/answer-key.json') ? JSON.parse(readFileSync('docs/answer-key.json', 'utf8')) : undefined;
+if (existsSync('cases/todomvc-impl-react/case.json')) {
+  await clip('real-bug', async (page) => {
+    await open(page, '?case=todomvc-impl-react');
+    await caption(page, 'Written by people, not an agent: the official React TodoMVC. Replaying the jQuery recordings on it, Kane confirmed Escape doesn’t leave edit mode.');
+    await wait(page, 7000);
+    await caption(
+      page,
+      key && !key.notCheckedYet
+        ? `Someone else had filed that bug upstream (#2309). Of the ${key.coveredBySuite} reported bugs Kane’s tests cover, across ${new Set(key.rows.filter((r) => r.tests.length).map((r) => r.impl)).size} official apps, Kane confirmed ${key.confirmed}.`
+        : 'Someone else had filed that exact bug upstream ten days earlier (#2309). Kane never saw the issue.',
+    );
+    await wait(page, 7000);
+  });
+}
+
+// 3d. A real migration chore: a jQuery UI page, rebuilt in React
+if (existsSync('cases/datepicker/case.json')) {
+  await clip('migration', async (page) => {
+    await open(page, '?case=datepicker');
+    await caption(page, 'A real migration: a jQuery UI Datepicker booking page, rebuilt in React by Claude Code without jQuery. Kane designed the tests from its spec: 7 of 7 the same.');
+    await wait(page, 7500);
+  });
+}
 
 // 4. The whole planted-bug run, replayed from the recorded case
 const t = (iso) => Date.parse(iso);
 const times = mut.events.map((e) => t(e.t));
 const start = Math.min(...times, t(mut.createdAt));
 const end = Math.max(...times);
-const REPLAY = 24;
+const REPLAY = 20;
 const at = (iso) => ((t(iso) - start) / (end - start)) * REPLAY * 1000;
 const roundStart = (n) => {
   const r = mut.rounds.find((x) => x.n === n);
@@ -129,9 +156,9 @@ const roundStart = (n) => {
 };
 const minutes = Math.round((end - start) / 60000);
 const cues = [
-  [0, `The whole run, sped up: ${minutes} minutes of real Kane and Claude Code work.`],
-  [at(roundStart(0)), 'The breaker session changes 3 files. Kane checks all 18 behaviours on the broken build.'],
-  [at(roundStart(1)), 'Fix round 1: Claude repairs Escape and the counter. Kane: Escape matches again; the counter still differs.'],
+  [0, `The planted-bug run, sped up: ${minutes} minutes of real Kane and Claude Code work.`],
+  [at(roundStart(0)), 'The breaker changes 3 files. Kane checks all 18 behaviours on the broken build.'],
+  [at(roundStart(1)), 'Fix round 1: Claude repairs Escape and the counter; Kane still flags the counter.'],
   [at(roundStart(2)), 'Fix round 2: Claude finds the mark-all bug. Kane re-checks all 18.'],
 ].sort((a, b) => a[0] - b[0]);
 await clip('replay', async (page) => {
@@ -143,50 +170,29 @@ await clip('replay', async (page) => {
     if (delay > 0) await wait(page, delay);
     await caption(page, text);
   }
-  await wait(page, Math.max(0, REPLAY * 1000 + 1200 - (Date.now() - t0)));
-  await caption(page, '18 of 18 the same again. Every result here is a real Kane run, with its screenshots.');
-  await wait(page, 3500);
+  await wait(page, Math.max(0, REPLAY * 1000 + 1000 - (Date.now() - t0)));
+  await caption(page, '18 of 18 the same again. Every result is a real Kane run, with its screenshots.');
+  await wait(page, 3000);
 });
 
-// 5. The tests: written by Kane from the spec
+// 5. The tests and the referee
 await clip('tests', async (page) => {
   await open(page, '?case=todomvc&b=escape-discards-a-todo-title-edit');
   await page.mouse.wheel(0, 300);
-  await caption(page, 'Kane wrote the tests itself from the TodoMVC spec: 28 of them, each step tied to an acceptance criterion. No selectors.');
-  await wait(page, 6500);
-  await caption(page, 'The same test file runs on both apps. Kane’s screenshot of every step: the old jQuery app left, the rewrite right.');
-  await wait(page, 5500);
+  await caption(page, 'Kane wrote the tests from the spec: plain English, each step tied to an acceptance criterion, no selectors. The same file runs on both apps.');
+  await wait(page, 7000);
 });
-
-// 6. The oracle
 await clip('oracle', async (page) => {
   await open(page, '?case=todomvc');
   await scrollTo(page, '#behaviours');
-  await wait(page, 700);
-  await caption(page, 'First, every test runs on the old app. The 18 it passes, and that replay cleanly, become the referee.');
-  await wait(page, 5500);
-  await page.mouse.wheel(0, 420);
-  await caption(page, 'Tests Kane could not run cleanly on the old app are listed, not counted. A wrong test can never blame the new code.');
-  await wait(page, 5500);
-});
-
-// 7. Two ports, same referee
-await clip('port-sonnet', async (page) => {
-  await open(page, '?case=todomvc');
-  await caption(page, 'Claude Sonnet 5.5’s React port: 18 of 18 the same on the first try. 17 of the 18 checks were pure replays, for 18.5 credits.');
+  await wait(page, 600);
+  await caption(page, 'The old app referees: only tests it passes, and that replay cleanly, judge the rewrite. A wrong test can never blame the new code.');
   await wait(page, 6500);
 });
-await clip('port-haiku', async (page) => {
-  await open(page, '?case=todomvc-haiku');
-  await caption(page, 'Same referee, a second agent: Haiku 5.5’s port, 18 of 18 too. 22 of 24 Kane runs were replays: 7 credits.');
-  await wait(page, 5500);
-});
-
-// 8. A real gap: what the spec asks and the old app never did
-await clip('spec', async (page) => {
-  await open(page, '?case=todomvc&b=reload-retains-a-newly-created-active-todo');
-  await caption(page, 'Kane also caught what the spec asks and neither app did: todos must survive a reload. Claude Code added it from Kane’s findings. Kane: 3 of 3.');
-  await wait(page, 7500);
+await clip('ports', async (page) => {
+  await open(page, '?case=todomvc');
+  await caption(page, 'Claude Sonnet 5.5’s TodoMVC port: 18 of 18 on the first try, mostly pure replays for 18.5 credits. Haiku 5.5’s port: 18 of 18 for 7.');
+  await wait(page, 6500);
 });
 
 // 9. The real logs
