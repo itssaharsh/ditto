@@ -86,7 +86,17 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
     <section className="sheet" aria-labelledby="t-title">
       <div className="sheet-head">
         <code>{row.test.id}_test.md</code>
-        <span>Designed by Kane from the spec · one file, run unchanged on both apps</span>
+        <span>
+          Designed by Kane from the spec · one file, run unchanged on both apps
+          {row.legacy?.shareUrl && (
+            <>
+              {' · '}
+              <a href={row.legacy.shareUrl} target="_blank" rel="noreferrer">
+                Kane's run in Test Manager
+              </a>
+            </>
+          )}
+        </span>
       </div>
       <div className="sheet-body">
         <h2 id="t-title" className="t-title">
