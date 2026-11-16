@@ -214,13 +214,23 @@ function LoopStrip({ c, row }: { c: CaseFile; row: BehaviourRow }) {
   if (!fail) return null;
   const fixRound = c.rounds.find((r) => r.n === (row.fixedInRound ?? fail.round + 1));
   const agent = fixRound?.agent;
+  // The step that failed, in Kane's own screenshots: the broken build then, and the same step on the latest run.
+  const steps = row.test.steps.length;
+  const failFrames = framesByStep(fail.result, steps);
+  const at = failFrames.findIndex((f) => f.failed);
+  const failShot = at >= 0 ? failFrames[at].shot : undefined;
+  const fixedRun = row.history.find((h) => h.round === row.fixedInRound)?.result;
+  const nowShot = at >= 0 && fixedRun ? framesByStep(fixedRun, steps)[at].shot : undefined;
+  const rewrite = c.apps.rewrite.label;
   return (
-    <div className="strip">
+    <div className={`strip ${failShot ? 'with-frames' : ''}`}>
       <div className="s-kane">
         <small>
           Kane, {roundPhrase(c, fail.round)} ·{' '}
           {fail.result.outcome === 'mismatch' ? 'confirmed difference' : fail.result.outcome === 'fail' ? 'fail' : 'unsure whose fault'}
+          {at >= 0 ? ` · step ${at + 1}` : ''}
         </small>
+        {failShot && <Frame caseId={c.id} shot={failShot} label={`${rewrite} (rewrite), step ${at + 1}, ${roundPhrase(c, fail.round)}`} tone="fail" />}
         <q>{verdictText(fail.result)}</q>
       </div>
       <span className="arrow" aria-hidden>
@@ -230,13 +240,18 @@ function LoopStrip({ c, row }: { c: CaseFile; row: BehaviourRow }) {
         <small>Claude Code · round {agent?.round ?? fail.round + 1}</small>
         <span>{agent ? firstSentence(agent.summary) : 'Working on it'}</span>
         {agent?.diffStat && <code>{agent.diffStat}</code>}
+        {agent?.commit && <code>commit {agent.commit}</code>}
       </div>
       <span className="arrow" aria-hidden>
         →
       </span>
       <div className={`s-done ${row.fixedInRound !== undefined ? 'ok' : ''}`}>
-        <small>{row.fixedInRound !== undefined ? `Round ${row.fixedInRound}` : 'Next round'}</small>
-        <span>{row.fixedInRound !== undefined ? 'Same test, rewrite: pass' : 'Kane checks again'}</span>
+        <small>
+          {row.fixedInRound !== undefined ? `Kane, round ${row.fixedInRound}` : 'Next round'}
+          {nowShot ? ` · step ${at + 1}` : ''}
+        </small>
+        {nowShot && <Frame caseId={c.id} shot={nowShot} label={`${rewrite} (rewrite), step ${at + 1}, round ${row.fixedInRound}`} tone="pass" />}
+        <span>{row.fixedInRound !== undefined ? 'Same test, same step: pass' : 'Kane checks again'}</span>
       </div>
     </div>
   );
