@@ -32,7 +32,7 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 ## Resource inventory (no secret values here)
 | Resource | Type | Balance / status | Decision |
 |---|---|---|---|
-| TestMu AI / Kane CLI | credits | 11,127 on 16 Nov (10k offer claimed by user) | ~2–4k planned; replays preferred |
+| TestMu AI / Kane CLI | credits | 11,127 on 16 Nov (10k offer claimed by user); ≈6,660 at 19:30 UTC | replays preferred |
 | Claude Code CLI | user's subscription | 2.1.318 | port + fix agent (`--model sonnet`) |
 | Anthropic API key | env `ANTHROPIC_API_KEY` | paid | not used (removed from agent env) |
 | GitHub (gh) | itssaharsh | signed in | user approved public repos |
@@ -59,10 +59,21 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - `sh()` must not use a login shell (profile noise leaked into commit fields).
 - Force pushes are blocked by the auto-mode classifier: publish with normal pushes only.
 
-## Checkpoint (16 Nov ~15:10 UTC)
-- Console served locally by `ditto ui` (4747); legacy 7001 and Sonnet port 7002 (python http.server); everything committed and pushed.
-- Running: Kane self-test of the deployed console (scripts/selftest-console.ts → qa/console-selftest.json).
-- Next: scan of other TodoMVC implementations (stretch), video, second red-team, scorecard, launch drafts with real numbers.
+## Mutation check and edge check (16 Nov, real runs)
+- Case `todomvc-mutation` (config `ditto.mutation.config.json`, oracleCase todomvc, worktree `../todomvc-react-port-mutation` on branch `ditto/mutation-check`, port 7004): a breaker Claude Code session planted 3 bugs (answer key in `.ditto-work/mutations/todomvc-mutation/answer-key.md`, outside the repo). Kane on the broken build: 2 confirmed differences (escape, counter-at-zero) + 3 test_issue. Fix round 1 (fresh fixer session) fixed Escape + plural; Kane still flagged counter-at-zero (mark-all couldn't complete the last todo); fix round 2 fixed mark-all (App.tsx). Final replay 18/18. 61 Kane runs, 40 pure replays, 480 credits, $0.71 at API prices. Commits a150b02 (breaker), 62752c5, 40f2c99 (fixer), branch pushed.
+- The fixer over-corrected: its Escape repair also dropped the legacy quirk "empty title + Escape deletes the todo" (no test covers it). `scripts/edge-check.ts` ran one objective on both apps: legacy pass (todo deleted, 20 cr); port 710 (Kane: "Escape cancels the edit and keeps the original todo", judged the port right by the spec, 16 cr). First attempt was inconclusive (Kane pressed Escape before clearing); objective made explicit. Shown as the case `caveat` + README + docs/testing.md §5.
+- Kane balance 6,696 before the edge check (≈ 6,660 after).
+
+## Lessons (16 Nov evening)
+- A plain `1fr` grid column grows to its items' min-content: a nowrap filename with ellipsis still widened the phone layout. Use `minmax(0, 1fr)`.
+- Count "spec met" only when the rewrite failed first and passed after a fix; an immediate pass on a test the old app couldn't run proves nothing.
+- Kane screenshots a key press before its effect lands: show what Kane was doing under each frame.
+- Python Playwright (foldcheck) needs `LD_LIBRARY_PATH=$HOME/.local/lib/kane-chrome/lib` on this machine.
+
+## Checkpoint (16 Nov ~19:30 UTC)
+- Everything committed and pushed; site redeployed with the mutation case as default; fold check PASS on the live URL.
+- Running: Kane self-test of the redeployed console (scripts/selftest-console.ts → qa/console-selftest.json, then copy to docs/).
+- Next: re-record the video, fresh red-team + scorecard, launch drafts, hand-off message.
 
 ## Next actions
 See `TASKS.md`.
