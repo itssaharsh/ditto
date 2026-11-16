@@ -1,0 +1,64 @@
+{
+  "why": "Not in the 28-test suite. Found by reading the fixer’s diff after the mutation run; checked here with Kane on both apps.",
+  "objective": "Create a todo titled 'Pay rent' using the new-todo input. Double-click the 'Pay rent' label to edit it. In the edit field, select all of its text and delete it (Ctrl+A, then Backspace) so the field is completely empty, and only then press Escape; then assert that the todo list no longer contains a todo titled 'Pay rent'.",
+  "runs": [
+    {
+      "side": "legacy",
+      "app": "jQuery TodoMVC (the old app)",
+      "outcome": "pass",
+      "resultCode": 100,
+      "oneLiner": "removed the “Pay rent” todo on the todo list",
+      "summary": "You asked to create a todo named “Pay rent,” clear its title while editing it, and then cancel the edit with Escape.\nCreated the “Pay rent” todo, opened it for editing, selected and deleted the full title, and pressed Escape after the field was empty.\nThe todo list no longer contains an item titled “Pay rent.”",
+      "credits": 20.23,
+      "durationS": 75.4,
+      "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JQBNN0XZ7APXMH4SBK1BME/dashboard/share/US_VNPZTQY9MCCC9CPXXMFRT1GYUELTL4QRZJI3S3SMOO39YNKLQQFCPBPTUOQ91KIM?type=summary&agentView=true&fqdn=summary-page",
+      "startedAt": "2026-11-16T17:44:23.150Z",
+      "endedAt": "2026-11-16T17:46:15.576Z",
+      "shots": [
+        {
+          "step": "10-0-10",
+          "kind": "screenshot",
+          "file": "edge-check/legacy/10-0-10-screenshot.jpg",
+          "summary": "assert: the todo list no longer contains a todo titled 'Pay rent'",
+          "status": "passed",
+          "url": "http://127.0.0.1:7001/#/all"
+        }
+      ]
+    },
+    {
+      "side": "rewrite",
+      "app": "React port after the mutation run’s fixes (commit 40f2c99)",
+      "outcome": "test_issue",
+      "resultCode": 710,
+      "oneLiner": "The check expected Escape to save an empty edit and remove the todo, but Escape cancels the edit and keeps the original todo.",
+      "summary": "The test assumed that pressing Escape after clearing the edit field would delete the todo. In this todo interface, Escape is a cancel action, so the previous title, “Pay rent,” is restored instead.\nRevise the scenario to commit the empty field with Enter or by moving focus away, then verify deletion. If the intended behavior is specifically that Escape deletes an empty edit, change the product requirement and add a dedicated test for it.",
+      "verdict": {
+        "confirmed": false,
+        "family": "automation_bug",
+        "category": "state_transition_bug",
+        "severity": "minor",
+        "rootCause": "The test assumed that pressing Escape after clearing the edit field would delete the todo. In this todo interface, Escape is a cancel action, so the previous title, “Pay rent,” is restored instead.",
+        "bugTitle": "Escape cancellation mistaken for empty-edit deletion",
+        "suggestion": "Revise the scenario to commit the empty field with Enter or by moving focus away, then verify deletion. If the intended behavior is specifically that Escape deletes an empty edit, change the product requirement and add a dedicated test for it.",
+        "oneLiner": "The check expected Escape to save an empty edit and remove the todo, but Escape cancels the edit and keeps the original todo.",
+        "confidence": 0.96,
+        "culpritStep": "0-10"
+      },
+      "credits": 16.17,
+      "durationS": 94.8,
+      "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JQF30WNA8AJ5ZERGDG7WAQ/dashboard/share/US_90Z9MD6RNW35N13W8NXUOPRDMOXU8SOBNV2HZOKWM0W1CP2SRLB54HV604HWYA6U?type=summary&agentView=true&fqdn=summary-page",
+      "startedAt": "2026-11-16T17:46:15.688Z",
+      "endedAt": "2026-11-16T17:48:09.938Z",
+      "shots": [
+        {
+          "step": "13-0-13",
+          "kind": "screenshot",
+          "file": "edge-check/rewrite/13-0-13-screenshot.jpg",
+          "summary": "assert: the todo list no longer contains a todo titled 'Pay rent'",
+          "status": "failed",
+          "url": "http://127.0.0.1:7004/#/all"
+        }
+      ]
+    }
+  ]
+}

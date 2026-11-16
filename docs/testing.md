@@ -50,3 +50,24 @@ The first run of these tests came back "unclear" on 3 of 4: Kane reported that t
 ## 4. The end-to-end run
 
 `npm run ditto -- loop` is itself the integration test: Kane designs the suite, records the oracle, Claude Code ports the app, and the loop must end in parity with a final replay of every test on the rewrite. The recorded run is `cases/todomvc/case.json`; `npm run ditto -- status` prints its table.
+
+A port that matches first time doesn't prove the tests would notice a regression, so the method has its own check: `npm run ditto -- mutate --config ditto.mutation.config.json`. A second Claude Code session plants bugs in a copy of the finished port and writes them down in `.ditto-work/` (outside the repository). Ditto then runs the normal loop with a fresh fixer session that sees only Kane's findings. The run passes only if the loop ends at parity again.
+
+Recorded run (`cases/todomvc-mutation/case.json`, 16 Nov 2026): 3 bugs planted (Escape saves the edit; "0 item left"; mark-all looks checked while one todo is active). Kane confirmed differences on 2 behaviours on the broken build. Fix round 1 repaired Escape and the counter; Kane still flagged the counter test, now because mark-all couldn't complete the last todo; fix round 2 found the mark-all bug. Final replay: 18/18. 61 Kane runs, 40 of them pure replays, 480 credits; Claude Code reported $0.71 at API prices for the breaker and both fixer sessions. The commits are on the port's [`ditto/mutation-check`](https://github.com/itssaharsh/todomvc-react-port/commits/ditto/mutation-check) branch.
+
+## 5. A behaviour no test covers
+
+Parity only means something for the behaviours the suite checks. The mutation run showed where that ends. Fixing planted bug 1 (Escape saved the edit), Claude Code also removed a quirk of the old app: in the jQuery app, if you empty a title while editing and press Escape, the todo is deleted ([`app.js`](../fixtures/legacy-todomvc/app.js) checks for an empty value before it checks for Escape). The fixed port keeps the todo. No test in the suite does that, so Kane reported 18/18.
+
+We spotted it reading the fixer's diff (commit `62752c5` on the [`ditto/mutation-check`](https://github.com/itssaharsh/todomvc-react-port/commits/ditto/mutation-check) branch), then asked Kane to look at both apps with one plain-English objective ([`scripts/edge-check.ts`](../scripts/edge-check.ts), results in [`edge-check.json`](edge-check.json)):
+
+> Create a todo titled 'Pay rent' using the new-todo input. Double-click the 'Pay rent' label to edit it. In the edit field, select all of its text and delete it (Ctrl+A, then Backspace) so the field is completely empty, and only then press Escape; then assert that the todo list no longer contains a todo titled 'Pay rent'.
+
+| App | Kane | Credits | Kane's summary |
+|---|---|---|---|
+| jQuery (old app) | pass | 20 | removed the “Pay rent” todo on the todo list |
+| React port after the fixes | test_issue (`710`, Kane blames the check) | 16 | The check expected Escape to save an empty edit and remove the todo, but Escape cancels the edit and keeps the original todo. |
+
+![The old app after the check: the list is empty](edge-check/legacy/10-0-10-screenshot.jpg) ![The fixed port after the check: Pay rent is still there](edge-check/rewrite/13-0-13-screenshot.jpg)
+
+Kane saw the difference, and judged the port's behaviour right by the spec ("If escape is pressed during the edit, the edit state should be left and any changes be discarded"). So the fixer's change is arguably an improvement, but it is still a change users of the old app could notice, and Ditto only caught it because a person read the diff. The fix for the method is the obvious one: add the sentence to the suite, and the oracle decides which behaviour is the reference.
