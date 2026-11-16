@@ -78,6 +78,9 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - `ditto index` used to construct the loop (which saved cases/todomvc/case.json, bumping updatedAt); now runs before the loop opens a case.
 - Kane replays vary between runs on the same build (completed-route passed in round 0, failed on re-check replay).
 
+## Evidence integrity (16 Nov ~21:40 UTC)
+- `kane-cli evidence validate --json` is local and free (~2.5 s per pack). scripts/validate-evidence.ts: 300/301 packs valid (L1); the invalid one is the 13:06 UTC oracle run whose browser died before step 1 (logged as error, never counted). docs/evidence-validation.json.
+
 ## Checkpoint (16 Nov ~21:15 UTC): ready for the user's hand-off
 - Video: qa/video/ditto-demo.mp4 (169 s; segments trimmed of page loads), thumbnail qa/video/thumbnail.png (git-ignored; re-record with `node scripts/video/record.mjs`).
 - TestMu Slack (#kane-cli-hacakathon C0BS5K131NU, #general) read with the user's OK: no Nov rule changes; previous edition used a SurveyMonkey form and extended its deadline once. Nothing posted.
