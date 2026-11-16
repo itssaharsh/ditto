@@ -1,9 +1,10 @@
 {
- "default": "todomvc",
+ "default": "todomvc-mutation",
  "cases": [
   {
    "id": "todomvc",
    "title": "TodoMVC: jQuery → React, ported by Claude Sonnet 5.5",
+   "tab": "Sonnet 5.5 port",
    "rewrite": "React 19 + TypeScript + Vite (written by Claude Code)",
    "status": "parity",
    "matched": 18,
@@ -14,12 +15,25 @@
   {
    "id": "todomvc-haiku",
    "title": "TodoMVC: jQuery → React, ported by Claude Haiku 5.5",
+   "tab": "Haiku 5.5 port",
    "rewrite": "React 19 + TypeScript + Vite (written by Claude Code, Haiku 5.5)",
    "status": "parity",
    "matched": 18,
    "total": 18,
    "fixRounds": 0,
    "createdAt": "2026-11-16T14:11:53.480Z"
+  },
+  {
+   "id": "todomvc-mutation",
+   "title": "TodoMVC: a second agent breaks the port on purpose (mutation check)",
+   "tab": "Bugs planted on purpose",
+   "planted": 3,
+   "rewrite": "React 19 + TypeScript + Vite (Sonnet 5.5 port, then broken on purpose by a second session)",
+   "status": "parity",
+   "matched": 18,
+   "total": 18,
+   "fixRounds": 2,
+   "createdAt": "2026-11-16T15:30:06.884Z"
   }
  ]
 }
