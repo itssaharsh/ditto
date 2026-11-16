@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { derive, type BehaviourRow, type CaseFile, type Derived } from './data';
 import { caseFacts, pickNamed, tryOrder } from './model';
 import { Behaviours, HowItWorks, LoopRail, Rounds, TestSheet } from './parts';
+import { atTime, bounds, latestTest, phases } from './timeline';
 import { useCase, useParam } from './useCase';
 
 const DEFAULT_CASE = 'todomvc';
@@ -57,13 +58,60 @@ function Mark() {
   );
 }
 
-function CaseView({ c }: { c: CaseFile }) {
+const REPLAY_SECONDS = 60;
+
+/** Plays the recorded run back from the start in about a minute. */
+function useReplay(full: CaseFile) {
+  const span = useMemo(() => bounds(full), [full]);
+  const [t, setT] = useState<number | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const raf = useRef<number>(0);
+  useEffect(() => {
+    if (!playing) return;
+    let last = performance.now();
+    const rate = (span.end - span.start) / (REPLAY_SECONDS * 1000);
+    const tick = (now: number) => {
+      const dt = now - last;
+      last = now;
+      setT((cur) => {
+        const next = (cur ?? span.start) + dt * rate;
+        if (next >= span.end) {
+          setPlaying(false);
+          return null;
+        }
+        return next;
+      });
+      raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf.current);
+  }, [playing, span]);
+  const start = () => {
+    setT(span.start);
+    setPlaying(true);
+  };
+  const stop = () => {
+    setPlaying(false);
+    setT(null);
+  };
+  return { t, playing, start, stop, toggle: () => setPlaying((p) => !p), span, speed: Math.round((span.end - span.start) / (REPLAY_SECONDS * 1000)) };
+}
+
+function CaseView({ c: full }: { c: CaseFile }) {
+  const replay = useReplay(full);
+  const c = useMemo(() => (replay.t === null ? full : atTime(full, replay.t)), [full, replay.t]);
   const d: Derived = useMemo(() => derive(c), [c]);
   const [bParam, setB] = useParam('b');
   const named = pickNamed(d.rows);
-  const selected: BehaviourRow | undefined = d.rows.find((r) => r.test.id === bParam) ?? named;
+  const following = replay.t !== null ? latestTest(c) : undefined;
+  const selected: BehaviourRow | undefined = d.rows.find((r) => r.test.id === (following ?? bParam)) ?? named;
   const facts = caseFacts(c);
   const [focus, setFocus] = useState(0);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('autoplay') === '1' && ['parity', 'stopped'].includes(full.status)) replay.start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="wrap">
@@ -71,6 +119,7 @@ function CaseView({ c }: { c: CaseFile }) {
       <header className="hero">
         <h1>Ditto: Did the rewrite break anything?</h1>
         <Answer c={c} d={d} />
+        <ReplayBar full={full} replay={replay} />
       </header>
 
       <div className="grid">
@@ -149,6 +198,44 @@ function CaseView({ c }: { c: CaseFile }) {
       }} />
       <Rounds c={c} d={d} />
       <HowItWorks c={c} d={d} />
+    </div>
+  );
+}
+
+function ReplayBar({ full, replay }: { full: CaseFile; replay: ReturnType<typeof useReplay> }) {
+  const final = ['parity', 'stopped', 'failed'].includes(full.status);
+  if (!final) return null;
+  const ph = phases(full);
+  const total = replay.span.end - replay.span.start;
+  const pos = replay.t === null ? 1 : (replay.t - replay.span.start) / total;
+  const recorded = new Date(full.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return (
+    <div className={`replay ${replay.t !== null ? 'on' : ''}`}>
+      {replay.t === null ? (
+        <button className="rp-btn" onClick={replay.start}>
+          <span aria-hidden>▶</span> Watch the whole run in {REPLAY_SECONDS} seconds
+        </button>
+      ) : (
+        <>
+          <button className="rp-btn" onClick={replay.toggle} aria-label={replay.playing ? 'Pause replay' : 'Resume replay'}>
+            {replay.playing ? '❚❚ Pause' : '▶ Resume'}
+          </button>
+          <button className="rp-btn ghost" onClick={replay.stop}>
+            Skip to the end
+          </button>
+        </>
+      )}
+      <div className="rp-track" aria-label="Phases of the run">
+        {ph.map((p) => (
+          <span key={p.label + p.start} style={{ flexGrow: Math.max(1, p.end - p.start) }} className="rp-ph">
+            {p.label}
+          </span>
+        ))}
+        <i className="rp-pos" style={{ left: `${pos * 100}%` }} aria-hidden />
+      </div>
+      <small className="rp-note">
+        {replay.t === null ? `Recorded ${recorded}, ${Math.round(total / 60000)} minutes of real Kane and Claude Code work.` : `Replaying at ${replay.speed}× speed.`}
+      </small>
     </div>
   );
 }

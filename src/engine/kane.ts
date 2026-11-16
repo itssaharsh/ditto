@@ -43,6 +43,8 @@ export interface EvidenceShot {
 export interface EvidenceExtract {
   shots: EvidenceShot[];
   consoleErrors: string[];
+  /** Every page URL Kane was on, from the per-step records. */
+  urls: string[];
   failureMessage?: string;
   culpritStep?: string;
 }
@@ -335,7 +337,7 @@ export function findPack(sessionDir: string): string | undefined {
  */
 export function extractEvidence(sessionDir: string, assetsDir: string, assetsRel: string): EvidenceExtract {
   const pack = findPack(sessionDir);
-  const out: EvidenceExtract = { shots: [], consoleErrors: [] };
+  const out: EvidenceExtract = { shots: [], consoleErrors: [], urls: [] };
   if (!pack) return out;
   const files = unzipSync(readFileSync(pack));
   mkdirSync(assetsDir, { recursive: true });
@@ -352,6 +354,8 @@ export function extractEvidence(sessionDir: string, assetsDir: string, assetsRel
       }
     }
   }
+
+  out.urls = [...new Set([...stepJson.values()].map((j) => (typeof j.url === 'string' ? j.url : '')).filter(Boolean))];
 
   // Step folders are named <ordinal>-<markdown step>-<sub step>. Keep the last frame of each markdown
   // step, plus the annotated frame of any step that failed: that is what the console shows.

@@ -1,6 +1,6 @@
 // The Ditto loop: record the legacy app's behaviour with Kane, let Claude Code port it,
 // replay the same tests on the port, and send every difference back to Claude until they match.
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import type { Server } from 'node:http';
 import { join, relative } from 'node:path';
 import { runClaude } from './agent.js';
@@ -101,22 +101,28 @@ export class DittoLoop {
 
   // ---------- Kane runs ----------
 
-  private async kane(test: SuiteTest, side: AppSide, round: number, phase: 'author' | 'replay' | 'heal'): Promise<RunSummary> {
+  private async kane(test: SuiteTest, side: AppSide, round: number, phase: 'author' | 'replay' | 'heal' | 'fresh'): Promise<RunSummary> {
     const url = side === 'legacy' ? this.cfg.legacyUrl : this.cfg.rewriteUrl;
-    const file = join(this.kaneDir, `${test.id}_test.md`);
-    const mode: RunSummary['mode'] = phase === 'author' ? 'author' : phase === 'replay' ? 'replay' : 'replay+heal';
+    // 'fresh' authors the test from scratch on the rewrite, in its own copy, without the legacy recording.
+    const freshDir = join(this.kaneDir, 'rewrite-fresh');
+    if (phase === 'fresh') {
+      mkdirSync(freshDir, { recursive: true });
+      copyFileSync(this.cfg.abs(test.file), join(freshDir, `${test.id}_test.md`));
+    }
+    const file = phase === 'fresh' ? join(freshDir, `${test.id}_test.md`) : join(this.kaneDir, `${test.id}_test.md`);
+    const mode: RunSummary['mode'] = phase === 'author' || phase === 'fresh' ? 'author' : phase === 'replay' ? 'replay' : 'replay+heal';
     const stamp = `${side}-r${round}-${phase}`;
     this.rec.event({ kind: 'kane_start', side, test: test.id, round, mode });
     const r: KaneRunResult = await runTestmd(file, {
-      cwd: this.kaneDir,
-      url: side === 'legacy' ? url : undefined,
-      overrideStartUrl: side === 'rewrite' ? url : undefined,
+      cwd: phase === 'fresh' ? freshDir : this.kaneDir,
+      url: side === 'legacy' || phase === 'fresh' ? url : undefined,
+      overrideStartUrl: side === 'rewrite' && phase !== 'fresh' ? url : undefined,
       noAdaptiveHeal: phase === 'replay',
       bugDetection: 'continue',
       maxSteps: 25,
       timeoutS: 900,
       variables: { ...(this.cfg.variables ?? {}), start_url: url },
-      local: side === 'rewrite',
+      local: side === 'rewrite' && phase !== 'fresh',
       assetsDir: this.rec.assetsDir(test.id, stamp),
       assetsRel: `assets/${test.id}/${stamp}`,
       onLine: (e) => {
@@ -134,6 +140,11 @@ export class DittoLoop {
       },
     });
     const s = summarize(r, mode);
+    // A replay on the rewrite must never touch the legacy app (an absolute URL in a recorded step would).
+    if (side === 'rewrite' && s.urls?.some((u) => u.startsWith(this.cfg.legacyUrl.replace(/\/$/, '')))) {
+      s.outcome = 'error';
+      s.reason = `The replay left the rewrite and opened the legacy app (${s.urls.find((u) => u.includes(String(this.cfg.legacy.port)))}); not counted.`;
+    }
     this.rec.addRun(s);
     this.rec.event({ kind: 'kane_end', side, test: test.id, round, outcome: s.outcome, oneLiner: s.oneLiner ?? s.reason });
     this.log(`  kane ${side.padEnd(7)} ${test.id.padEnd(48)} ${s.outcome.padEnd(10)} ${s.mode} ${s.credits ?? 0}cr ${Math.round(s.durationS ?? 0)}s`);
@@ -300,6 +311,16 @@ export class DittoLoop {
       });
       s = await this.kane(t, 'rewrite', n, 'heal');
       if (s.outcome === 'error') s = await this.kane(t, 'rewrite', n, 'heal');
+      if ((s.outcome === 'error' || s.outcome === 'test_issue') && this.creditsLeft()) {
+        this.rec.event({
+          kind: 'decision',
+          round: n,
+          test: t.id,
+          said: `Still no clean verdict: ${s.oneLiner ?? s.reason ?? s.outcome}`,
+          did: 'Had Kane author the same test from scratch on the rewrite, without the legacy recording',
+        });
+        s = await this.kane(t, 'rewrite', n, 'fresh');
+      }
     }
     return s;
   }
@@ -390,6 +411,44 @@ export class DittoLoop {
     await this.finishAgentTurn(n, res, `Round ${n}: fix ${failing.length} behaviour(s) Kane flagged\n\n${failing.map((t) => `- ${t.title}`).join('\n')}`);
   }
 
+  // ---------- Hand-over: the suite becomes the rewrite's own regression tests ----------
+
+  async promote(): Promise<void> {
+    const repo = this.cfg.abs(this.cfg.rewrite.repo);
+    const dir = join(repo, 'tests', 'kane');
+    mkdirSync(dir, { recursive: true });
+    for (const t of this.oraclePassing()) copyFileSync(this.cfg.abs(t.file), join(dir, `${t.id}_test.md`));
+    const vars = Object.fromEntries(
+      Object.entries({ ...(this.cfg.variables ?? {}), start_url: `http://127.0.0.1:${this.cfg.rewrite.port}/` }).map(([k, v]) => [k, { value: v, secret: false }]),
+    );
+    mkdirSync(join(repo, '.testmuai', 'variables'), { recursive: true });
+    writeFileSync(join(repo, '.testmuai', 'variables', 'ditto.json'), JSON.stringify(vars, null, 2) + '\n');
+    writeFileSync(
+      join(dir, 'README.md'),
+      [
+        '# Behaviour tests (Kane CLI)',
+        '',
+        `These ${this.oraclePassing().length} plain-English tests were designed by Kane CLI from the TodoMVC spec, passed on the original jQuery app, and were used by [Ditto](https://github.com/itssaharsh/ditto) to check this port until every one passed here too.`,
+        '',
+        'Run them against a local build:',
+        '',
+        '```bash',
+        'npm run build && npx serve -l 7002 dist   # or any static server on port 7002',
+        'kane-cli testrun run tests/kane --parallel 3 < /dev/null',
+        '```',
+        '',
+        'The start URL and test values come from `.testmuai/variables/ditto.json`.',
+        '',
+      ].join('\n'),
+    );
+    const gi = join(repo, '.gitignore');
+    const extra = '\n# Kane CLI: recordings and evidence hold account details\n.testmuai/evidence/\n**/output-*/.internal/\n*.evidence\n';
+    const cur = existsSync(gi) ? readFileSync(gi, 'utf8') : '';
+    if (!cur.includes('output-*/.internal')) writeFileSync(gi, cur + extra);
+    await sh('git add -A && git commit -q -m "Add the Kane behaviour tests Ditto used as this port\u0027s regression suite" || true', repo);
+    this.rec.event({ kind: 'note', text: `Copied the ${this.oraclePassing().length} tests into the rewrite repo (tests/kane) as its regression suite.` });
+  }
+
   // ---------- Hook mode: an interactive Claude Code session asks Ditto before it stops ----------
 
   /** Build, replay every oracle behaviour on the rewrite, and return what still differs. */
@@ -463,6 +522,7 @@ export class DittoLoop {
           failing = regress;
         }
       }
+      if (!failing.length) await this.promote();
       this.rec.data.status = failing.length ? 'stopped' : 'parity';
       this.rec.event({
         kind: 'note',

@@ -20,6 +20,7 @@ export interface RunSummary {
   healTriggered?: boolean;
   shots: EvidenceShot[];
   consoleErrors: string[];
+  urls?: string[];
   failureMessage?: string;
   mode: 'author' | 'replay' | 'replay+heal';
   startedAt: string;
@@ -95,6 +96,7 @@ export function summarize(r: KaneRunResult, mode: RunSummary['mode']): RunSummar
     healTriggered: r.healTriggered,
     shots: r.evidence?.shots ?? [],
     consoleErrors: r.evidence?.consoleErrors ?? [],
+    urls: r.evidence?.urls,
     failureMessage: r.evidence?.failureMessage,
     mode: mode === 'replay' && (r.authorDecisions ?? 0) > 0 ? 'replay+heal' : mode,
     startedAt: r.startedAt,

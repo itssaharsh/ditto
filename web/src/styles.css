@@ -800,3 +800,72 @@ dialog.zoom::backdrop {
     font-size: 13.5px;
   }
 }
+
+/* replay bar */
+.replay {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-areas: 'btn btn2 track' 'note note note';
+  align-items: center;
+  gap: 6px 10px;
+  margin: -6px 0 18px;
+  max-width: 980px;
+}
+.rp-btn {
+  grid-area: btn;
+  font: 700 14px var(--body);
+  padding: 7px 12px;
+  border-radius: var(--r-chip);
+  background: var(--ink);
+  color: #fff;
+  box-shadow: var(--sh1);
+  white-space: nowrap;
+}
+.rp-btn.ghost {
+  grid-area: btn2;
+  background: var(--surf);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.rp-track {
+  grid-area: track;
+  position: relative;
+  display: flex;
+  gap: 3px;
+  height: 26px;
+}
+.rp-ph {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 600 11.5px/26px var(--body);
+  padding: 0 6px;
+  border-radius: 5px;
+  background: #dfe8f3;
+  color: var(--ink2);
+}
+.replay.on .rp-ph {
+  background: #e6edf6;
+}
+.rp-pos {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 3px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--hl);
+}
+.rp-note {
+  grid-area: note;
+  color: var(--ink3);
+  font-size: 13px;
+}
+@media (max-width: 760px) {
+  .replay {
+    grid-template-columns: auto auto;
+    grid-template-areas: 'btn btn2' 'track track' 'note note';
+  }
+}
