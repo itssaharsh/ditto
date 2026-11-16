@@ -73,7 +73,7 @@ export interface CaseFile {
   updatedAt: string;
   status: 'recording' | 'porting' | 'checking' | 'fixing' | 'parity' | 'stopped' | 'failed';
   apps: Record<AppSide, { label: string; url: string; framework: string; source?: string }>;
-  suite: { name: string; designedBy: string; spec?: string; tests: SuiteTest[] };
+  suite: { name: string; designedBy: string; spec?: string; variables?: Record<string, string>; tests: SuiteTest[] };
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];

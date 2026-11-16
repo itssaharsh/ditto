@@ -16,3 +16,4 @@ dist/
 **/output-*/.internal/
 *.evidence
 rewrite/node_modules/
+qa/

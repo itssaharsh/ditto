@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p web",
     "test": "node --import tsx --test test/*.test.ts",
     "web:dev": "vite --config web/vite.config.ts",
-    "web:build": "vite build --config web/vite.config.ts && node scripts/copy-cases.mjs"
+    "web:build": "vite build --config web/vite.config.ts",
+    "site:build": "node scripts/build-site.mjs",
+    "site:publish": "bash scripts/publish-pages.sh"
   },
   "engines": {
     "node": ">=22"

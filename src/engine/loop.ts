@@ -36,6 +36,8 @@ export class DittoLoop {
     this.kaneDir = cfg.abs(join(cfg.workDir, 'kane', cfg.case));
     this.rec = new CaseRecorder(cfg.abs(join(cfg.casesDir, cfg.case)), () => this.initCase());
     this.rec.data.suite.tests = this.tests;
+    this.rec.data.suite.variables = cfg.variables;
+    this.rec.data.suite.spec = cfg.spec;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -168,13 +170,21 @@ export class DittoLoop {
         this.rec.event({ kind: 'decision', round: 0, test: t.id, said: `Kane blamed the test, not the app: ${s.oneLiner ?? s.reason ?? ''}`, did: 'Ran it once more from scratch' });
         s = await this.kane(t, 'legacy', 0, 'author');
       }
-      if (s.outcome !== 'pass') {
+      if (s.outcome === 'mismatch' || s.outcome === 'fail') {
         this.rec.event({
           kind: 'decision',
           round: 0,
           test: t.id,
           said: `The legacy app fails "${t.title}": ${s.oneLiner ?? s.reason ?? s.outcome}`,
           did: 'Left out of parity and listed as a place where the legacy app already differs from its spec',
+        });
+      } else if (s.outcome !== 'pass') {
+        this.rec.event({
+          kind: 'decision',
+          round: 0,
+          test: t.id,
+          said: `Kane could not get a clean run of "${t.title}" (${s.outcome === 'test_issue' ? 'it judged the test itself unreliable' : 'browser or environment problem'}): ${s.oneLiner ?? s.reason ?? ''}`,
+          did: 'Left out of parity and marked as not verified',
         });
       }
       this.rec.data.oracle[t.id] = s;

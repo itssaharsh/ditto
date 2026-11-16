@@ -4,7 +4,7 @@ import type { SuiteTest } from '../../src/engine/suite';
 
 export type { CaseEvent, CaseFile, Round, RunSummary, SuiteTest };
 
-export type RowStatus = 'match' | 'differs' | 'legacy-differs' | 'checking' | 'waiting';
+export type RowStatus = 'match' | 'differs' | 'legacy-differs' | 'unverified' | 'checking' | 'waiting';
 
 export interface BehaviourRow {
   test: SuiteTest;
@@ -30,6 +30,7 @@ export interface Derived {
   oracleTotal: number;
   matched: number;
   legacyDiffers: number;
+  unverified: number;
   rounds: Round[];
   loop: LoopEntry[];
   fixedRows: BehaviourRow[];
@@ -55,7 +56,8 @@ export function derive(c: CaseFile): Derived {
       else if (sawFail && fixedInRound === undefined) fixedInRound = h.round;
     }
     let status: RowStatus = 'waiting';
-    if (legacy && legacy.outcome !== 'pass') status = 'legacy-differs';
+    if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail')) status = 'legacy-differs';
+    else if (legacy && legacy.outcome !== 'pass') status = 'unverified';
     else if (latest?.outcome === 'pass') status = 'match';
     else if (latest) status = 'differs';
     const running = live ? open.get(test.id) : undefined;
@@ -71,6 +73,7 @@ export function derive(c: CaseFile): Derived {
     oracleTotal: oracleRows.length,
     matched: oracleRows.filter((r) => r.latest?.outcome === 'pass').length,
     legacyDiffers: rows.filter((r) => r.status === 'legacy-differs').length,
+    unverified: rows.filter((r) => r.status === 'unverified').length,
     rounds,
     loop,
     fixedRows: rows.filter((r) => r.fixedInRound !== undefined),

@@ -353,19 +353,28 @@ export function extractEvidence(sessionDir: string, assetsDir: string, assetsRel
     }
   }
 
-  // Several markdown steps in one pack share step ids across tests/<stem>-<hash>/; keep them ordered.
-  const entries = Object.keys(files)
-    .filter((n) => /steps\/[^/]+\/(screenshot\.jpg|annotated\.png)$/.test(n))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-  for (const name of entries) {
-    const m = name.match(/steps\/([^/]+)\/(screenshot\.jpg|annotated\.png)$/)!;
+  // Step folders are named <ordinal>-<markdown step>-<sub step>. Keep the last frame of each markdown
+  // step, plus the annotated frame of any step that failed: that is what the console shows.
+  const frames = Object.keys(files)
+    .map((n) => n.match(/steps\/((\d+)-(\d+)-(\d+))\/(screenshot\.jpg|annotated\.png)$/))
+    .filter((m): m is RegExpMatchArray => m !== null)
+    .sort((a, b) => Number(a[2]) - Number(b[2]));
+  const lastPerMdStep = new Map<string, RegExpMatchArray>();
+  for (const m of frames) if (m[5] === 'screenshot.jpg') lastPerMdStep.set(m[3], m);
+  const keep = new Set([...lastPerMdStep.values()].map((m) => m[0]));
+  for (const m of frames) {
+    const sj = stepJson.get(m[1]);
+    if (m[5] === 'annotated.png' && sj?.status === 'failed') keep.add(m[0]);
+  }
+  for (const m of frames.filter((x) => keep.has(x[0]))) {
     const stepDir = m[1];
-    const kind = m[2] === 'annotated.png' ? 'annotated' : 'screenshot';
+    const kind = m[5] === 'annotated.png' ? 'annotated' : 'screenshot';
     const target = `${stepDir}-${kind}${kind === 'annotated' ? '.png' : '.jpg'}`;
-    writeFileSync(join(assetsDir, target), files[name]);
+    const entry = Object.keys(files).find((n) => n.endsWith(`steps/${stepDir}/${m[5]}`))!;
+    writeFileSync(join(assetsDir, target), files[entry]);
     const sj = stepJson.get(stepDir);
     out.shots.push({
-      step: String(sj?.id ?? stepDir),
+      step: stepDir,
       kind,
       file: assetsRel ? `${assetsRel}/${target}` : target,
       summary: typeof sj?.summary === 'string' ? sj.summary : undefined,
