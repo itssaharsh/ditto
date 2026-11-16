@@ -36,6 +36,10 @@ Kane authors each test the first time (an AI works out the steps in the browser)
 
 When the legacy app fails a test, Ditto runs it once more before believing it: Kane's judgement can be wrong once, so a deviation of the reference has to reproduce. If it does, Ditto lists it as a place where the old app already differs from its own spec and leaves it out of parity (you decide what's right). If the second run passes, the behaviour stays in. Tests that Kane itself calls unreliable (`710`) or could not run (`510`) get another chance and are otherwise marked "not verified", never blamed on either app.
 
+A pass has to hold up too: Ditto replays every passing test from its own recording on the old app once more. A recording that doesn't replay cleanly on the app it was made on can't judge another app, so that test is left out as "not verified".
+
+These two rules are why the TodoMVC referee is 18 tests and not 21. The first recording of the old app (16 Nov, 13:04–13:39 UTC, logged in `cases/todomvc/case.json`) counted 21 passes before the rules were in place. Recording again with them: 5 tests that had passed once did not replay cleanly, and 2 that had failed once passed on both reruns (Kane's first verdict was wrong). 21 − 5 + 2 = 18.
+
 ## 3. Port: Claude Code rewrites the app
 
 `ditto loop` asks Claude Code to port the app (jQuery → React + TypeScript + Vite here). The prompt is what a developer would type: keep the look and the behaviour. The agent reads the legacy code; it does not see the suite.

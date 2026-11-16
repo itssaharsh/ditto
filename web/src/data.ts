@@ -35,6 +35,8 @@ export interface Derived {
   /** By the old app's own results, before any spec fix: confirmed spec failures, and tests Kane could not run cleanly. */
   oracleFails: number;
   oracleUnclear: number;
+  /** How the parity behaviours that match were last checked: replaying the old app's recording, healed, or written fresh by Kane. */
+  lastCheck: { replayed: number; healed: number; fresh: number };
   rounds: Round[];
   loop: LoopEntry[];
   fixedRows: BehaviourRow[];
@@ -75,6 +77,12 @@ export function derive(c: CaseFile): Derived {
     return { test, legacy, history, latest, status, fixedInRound, running };
   });
   const oracleRows = rows.filter((r) => r.legacy?.outcome === 'pass');
+  const lastPasses = oracleRows.map((r) => r.latest).filter((x): x is RunSummary => x?.outcome === 'pass');
+  const lastCheck = {
+    replayed: lastPasses.filter((x) => x.mode !== 'author' && !x.healTriggered).length,
+    healed: lastPasses.filter((x) => x.mode !== 'author' && x.healTriggered).length,
+    fresh: lastPasses.filter((x) => x.mode === 'author').length,
+  };
   const loop: LoopEntry[] = c.events
     .filter((e): e is Extract<CaseEvent, { kind: 'decision' }> => e.kind === 'decision')
     .map((e) => ({ round: e.round, t: e.t, test: e.test, said: e.said, did: e.did }));
@@ -92,6 +100,7 @@ export function derive(c: CaseFile): Derived {
         !(r.legacy.outcome === 'pass' && r.legacy.replayVerified !== false) &&
         !((r.legacy.outcome === 'mismatch' || r.legacy.outcome === 'fail') && r.legacy.confirmed),
     ).length,
+    lastCheck,
     rounds,
     loop,
     fixedRows: rows.filter((r) => r.fixedInRound !== undefined),

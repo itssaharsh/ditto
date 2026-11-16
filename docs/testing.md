@@ -36,16 +36,16 @@ kane-cli testrun run . --parallel 2 \
 | `screenshot-opens-enlarged` | every screenshot opens full size and closes again |
 | `all-behaviours-table` | the table lists every behaviour and opens one at the top |
 
-Latest run, against the deployed console (https://itssaharsh.github.io/ditto/, 2026-11-16), saved in [`console-selftest.json`](console-selftest.json):
+Latest run, against the deployed console (https://itssaharsh.github.io/ditto/, 2026-11-16, opening on the planted-bug run), saved in [`console-selftest.json`](console-selftest.json):
 
 | Test | Result | Time | Credits | Kane's summary |
 |---|---|---|---|---|
-| `all-behaviours-table` | pass | 88 s | 36 | opened the “Escape discards a todo title edit” behavior on the Ditto site |
-| `first-screen-shows-the-verdict` | pass | 39 s | 12 | verified the Ditto results page on itssaharsh.github.io |
-| `screenshot-opens-enlarged` | pass | 133 s | 26 | The first screenshot click already opened the dialog, but the replay then attempted a second click on the screenshot behind that dialog. |
-| `try-these-switches-behaviour` | pass | 82 s | 24 | opened the Escape discards a todo title edit test on the Ditto page |
+| `all-behaviours-table` | pass | 21 s | 0 | replay completed |
+| `first-screen-shows-the-verdict` | pass | 20 s | 0 | replay completed |
+| `screenshot-opens-enlarged` | pass | 128 s | 32 | The screenshot dialog opened successfully, but the replay's next click targeted another screenshot rather than the visible Close button. |
+| `try-these-switches-behaviour` | pass | 70 s | 21 | opened the completed-todos scenario on itssaharsh.github.io |
 
-The first run of these tests came back "unclear" on 3 of 4: Kane reported that the console did the right thing but its own final check failed, and in one case that the test expected "26/26" (a number left over from the design mock-ups) while the page showed the real 18/18. The test wording was fixed and all four pass.
+Two tests replayed their earlier recordings for 0 credits. `try-these-switches-behaviour` was authored again because its text changed (the chip it clicks was already open on the new first screen, so it now picks another). `screenshot-opens-enlarged` healed: the replayed click hit a different screenshot, and Kane re-authored that step. The first run of these tests, earlier on 16 Nov, came back "unclear" on 3 of 4: Kane reported the console did the right thing but its own final check failed, and in one case the test expected "26/26" (a number left over from the design mock-ups) where the page showed the real 18/18. The test wording was fixed and all four passed.
 
 ## 4. The end-to-end run
 
@@ -70,4 +70,4 @@ We spotted it reading the fixer's diff (commit `62752c5` on the [`ditto/mutation
 
 ![The old app after the check: the list is empty](edge-check/legacy/10-0-10-screenshot.jpg) ![The fixed port after the check: Pay rent is still there](edge-check/rewrite/13-0-13-screenshot.jpg)
 
-Kane saw the difference, and judged the port's behaviour right by the spec ("If escape is pressed during the edit, the edit state should be left and any changes be discarded"). So the fixer's change is arguably an improvement, but it is still a change users of the old app could notice, and Ditto only caught it because a person read the diff. The fix for the method is the obvious one: add the sentence to the suite, and the oracle decides which behaviour is the reference.
+Kane's runs show the difference: the old app deleted the todo, the port kept it. Kane did not call that a bug in the port; it blamed the check (`710`), judging the port's behaviour right by the spec ("If escape is pressed during the edit, the edit state should be left and any changes be discarded"). So the fixer's change is arguably an improvement, but it is still a change users of the old app could notice, and Ditto only caught it because a person read the diff. The fix for the method is the obvious one: add the sentence to the suite, and the oracle decides which behaviour is the reference.

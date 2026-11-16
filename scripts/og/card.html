@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Ditto social card</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14202e;--ink2:#3c4b5d;--canvas:#e9f0f8;--hl:#ffd84d;--ok:#147a52;--bad:#d23a2d}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden;background:var(--canvas);font-family:'Albert Sans',sans-serif;color:var(--ink)}
+.wrap{position:absolute;inset:0;padding:54px 0 0 64px;display:grid;grid-template-columns:600px 1fr;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;font:800 30px 'Syne',sans-serif;letter-spacing:-.01em}
+.brand small{margin-left:10px;font:600 17px 'IBM Plex Mono',monospace;color:#6b7c90;letter-spacing:0}
+.brand svg{width:40px;height:40px}
+h1{margin-top:34px;font:800 58px/1.02 'Syne',sans-serif;letter-spacing:-.025em}
+p{margin-top:22px;font:500 23px/1.4 'Albert Sans',sans-serif;color:var(--ink2)}
+p b{color:var(--ink);background:linear-gradient(var(--hl),var(--hl)) 0 88%/100% 55% no-repeat}
+.stamp{position:absolute;left:64px;bottom:50px;display:flex;align-items:center;gap:16px}
+.num{font:800 64px/1 'Syne',sans-serif;letter-spacing:-.04em}
+.num span{color:#6b7c90;font-size:40px}
+.sticker{font:800 22px 'Syne',sans-serif;background:var(--hl);padding:6px 14px;border-radius:8px;transform:rotate(-3deg);box-shadow:0 6px 14px rgba(20,32,46,.18)}
+.frames{position:relative}
+.f{position:absolute;width:470px;border-radius:14px;overflow:hidden;background:#f5f5f5;box-shadow:0 22px 44px -14px rgba(20,50,90,.45)}
+.f .img{height:222px;overflow:hidden;position:relative}
+.f img{position:absolute;top:-4%;left:-60%;width:220%}
+.f .cap{padding:10px 14px;font:700 16px 'Albert Sans',sans-serif;color:#fff}
+.f.bad{top:18px;left:0;transform:rotate(-2.5deg);border:3px solid #edb5ad}
+.f.bad .cap{background:var(--bad)}
+.f.ok{top:286px;left:44px;transform:rotate(1.5deg);border:3px solid #9fd8b7}
+.f.ok .cap{background:var(--ok)}
+</style></head><body>
+<div class="wrap">
+  <div>
+    <div class="brand"><svg viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#147a52"/><path d="M19 13 L14 29 M33 13 L28 29" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/></svg>Ditto<small>itssaharsh.github.io/ditto</small></div>
+    <h1>Did the rewrite break anything?</h1>
+    <p>A second Claude Code session planted 3 bugs. <b>Kane CLI’s findings led Claude Code to all 3</b>, and every behaviour matches again.</p>
+  </div>
+  <div class="frames">
+    <div class="f bad"><div class="cap">Kane, broken build: Escape kept the edit</div><div class="img"><img id="bad"></div></div>
+    <div class="f ok"><div class="img"><img id="ok"></div><div class="cap">Kane, after fix round 1: same test, pass</div></div>
+  </div>
+</div>
+<div class="stamp"><div class="num">18<span>/18</span></div><div class="sticker">Same behaviour</div></div>
+<script>
+const q = new URLSearchParams(location.search);
+document.getElementById('bad').src = q.get('bad');
+document.getElementById('ok').src = q.get('ok');
+</script>
+</body></html>

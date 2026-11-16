@@ -270,7 +270,11 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
   return (
     <section className="card loop">
       <h2>Kane said → Claude did</h2>
-      {rounds.length === 0 && <p className="muted">Nothing to send back: every behaviour matched on the first port.</p>}
+      {rounds.length === 0 && (
+        <p className="muted">
+          {d.matched === d.oracleTotal ? 'Nothing to send back: every behaviour matched on the first port.' : 'This run only checks: nothing was sent to an agent.'}
+        </p>
+      )}
       {rounds.map((r) => {
         if (r.agent?.kind === 'mutate') return null;
         if (r.agent?.kind === 'hook') {
@@ -561,6 +565,8 @@ export function MutationsBlock({ c, d }: { c: CaseFile; d: Derived }) {
       <p className="lead">
         A second Claude Code session broke the port and wrote this list outside the repository. The fixer never saw it: it only got Kane&rsquo;s
         findings.
+        {c.audit &&
+          ` Its own transcript shows ${c.audit.fixerToolCalls} tool calls, ${c.audit.touchedAnswerKey === 0 ? 'none of them' : `${c.audit.touchedAnswerKey} of them`} touching the list or Ditto’s work folder.`}
       </p>
       <ol className="mut-list">
         {bugs.map((b, i) => (

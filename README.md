@@ -44,7 +44,7 @@ The three recorded cases together: 236 Kane runs and about 2,800 credits, most o
 
 ## What Ditto can't see
 
-- **Behaviour no test covers.** Fixing planted bug 1, Claude also dropped a quirk of the old app: empty a title while editing and press Escape, and the jQuery app deletes the todo, while the fixed port keeps it. No test does that, so Kane reported 18/18. We spotted it reading the fixer's diff, then ran Kane on both apps: it saw exactly that difference, and judged the port right by the spec ([two runs, with screenshots](docs/testing.md#5-a-behaviour-no-test-covers)). Parity is only as wide as the suite.
+- **Behaviour no test covers.** Fixing planted bug 1, Claude also dropped a quirk of the old app: empty a title while editing and press Escape, and the jQuery app deletes the todo, while the fixed port keeps it. No test does that, so Kane reported 18/18. We spotted it reading the fixer's diff, then ran Kane on both apps: its two runs show the old app deleting the todo and the port keeping it, and Kane blamed the check rather than the port, since the spec says Escape discards changes ([both runs, with screenshots](docs/testing.md#5-a-behaviour-no-test-covers)). Parity is only as wide as the suite.
 - **Tests Kane can't run cleanly on the old app** (9 of 28 here) are left out, never guessed. A wrong test can't blame the new code, but it can't protect it either.
 - **The old app has to run.** Ditto needs a working build of it to record the referee.
 - **Kane is sometimes unsure whose fault a failure is** (`710`). Ditto retries, heals, then has Kane author the test fresh on the rewrite; whatever is still unclear is shown as unclear, not counted as a pass or a fail.
@@ -92,6 +92,17 @@ Also: `ditto hook install` puts the same check on your own interactive Claude Co
 - **Evidence packs:** per-step screenshots, annotated frames, failure records and console logs, copied into the case (account details are never copied).
 - **Test Manager**: every authored run is uploaded; the case keeps its share link.
 
+## Look around without Kane or credits
+
+Every recorded run is in the repository, so you can read it in a terminal or open the console locally with nothing but Node:
+
+```bash
+git clone https://github.com/itssaharsh/ditto && cd ditto && npm install
+npm run ditto -- status --config ditto.mutation.config.json --loop   # the planted-bug run: every round, what Kane said, what Ditto did
+npm run web:build && npm run ditto -- ui                             # the console on http://127.0.0.1:4747, replaying the same runs
+npm test                                                             # unit tests, fed with real Kane CLI output
+```
+
 ## Run it
 
 You need Node 22, [Kane CLI](https://www.testmuai.com/support/docs/kane-cli-introduction/) (`npm i -g @testmuai/kane-cli`, then `kane-cli login`), Google Chrome, and [Claude Code](https://code.claude.com) signed in.
@@ -129,7 +140,7 @@ At parity Ditto copies the tests into the rewrite repo (`tests/kane/`), writes t
 | The ports and every fix | Written by Claude Code (Sonnet 5.5, and Haiku 5.5 for the second port) in [todomvc-react-port](https://github.com/itssaharsh/todomvc-react-port); one commit per round |
 | The planted bugs | Written by a separate Claude Code session; its list was kept outside the repository until the run ended |
 | Every pass, fail, verdict and screenshot | Real Kane CLI runs, recorded in `cases/*/case.json` |
-| The note about the untested Escape quirk | Found by a person reading the diff, then checked with two Kane runs ([`docs/edge-check.json`](docs/edge-check.json)) |
+| The note about the untested Escape quirk | Found by a person reading the diff, then looked at with two Kane runs ([`docs/edge-check.json`](docs/edge-check.json)): a pass on the old app, and a `710` on the port, where Kane blamed the check |
 | Live mode on the website | Not hosted: the site replays the recorded runs. Live runs need Kane and Claude Code on your machine. |
 
 ## Built with

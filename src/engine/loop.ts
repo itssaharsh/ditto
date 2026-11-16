@@ -18,6 +18,11 @@ export interface LoopOptions {
 
 const now = () => new Date().toISOString();
 
+/** True when a run failed at one of the test's checks (an assertion), rather than missing an element or crashing. */
+export function failedAtCheck(...runs: RunSummary[]): boolean {
+  return runs.some((r) => /assertion_failed/i.test(r.reason ?? ''));
+}
+
 export class DittoLoop {
   readonly cfg: LoadedConfig;
   readonly rec: CaseRecorder;
@@ -41,6 +46,7 @@ export class DittoLoop {
     this.rec.data.suite.spec = cfg.spec;
     if (cfg.namedExample) this.rec.data.named = cfg.namedExample;
     if (cfg.note) this.rec.data.note = cfg.note;
+    if (cfg.tab) this.rec.data.tab = cfg.tab;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -385,6 +391,7 @@ export class DittoLoop {
     const origin = this.cfg.rewriteUrl.replace(/\/$/, '');
     const reached = (x: RunSummary) => (x.urls ?? []).some((u) => u.startsWith(origin));
     if (s.outcome === 'error' || (s.outcome !== 'pass' && !reached(s))) s = await this.kane(t, 'rewrite', n, 'replay');
+    const replay = s;
     if (s.outcome !== 'pass' && this.creditsLeft()) {
       this.rec.event({
         kind: 'decision',
@@ -404,6 +411,21 @@ export class DittoLoop {
           did: 'Had Kane author the same test from scratch on the rewrite, without the legacy recording',
         });
         s = await this.kane(t, 'rewrite', n, 'fresh');
+      }
+      // The replay got as far as a check and the check failed: that is a behaviour signal, not a markup miss.
+      // Healing re-authors steps until the test passes, and the mutation check showed it can step around a
+      // real regression (it passed two tests a planted bug broke). So a healed pass only counts if a fresh run,
+      // authored from the plain-English test without the legacy recording, passes too.
+      if (s.outcome === 'pass' && s.healTriggered && failedAtCheck(replay, s) && this.creditsLeft()) {
+        this.rec.event({
+          kind: 'decision',
+          round: n,
+          test: t.id,
+          said: `The replay reached the check and it failed (${replay.oneLiner ?? s.oneLiner ?? replay.reason ?? 'assertion failed'}); healing then passed it`,
+          did: 'Did not take the healed pass: had Kane author the test from scratch on the rewrite to settle it',
+        });
+        const fresh = await this.kane(t, 'rewrite', n, 'fresh');
+        s = fresh.outcome === 'pass' || fresh.outcome === 'mismatch' || fresh.outcome === 'fail' ? fresh : { ...fresh, outcome: 'test_issue' };
       }
     }
     return s;
@@ -880,7 +902,7 @@ export function writeCasesIndex(casesDir: string): void {
     return {
       id,
       title: c.title,
-      tab: planted ? 'Bugs planted on purpose' : by ? `${by.replace(/^Claude /, '')} port` : c.title,
+      tab: c.tab ?? (planted ? 'Bugs planted on purpose' : by ? `${by.replace(/^Claude /, '')} port` : c.title),
       planted: planted || undefined,
       rewrite: c.apps.rewrite.framework,
       status: c.status,

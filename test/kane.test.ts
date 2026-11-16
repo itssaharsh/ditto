@@ -78,3 +78,12 @@ test('a replay reports its evidence pack and the pages it visited', () => {
   assert.match(r.pack ?? '', /\.evidence$/);
   assert.ok(r.sessionDir);
 });
+
+test('a healed pass needs confirming only when the replay failed at a check, not when it missed an element', async () => {
+  const { failedAtCheck } = await import('../src/engine/loop.js');
+  const base = { shots: [], consoleErrors: [], mode: 'replay' as const, startedAt: '', endedAt: '' };
+  assert.equal(failedAtCheck({ ...base, outcome: 'fail', reason: 'assertion_failed: @ step 4' }), true);
+  assert.equal(failedAtCheck({ ...base, outcome: 'pass', reason: 'replay completed' }, { ...base, outcome: 'pass', reason: 'assertion_failed: @ step 5' }), true);
+  assert.equal(failedAtCheck({ ...base, outcome: 'test_issue', reason: 'action_failed: navigate @ step 1' }), false);
+  assert.equal(failedAtCheck({ ...base, outcome: 'error' }), false);
+});

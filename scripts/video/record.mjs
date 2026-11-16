@@ -214,7 +214,7 @@ await clip('limit', async (page) => {
     card(
       'What Ditto can’t see',
       edgeConfirmed
-        ? 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks: the old app deletes a todo on Escape after you empty it; the port keeps it. We found it in the diff; Kane saw it on both apps.'
+        ? 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks: the old app deletes a todo on Escape after you empty it; the port keeps it. We found it in the diff, and Kane’s runs on both apps show it.'
         : 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks. We found it reading the diff. It’s in the README.',
     ),
   );

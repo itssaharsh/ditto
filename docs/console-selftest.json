@@ -1,57 +1,51 @@
 {
  "url": "https://itssaharsh.github.io/ditto/",
- "at": "2026-11-16T15:22:19.056Z",
+ "at": "2026-11-16T18:02:36.991Z",
  "results": [
   {
    "id": "all-behaviours-table",
    "outcome": "pass",
-   "credits": 35.72,
-   "durationS": 88.4,
-   "oneLiner": "opened the “Escape discards a todo title edit” behavior on the Ditto site",
-   "reason": "Objective completed",
-   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEAVZPGKCWWDE0Y9MPKJFF/dashboard/share/US_EWZO1JU9D5L7ZV5LZQ3IXXQUGJWBX7265YX7FPJNGXL2R9QZWQVK7OQCI8OCXN7R?type=summary&agentView=true&fqdn=summary-page",
+   "durationS": 20.55,
+   "reason": "replay completed",
    "shots": 2
   },
   {
    "id": "first-screen-shows-the-verdict",
    "outcome": "pass",
-   "credits": 11.7,
-   "durationS": 39.4,
-   "oneLiner": "verified the Ditto results page on itssaharsh.github.io",
-   "reason": "Objective completed",
-   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEDRZ9SKRXJNZ8X9RYCXGC/dashboard/share/US_9H4SYZADSMMJS3RNXHJYMTFV5EH0LOKSV7VSVG4N7LH8QCDQF9YVOKA71X8CXJ5I?type=summary&agentView=true&fqdn=summary-page",
+   "durationS": 19.69,
+   "reason": "replay completed",
    "shots": 1
   },
   {
    "id": "screenshot-opens-enlarged",
    "outcome": "pass",
-   "credits": 25.58,
-   "durationS": 132.51,
-   "oneLiner": "The first screenshot click already opened the dialog, but the replay then attempted a second click on the screenshot behind that dialog.",
+   "credits": 31.9,
+   "durationS": 127.77,
+   "oneLiner": "The screenshot dialog opened successfully, but the replay's next click targeted another screenshot rather than the visible Close button.",
    "reason": "action_failed: click @ step 4",
    "verdict": {
     "confirmed": false,
     "family": "automation_bug",
     "category": "agent_misstep",
     "severity": "minor",
-    "rootCause": "The recording contains an extra screenshot-click action instead of moving on to verify and close the open dialog.",
-    "bugTitle": "Replay clicks the screenshot again while its dialog is open",
-    "suggestion": "Update the recording to remove the duplicate screenshot click, then verify the visible dialog and click its Close button.",
-    "oneLiner": "The first screenshot click already opened the dialog, but the replay then attempted a second click on the screenshot behind that dialog.",
+    "rootCause": "The replay did not follow the recorded flow after opening the dialog. It attempted to click a screenshot while the dialog was already open instead of clicking Close.",
+    "bugTitle": "Replay clicks screenshot instead of dialog Close button",
+    "suggestion": "Update the replay to identify and click the dialog's Close button after the first Old app screenshot opens.",
+    "oneLiner": "The screenshot dialog opened successfully, but the replay's next click targeted another screenshot rather than the visible Close button.",
     "confidence": 0.98,
     "culpritStep": "0-4"
    },
-   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEG9S7PBWS0M0K79BQE7C9/dashboard/share/US_DZVW7CN3BFA8ZSKSOC59K6UODNI2RQCJICPG7A5ZAPYBO2C4AU2VHC1DVHU4MVY4?type=summary&agentView=true&fqdn=summary-page",
+   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEG9S7PBWS0M0K79BQE7C9/dashboard/share/US_ZHQ0EHHKU84GIO3Y1VEIGHXBUO4M3DXQ54GYUU2S6BEYBPOTUDBDV3QKYGBPSNP6?type=summary&agentView=true&fqdn=summary-page",
    "shots": 1
   },
   {
    "id": "try-these-switches-behaviour",
    "outcome": "pass",
-   "credits": 24.39,
-   "durationS": 82.3,
-   "oneLiner": "opened the Escape discards a todo title edit test on the Ditto page",
+   "credits": 20.53,
+   "durationS": 69.9,
+   "oneLiner": "opened the completed-todos scenario on itssaharsh.github.io",
    "reason": "Objective completed",
-   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEMN7YQ6DH3C94AKFHJ2AX/dashboard/share/US_W7LQ97JM18L4I2FS0MXP2VKRZHQ8JXF9XUO76SLEXGT6QU1U66P6X3INY9STS1WR?type=summary&agentView=true&fqdn=summary-page",
+   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JEMN7YQ6DH3C94AKFHJ2AX/dashboard/share/US_1YXG1RZ776PUL6LGHY9LGX09LTVA5X594UP7FBF34K9W368QAPS2PKXTKVNN9Y1L?type=summary&agentView=true&fqdn=summary-page",
    "shots": 1
   }
  ]

@@ -27,12 +27,12 @@ function help(): void {
   ditto record                  Run every behaviour on the legacy app (the oracle)
   ditto loop [--only a,b]       Record, let Claude Code port the app, replay on the port, fix until parity
        [--skip-port]            ...resume with the port that already exists
-  ditto check                   Replay the suite on the current rewrite once (no agent)
+  ditto check [--label L]                   Replay the suite on the current rewrite once (no agent)
   ditto spec-gaps               Behaviours the old app never met: Kane checks them on the rewrite, Claude implements them
   ditto fix                     Continue from the recorded check: send what still differs to Claude Code, round by round
   ditto mutate [--count 3]      Mutation check: a second agent breaks the rewrite on purpose; does Kane catch it?
   ditto ui [--port 4747]        Open the console (live while a loop runs)
-  ditto status                  Print the parity table for the current case
+  ditto status [--loop]                  Print the parity table for the current case
   ditto scan [--targets a,b]    Replay the reference recordings on other builds (e.g. every TodoMVC framework)
   ditto hook install            Make your interactive Claude Code session in the rewrite repo
                                 check with Ditto (Kane) before it is allowed to stop
@@ -81,7 +81,9 @@ async function main(): Promise<void> {
   if (cmd === 'status') {
     const file = cfg.abs(join(cfg.casesDir, cfg.case, 'case.json'));
     if (!existsSync(file)) return console.log('No case yet. Run `ditto record` or `ditto loop`.');
-    printStatus(JSON.parse(readFileSync(file, 'utf8')) as CaseFile);
+    const c = JSON.parse(readFileSync(file, 'utf8')) as CaseFile;
+    printStatus(c);
+    if (process.argv.includes('--loop')) printLoop(c);
     return;
   }
 
@@ -101,6 +103,11 @@ async function main(): Promise<void> {
     try {
       const n = Math.max(0, ...loop.rec.data.rounds.map((r) => r.n));
       await loop.check(n, loop.oraclePassing());
+      const round = loop.rec.data.rounds.find((r) => r.n === n);
+      if (round && flag('label')) round.label = flag('label');
+      // A check on its own ends the case: parity if every oracle behaviour matches, otherwise stopped with the differences listed.
+      loop.rec.data.status = loop.matchedCount(n) === loop.oraclePassing().length ? 'parity' : 'stopped';
+      loop.rec.save();
     } finally {
       loop.stopApps();
     }
@@ -312,6 +319,25 @@ function printStatus(c: CaseFile): void {
   const oraclePass = c.suite.tests.filter((t) => c.oracle[t.id]?.outcome === 'pass');
   const matched = oraclePass.filter((t) => latest(t.id)?.outcome === 'pass').length;
   console.log(`\nparity ${matched}/${oraclePass.length} · Kane runs ${c.totals.kaneRuns} (${c.totals.replays} pure replays) · ${c.totals.credits} credits · agent $${c.totals.agentCostUsd}`);
+}
+
+/** The closed loop as recorded: each agent turn, what Kane reported, and what Ditto did about it. Reads the case only (no Kane, no credits). */
+function printLoop(c: CaseFile): void {
+  const title = new Map(c.suite.tests.map((t) => [t.id, t.title]));
+  const one = (s?: string) => (s ?? '').replace(/\s+/g, ' ').replace(/[*`#]/g, '').trim().slice(0, 150);
+  for (const r of [...c.rounds].sort((a, b) => a.n - b.n)) {
+    const res = Object.values(r.results);
+    const same = res.filter((x) => x.outcome === 'pass').length;
+    const differ = res.filter((x) => x.outcome === 'mismatch' || x.outcome === 'fail').length;
+    console.log(`\n── round ${r.n}${r.agent ? ` · Claude Code (${r.agent.kind})` : r.label ? ` · ${r.label}` : ''}`);
+    if (r.agent?.summary) console.log(`   Claude: ${one(r.agent.summary)}${r.agent.commit ? ` [${r.agent.commit}]` : ''}`);
+    for (const e of c.events) {
+      if (e.kind !== 'decision' || e.round !== r.n || e.test === '-') continue;
+      console.log(`   Kane on "${title.get(e.test) ?? e.test}": ${one(e.said)}\n     → ${one(e.did)}`);
+    }
+    if (res.length) console.log(`   Kane: ${res.length} checked, ${same} same, ${differ} different, ${res.length - same - differ} unclear`);
+  }
+  if (c.caveat) console.log(`\nNote: ${one(c.caveat)}`);
 }
 
 // Keep suite parsing reachable for scripts: `tsx src/cli.ts suite`

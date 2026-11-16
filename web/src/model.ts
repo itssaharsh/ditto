@@ -66,6 +66,7 @@ export function pickNamed(rows: BehaviourRow[], named?: string): BehaviourRow | 
     .sort((a, b) => (a.fixedInRound ?? 0) - (b.fixedInRound ?? 0));
   return (
     fixed[0] ??
+    rows.find((r) => r.test.id === named && r.status === 'differs') ??
     rows.find((r) => r.status === 'differs') ??
     rows.find((r) => r.test.id === named && r.status === 'match') ??
     rows.find((r) => r.status === 'match') ??
@@ -82,8 +83,8 @@ export function tryOrder(rows: BehaviourRow[], named?: string): BehaviourRow[] {
 
 export function roundLabel(r: { n: number; label?: string; agent?: { kind: string } }): string {
   if (r.agent?.kind === 'mutate') return 'Broken';
-  if (r.n === 0) return 'Port';
   if (!r.agent && r.label) return r.label;
+  if (r.n === 0) return 'Port';
   if (r.agent?.kind === 'hook') return `Stop hook ${r.n}`;
   if (r.agent?.kind === 'spec') return `Spec ${r.n}`;
   return `Fix ${r.n}`;
@@ -93,6 +94,7 @@ export function roundLabel(r: { n: number; label?: string; agent?: { kind: strin
 export function roundPhrase(c: CaseFile, n: number): string {
   const r = c.rounds.find((x) => x.n === n);
   if (r?.agent?.kind === 'mutate') return 'on the broken build';
+  if (r && !r.agent && r.label) return `in the ${r.label.charAt(0).toLowerCase()}${r.label.slice(1)}`;
   if (n === 0) return 'on the first port';
   return `in round ${n}`;
 }

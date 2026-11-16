@@ -93,6 +93,10 @@ export interface CaseFile {
   note?: string;
   /** A limit of this run found after it, by a person reading the diffs (shown as such, never as a Kane result). */
   caveat?: string;
+  /** Short name for the console's run switcher. */
+  tab?: string;
+  /** Mutation runs: what the fixer's own transcript shows (scripts/audit-fixer.ts). */
+  audit?: { fixerSessions: number; fixerToolCalls: number; touchedAnswerKey: number; checkedAt: string };
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];

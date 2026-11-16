@@ -73,7 +73,7 @@ export function phases(c: CaseFile): Phase[] {
     return times.length ? Math.min(...times) : NaN;
   };
   const labelOf = (r: Round) =>
-    r.n === 0 && r.agent?.kind === 'mutate' ? 'Broken on purpose + check' : r.n === 0 ? 'Port + check' : r.agent?.kind === 'hook' ? 'Stop hook' : r.agent?.kind === 'spec' ? 'Spec fix + check' : r.label ?? `Fix ${r.n} + check`;
+    r.n === 0 && r.agent?.kind === 'mutate' ? 'Broken on purpose + check' : !r.agent && r.label ? r.label : r.n === 0 ? 'Port + check' : r.agent?.kind === 'hook' ? 'Stop hook' : r.agent?.kind === 'spec' ? 'Spec fix + check' : r.label ?? `Fix ${r.n} + check`;
   const marks = rounds.map((r) => ({ label: labelOf(r), start: startOf(r) })).filter((m) => !Number.isNaN(m.start));
   const out: Phase[] = [{ label: 'Record the old app', start, end: marks[0]?.start ?? end }];
   marks.forEach((m, i) => out.push({ label: m.label, start: m.start, end: marks[i + 1]?.start ?? end }));

@@ -14,6 +14,8 @@ export interface DittoConfig {
   namedExample?: string;
   /** One line shown under the console's title for this case. */
   note?: string;
+  /** Short name for the console's run switcher (defaults to one derived from the title). */
+  tab?: string;
   /** Reuse the oracle (recordings and results) of another case instead of recording the legacy app again. */
   oracleCase?: string;
   /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */

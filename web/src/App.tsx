@@ -214,6 +214,21 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
               <span>
                 <b>Same test file</b> on both apps
               </span>
+              {d.matched > 0 && (
+                <span>
+                  Last check of the {d.matched}: <b>{d.lastCheck.replayed}</b> replays of the old app&rsquo;s recordings
+                  {d.lastCheck.healed > 0 && (
+                    <>
+                      , <b>{d.lastCheck.healed}</b> healed
+                    </>
+                  )}
+                  {d.lastCheck.fresh > 0 && (
+                    <>
+                      , <b>{d.lastCheck.fresh}</b> written fresh by Kane
+                    </>
+                  )}
+                </span>
+              )}
               <span>
                 <b>{facts.rounds}</b> fix {facts.rounds === 1 ? 'round' : 'rounds'}
                 {facts.rounds === 0 ? ' needed' : ''}
@@ -333,16 +348,16 @@ function Answer({ c, d }: { c: CaseFile; d: Derived }) {
     const found = planted.filter((b) => b.fixRound !== undefined).length;
     return (
       <p className="ans">
-        <b>It did, and now it doesn&rsquo;t.</b> A second Claude Code session planted {planted.length} bugs. Kane caught{' '}
-        {found === planted.length ? `all ${found}` : `${found} of ${planted.length}`}, and Claude Code fixed them from Kane&rsquo;s findings alone in{' '}
-        {rounds} {rounds === 1 ? 'round' : 'rounds'}. Now {d.matched} of {d.oracleTotal} act the same.
+        <b>It did: a second Claude Code session planted {planted.length} bugs.</b> Kane&rsquo;s findings led Claude Code to{' '}
+        {found === planted.length ? `all ${found}` : `${found} of ${planted.length}`} in {rounds} {rounds === 1 ? 'round' : 'rounds'}, and now{' '}
+        {d.matched} of {d.oracleTotal} behaviours act the same again.
       </p>
     );
   }
   if (c.status === 'parity' && fixed.length > 0)
     return (
       <p className="ans">
-        <b>It did, and now it doesn&rsquo;t.</b> Kane confirmed {confirmed.length} {confirmed.length === 1 ? 'behaviour' : 'behaviours'} that changed, and
+        <b>Yes, and Claude Code fixed it.</b> Kane confirmed {confirmed.length} {confirmed.length === 1 ? 'behaviour' : 'behaviours'} that changed, and
         Claude Code fixed {confirmed.length === 1 ? 'it' : 'them'} from Kane&rsquo;s findings
         {unsure > 0 ? `; ${unsure} more that Kane was unsure about pass now too` : ''}. Now {d.matched} of {d.oracleTotal} act the same.
       </p>
@@ -358,7 +373,8 @@ function Answer({ c, d }: { c: CaseFile; d: Derived }) {
   if (c.status === 'stopped' || c.status === 'failed')
     return (
       <p className="ans">
-        <b>Yes, still.</b> {d.oracleTotal - d.matched} of {d.oracleTotal} behaviours act differently on the rewrite. Here is one of them.
+        <b>{rounds > 0 ? 'Yes, still.' : 'Yes.'}</b> {d.oracleTotal - d.matched} of {d.oracleTotal} behaviours act differently on the rewrite. Here is one
+        of them.
       </p>
     );
   if (c.status === 'recording') {
