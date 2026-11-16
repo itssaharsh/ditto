@@ -21,8 +21,8 @@
   "agent": {
     "model": "haiku",
     "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
-    "maxTurnsPort": 120,
-    "maxTurnsFix": 60
+    "maxTurnsPort": 40,
+    "maxTurnsFix": 40
   },
   "parallel": 3,
   "maxRounds": 4,

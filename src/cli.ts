@@ -4,7 +4,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { join } from 'node:path';
 import { loadConfig } from './engine/config.js';
 import { designSuite } from './engine/design.js';
-import { DittoLoop } from './engine/loop.js';
+import { DittoLoop, writeCasesIndex } from './engine/loop.js';
 import { serveConsole } from './engine/apps.js';
 import { findTargets, scan } from './engine/scan.js';
 import { importDesigned, loadSuite } from './engine/suite.js';
@@ -123,7 +123,13 @@ async function main(): Promise<void> {
   }
   if (cmd === 'loop') {
     const data = await loop.run({ skipPort: has('skip-port') });
+    writeCasesIndex(cfg.abs(cfg.casesDir));
     printStatus(data);
+    return;
+  }
+  if (cmd === 'index') {
+    writeCasesIndex(cfg.abs(cfg.casesDir));
+    console.log(readFileSync(join(cfg.abs(cfg.casesDir), 'index.json'), 'utf8'));
     return;
   }
   help();

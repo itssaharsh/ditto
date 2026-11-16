@@ -7,12 +7,49 @@ import { useCase, useParam } from './useCase';
 
 const DEFAULT_CASE = 'todomvc';
 
+export interface CasesIndex {
+  default?: string;
+  cases: { id: string; title: string; rewrite: string; status: string; matched: number; total: number; fixRounds: number; createdAt: string }[];
+}
+
+function useIndex(): { loaded: boolean; index?: CasesIndex } {
+  const [state, setState] = useState<{ loaded: boolean; index?: CasesIndex }>({ loaded: false });
+  useEffect(() => {
+    fetch('./cases/index.json', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : undefined))
+      .then((index) => setState({ loaded: true, index }))
+      .catch(() => setState({ loaded: true }));
+  }, []);
+  return state;
+}
+
 export function App() {
   const [caseParam] = useParam('case');
-  const caseId = caseParam ?? DEFAULT_CASE;
-  const { data, error } = useCase(caseId);
+  const { loaded, index } = useIndex();
+  if (!loaded && !caseParam) return <Shell><Skeleton /></Shell>;
+  return <CaseLoader id={caseParam ?? index?.default ?? DEFAULT_CASE} index={index} />;
+}
+
+function CaseLoader({ id, index }: { id: string; index?: CasesIndex }) {
+  const { data, error } = useCase(id);
   if (!data) return <Shell>{error ? <NoCase error={error} /> : <Skeleton />}</Shell>;
-  return <CaseView c={data} />;
+  return <CaseView c={data} index={index} />;
+}
+
+function CaseTabs({ index, current }: { index?: CasesIndex; current: string }) {
+  if (!index || index.cases.length < 2) return null;
+  return (
+    <nav className="cases" aria-label="Runs">
+      {index.cases.map((k) => (
+        <a key={k.id} href={`?case=${k.id}`} className={k.id === current ? 'on' : ''} aria-current={k.id === current ? 'page' : undefined}>
+          <b>{k.title.replace(/^.*ported by /, '').replace('Claude Code', 'Claude Code')}</b>
+          <span>
+            {k.matched}/{k.total} same{k.fixRounds ? ` after ${k.fixRounds} fix ${k.fixRounds === 1 ? 'round' : 'rounds'}` : ' on the first port'}
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
@@ -97,7 +134,7 @@ function useReplay(full: CaseFile) {
   return { t, playing, start, stop, toggle: () => setPlaying((p) => !p), span, speed: Math.round((span.end - span.start) / (REPLAY_SECONDS * 1000)) };
 }
 
-function CaseView({ c: full }: { c: CaseFile }) {
+function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
   const replay = useReplay(full);
   const c = useMemo(() => (replay.t === null ? full : atTime(full, replay.t)), [full, replay.t]);
   const d: Derived = useMemo(() => derive(c), [c]);
@@ -126,6 +163,7 @@ function CaseView({ c: full }: { c: CaseFile }) {
       <header className="hero">
         <h1>Ditto: Did the rewrite break anything?</h1>
         <Answer c={c} d={d} />
+        <CaseTabs index={index} current={full.id} />
         <ReplayBar full={full} replay={replay} />
       </header>
 

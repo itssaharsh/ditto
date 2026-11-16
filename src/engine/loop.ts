@@ -672,6 +672,27 @@ export class DittoLoop {
   }
 }
 
+/** cases/index.json: what the console lists in its case switcher, and which case it opens first. */
+export function writeCasesIndex(casesDir: string): void {
+  const items = listCases(casesDir).map((id) => {
+    const c = JSON.parse(readFileSync(join(casesDir, id, 'case.json'), 'utf8')) as CaseFile;
+    const oracle = c.suite.tests.filter((t) => c.oracle[t.id]?.outcome === 'pass');
+    const latest = (tid: string) => [...c.rounds].sort((a, b) => a.n - b.n).reduce<RunSummary | undefined>((acc, r) => r.results[tid] ?? acc, undefined);
+    return {
+      id,
+      title: c.title,
+      rewrite: c.apps.rewrite.framework,
+      status: c.status,
+      matched: oracle.filter((t) => latest(t.id)?.outcome === 'pass').length,
+      total: oracle.length,
+      fixRounds: c.rounds.filter((r) => r.n > 0 && r.agent?.kind === 'fix').length,
+      createdAt: c.createdAt,
+    };
+  });
+  const best = [...items].sort((a, b) => b.fixRounds - a.fixRounds)[0];
+  writeFileSync(join(casesDir, 'index.json'), JSON.stringify({ default: best?.id, cases: items }, null, 1));
+}
+
 export function listCases(casesDir: string): string[] {
   return existsSync(casesDir) ? readdirSync(casesDir).filter((d) => existsSync(join(casesDir, d, 'case.json'))) : [];
 }

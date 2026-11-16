@@ -1056,97 +1056,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/2-0-2-annotated.png",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/3-0-3-annotated.png",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/4-0-4-screenshot.jpg",
-     "summary": "wait: Waiting for the plan to process",
-     "status": "passed"
-    },
-    {
-     "step": "0-5",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/5-0-5-screenshot.jpg",
-     "summary": "press_key: Press Home",
-     "status": "passed"
-    },
-    {
-     "step": "0-6",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/6-0-6-screenshot.jpg",
-     "summary": "press_key: Press R",
-     "status": "passed"
-    },
-    {
-     "step": "0-7",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/7-0-7-screenshot.jpg",
-     "summary": "press_key: Press Enter",
-     "status": "passed"
-    },
-    {
-     "step": "0-8",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/8-0-8-annotated.png",
-     "summary": "click: Clicking mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "0-8",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/8-0-8-screenshot.jpg",
-     "summary": "click: Clicking mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "0-9",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/9-0-9-annotated.png",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-9",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/9-0-9-screenshot.jpg",
-     "summary": "fill: Typing Review proposal into the new todo input",
-     "status": "passed"
-    },
-    {
      "step": "0-10",
      "kind": "screenshot",
      "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/10-0-10-screenshot.jpg",
@@ -1154,66 +1063,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/11-1-1-annotated.png",
-     "summary": "click: PRIMARY: In the todo list, double-click the newly created 'Review proposal' item",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/11-1-1-screenshot.jpg",
-     "summary": "click: PRIMARY: In the todo list, double-click the newly created 'Review proposal' item",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/12-1-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"The 'Review proposal' todo item's other controls are hi",
-     "status": "passed"
-    },
-    {
      "step": "1-3",
      "kind": "screenshot",
      "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/13-1-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/14-2-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"textbox\"; press_key \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "annotated",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/15-2-2-annotated.png",
-     "summary": "type: Type \"  Review contract  \" into \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/15-2-2-screenshot.jpg",
-     "summary": "type: Type \"  Review contract  \" into \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/16-2-3-screenshot.jpg",
-     "summary": "press_key: Press Tab",
-     "status": "passed"
-    },
-    {
-     "step": "2-4",
-     "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/17-2-4-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"The todo item's displayed title equals 'Review contract",
      "status": "passed"
     },
     {
@@ -1244,45 +1097,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "wait: PRIMARY: Load the todo app",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the new-todo input at the top of the page is the active",
-     "status": "passed"
-    },
-    {
      "step": "0-4",
      "kind": "screenshot",
      "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/4-0-4-screenshot.jpg",
      "summary": "assert: the new-todo input at the top of the page is the active focused element",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/5-1-1-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the number of todos in the all-todos list is saved as {",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/6-1-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
      "status": "passed"
     },
     {
@@ -1293,48 +1111,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "annotated",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/9-2-2-annotated.png",
-     "summary": "type: Type \"   \" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/9-2-2-screenshot.jpg",
-     "summary": "type: Type \"   \" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/10-2-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "2-4",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/11-2-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press Enter in the todo app's new-todo input at the top; role=textbox; ",
-     "status": "passed"
-    },
-    {
-     "step": "2-5",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/12-2-5-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the all-todos list still has exactly the captured {{bas",
-     "status": "passed"
-    },
-    {
      "step": "2-6",
      "kind": "screenshot",
      "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/13-2-6-screenshot.jpg",
@@ -1342,31 +1118,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/14-3-1-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the number of todos in the all-todos list before pressi",
-     "status": "passed"
-    },
-    {
      "step": "3-2",
      "kind": "screenshot",
      "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/15-3-2-screenshot.jpg",
      "summary": "wait: Waiting after all required checkpoint analyses have passed",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/16-4-1-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press Enter in the todo app's new-todo input at the top",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/legacy-r0-author/17-4-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the all-todos list still has exactly the latest capture",
      "status": "passed"
     },
     {
@@ -1399,94 +1154,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "annotated",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/2-0-2-annotated.png",
-     "summary": "type: Typing the active todo text into the input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "type: Typing the active todo text into the input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to submit the active todo",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "annotated",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/4-0-4-annotated.png",
-     "summary": "type: Typing into the completed todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/4-0-4-screenshot.jpg",
-     "summary": "type: Typing into the completed todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-5",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/5-0-5-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to submit the completed todo",
-     "status": "passed"
-    },
-    {
-     "step": "0-6",
-     "kind": "annotated",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/6-0-6-annotated.png",
-     "summary": "click: Clicking the completed todo item",
-     "status": "passed"
-    },
-    {
-     "step": "0-6",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/6-0-6-screenshot.jpg",
-     "summary": "click: Clicking the completed todo item",
-     "status": "passed"
-    },
-    {
      "step": "0-7",
      "kind": "screenshot",
      "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/7-0-7-screenshot.jpg",
      "summary": "wait: Waiting verify the All list contains the requested active and completed todos",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/8-1-1-annotated.png",
-     "summary": "click: Clicking Clear completed in the todo footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/8-1-1-screenshot.jpg",
-     "summary": "click: Clicking Clear completed in the todo footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/legacy-r0-author/9-1-2-screenshot.jpg",
-     "summary": "analyze: Clear completed is hidden",
      "status": "passed"
     },
     {
@@ -1547,87 +1218,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "annotated",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/2-0-2-annotated.png",
-     "summary": "type: Typing the todo title into the What needs to be done textbox",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "type: Typing the todo title into the What needs to be done textbox",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "annotated",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/4-0-4-annotated.png",
-     "summary": "click: Clicking Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/4-0-4-screenshot.jpg",
-     "summary": "click: Clicking Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
      "step": "0-5",
      "kind": "screenshot",
      "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/5-0-5-screenshot.jpg",
      "summary": "wait: Waiting 1000 ms after confirming the completed todo state",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/6-1-1-annotated.png",
-     "summary": "click: Clicking Clear completed on the todo list footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/6-1-1-screenshot.jpg",
-     "summary": "click: Clicking Clear completed on the todo list footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/7-1-2-screenshot.jpg",
-     "summary": "analyze: Clear completed is hidden",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/8-1-3-screenshot.jpg",
-     "summary": "assert: no completed todos remain",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-resets-mark-all-after-all-todos-are/legacy-r0-author/9-1-4-screenshot.jpg",
-     "summary": "assert: Mark all as complete is unchecked",
      "status": "passed"
     },
     {
@@ -1720,80 +1314,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Show the All todo list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "analyze: the todo named 'Clear beta' is not already present",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/4-1-a0bdf4ee-1-screenshot.jpg",
-     "summary": "wait: queued plan (4 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-2",
-     "kind": "annotated",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/5-1-a0bdf4ee-2-annotated.png",
-     "summary": "type: Type \"Clear alpha\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/5-1-a0bdf4ee-2-screenshot.jpg",
-     "summary": "type: Type \"Clear alpha\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-3",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/6-1-a0bdf4ee-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-4",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/7-1-a0bdf4ee-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: submit the new todo named 'Clear alpha' with the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-5",
-     "kind": "annotated",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/8-1-a0bdf4ee-5-annotated.png",
-     "summary": "type: Typing Clear beta into the new todo field",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-5",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/8-1-a0bdf4ee-5-screenshot.jpg",
-     "summary": "type: Typing Clear beta into the new todo field",
-     "status": "passed"
-    },
-    {
-     "step": "1-a0bdf4ee-6",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/9-1-a0bdf4ee-6-screenshot.jpg",
-     "summary": "press_key: PRIMARY: submit the new todo named 'Clear beta' with the Enter key",
      "status": "passed"
     },
     {
@@ -1812,37 +1336,9 @@
     },
     {
      "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/12-2-1-annotated.png",
-     "summary": "click: Clicking the Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
      "kind": "screenshot",
      "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/12-2-1-screenshot.jpg",
      "summary": "click: Clicking the Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/13-3-1-annotated.png",
-     "summary": "click: Clicking Clear completed",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/13-3-1-screenshot.jpg",
-     "summary": "click: Clicking Clear completed",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/clear-completed-unchecks-mark-all/legacy-r0-author/14-3-2-screenshot.jpg",
-     "summary": "analyze: the 'Mark all as complete' checkbox is unchecked",
      "status": "passed"
     },
     {
@@ -1873,83 +1369,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "annotated",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/3-0-3-annotated.png",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "0-4",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/4-0-4-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "0-5",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/5-0-5-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to add the active todo",
-     "status": "passed"
-    },
-    {
-     "step": "0-6",
-     "kind": "annotated",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/6-0-6-annotated.png",
-     "summary": "type: Entering completed to-do title in the new-todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-6",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/6-0-6-screenshot.jpg",
-     "summary": "type: Entering completed to-do title in the new-todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "0-7",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/7-0-7-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to add the completed todo",
-     "status": "passed"
-    },
-    {
-     "step": "0-8",
-     "kind": "annotated",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/8-0-8-annotated.png",
-     "summary": "click: Clicking the completion checkbox for the completed todo",
-     "status": "passed"
-    },
-    {
-     "step": "0-8",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/8-0-8-screenshot.jpg",
-     "summary": "click: Clicking the completion checkbox for the completed todo",
-     "status": "passed"
-    },
-    {
      "step": "0-9",
      "kind": "screenshot",
      "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/9-0-9-screenshot.jpg",
@@ -1957,45 +1376,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/10-1-1-annotated.png",
-     "summary": "click: Clicking the Completed filter link in the footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/10-1-1-screenshot.jpg",
-     "summary": "click: Clicking the Completed filter link in the footer",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/11-1-2-screenshot.jpg",
-     "summary": "analyze: the Completed filter link has the `selected` class",
-     "status": "passed"
-    },
-    {
      "step": "1-3",
      "kind": "screenshot",
      "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/12-1-3-screenshot.jpg",
      "summary": "assert: the Completed filter link has the `selected` class",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/13-2-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: Inspect the displayed todo titles and completion states on the Complete",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/completed-route-displays-only-completed-todos/legacy-r0-author/14-2-2-screenshot.jpg",
-     "summary": "analyze: {{global.active_todo_title}} is absent",
      "status": "passed"
     },
     {
@@ -2028,13 +1412,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/2-0-2-screenshot.jpg",
@@ -2042,66 +1419,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "annotated",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/4-1-2-annotated.png",
-     "summary": "type: Type \"{{global.completed_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "type: Type \"{{global.completed_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/5-1-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/6-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to create the todo in the new-todo input at the top",
-     "status": "passed"
-    },
-    {
      "step": "1-5",
      "kind": "screenshot",
      "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/7-1-5-screenshot.jpg",
      "summary": "wait: Waiting after creating the todo in the new-todo input at the top of the app",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/8-2-1-annotated.png",
-     "summary": "click: Clicking mark-all checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "click: Clicking mark-all checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/9-2-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'zero equals the independently counted unchecked todo ro",
      "status": "passed"
     },
     {
@@ -2134,73 +1455,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Reach the todo app's All list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/3-1-1-annotated.png",
-     "summary": "type: Typing into the todo input box",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "type: Typing into the todo input box",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "annotated",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/5-1-3-annotated.png",
-     "summary": "type: Typing \"Assurance active epsilon\" in the todo input",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/5-1-3-screenshot.jpg",
-     "summary": "type: Typing \"Assurance active epsilon\" in the todo input",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/6-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "1-5",
-     "kind": "annotated",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/7-1-5-annotated.png",
-     "summary": "click: Clicking Assurance completed delta checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "1-5",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/7-1-5-screenshot.jpg",
-     "summary": "click: Clicking Assurance completed delta checkbox",
      "status": "passed"
     },
     {
@@ -2211,27 +1469,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/9-2-1-annotated.png",
-     "summary": "click: Clicking Completed filter in the footer",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/9-2-1-screenshot.jpg",
-     "summary": "click: Clicking Completed filter in the footer",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/10-2-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"the `.destroy` remove button for 'Assurance completed d",
-     "status": "passed"
-    },
-    {
      "step": "2-3",
      "kind": "screenshot",
      "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/11-2-3-screenshot.jpg",
@@ -2239,52 +1476,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/12-3-1-annotated.png",
-     "summary": "click: Clicking the remove button for Assurance completed delta in Completed filter",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/12-3-1-screenshot.jpg",
-     "summary": "click: Clicking the remove button for Assurance completed delta in Completed filter",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/13-3-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(visual, \"'Assurance completed delta' is absent from the Completed filter",
-     "status": "passed"
-    },
-    {
      "step": "3-3",
      "kind": "screenshot",
      "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/14-3-3-screenshot.jpg",
      "summary": "assert: 'Assurance completed delta' is absent from the Completed filter list",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/15-4-1-screenshot.jpg",
-     "summary": "click: Clicking open its All list",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/16-4-2-screenshot.jpg",
-     "summary": "navigate: PRIMARY: open its All list",
-     "status": "passed"
-    },
-    {
-     "step": "4-3",
-     "kind": "screenshot",
-     "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/legacy-r0-author/17-4-3-screenshot.jpg",
-     "summary": "analyze: 'Assurance completed delta' is absent from the list",
      "status": "passed"
     },
     {
@@ -2317,59 +1512,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Reach the todo app's All list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/3-1-1-annotated.png",
-     "summary": "type: Typing Assurance target alpha into the todo textbox",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "type: Typing Assurance target alpha into the todo textbox",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "annotated",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/5-1-3-annotated.png",
-     "summary": "type: Typing Assurance neighbour beta",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/5-1-3-screenshot.jpg",
-     "summary": "type: Typing Assurance neighbour beta",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/6-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
      "status": "passed"
     },
     {
@@ -2380,20 +1526,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: On the All list, hover over 'Assurance target alpha'; role=text; text=\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/9-2-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"the `.destroy` remove button for 'Assurance target alph",
-     "status": "passed"
-    },
-    {
      "step": "2-3",
      "kind": "screenshot",
      "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/10-2-3-screenshot.jpg",
@@ -2401,45 +1533,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/11-3-1-annotated.png",
-     "summary": "click: Removing Assurance target alpha using the revealed × button",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/11-3-1-screenshot.jpg",
-     "summary": "click: Removing Assurance target alpha using the revealed × button",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/12-3-2-screenshot.jpg",
-     "summary": "analyze: 'Assurance target alpha' is absent from the list.",
-     "status": "passed"
-    },
-    {
      "step": "3-3",
      "kind": "screenshot",
      "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/13-3-3-screenshot.jpg",
      "summary": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/14-4-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: Reload the todo app's All list",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-one-active-todo-preserves-its-neighbour/legacy-r0-author/15-4-2-screenshot.jpg",
-     "summary": "analyze: 'Assurance target alpha' is absent from the list.",
      "status": "passed"
     },
     {
@@ -2536,52 +1633,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Reach the todo app's All list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "annotated",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/4-1-2-annotated.png",
-     "summary": "type: Type \"Assurance sole gamma\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "type: Type \"Assurance sole gamma\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/5-1-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/6-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: establish a sole active todo named 'Assurance sole gamma'; role=textbox",
      "status": "passed"
     },
     {
@@ -2592,20 +1647,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: On the All list, hover over 'Assurance sole gamma'",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/9-2-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"the `.destroy` remove button for 'Assurance sole gamma'",
-     "status": "passed"
-    },
-    {
      "step": "2-3",
      "kind": "screenshot",
      "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/10-2-3-screenshot.jpg",
@@ -2613,45 +1654,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/11-3-1-annotated.png",
-     "summary": "click: Clicking remove (×) for Assurance sole gamma",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/11-3-1-screenshot.jpg",
-     "summary": "click: Clicking remove (×) for Assurance sole gamma",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/12-3-2-screenshot.jpg",
-     "summary": "analyze: `#footer` is hidden",
-     "status": "passed"
-    },
-    {
      "step": "3-3",
      "kind": "screenshot",
      "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/13-3-3-screenshot.jpg",
      "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/14-4-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: Reload the todo app's All list",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/legacy-r0-author/15-4-2-screenshot.jpg",
-     "summary": "analyze: 'Assurance sole gamma' remains absent.",
      "status": "passed"
     },
     {
@@ -2794,27 +1800,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "wait: Waiting for the todo app to load",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "analyze: Checking whether the new-todo input is focused",
-     "status": "passed"
-    },
-    {
      "step": "0-4",
      "kind": "screenshot",
      "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/4-0-4-screenshot.jpg",
@@ -2829,55 +1814,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/6-2-1-screenshot.jpg",
-     "summary": "wait: Waiting for the next step to load",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "annotated",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/7-2-2-annotated.png",
-     "summary": "fill: Type \"  Buy milk  \" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/7-2-2-screenshot.jpg",
-     "summary": "fill: Type \"  Buy milk  \" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/8-2-3-screenshot.jpg",
-     "summary": "press_key: Pressing the Enter key",
-     "status": "passed"
-    },
-    {
-     "step": "2-4",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/9-2-4-screenshot.jpg",
-     "summary": "analyze: Reading the all-todos item count",
-     "status": "passed"
-    },
-    {
-     "step": "2-5",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/10-2-5-screenshot.jpg",
-     "summary": "analyze: Reading the newly appended todo title",
-     "status": "passed"
-    },
-    {
-     "step": "2-6",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/11-2-6-screenshot.jpg",
-     "summary": "analyze: Reading the new-todo input character count",
-     "status": "passed"
-    },
-    {
      "step": "2-7",
      "kind": "screenshot",
      "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/12-2-7-screenshot.jpg",
@@ -2885,59 +1821,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/13-3-1-screenshot.jpg",
-     "summary": "press_key: Pressing Enter",
-     "status": "passed"
-    },
-    {
      "step": "3-2",
      "kind": "screenshot",
      "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/14-3-2-screenshot.jpg",
      "summary": "analyze: Recording the baseline all-todos count",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/15-4-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "annotated",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/16-4-2-annotated.png",
-     "summary": "type: Type \"Call home\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/16-4-2-screenshot.jpg",
-     "summary": "type: Type \"Call home\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "4-3",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/17-4-3-screenshot.jpg",
-     "summary": "press_key: Press Enter",
-     "status": "passed"
-    },
-    {
-     "step": "4-4",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/18-4-4-screenshot.jpg",
-     "summary": "wait: PRIMARY: wait 200 ms for the todo list update to settle",
-     "status": "passed"
-    },
-    {
-     "step": "4-5",
-     "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/19-4-5-screenshot.jpg",
-     "summary": "analyze: The new-todo input is empty.",
      "status": "passed"
     },
     {
@@ -2970,34 +1857,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "annotated",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/2-0-2-annotated.png",
-     "summary": "type: Typing Review proposal in the new to-do field",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "type: Typing Review proposal in the new to-do field",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
      "step": "0-4",
      "kind": "screenshot",
      "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/4-0-4-screenshot.jpg",
@@ -3005,66 +1864,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/5-1-1-annotated.png",
-     "summary": "click: PRIMARY: In the todo list, double-click the newly created 'Review proposal' item",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/5-1-1-screenshot.jpg",
-     "summary": "click: PRIMARY: In the todo list, double-click the newly created 'Review proposal' item",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/6-1-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"The newly created 'Review proposal' item's other contro",
-     "status": "passed"
-    },
-    {
      "step": "1-3",
      "kind": "screenshot",
      "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/7-1-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"textbox\"; press_key \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "annotated",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/9-2-2-annotated.png",
-     "summary": "type: Type \"Review contract\" into \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/9-2-2-screenshot.jpg",
-     "summary": "type: Type \"Review contract\" into \"textbox\"",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/10-2-3-screenshot.jpg",
-     "summary": "press_key: Press Escape",
-     "status": "passed"
-    },
-    {
-     "step": "2-4",
-     "kind": "screenshot",
-     "file": "assets/escape-discards-a-todo-title-edit/legacy-r0-author/11-2-4-screenshot.jpg",
-     "summary": "analyze: the item's displayed title remains 'Review proposal'",
      "status": "passed"
     },
     {
@@ -3097,27 +1900,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "annotated",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/2-0-2-annotated.png",
-     "summary": "fill: Typing Review proposal in the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "fill: Typing Review proposal in the new todo input",
-     "status": "passed"
-    },
-    {
      "step": "0-3",
      "kind": "screenshot",
      "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/3-0-3-screenshot.jpg",
@@ -3125,59 +1907,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/4-1-1-annotated.png",
-     "summary": "click: Double-clicking Review proposal to edit it",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/4-1-1-screenshot.jpg",
-     "summary": "click: Double-clicking Review proposal to edit it",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/5-1-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"The edited 'Review proposal' todo item's other controls",
-     "status": "passed"
-    },
-    {
      "step": "1-3",
      "kind": "screenshot",
      "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/6-1-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/7-2-1-annotated.png",
-     "summary": "type: Typing Review contract in the todo edit box",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/7-2-1-screenshot.jpg",
-     "summary": "type: Typing Review contract in the todo edit box",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/8-2-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: Press Enter",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/enter-saves-a-trimmed-todo-title/legacy-r0-author/9-2-3-screenshot.jpg",
-     "summary": "analyze: the item's displayed title equals 'Review contract'",
      "status": "passed"
     },
     {
@@ -3210,20 +1943,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "wait: PRIMARY: open the todo app's All list",
-     "status": "passed"
-    },
-    {
      "step": "0-3",
      "kind": "screenshot",
      "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/3-0-3-screenshot.jpg",
@@ -3231,80 +1950,10 @@
      "status": "passed"
     },
     {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/4-1-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "annotated",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/5-1-2-annotated.png",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/5-1-2-screenshot.jpg",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/6-1-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/7-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: On the todo app's All list, establish an active todo titled {{global.ac",
-     "status": "passed"
-    },
-    {
-     "step": "1-5",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/8-1-5-screenshot.jpg",
-     "summary": "analyze: Clear completed is hidden",
-     "status": "passed"
-    },
-    {
      "step": "1-6",
      "kind": "screenshot",
      "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/9-1-6-screenshot.jpg",
      "summary": "assert: Clear completed is hidden",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/10-2-1-annotated.png",
-     "summary": "click: Clicking × to remove the Pay rent todo so the list is empty",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/10-2-1-screenshot.jpg",
-     "summary": "click: Clicking × to remove the Pay rent todo so the list is empty",
-     "status": "passed"
-    },
-    {
-     "step": "2-2",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/11-2-2-screenshot.jpg",
-     "summary": "wait: PRIMARY: confirm the All list is empty after removing all remaining active todos",
-     "status": "passed"
-    },
-    {
-     "step": "2-3",
-     "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/12-2-3-screenshot.jpg",
-     "summary": "analyze: Clear completed is hidden",
      "status": "passed"
     },
     {
@@ -3337,31 +1986,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "navigate: Navigating to the TodoMVC All view page",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "wait: PRIMARY: On the TodoMVC All view, remove every existing todo through each item's",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "analyze: #footer is hidden.",
      "status": "passed"
     },
     {
@@ -3392,73 +2020,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Show the All todo list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, \"'Bulk beta' is not already present in the new-todo inpu",
-     "status": "passed"
-    },
-    {
-     "step": "1-6515c92d-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/4-1-6515c92d-1-annotated.png",
-     "summary": "type: Typing Bulk alpha into the new todo field",
-     "status": "passed"
-    },
-    {
-     "step": "1-6515c92d-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/4-1-6515c92d-1-screenshot.jpg",
-     "summary": "type: Typing Bulk alpha into the new todo field",
-     "status": "passed"
-    },
-    {
-     "step": "1-6515c92d-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/5-1-6515c92d-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to create a todo named 'Bulk alpha'",
-     "status": "passed"
-    },
-    {
-     "step": "1-6515c92d-3",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/6-1-6515c92d-3-screenshot.jpg",
-     "summary": "wait: Waiting briefly after confirming the todo named 'Bulk alpha' is visible",
-     "status": "passed"
-    },
-    {
-     "step": "1-a40aae46-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/7-1-a40aae46-1-annotated.png",
-     "summary": "type: Typing Bulk beta into the todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "1-a40aae46-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/7-1-a40aae46-1-screenshot.jpg",
-     "summary": "type: Typing Bulk beta into the todo input field",
-     "status": "passed"
-    },
-    {
-     "step": "1-a40aae46-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/8-1-a40aae46-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: Create a todo named 'Bulk beta' by pressing the Enter key",
      "status": "passed"
     },
     {
@@ -3476,45 +2041,10 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/11-2-1-annotated.png",
-     "summary": "click: Clicking the checkbox for Bulk beta to mark it completed",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/11-2-1-screenshot.jpg",
-     "summary": "click: Clicking the checkbox for Bulk beta to mark it completed",
-     "status": "passed"
-    },
-    {
      "step": "2-2",
      "kind": "screenshot",
      "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/12-2-2-screenshot.jpg",
      "summary": "wait: Waiting confirm Bulk beta is completed and Bulk alpha remains active",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/13-3-1-annotated.png",
-     "summary": "click: Checking the Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/13-3-1-screenshot.jpg",
-     "summary": "click: Checking the Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-checks-every-todo-in-all/legacy-r0-author/14-3-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'Every existing todo in All has its item checkbox checke",
      "status": "passed"
     },
     {
@@ -3547,27 +2077,6 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/new-todo-input-receives-focus-on-page-load/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
-     "step": "0-2",
-     "kind": "screenshot",
-     "file": "assets/new-todo-input-receives-focus-on-page-load/legacy-r0-author/2-0-2-screenshot.jpg",
-     "summary": "wait: PRIMARY: Load the todo app",
-     "status": "passed"
-    },
-    {
-     "step": "0-3",
-     "kind": "screenshot",
-     "file": "assets/new-todo-input-receives-focus-on-page-load/legacy-r0-author/3-0-3-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'the new-todo input at the top of the page is the active",
-     "status": "passed"
-    },
-    {
      "step": "0-4",
      "kind": "screenshot",
      "file": "assets/new-todo-input-receives-focus-on-page-load/legacy-r0-author/4-0-4-screenshot.jpg",
@@ -3597,94 +2106,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Show the All todo list",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "analyze: 'Restore beta' is not already present",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/4-1-43a543bc-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-2",
-     "kind": "annotated",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/5-1-43a543bc-2-annotated.png",
-     "summary": "type: Type \"Restore alpha\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/5-1-43a543bc-2-screenshot.jpg",
-     "summary": "type: Type \"Restore alpha\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-3",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/6-1-43a543bc-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-4",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/7-1-43a543bc-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: Create a todo named 'Restore alpha'; role=textbox; text=\"What needs to ",
-     "status": "passed"
-    },
-    {
-     "step": "1-43a543bc-5",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/8-1-43a543bc-5-screenshot.jpg",
-     "summary": "wait: Waiting confirm the todo named 'Restore alpha' remains visible",
-     "status": "passed"
-    },
-    {
-     "step": "1-b1b25393-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/9-1-b1b25393-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-b1b25393-2",
-     "kind": "annotated",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/10-1-b1b25393-2-annotated.png",
-     "summary": "type: Type \"Restore beta\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-b1b25393-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/10-1-b1b25393-2-screenshot.jpg",
-     "summary": "type: Type \"Restore beta\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-b1b25393-3",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/11-1-b1b25393-3-screenshot.jpg",
-     "summary": "press_key: Press Enter",
      "status": "passed"
     },
     {
@@ -3703,37 +2128,9 @@
     },
     {
      "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/14-2-1-annotated.png",
-     "summary": "click: Checking Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
      "kind": "screenshot",
      "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/14-2-1-screenshot.jpg",
      "summary": "click: Checking Mark all as complete checkbox",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/15-3-1-annotated.png",
-     "summary": "click: Clicking Mark all as complete checkbox to uncheck it",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/15-3-1-screenshot.jpg",
-     "summary": "click: Clicking Mark all as complete checkbox to uncheck it",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/mark-all-reactivates-every-completed-todo/legacy-r0-author/16-3-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'every existing todo in All has its item checkbox unchec",
      "status": "passed"
     },
     {
@@ -3766,38 +2163,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting Open the todo app's All view so the complete todo list is visible",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "annotated",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/3-1-1-annotated.png",
-     "summary": "type: Typing the completed todo title into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "type: Typing the completed todo title into the new todo input",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: submit the new-todo input at the top of the app by pressing the Enter k",
      "status": "passed"
     },
     {
@@ -3809,51 +2178,9 @@
     },
     {
      "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/6-2-1-annotated.png",
-     "summary": "click: Clicking the mark-all checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
      "kind": "screenshot",
      "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/6-2-1-screenshot.jpg",
      "summary": "click: Clicking the mark-all checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/7-3-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "annotated",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/8-3-2-annotated.png",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/8-3-2-screenshot.jpg",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "3-3",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/9-3-3-screenshot.jpg",
-     "summary": "press_key: Press Enter",
-     "status": "passed"
-    },
-    {
-     "step": "3-4",
-     "kind": "screenshot",
-     "file": "assets/one-active-todo-displays-a-singular-counter/legacy-r0-author/10-3-4-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'one equals the independently counted unchecked todo row",
      "status": "passed"
     },
     {
@@ -4051,52 +2378,10 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-1",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/1-0-1-screenshot.jpg",
-     "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
-    },
-    {
      "step": "0-2",
      "kind": "screenshot",
      "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting todo app's All view so the complete todo list is visible",
-     "status": "passed"
-    },
-    {
-     "step": "1-1",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/3-1-1-screenshot.jpg",
-     "summary": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "annotated",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/4-1-2-annotated.png",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-2",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/4-1-2-screenshot.jpg",
-     "summary": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
-     "status": "passed"
-    },
-    {
-     "step": "1-3",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/5-1-3-screenshot.jpg",
-     "summary": "",
-     "status": "passed"
-    },
-    {
-     "step": "1-4",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/6-1-4-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key to create the todo",
      "status": "passed"
     },
     {
@@ -4107,20 +2392,6 @@
      "status": "passed"
     },
     {
-     "step": "2-1",
-     "kind": "annotated",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/8-2-1-annotated.png",
-     "summary": "click: Clicking the Mark all as complete checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
-     "step": "2-1",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/8-2-1-screenshot.jpg",
-     "summary": "click: Clicking the Mark all as complete checkbox to complete all todos",
-     "status": "passed"
-    },
-    {
      "step": "2-2",
      "kind": "screenshot",
      "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/9-2-2-screenshot.jpg",
@@ -4128,52 +2399,10 @@
      "status": "passed"
     },
     {
-     "step": "3-1",
-     "kind": "annotated",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/10-3-1-annotated.png",
-     "summary": "type: Typing the new to-do title into the input at the top of the app",
-     "status": "passed"
-    },
-    {
-     "step": "3-1",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/10-3-1-screenshot.jpg",
-     "summary": "type: Typing the new to-do title into the input at the top of the app",
-     "status": "passed"
-    },
-    {
-     "step": "3-2",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/11-3-2-screenshot.jpg",
-     "summary": "press_key: PRIMARY: press the Enter key",
-     "status": "passed"
-    },
-    {
      "step": "3-3",
      "kind": "screenshot",
      "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/12-3-3-screenshot.jpg",
      "summary": "wait: Waiting for the newly created unfinished todo to remain visible",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "annotated",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/13-4-1-annotated.png",
-     "summary": "click: Clicking the active todo’s item checkbox to reactivate it in All view",
-     "status": "passed"
-    },
-    {
-     "step": "4-1",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/13-4-1-screenshot.jpg",
-     "summary": "click: Clicking the active todo’s item checkbox to reactivate it in All view",
-     "status": "passed"
-    },
-    {
-     "step": "4-2",
-     "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/14-4-2-screenshot.jpg",
-     "summary": "analyze: ANALYZE(textual_visual, 'two equals the independently counted unchecked todo row",
      "status": "passed"
     },
     {

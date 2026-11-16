@@ -943,3 +943,31 @@ details.sent pre {
   border-radius: 8px;
   color: var(--ink2);
 }
+
+/* switch between recorded runs */
+nav.cases {
+  height: auto;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -6px 0 16px;
+}
+nav.cases a {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 12px;
+  border-radius: var(--r-block);
+  background: var(--surf);
+  box-shadow: inset 0 0 0 1px var(--line), var(--lit);
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--ink2);
+}
+nav.cases a b {
+  color: var(--ink);
+  font-size: 14px;
+}
+nav.cases a.on {
+  background: var(--hl2);
+  box-shadow: inset 0 0 0 1px #e9c84a, var(--lit);
+}
