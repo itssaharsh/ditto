@@ -153,7 +153,9 @@ export class DittoLoop {
 
   private async pool<T>(items: T[], n: number, fn: (item: T) => Promise<void>): Promise<void> {
     const queue = [...items];
-    const workers = Array.from({ length: Math.min(n, queue.length) }, async () => {
+    // Kane runs that start in the same instant can race each other at start-up: stagger the workers.
+    const workers = Array.from({ length: Math.min(n, queue.length) }, async (_, w) => {
+      if (w > 0) await new Promise((r) => setTimeout(r, w * 12_000));
       while (queue.length) {
         const item = queue.shift()!;
         await fn(item);
@@ -353,7 +355,10 @@ export class DittoLoop {
   /** Replay the legacy recording on the rewrite; only re-author (heal) when the pure replay misses. */
   private async checkOne(t: SuiteTest, n: number): Promise<RunSummary> {
     let s = await this.kane(t, 'rewrite', n, 'replay');
-    if (s.outcome === 'error') s = await this.kane(t, 'rewrite', n, 'replay');
+    // A replay that never reached the rewrite (or crashed) says nothing about it: run it again before healing.
+    const origin = this.cfg.rewriteUrl.replace(/\/$/, '');
+    const reached = (x: RunSummary) => (x.urls ?? []).some((u) => u.startsWith(origin));
+    if (s.outcome === 'error' || (s.outcome !== 'pass' && !reached(s))) s = await this.kane(t, 'rewrite', n, 'replay');
     if (s.outcome !== 'pass' && this.creditsLeft()) {
       this.rec.event({
         kind: 'decision',
