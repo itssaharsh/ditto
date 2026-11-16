@@ -22,6 +22,7 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Red-team 2 (redteam-2.md) → fixes: honest claims, heal rule in the engine, fixer audit, status --loop, LICENSE, OG card
 - [x] Re-check of the broken build with the heal rule (case todomvc-recheck): 6 confirmed differences instead of 2, all 3 planted bugs in one check, 539 credits
 - [x] Scorecard (scorecard.md), launch drafts updated with the re-check story
+- [x] Red-team re-audit (≈7.9/10) → wording fixes; clean-port validation of the heal rule: 18/18, no false alarm
 
 ## Now
 - [~] Record the video (scripts/video/record.mjs from the live site) and check it under 3:00
