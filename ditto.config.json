@@ -1,6 +1,6 @@
 {
   "case": "todomvc",
-  "title": "TodoMVC: jQuery \u2192 React, ported by Claude Code",
+  "title": "TodoMVC: jQuery \u2192 React, ported by Claude Sonnet 5.5",
   "spec": "fixtures/app-spec.md",
   "suite": "suites/todomvc",
   "legacy": {
