@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+
+/** Which part of Kane's screenshots the small frames show; the default suits TodoMVC's narrow, centred app. */
+export const FrameCrop = createContext<{ left: number; top: number; width: number } | undefined>(undefined);
 import { assetUrl, type BehaviourRow, type CaseFile, type Derived, type RunSummary } from './data';
 import { firstFailingRound, fmtDate, framesByStep, plantedBugs, roundLabel, roundPhrase, verdictText, type EvidenceShot, type StepFrame } from './model';
 
@@ -32,12 +35,18 @@ function StepText({ text, lit, vars }: { text: string; lit: boolean; vars?: Reco
 
 function Frame({ caseId, shot, label, tone, passed }: { caseId: string; shot?: EvidenceShot; label: string; tone?: 'fail' | 'pass'; passed?: boolean }) {
   const dlg = useRef<HTMLDialogElement>(null);
+  const crop = useContext(FrameCrop);
   if (!shot) return <div className="fr none">{passed ? 'Kane opened the app here; no screenshot of it for this step' : `${label}: not reached`}</div>;
   const src = assetUrl(caseId, shot.file);
   return (
     <>
       <button className={`fr ${tone ?? ''}`} onClick={() => dlg.current?.showModal()} aria-label={`Enlarge: ${label}`}>
-        <img src={src} alt={`${label}: ${shot.summary ?? 'Kane screenshot'}`} loading="lazy" />
+        <img
+          src={src}
+          alt={`${label}: ${shot.summary ?? 'Kane screenshot'}`}
+          loading="lazy"
+          style={crop ? { left: `${crop.left}%`, top: `${crop.top}%`, width: `${crop.width}%` } : undefined}
+        />
       </button>
       <dialog ref={dlg} className="zoom" aria-label={label} onClick={(e) => e.target === dlg.current && dlg.current?.close()}>
         <figure>
@@ -707,7 +716,9 @@ export function RunsBlock({ runs: all, current }: { runs: RunIndexEntry[]; curre
   const agentRuns = runs.filter((r) => !r.unlisted);
   const others = runs.filter((r) => r.unlisted);
   const result = (r: RunIndexEntry) =>
-    r.status === 'parity'
+    !['parity', 'stopped', 'failed'].includes(r.status)
+      ? 'still checking'
+      : r.status === 'parity'
       ? `${r.matched}/${r.total} the same${r.fixRounds ? ` after ${r.fixRounds} fix ${r.fixRounds === 1 ? 'round' : 'rounds'}` : ''}`
       : `${r.matched}/${r.total} the same · ${r.differ ?? r.total - r.matched} confirmed different`;
   const table = (rows: RunIndexEntry[]) => (

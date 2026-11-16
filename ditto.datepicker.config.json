@@ -9,7 +9,8 @@
     "framework": "jQuery 3.7 + jQuery UI 1.13 Datepicker",
     "dir": "fixtures/legacy-datepicker",
     "port": 7011,
-    "source": "https://jqueryui.com/datepicker/"
+    "source": "https://jqueryui.com/datepicker/",
+    "publishAs": "datepicker-legacy"
   },
   "rewrite": {
     "label": "React",
@@ -17,7 +18,8 @@
     "repo": "../datepicker-react-port",
     "build": "npm install --no-audit --no-fund && npm run build",
     "dist": "dist",
-    "port": 7012
+    "port": 7012,
+    "publishAs": "datepicker-port"
   },
   "agent": {
     "model": "sonnet",
@@ -30,5 +32,10 @@
   "creditCap": 3000,
   "workDir": ".ditto-work",
   "casesDir": "cases",
-  "note": "A real migration chore, not TodoMVC: a booking page built on the jQuery UI 1.13 Datepicker, rebuilt in React by Claude Code without jQuery. The page around the widget is ours; the widget behaviour the port must match is jQuery UI's."
+  "note": "A real migration chore, not TodoMVC: a booking page built on the jQuery UI 1.13 Datepicker, rebuilt in React by Claude Code without jQuery. The page around the widget is ours; the widget behaviour the port must match is jQuery UI's.",
+  "frame": {
+    "left": 0,
+    "top": 0,
+    "width": 234.1
+  }
 }

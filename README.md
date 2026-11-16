@@ -58,6 +58,14 @@ On a build with nothing planted, the rule raised no false alarm: the clean Sonne
 
 Read this as one re-run, not a measurement: Kane's verdicts vary between runs on the same build, and two tests moved from "unsure" to "different" through fresh authoring rather than the new rule. The rule doesn't cover a heal after a failed *action* (a click Kane re-targets), which Ditto still trusts because that is usually markup moving.
 
+## A second app: a real migration chore
+
+TodoMVC is in every model's training data, so Ditto was also run on a migration teams actually face: a hotel booking page built on the [jQuery UI 1.13 Datepicker](https://jqueryui.com/datepicker/). It has linked check-in and check-out calendars, fully booked nights, a stay-length line, a date-of-birth picker with month and year menus, and an always-visible availability calendar ([the page](fixtures/legacy-datepicker), [its spec](fixtures/datepicker-spec.md)). The page around the widget is ours; almost all of its behaviour is jQuery UI's, which the port has to match.
+
+- Kane designed 12 tests from the spec (70 credits). On the jQuery UI page, 7 passed and replayed cleanly. Kane couldn't run the other 5 cleanly: it couldn't prove "the page didn't reload" after Book, and it misread a selected date in the keyboard test. They are left out.
+- Claude Code (Sonnet 5.5) rebuilt the page in React without jQuery, writing its own datepicker ([`datepicker-react-port`](https://github.com/itssaharsh/datepicker-react-port)), down to jQuery UI's habit of moving an existing check-out forward when a later check-in is chosen.
+- Kane: **7 of 7 the same on the first port**. One test healed past a failed check, so the new rule sent it to a fresh run, which passed. 36 Kane runs, 1,153 credits, $1.64 of Claude Code ([live](https://itssaharsh.github.io/ditto/?case=datepicker); try [the jQuery UI page](https://itssaharsh.github.io/ditto/datepicker-legacy/) and [the React port](https://itssaharsh.github.io/ditto/datepicker-port/)).
+
 ## A real bug in code written by people
 
 The same 18 recordings Kane made on the jQuery app can judge anyone's TodoMVC. Replayed on the official React TodoMVC from tastejs/todomvc (unchanged, commit `ff43b02`), Kane confirmed one difference: **Escape doesn't leave edit mode**. The app's source handles only Enter (`if (e.key !== "Enter") return;` in `src/todo/components/input.jsx`), and the bug is an open upstream issue filed ten days earlier, [tastejs/todomvc#2309](https://github.com/tastejs/todomvc/issues/2309). Kane caught it with no knowledge of the issue, from recordings made on a different framework.
@@ -77,6 +85,8 @@ Three more results were unclear: the React footer writes "2 items left!" without
 | Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
 | The same broken build, re-checked with the new heal rule | **6 behaviours confirmed different** (was 2), covering all 3 planted bugs in one check; 1 unsure; 539 credits |
 | The clean Sonnet port, checked with the new heal rule | **18/18 the same**, no false alarm; the one doubted heal passed its fresh run; 124 credits |
+| The official React TodoMVC (written by people), judged by the jQuery recordings | **14/18 the same**; Kane confirmed the Escape bug that is open upstream as [#2309](https://github.com/tastejs/todomvc/issues/2309); 3 unclear on the footer wording; 552 credits |
+| A jQuery UI booking page, migrated to React by Claude Code | Kane designed 12 tests; 7 judge the port: **7/7 the same** on the first port; 1,153 credits |
 
 The four recorded runs and the clean-port check together: 297 Kane runs and about 3,450 credits, most of it recording the old app once.
 

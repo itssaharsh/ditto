@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { derive, type BehaviourRow, type CaseFile, type Derived } from './data';
 import { caseFacts, pickNamed, plantedBugs, tryOrder } from './model';
-import { Behaviours, HowItWorks, LoopRail, MutationsBlock, Rounds, RunsBlock, ScanBlock, TestSheet, type ScanData } from './parts';
+import { Behaviours, FrameCrop, HowItWorks, LoopRail, MutationsBlock, Rounds, RunsBlock, ScanBlock, TestSheet, type ScanData } from './parts';
 import { atTime, bounds, latestTest, phases } from './timeline';
 import { useCase, useParam } from './useCase';
 
@@ -184,6 +184,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
   }, []);
 
   return (
+    <FrameCrop.Provider value={full.frame}>
     <div className="wrap">
       <Nav c={c} />
       <header className="hero">
@@ -306,6 +307,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
       {index && <RunsBlock runs={index.cases} current={full.id} />}
       <HowItWorks c={c} d={d} />
     </div>
+    </FrameCrop.Provider>
   );
 }
 

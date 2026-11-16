@@ -7,7 +7,7 @@ export interface DittoConfig {
   spec: string;
   suite: string;
   /** Either a folder Ditto serves on `port`, or the `url` of an app you already run. */
-  legacy: { label: string; framework: string; dir?: string; url?: string; port: number; source?: string };
+  legacy: { label: string; framework: string; dir?: string; url?: string; port: number; source?: string; publishAs?: string };
   /** `url`: a rewrite that is already running or deployed (Ditto then neither builds nor serves it). `publishAs`: folder name on the published site. */
   rewrite: { label: string; framework: string; repo: string; build: string; dist: string; port: number; source?: string; url?: string; publishAs?: string };
   agent: { model?: string; portPrompt: string; maxTurnsPort?: number; maxTurnsFix?: number };
@@ -19,6 +19,8 @@ export interface DittoConfig {
   tab?: string;
   /** Keep this case out of the run switcher (it is linked from another case, e.g. a scan of other builds). */
   unlisted?: boolean;
+  /** Which part of Kane's screenshots the console shows in its small frames (CSS percentages for the image). */
+  frame?: { left: number; top: number; width: number };
   /** Reuse the oracle (recordings and results) of another case instead of recording the legacy app again. */
   oracleCase?: string;
   /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */

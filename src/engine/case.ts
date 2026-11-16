@@ -97,6 +97,8 @@ export interface CaseFile {
   tab?: string;
   /** Not listed in the run switcher; reached from a link. */
   unlisted?: boolean;
+  /** The part of Kane's screenshots the console's small frames show. */
+  frame?: { left: number; top: number; width: number };
   /** A later recorded run this one led to, with one line on what it showed (written by hand from that run's case file). */
   followUp?: { case: string; text: string };
   /** Mutation runs: what the fixer's own transcript shows (scripts/audit-fixer.ts). */

@@ -48,6 +48,7 @@ export class DittoLoop {
     if (cfg.note) this.rec.data.note = cfg.note;
     if (cfg.tab) this.rec.data.tab = cfg.tab;
     if (cfg.unlisted) this.rec.data.unlisted = true;
+    if (cfg.frame) this.rec.data.frame = cfg.frame;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -653,12 +654,12 @@ export class DittoLoop {
       [
         '# Behaviour tests (Kane CLI)',
         '',
-        `These ${this.oraclePassing().length} plain-English tests were designed by Kane CLI from the TodoMVC spec, passed on the original jQuery app, and were used by [Ditto](https://github.com/itssaharsh/ditto) to check this port until every one passed here too.`,
+        `These ${this.oraclePassing().length} plain-English tests were designed by Kane CLI from the app's spec (\`${this.cfg.spec}\` in Ditto), passed on the original ${this.cfg.legacy.label} app, and were used by [Ditto](https://github.com/itssaharsh/ditto) to check this port until every one passed here too.`,
         '',
         'Run them against a local build:',
         '',
         '```bash',
-        'npm run build && npx serve -l 7002 dist   # or any static server on port 7002',
+        `npm run build && npx serve -l ${this.cfg.rewrite.port} dist   # or any static server on port ${this.cfg.rewrite.port}`,
         'kane-cli testrun run tests/kane --parallel 3 < /dev/null',
         '```',
         '',
@@ -916,6 +917,7 @@ export function writeCasesIndex(casesDir: string): void {
       createdAt: c.createdAt,
     };
   });
+  items.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   const best = [...items].filter((i) => !i.unlisted).sort((a, b) => b.fixRounds - a.fixRounds)[0];
   writeFileSync(join(casesDir, 'index.json'), JSON.stringify({ default: best?.id, cases: items }, null, 1));
 }
