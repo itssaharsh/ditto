@@ -508,7 +508,7 @@ export function HowItWorks({ c, d }: { c: CaseFile; d: Derived }) {
       <h2 id="hh">How it works</h2>
       <ol className="how3">
         <li>
-          <b>Kane writes the tests from your spec.</b> <code>kane-cli design tests</code> turned the TodoMVC spec into {d.rows.length} plain-English
+          <b>Kane writes the tests from your spec.</b> <code>kane-cli design tests</code> turned the {c.title.split(':')[0]} spec into {d.rows.length} plain-English
           tests. No selectors: each step says what a person does and what they should see.
         </li>
         <li>
@@ -529,7 +529,7 @@ export function HowItWorks({ c, d }: { c: CaseFile; d: Derived }) {
       <p className="real">
         What's real: every run, verdict and screenshot here comes from Kane CLI, and every change from Claude Code, recorded {fmtDate(c.createdAt)}.{' '}
         <a href={`${REPO}#whats-real`}>Details</a> · <a href={REPO}>Code</a> ·{' '}
-        <a href={c.apps.legacy.source ?? 'https://github.com/tastejs/todomvc'}>Old app source (TodoMVC, MIT)</a>
+        <a href={c.apps.legacy.source ?? 'https://github.com/tastejs/todomvc'}>Old app source ({c.apps.legacy.framework})</a>
       </p>
     </section>
   );
@@ -690,6 +690,8 @@ export interface RunIndexEntry {
   differ?: number;
   unlisted?: boolean;
   rewrite: string;
+  /** The old app that referees this run (runs with the same one share recordings). */
+  legacy?: string;
   status: string;
   matched: number;
   total: number;
@@ -697,7 +699,10 @@ export interface RunIndexEntry {
 }
 
 /** Every recorded run, so the ones kept out of the switcher (e.g. other official implementations) are one click away. */
-export function RunsBlock({ runs, current }: { runs: RunIndexEntry[]; current: string }) {
+export function RunsBlock({ runs: all, current }: { runs: RunIndexEntry[]; current: string }) {
+  // Only runs judged by the same old app's recordings belong together.
+  const app = all.find((r) => r.id === current)?.legacy;
+  const runs = all.filter((r) => r.legacy === app);
   if (runs.length < 2) return null;
   const agentRuns = runs.filter((r) => !r.unlisted);
   const others = runs.filter((r) => r.unlisted);
@@ -719,7 +724,9 @@ export function RunsBlock({ runs, current }: { runs: RunIndexEntry[]; current: s
   return (
     <section className="block" id="runs" aria-labelledby="runh">
       <h2 id="runh">Every recorded run</h2>
-      <p className="lead">All judged by the same 18 Kane recordings of the old jQuery app.</p>
+      <p className="lead">
+        All judged by the same {runs[0].total} Kane recordings of the old {app ?? ''} app.
+      </p>
       {table(agentRuns)}
       {others.length > 0 && (
         <>

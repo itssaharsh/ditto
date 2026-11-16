@@ -21,6 +21,7 @@ export interface CasesIndex {
     /** Reached from a link, not shown in the run switcher. */
     unlisted?: boolean;
     rewrite: string;
+    legacy?: string;
     status: string;
     matched: number;
     total: number;
