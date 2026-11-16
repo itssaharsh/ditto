@@ -44,12 +44,25 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 ## Failed approaches
 - `testmd run --push` under OAuth; split verify step (710); Playwright MCP browser (no Chrome) → use kane-chrome wrapper.
 
-## Checkpoint (16 Nov ~13:25 UTC)
-- Oracle `ditto record` running in background (log `.ditto-work/record.log`); a chained background job starts `ditto loop` when it ends (log `.ditto-work/loop.log`).
-- Console served by `ditto ui` on 127.0.0.1:4747 (nohup); legacy app on 7001 (python http.server, nohup).
-- Repo pushed to github.com/itssaharsh/ditto (master). `cases/` not committed yet (commit after the loop).
-- Port repo will be `../todomvc-react-port` (created by the loop).
-- TodoMVC implementations for `ditto scan` are sparse-cloned in `.ditto-work/impls/todomvc/examples/*/dist`.
+## Results so far (16 Nov, real runs)
+- Kane design: 28 tests (9 use-cases) from fixtures/app-spec.md.
+- Oracle (jQuery): 18 pass + replay-verified; 1 confirmed deviation (reload loses todos); 9 not verified.
+- Case `todomvc` (Sonnet 5.5): port 18/18 first try (17 pure replays); round 1 = Stop-hook-guarded refactor (18/18, stop allowed); round 2 = spec check (5 gaps: 2 met, 3 failed incl. one 740); round 3 = Claude added localStorage persistence (commit c202eb6) → 3/3 met, parity replay 18/18. 151 Kane runs, ~2,304 credits.
+- Case `todomvc-haiku` (Haiku 5.5, 40 turns): 18/18, 22/24 pure replays, 7.36 credits.
+- Repos: github.com/itssaharsh/ditto, /todomvc-react-port, /todomvc-react-port-haiku. Site: https://itssaharsh.github.io/ditto/ (gh-pages via scripts/publish-pages.sh, no force pushes).
+
+## Lessons (engine)
+- Replays report the evidence pack only on the `coverage` event; `run_start` has `override_applied`; `step_event` screenshot `detail` = page URL.
+- Parallel Kane runs launched together can fail their first navigate: workers are staggered 12 s.
+- A recorded absolute navigation can send a replay to the legacy app: the URL guard marks it error; heal/fresh follow.
+- Backfill must match Kane sessions on ALL step objectives (normalize `{{global.x}}` → `{{x}}`), never on the first step alone.
+- `sh()` must not use a login shell (profile noise leaked into commit fields).
+- Force pushes are blocked by the auto-mode classifier: publish with normal pushes only.
+
+## Checkpoint (16 Nov ~15:10 UTC)
+- Console served locally by `ditto ui` (4747); legacy 7001 and Sonnet port 7002 (python http.server); everything committed and pushed.
+- Running: Kane self-test of the deployed console (scripts/selftest-console.ts → qa/console-selftest.json).
+- Next: scan of other TodoMVC implementations (stretch), video, second red-team, scorecard, launch drafts with real numbers.
 
 ## Next actions
 See `TASKS.md`.

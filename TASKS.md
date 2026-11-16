@@ -13,9 +13,11 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Public repo github.com/itssaharsh/ditto (privacy scan clean)
 
 ## Now
-- [~] `ditto record` oracle on legacy (28 tests)
-- [ ] `ditto loop`: port (Claude Code) → check → fix rounds → parity → promote suite into port repo
-- [ ] Commit the recorded case; push port repo (itssaharsh/todomvc-react-port)
+- [x] Oracle (28 tests; 18 verified, 1 confirmed deviation)
+- [x] Sonnet port 18/18; Haiku port 18/18 (7.4 credits); repos public
+- [x] Stop-hook demo (refactor, 18/18 allowed); spec gaps closed (3/3) with real Kane→Claude→Kane loop
+- [x] Site deployed (gh-pages)
+- [~] Kane self-test of the deployed console
 
 ## Next
 - [ ] Console critique round on the final case (1440/390), fix
