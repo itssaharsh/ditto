@@ -81,7 +81,7 @@ Every decision is written to the case file as **"Kane said → Ditto did"**, and
 
 ## 7. Checking the checker: plant bugs on purpose
 
-A port that matches first time doesn't show the tests would notice a regression. `ditto mutate` asks a second Claude Code session to break a copy of the finished port in a few ways a user would notice, and to write down what it changed in `.ditto-work/` (outside the repository, so the fixer can't read it). Ditto then runs the normal check and fix rounds with a fresh Claude Code session that sees only Kane's findings. In the recorded run Kane caught all 3 planted bugs and the fixer repaired them in 2 rounds; the console shows the breaker's list beside what Kane reported each round.
+A port that matches first time doesn't show the tests would notice a regression. `ditto mutate` asks a second Claude Code session to break a copy of the finished port in a few ways a user would notice, and to write down what it changed in `.ditto-work/` (outside the repository, so the fixer can't read it). Ditto then runs the normal check and fix rounds with a fresh Claude Code session that sees only Kane's findings. In the recorded run Kane confirmed 2 of the 3 planted bugs on the broken build and the third after the first fix round, and the fixer repaired all 3 in 2 rounds; the console shows the breaker's list beside what Kane reported each round. With the healing rule below, a re-check of the same broken build confirmed all 3 in one check.
 
 The same run showed the method's edge: the fixer's repair also changed a behaviour no test covers. See [Testing §5](testing.md#5-a-behaviour-no-test-covers).
 
