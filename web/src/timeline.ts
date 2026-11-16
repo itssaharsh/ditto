@@ -66,16 +66,16 @@ export function latestTest(c: CaseFile): string | undefined {
 }
 
 export function phases(c: CaseFile): Phase[] {
-  const out: Phase[] = [];
   const { start, end } = bounds(c);
-  const firstPort = c.events.find((e) => e.kind === 'agent_start' && e.agentKind === 'port');
-  const oracleEnd = firstPort ? ms(firstPort.t) : end;
-  out.push({ label: 'Record the old app', start, end: oracleEnd });
-  const agentStarts = c.events.filter((e): e is Extract<CaseEvent, { kind: 'agent_start' }> => e.kind === 'agent_start');
-  agentStarts.forEach((a, i) => {
-    const s = ms(a.t);
-    const next = agentStarts[i + 1] ? ms(agentStarts[i + 1].t) : end;
-    out.push({ label: a.agentKind === 'port' ? 'Port + check' : `Fix ${a.round} + check`, start: s, end: next });
-  });
-  return out;
+  const rounds = [...c.rounds].sort((a, b) => a.n - b.n);
+  const startOf = (r: Round) => {
+    const times = [ms(r.agent?.startedAt), ...Object.values(r.results).map((x) => ms(x.startedAt))].filter((n) => !Number.isNaN(n));
+    return times.length ? Math.min(...times) : NaN;
+  };
+  const labelOf = (r: Round) =>
+    r.n === 0 ? 'Port + check' : r.agent?.kind === 'hook' ? 'Stop hook' : r.agent?.kind === 'spec' ? 'Spec fix + check' : r.label ?? `Fix ${r.n} + check`;
+  const marks = rounds.map((r) => ({ label: labelOf(r), start: startOf(r) })).filter((m) => !Number.isNaN(m.start));
+  const out: Phase[] = [{ label: 'Record the old app', start, end: marks[0]?.start ?? end }];
+  marks.forEach((m, i) => out.push({ label: m.label, start: m.start, end: marks[i + 1]?.start ?? end }));
+  return out.filter((p) => p.end > p.start);
 }

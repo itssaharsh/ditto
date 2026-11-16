@@ -1056,25 +1056,28 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-10",
+     "step": "10-0-10",
      "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/10-0-10-screenshot.jpg",
+     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-replay/10-0-10-screenshot.jpg",
      "summary": "press_key: Pressing Enter to create the new todo",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-3",
+     "step": "13-1-3",
      "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/13-1-3-screenshot.jpg",
+     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-replay/13-1-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "2-5",
+     "step": "18-2-5",
      "kind": "screenshot",
-     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-author/18-2-5-screenshot.jpg",
+     "file": "assets/blur-saves-a-trimmed-todo-title/legacy-r0-replay/18-2-5-screenshot.jpg",
      "summary": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1082,7 +1085,11 @@
    ],
    "mode": "author",
    "startedAt": "2026-11-16T13:07:39.568Z",
-   "endedAt": "2026-11-16T13:09:53.423Z"
+   "endedAt": "2026-11-16T13:09:53.423Z",
+   "urls": [
+    "https://kaneai-playground.lambdatest.io/",
+    "http://127.0.0.1:7001/#/all"
+   ]
   },
   "blank-new-todo-submissions-do-not-add-a-todo": {
    "outcome": "pass",
@@ -1283,37 +1290,42 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "5-1-4",
      "kind": "screenshot",
-     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-author/5-1-4-screenshot.jpg",
+     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-replay/5-1-4-screenshot.jpg",
      "summary": "press_key: Pressing Enter to submit the new todo",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "10-2-5",
      "kind": "screenshot",
-     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-author/10-2-5-screenshot.jpg",
+     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-replay/10-2-5-screenshot.jpg",
      "summary": "assert: 'Assurance active A' is absent from the Active list and the mark-all checkbox re",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/active"
     },
     {
      "step": "14-3-4",
      "kind": "screenshot",
-     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-author/14-3-4-screenshot.jpg",
+     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-replay/14-3-4-screenshot.jpg",
      "summary": "assert: the checkbox for 'Assurance active A' is checked and its parent li has the compl",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "17-4-3",
      "kind": "screenshot",
-     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-author/17-4-3-screenshot.jpg",
+     "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/legacy-r0-replay/17-4-3-screenshot.jpg",
      "summary": "assert: the stored completed value for 'Assurance active A' is true",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1321,8 +1333,8 @@
    ],
    "urls": [
     "https://kaneai-playground.lambdatest.io/",
-    "http://127.0.0.1:7001/#/active",
-    "http://127.0.0.1:7001/#/all"
+    "http://127.0.0.1:7001/#/all",
+    "http://127.0.0.1:7001/#/active"
    ],
    "mode": "author",
    "startedAt": "2026-11-16T13:40:34.888Z",
@@ -1441,25 +1453,28 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-2",
+     "step": "2-0-2",
      "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/2-0-2-screenshot.jpg",
+     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-replay/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting open the todo app's All view so the complete todo list is visible",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-5",
+     "step": "7-1-5",
      "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/7-1-5-screenshot.jpg",
+     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-replay/7-1-5-screenshot.jpg",
      "summary": "wait: Waiting after creating the todo in the new-todo input at the top of the app",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "2-3",
+     "step": "10-2-3",
      "kind": "screenshot",
-     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-author/10-2-3-screenshot.jpg",
+     "file": "assets/completed-todos-leave-the-active-counter-at-zero/legacy-r0-replay/10-2-3-screenshot.jpg",
      "summary": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1469,7 +1484,10 @@
    "startedAt": "2026-11-16T13:14:43.658Z",
    "endedAt": "2026-11-16T13:16:41.080Z",
    "replayVerified": true,
-   "replaySeconds": 4.84
+   "replaySeconds": 4.84,
+   "urls": [
+    "http://127.0.0.1:7001/#/all"
+   ]
   },
   "deleting-a-completed-todo-removes-it-from-all-after-reload": {
    "outcome": "pass",
@@ -1611,30 +1629,34 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "6-1-5",
      "kind": "screenshot",
-     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-author/6-1-5-screenshot.jpg",
+     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-replay/6-1-5-screenshot.jpg",
      "summary": "click: Checking only Assurance already complete",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "11-2-5",
      "kind": "screenshot",
-     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-author/11-2-5-screenshot.jpg",
+     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-replay/11-2-5-screenshot.jpg",
      "summary": "assert: its checkbox is checked, its parent li has the completed class, and the mark-all",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "14-3-3",
      "kind": "screenshot",
-     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-author/14-3-3-screenshot.jpg",
+     "file": "assets/completing-the-last-active-todo-checks-mark-all/legacy-r0-replay/14-3-3-screenshot.jpg",
      "summary": "wait: Waiting after storage inspection failure",
-     "status": "failed"
+     "status": "failed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1721,86 +1743,98 @@
     {
      "step": "3-0-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/3-0-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/3-0-3-screenshot.jpg",
      "summary": "press_key: Pressing the Enter key to create the todo from the new-todo input",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "8-1-5",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/8-1-5-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/8-1-5-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "13-2-5",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/13-2-5-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/13-2-5-screenshot.jpg",
      "summary": "assert: the edited todo item no longer exists in the list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "16-3-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/16-3-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/16-3-3-screenshot.jpg",
      "summary": "press_key: Pressing Enter key",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "19-4-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/19-4-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/19-4-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "23-5-4",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/23-5-4-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/23-5-4-screenshot.jpg",
      "summary": "assert: the edited todo item no longer exists in the list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "28-6-5",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/28-6-5-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/28-6-5-screenshot.jpg",
      "summary": "wait: Waiting after confirming the created todo",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "31-7-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/31-7-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/31-7-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "34-8-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/34-8-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/34-8-3-screenshot.jpg",
      "summary": "assert: the edited todo item no longer exists in the list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "37-9-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/37-9-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/37-9-3-screenshot.jpg",
      "summary": "wait: Waiting 1000 ms after creating the todo",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "40-10-3",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/40-10-3-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/40-10-3-screenshot.jpg",
      "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "44-11-4",
      "kind": "screenshot",
-     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-author/44-11-4-screenshot.jpg",
+     "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/legacy-r0-replay/44-11-4-screenshot.jpg",
      "summary": "assert: the edited todo item no longer exists in the list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1829,39 +1863,44 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-4",
+     "step": "4-0-4",
      "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/4-0-4-screenshot.jpg",
+     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-replay/4-0-4-screenshot.jpg",
      "summary": "assert: the new-todo input at the top of the page is the active focused element",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-1",
+     "step": "5-1-1",
      "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/5-1-1-screenshot.jpg",
+     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-replay/5-1-1-screenshot.jpg",
      "summary": "analyze: Counting todos in the all-todos list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "2-7",
+     "step": "12-2-7",
      "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/12-2-7-screenshot.jpg",
+     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-replay/12-2-7-screenshot.jpg",
      "summary": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "3-2",
+     "step": "14-3-2",
      "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/14-3-2-screenshot.jpg",
+     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-replay/14-3-2-screenshot.jpg",
      "summary": "analyze: Recording the baseline all-todos count",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "4-6",
+     "step": "20-4-6",
      "kind": "screenshot",
-     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-author/20-4-6-screenshot.jpg",
+     "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/legacy-r0-replay/20-4-6-screenshot.jpg",
      "summary": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -1871,7 +1910,11 @@
    "startedAt": "2026-11-16T13:24:00.531Z",
    "endedAt": "2026-11-16T13:25:51.762Z",
    "replayVerified": true,
-   "replaySeconds": 25.570000000000004
+   "replaySeconds": 25.570000000000004,
+   "urls": [
+    "https://kaneai-playground.lambdatest.io/",
+    "http://127.0.0.1:7001/#/all"
+   ]
   },
   "escape-discards-a-todo-title-edit": {
    "outcome": "pass",
@@ -1972,25 +2015,28 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-3",
+     "step": "3-0-3",
      "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/3-0-3-screenshot.jpg",
+     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-replay/3-0-3-screenshot.jpg",
      "summary": "wait: Waiting clear any completed todos that already exist in the todo app's All list",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-6",
+     "step": "9-1-6",
      "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/9-1-6-screenshot.jpg",
+     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-replay/9-1-6-screenshot.jpg",
      "summary": "assert: Clear completed is hidden",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "2-4",
+     "step": "13-2-4",
      "kind": "screenshot",
-     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-author/13-2-4-screenshot.jpg",
+     "file": "assets/hide-clear-completed-without-completed-todos/legacy-r0-replay/13-2-4-screenshot.jpg",
      "summary": "assert: Clear completed is hidden",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2000,7 +2046,10 @@
    "startedAt": "2026-11-16T13:25:51.810Z",
    "endedAt": "2026-11-16T13:28:33.877Z",
    "replayVerified": true,
-   "replaySeconds": 40.28
+   "replaySeconds": 40.28,
+   "urls": [
+    "http://127.0.0.1:7001/#/all"
+   ]
   },
   "hide-main-and-footer-with-zero-todos": {
    "outcome": "test_issue",
@@ -2015,18 +2064,20 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-2",
+     "step": "2-0-2",
      "kind": "screenshot",
-     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/2-0-2-screenshot.jpg",
+     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-replay/2-0-2-screenshot.jpg",
      "summary": "navigate: Navigating to the TodoMVC All view page",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-3",
+     "step": "5-1-3",
      "kind": "screenshot",
-     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-author/5-1-3-screenshot.jpg",
+     "file": "assets/hide-main-and-footer-with-zero-todos/legacy-r0-replay/5-1-3-screenshot.jpg",
      "summary": "assert: #main and #footer are hidden.",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/"
     }
    ],
    "consoleErrors": [
@@ -2034,7 +2085,12 @@
    ],
    "mode": "author",
    "startedAt": "2026-11-16T13:28:42.771Z",
-   "endedAt": "2026-11-16T13:29:54.540Z"
+   "endedAt": "2026-11-16T13:29:54.540Z",
+   "urls": [
+    "https://kaneai-playground.lambdatest.io/",
+    "http://127.0.0.1:7001/#/all",
+    "http://127.0.0.1:7001/#/"
+   ]
   },
   "mark-all-checks-every-todo-in-all": {
    "outcome": "pass",
@@ -2255,30 +2311,34 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "4-1-3",
      "kind": "screenshot",
-     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-author/4-1-3-screenshot.jpg",
+     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-replay/4-1-3-screenshot.jpg",
      "summary": "wait: Waiting for the active todo to be confirmed as created",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "5-2-1",
      "kind": "screenshot",
-     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-author/5-2-1-screenshot.jpg",
+     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-replay/5-2-1-screenshot.jpg",
      "summary": "click: Clicking into the saved active todo item to edit its title",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "7-3-2",
      "kind": "screenshot",
-     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-author/7-3-2-screenshot.jpg",
+     "file": "assets/reload-does-not-restore-todo-editing-mode/legacy-r0-replay/7-3-2-screenshot.jpg",
      "summary": "wait: Waiting after reloading the todo list page",
-     "status": "failed"
+     "status": "failed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2320,16 +2380,18 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/reload-retains-a-completed-todo-and-its-stored-state/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/reload-retains-a-completed-todo-and-its-stored-state/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "7-1-6",
      "kind": "screenshot",
-     "file": "assets/reload-retains-a-completed-todo-and-its-stored-state/legacy-r0-author/7-1-6-screenshot.jpg",
+     "file": "assets/reload-retains-a-completed-todo-and-its-stored-state/legacy-r0-replay/7-1-6-screenshot.jpg",
      "summary": "assert: localStorage contains todo data reflecting the newly saved title {{global.comple",
-     "status": "failed"
+     "status": "failed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2370,16 +2432,18 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/reload-retains-a-newly-created-active-todo/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/reload-retains-a-newly-created-active-todo/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "5-1-4",
      "kind": "screenshot",
-     "file": "assets/reload-retains-a-newly-created-active-todo/legacy-r0-author/5-1-4-screenshot.jpg",
+     "file": "assets/reload-retains-a-newly-created-active-todo/legacy-r0-replay/5-1-4-screenshot.jpg",
      "summary": "assert: localStorage contains todo data reflecting the newly saved title {{global.active",
-     "status": "failed"
+     "status": "failed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2407,39 +2471,44 @@
    "healTriggered": false,
    "shots": [
     {
-     "step": "0-2",
+     "step": "2-0-2",
      "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/2-0-2-screenshot.jpg",
+     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-replay/2-0-2-screenshot.jpg",
      "summary": "wait: Waiting todo app's All view so the complete todo list is visible",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "1-5",
+     "step": "7-1-5",
      "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/7-1-5-screenshot.jpg",
+     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-replay/7-1-5-screenshot.jpg",
      "summary": "wait: Waiting after confirming the created todo is visible",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "2-2",
+     "step": "9-2-2",
      "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/9-2-2-screenshot.jpg",
+     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-replay/9-2-2-screenshot.jpg",
      "summary": "wait: Waiting after confirming all todos are marked complete",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "3-3",
+     "step": "12-3-3",
      "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/12-3-3-screenshot.jpg",
+     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-replay/12-3-3-screenshot.jpg",
      "summary": "wait: Waiting for the newly created unfinished todo to remain visible",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
-     "step": "4-3",
+     "step": "15-4-3",
      "kind": "screenshot",
-     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-author/15-4-3-screenshot.jpg",
+     "file": "assets/two-active-todos-display-a-plural-counter/legacy-r0-replay/15-4-3-screenshot.jpg",
      "summary": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2449,7 +2518,10 @@
    "startedAt": "2026-11-16T13:33:24.828Z",
    "endedAt": "2026-11-16T13:36:18.304Z",
    "replayVerified": true,
-   "replaySeconds": 10.5
+   "replaySeconds": 10.5,
+   "urls": [
+    "http://127.0.0.1:7001/#/all"
+   ]
   },
   "unchecking-a-completed-todo-removes-it-from-the-completed": {
    "outcome": "test_issue",
@@ -2477,37 +2549,42 @@
     {
      "step": "1-0-1",
      "kind": "screenshot",
-     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-author/1-0-1-screenshot.jpg",
+     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-replay/1-0-1-screenshot.jpg",
      "summary": "navigate: Navigate to {{global.start_url}}",
-     "status": "passed"
+     "status": "passed",
+     "url": "https://kaneai-playground.lambdatest.io/"
     },
     {
      "step": "8-1-7",
      "kind": "screenshot",
-     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-author/8-1-7-screenshot.jpg",
+     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-replay/8-1-7-screenshot.jpg",
      "summary": "click: Checking Assurance completed B",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "13-2-5",
      "kind": "screenshot",
-     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-author/13-2-5-screenshot.jpg",
+     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-replay/13-2-5-screenshot.jpg",
      "summary": "assert: 'Assurance completed A' is absent from the Completed list and the mark-all check",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/completed"
     },
     {
      "step": "17-3-4",
      "kind": "screenshot",
-     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-author/17-3-4-screenshot.jpg",
+     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-replay/17-3-4-screenshot.jpg",
      "summary": "assert: its checkbox is unchecked and its parent li does not have the completed class",
-     "status": "passed"
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
     },
     {
      "step": "19-4-2",
      "kind": "screenshot",
-     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-author/19-4-2-screenshot.jpg",
+     "file": "assets/unchecking-a-completed-todo-removes-it-from-the-completed/legacy-r0-replay/19-4-2-screenshot.jpg",
      "summary": "wait: Waiting after the localStorage inspection failed",
-     "status": "failed"
+     "status": "failed",
+     "url": "http://127.0.0.1:7001/#/all"
     }
    ],
    "consoleErrors": [
@@ -2515,8 +2592,8 @@
    ],
    "urls": [
     "https://kaneai-playground.lambdatest.io/",
-    "http://127.0.0.1:7001/#/completed",
-    "http://127.0.0.1:7001/#/all"
+    "http://127.0.0.1:7001/#/all",
+    "http://127.0.0.1:7001/#/completed"
    ],
    "failureMessage": "Reload cleared the visible todos and localStorage contained no matching record.",
    "mode": "author",
@@ -2542,35 +2619,40 @@
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-replay/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-2-5",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-replay/10-2-5-screenshot.jpg",
        "summary": "assert: 'Assurance active A' is absent from the Active list and the mark-all checkbox re",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/active"
       },
       {
        "step": "14-3-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-replay/14-3-4-screenshot.jpg",
        "summary": "assert: the checkbox for 'Assurance active A' is checked and its parent li has the compl",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-3",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-replay/17-4-3-screenshot.jpg",
        "summary": "assert: the stored completed value for 'Assurance active A' is true",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -2598,14 +2680,16 @@
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r0-replay/6-0-6-screenshot.jpg",
        "summary": "click: Clicking the completed todo item",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-1-6",
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r0-replay/12-1-6-screenshot.jpg",
        "summary": "assert: no completed todos remain, the active todo titled {{global.active_todo_title}} r",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -2634,21 +2718,24 @@
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "9-2-5",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-replay/9-2-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -2675,35 +2762,40 @@
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r0-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "6-1-2",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r0-replay/6-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-2-5",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r0-replay/11-2-5-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the captured {{baseline}} number of items",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-1",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r0-replay/12-3-1-screenshot.jpg",
        "summary": "analyze: Counting todo items in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-4-4",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r0-replay/16-4-4-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the latest captured {{baseline}} number of ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -2732,21 +2824,24 @@
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r0-replay/7-0-7-screenshot.jpg",
        "summary": "click: Clicking the completion checkbox for the completed todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-1-3",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r0-replay/10-1-3-screenshot.jpg",
        "summary": "assert: the Completed filter link has the `selected` class",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       },
       {
        "step": "15-2-5",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r0-replay/15-2-5-screenshot.jpg",
        "summary": "assert: every displayed todo is completed, {{global.completed_todo_title}} is present, a",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       }
      ],
      "consoleErrors": [
@@ -2776,35 +2871,40 @@
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
-       "step": "4-1-3",
+       "step": "5-1-4",
        "kind": "screenshot",
-       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/4-1-3-screenshot.jpg",
-       "summary": "press_key: Pressing Enter to submit the todo title",
-       "status": "passed"
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/5-1-4-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
-       "step": "8-2-4",
+       "step": "9-2-4",
        "kind": "screenshot",
-       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/8-2-4-screenshot.jpg",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/9-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
-       "step": "13-3-5",
+       "step": "13-3-4",
        "kind": "screenshot",
-       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/13-3-5-screenshot.jpg",
-       "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
-       "status": "passed"
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/13-3-4-screenshot.jpg",
+       "summary": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/17-4-4-screenshot.jpg",
-       "summary": "assert: 'Assurance sole gamma' remains absent.",
-       "status": "passed"
+       "summary": "assert: 'Assurance target alpha' is still absent from the list.",
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -2831,44 +2931,53 @@
        "kind": "screenshot",
        "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
-       "step": "4-1-3",
+       "step": "6-1-5",
        "kind": "screenshot",
-       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/4-1-3-screenshot.jpg",
-       "summary": "press_key: Pressing Enter to submit the todo title",
-       "status": "passed"
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/6-1-5-screenshot.jpg",
+       "summary": "click: Clicking Assurance completed delta checkbox",
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
-       "step": "8-2-4",
+       "step": "10-2-4",
        "kind": "screenshot",
-       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/8-2-4-screenshot.jpg",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/10-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       },
       {
-       "step": "13-3-5",
+       "step": "13-3-3",
        "kind": "screenshot",
-       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/13-3-5-screenshot.jpg",
-       "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
-       "status": "passed"
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/13-3-3-screenshot.jpg",
+       "summary": "assert: 'Assurance completed delta' is absent from the Completed filter list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-replay/17-4-4-screenshot.jpg",
-       "summary": "assert: 'Assurance sole gamma' remains absent.",
-       "status": "passed"
+       "summary": "assert: 'Assurance completed delta' remains absent from the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7001/#/all"
       }
      ],
-     "consoleErrors": [],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (File not found)"
+     ],
      "mode": "replay",
      "startedAt": "2026-11-16T14:02:25.075Z",
      "endedAt": "2026-11-16T14:03:17.137Z",
      "urls": [
       "https://kaneai-playground.lambdatest.io/",
-      "http://127.0.0.1:7002/#/all"
+      "http://127.0.0.1:7002/#/all",
+      "http://127.0.0.1:7002/#/completed",
+      "http://127.0.0.1:7001/#/all"
      ],
      "overrideApplied": true
     },
@@ -2886,35 +2995,40 @@
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-1-1",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/5-1-1-screenshot.jpg",
        "summary": "analyze: Counting todos in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-7",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/12-2-7-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-3-2",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/14-3-2-screenshot.jpg",
        "summary": "analyze: Recording the baseline all-todos count",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "22-4-8",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/22-4-8-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -2943,35 +3057,40 @@
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the todo title",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-2-4",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/8-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-3-5",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/13-3-5-screenshot.jpg",
        "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/17-4-4-screenshot.jpg",
        "summary": "assert: 'Assurance sole gamma' remains absent.",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -2998,21 +3117,24 @@
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3041,21 +3163,24 @@
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-2-6",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-replay/14-2-6-screenshot.jpg",
        "summary": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3084,84 +3209,96 @@
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-3-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/16-3-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "21-4-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/21-4-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "25-5-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/25-5-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "28-6-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/28-6-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter in the new-todo input to submit the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "33-7-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/33-7-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "37-8-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/37-8-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "39-9-2",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/39-9-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "44-10-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/44-10-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "48-11-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/48-11-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3190,21 +3327,24 @@
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-replay/2-0-2-screenshot.jpg",
        "summary": "wait: Waiting for the All list to open in the todo app",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-1-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-replay/7-1-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-replay/12-2-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3233,28 +3373,32 @@
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "7-1-6",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-replay/7-1-6-screenshot.jpg",
        "summary": "press_key: Pressing Enter key to create a todo named Bulk beta",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-2-1",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-replay/8-2-1-screenshot.jpg",
        "summary": "click: Clicking the checkbox for Bulk beta to mark it completed",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-4",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-replay/12-3-4-screenshot.jpg",
        "summary": "assert: every existing todo in All is completed and its item checkbox is checked",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -3281,7 +3425,8 @@
        "kind": "screenshot",
        "file": "assets/new-todo-input-receives-focus-on-page-load/rewrite-r0-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3310,28 +3455,32 @@
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "3-1-2",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-replay/3-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "4-2-1",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-replay/4-2-1-screenshot.jpg",
        "summary": "click: Clicking the mark-all checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-3-7",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-replay/11-3-7-screenshot.jpg",
        "summary": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -3358,35 +3507,40 @@
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-2-1",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-replay/5-2-1-screenshot.jpg",
        "summary": "click: Clicking the Mark all as complete checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-3-2",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-replay/7-3-2-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-4-5",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-replay/12-4-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3510,35 +3664,40 @@
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r1-replay/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-2-5",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r1-replay/10-2-5-screenshot.jpg",
        "summary": "assert: 'Assurance active A' is absent from the Active list and the mark-all checkbox re",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/active"
       },
       {
        "step": "14-3-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r1-replay/14-3-4-screenshot.jpg",
        "summary": "assert: the checkbox for 'Assurance active A' is checked and its parent li has the compl",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-3",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r1-replay/17-4-3-screenshot.jpg",
        "summary": "assert: the stored completed value for 'Assurance active A' is true",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -3566,14 +3725,16 @@
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r1-replay/6-0-6-screenshot.jpg",
        "summary": "click: Clicking the completed todo item",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-1-6",
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r1-replay/12-1-6-screenshot.jpg",
        "summary": "assert: no completed todos remain, the active todo titled {{global.active_todo_title}} r",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3602,35 +3763,40 @@
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r1-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "6-1-2",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r1-replay/6-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-2-5",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r1-replay/11-2-5-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the captured {{baseline}} number of items",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-1",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r1-replay/12-3-1-screenshot.jpg",
        "summary": "analyze: Counting todo items in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-4-4",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r1-replay/16-4-4-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the latest captured {{baseline}} number of ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3659,21 +3825,24 @@
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r1-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "9-2-5",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r1-replay/9-2-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -3700,35 +3869,40 @@
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r1-replay/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "9-2-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r1-replay/9-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-3-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r1-replay/13-3-4-screenshot.jpg",
        "summary": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r1-replay/17-4-4-screenshot.jpg",
        "summary": "assert: 'Assurance target alpha' is still absent from the list.",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -3755,21 +3929,24 @@
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r1-heal/7-0-7-screenshot.jpg",
        "summary": "click: Clicking the completion checkbox for the completed todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-1-3",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r1-heal/10-1-3-screenshot.jpg",
        "summary": "assert: the Completed filter link has the `selected` class",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       },
       {
        "step": "15-2-5",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r1-heal/15-2-5-screenshot.jpg",
        "summary": "assert: every displayed todo is completed, {{global.completed_todo_title}} is present, a",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       }
      ],
      "consoleErrors": [
@@ -3799,84 +3976,96 @@
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-3-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/16-3-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "21-4-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/21-4-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "25-5-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/25-5-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "28-6-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/28-6-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter in the new-todo input to submit the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "33-7-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/33-7-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "37-8-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/37-8-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "39-9-2",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/39-9-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "44-10-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/44-10-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "48-11-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r1-replay/48-11-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3905,35 +4094,40 @@
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r1-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-1-1",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r1-replay/5-1-1-screenshot.jpg",
        "summary": "analyze: Counting todos in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-7",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r1-replay/12-2-7-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-3-2",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r1-replay/14-3-2-screenshot.jpg",
        "summary": "analyze: Recording the baseline all-todos count",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "22-4-8",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r1-replay/22-4-8-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -3962,21 +4156,24 @@
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r1-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r1-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r1-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -4005,35 +4202,40 @@
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r1-heal/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r1-heal/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the todo title",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-2-4",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r1-heal/8-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-3-5",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r1-heal/13-3-5-screenshot.jpg",
        "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r1-heal/17-4-4-screenshot.jpg",
        "summary": "assert: 'Assurance sole gamma' remains absent.",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -4060,21 +4262,24 @@
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r1-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r1-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-2-6",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r1-replay/14-2-6-screenshot.jpg",
        "summary": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -4103,28 +4308,32 @@
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "7-1-6",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r1-replay/7-1-6-screenshot.jpg",
        "summary": "press_key: Pressing Enter key to create a todo named Bulk beta",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-2-1",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r1-replay/8-2-1-screenshot.jpg",
        "summary": "click: Clicking the checkbox for Bulk beta to mark it completed",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-4",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r1-replay/12-3-4-screenshot.jpg",
        "summary": "assert: every existing todo in All is completed and its item checkbox is checked",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -4151,21 +4360,24 @@
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r1-replay/2-0-2-screenshot.jpg",
        "summary": "wait: Waiting for the All list to open in the todo app",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-1-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r1-replay/7-1-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r1-replay/12-2-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -4194,7 +4406,8 @@
        "kind": "screenshot",
        "file": "assets/new-todo-input-receives-focus-on-page-load/rewrite-r1-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -4223,28 +4436,32 @@
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "3-1-2",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r1-replay/3-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "4-2-1",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r1-replay/4-2-1-screenshot.jpg",
        "summary": "click: Clicking the mark-all checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-3-7",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r1-replay/11-3-7-screenshot.jpg",
        "summary": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -4271,35 +4488,40 @@
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r1-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r1-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-2-1",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r1-replay/5-2-1-screenshot.jpg",
        "summary": "click: Clicking the Mark all as complete checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-3-2",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r1-replay/7-3-2-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-4-5",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r1-replay/12-4-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -4904,35 +5126,40 @@
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r3-replay/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-2-5",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r3-replay/10-2-5-screenshot.jpg",
        "summary": "assert: 'Assurance active A' is absent from the Active list and the mark-all checkbox re",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/active"
       },
       {
        "step": "14-3-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r3-replay/14-3-4-screenshot.jpg",
        "summary": "assert: the checkbox for 'Assurance active A' is checked and its parent li has the compl",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-3",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r3-replay/17-4-3-screenshot.jpg",
        "summary": "assert: the stored completed value for 'Assurance active A' is true",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -4960,14 +5187,16 @@
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r3-replay/6-0-6-screenshot.jpg",
        "summary": "click: Clicking the completed todo item",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-1-6",
        "kind": "screenshot",
        "file": "assets/clear-completed-preserves-active-todos-in-a-mixed-list/rewrite-r3-replay/12-1-6-screenshot.jpg",
        "summary": "assert: no completed todos remain, the active todo titled {{global.active_todo_title}} r",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -4996,35 +5225,40 @@
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r3-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "6-1-2",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r3-replay/6-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-2-5",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r3-replay/11-2-5-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the captured {{baseline}} number of items",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-1",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r3-replay/12-3-1-screenshot.jpg",
        "summary": "analyze: Counting todo items in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-4-4",
        "kind": "screenshot",
        "file": "assets/blank-new-todo-submissions-do-not-add-a-todo/rewrite-r3-replay/16-4-4-screenshot.jpg",
        "summary": "assert: the all-todos list still has exactly the latest captured {{baseline}} number of ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5053,21 +5287,24 @@
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r3-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "9-2-5",
        "kind": "screenshot",
        "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r3-replay/9-2-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -5094,21 +5331,24 @@
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r3-replay/7-0-7-screenshot.jpg",
        "summary": "click: Clicking the completion checkbox for the completed todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "10-1-3",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r3-replay/10-1-3-screenshot.jpg",
        "summary": "assert: the Completed filter link has the `selected` class",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       },
       {
        "step": "15-2-5",
        "kind": "screenshot",
        "file": "assets/completed-route-displays-only-completed-todos/rewrite-r3-replay/15-2-5-screenshot.jpg",
        "summary": "assert: every displayed todo is completed, {{global.completed_todo_title}} is present, a",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/completed"
       }
      ],
      "consoleErrors": [
@@ -5138,35 +5378,40 @@
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r3-replay/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "9-2-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r3-replay/9-2-4-screenshot.jpg",
        "summary": "assert: its `.destroy` remove button appears",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-3-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r3-replay/13-3-4-screenshot.jpg",
        "summary": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "17-4-4",
        "kind": "screenshot",
        "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r3-replay/17-4-4-screenshot.jpg",
        "summary": "assert: 'Assurance target alpha' is still absent from the list.",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -5193,84 +5438,96 @@
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key to create the todo from the new-todo input",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "16-3-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/16-3-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "21-4-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/21-4-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "25-5-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/25-5-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "28-6-3",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/28-6-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter in the new-todo input to submit the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "33-7-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/33-7-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "37-8-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/37-8-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "39-9-2",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/39-9-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "44-10-5",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/44-10-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "48-11-4",
        "kind": "screenshot",
        "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r3-replay/48-11-4-screenshot.jpg",
        "summary": "assert: the edited todo item no longer exists in the list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5299,35 +5556,40 @@
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r3-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-1-1",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r3-replay/5-1-1-screenshot.jpg",
        "summary": "analyze: Counting todos in the all-todos list",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-7",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r3-replay/12-2-7-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-3-2",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r3-replay/14-3-2-screenshot.jpg",
        "summary": "analyze: Recording the baseline all-todos count",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "22-4-8",
        "kind": "screenshot",
        "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r3-replay/22-4-8-screenshot.jpg",
        "summary": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5356,21 +5618,24 @@
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r3-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r3-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "13-2-5",
        "kind": "screenshot",
        "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r3-replay/13-2-5-screenshot.jpg",
        "summary": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5399,21 +5664,24 @@
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r3-replay/3-0-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-1-5",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r3-replay/8-1-5-screenshot.jpg",
        "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "14-2-6",
        "kind": "screenshot",
        "file": "assets/escape-discards-a-todo-title-edit/rewrite-r3-replay/14-2-6-screenshot.jpg",
        "summary": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5442,21 +5710,24 @@
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r3-replay/2-0-2-screenshot.jpg",
        "summary": "wait: Waiting for the All list to open in the todo app",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-1-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r3-replay/7-1-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-2-5",
        "kind": "screenshot",
        "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r3-replay/12-2-5-screenshot.jpg",
        "summary": "assert: Clear completed is hidden",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5554,28 +5825,32 @@
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "7-1-6",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r3-replay/7-1-6-screenshot.jpg",
        "summary": "press_key: Pressing Enter key to create a todo named Bulk beta",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "8-2-1",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r3-replay/8-2-1-screenshot.jpg",
        "summary": "click: Clicking the checkbox for Bulk beta to mark it completed",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-3-4",
        "kind": "screenshot",
        "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r3-replay/12-3-4-screenshot.jpg",
        "summary": "assert: every existing todo in All is completed and its item checkbox is checked",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -5602,7 +5877,8 @@
        "kind": "screenshot",
        "file": "assets/new-todo-input-receives-focus-on-page-load/rewrite-r3-replay/4-0-4-screenshot.jpg",
        "summary": "assert: the new-todo input at the top of the page is the active focused element",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [
@@ -5631,28 +5907,32 @@
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "3-1-2",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r3-replay/3-1-2-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "4-2-1",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r3-replay/4-2-1-screenshot.jpg",
        "summary": "click: Clicking the mark-all checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "11-3-7",
        "kind": "screenshot",
        "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r3-replay/11-3-7-screenshot.jpg",
        "summary": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -5679,35 +5959,40 @@
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r3-replay/1-0-1-screenshot.jpg",
        "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed"
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
        "step": "4-1-3",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r3-replay/4-1-3-screenshot.jpg",
        "summary": "press_key: Pressing Enter to create the todo",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "5-2-1",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r3-replay/5-2-1-screenshot.jpg",
        "summary": "click: Clicking the Mark all as complete checkbox to complete all todos",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "7-3-2",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r3-replay/7-3-2-screenshot.jpg",
        "summary": "press_key: Pressing the Enter key",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       },
       {
        "step": "12-4-5",
        "kind": "screenshot",
        "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r3-replay/12-4-5-screenshot.jpg",
        "summary": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
-       "status": "passed"
+       "status": "passed",
+       "url": "http://127.0.0.1:7002/#/all"
       }
      ],
      "consoleErrors": [],
@@ -31733,8 +32018,8 @@
   "kaneRuns": 151,
   "credits": 2304.26,
   "agentCostUsd": 0.43,
-  "replays": 83,
-  "authored": 22,
+  "replays": 80,
+  "authored": 61,
   "heals": 10
  },
  "named": "escape-discards-a-todo-title-edit"

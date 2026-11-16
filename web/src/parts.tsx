@@ -32,7 +32,7 @@ function StepText({ text, lit, vars }: { text: string; lit: boolean; vars?: Reco
 
 function Frame({ caseId, shot, label, tone, passed }: { caseId: string; shot?: EvidenceShot; label: string; tone?: 'fail' | 'pass'; passed?: boolean }) {
   const dlg = useRef<HTMLDialogElement>(null);
-  if (!shot) return <div className="fr none">{passed ? 'No screenshot for this step' : `${label}: not reached`}</div>;
+  if (!shot) return <div className="fr none">{passed ? 'Kane opened the app here; no screenshot of it for this step' : `${label}: not reached`}</div>;
   const src = assetUrl(caseId, shot.file);
   return (
     <>
@@ -138,7 +138,7 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                 <StepText text={st.text} lit={sweep >= i} vars={c.suite.variables} />
               </div>
               <div className="lane">
-                <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} passed={row.legacy?.outcome === 'pass'} />
+                <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} passed={row.legacy?.outcome === 'pass' || lf.reached} />
                 {row.legacy && <Tag ok={legacyOk}>{legacyOk ? 'pass' : lf.failed ? 'fail' : 'not reached'}</Tag>}
               </div>
               <div className={`node ${same === undefined ? '' : same ? 'eq' : 'ne'}`} aria-label={same ? 'same' : same === false ? 'different' : 'pending'}>
@@ -151,7 +151,7 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                     <Frame caseId={c.id} shot={was.shot} label={`${rewriteLabel}, step ${i + 1}, round ${firstFail!.round}`} tone="fail" />
                   </div>
                 )}
-                <Frame caseId={c.id} shot={rf.shot} label={`${rewriteLabel}, step ${i + 1}`} tone={showWas ? 'pass' : undefined} passed={row.latest?.outcome === 'pass'} />
+                <Frame caseId={c.id} shot={rf.shot} label={`${rewriteLabel}, step ${i + 1}`} tone={showWas ? 'pass' : undefined} passed={row.latest?.outcome === 'pass' || rf.reached} />
                 {row.latest && <Tag ok={rewriteOk}>{rewriteOk ? 'pass' : rf.failed ? 'fail' : 'not reached'}</Tag>}
                 {!row.latest && row.legacy?.outcome === 'pass' && <Tag ok={undefined}>waiting for Kane</Tag>}
               </div>
@@ -236,6 +236,20 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
               <div className={blocked.length ? 'kq' : 'cq'}>
                 <b>Kane</b> replayed {res.length} legacy behaviours on the result: {same} the same.{' '}
                 {blocked.length ? `Stop blocked; ${blocked.length} sent back.` : 'Stop allowed.'}
+              </div>
+            </div>
+          );
+        }
+        if (!r.agent) {
+          const res = Object.values(r.results);
+          const met = res.filter((x) => x.outcome === 'pass').length;
+          return (
+            <div className="lr" key={r.n}>
+              <h3>
+                Round {r.n} · {r.label ?? 'Check'}
+              </h3>
+              <div className={met < res.length ? 'kq' : 'cq'}>
+                <b>Kane</b> ran {res.length} behaviours the old app never met, straight from the spec: {met} met, {res.length - met} not.
               </div>
             </div>
           );

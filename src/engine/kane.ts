@@ -38,6 +38,8 @@ export interface EvidenceShot {
   file: string; // path relative to the case folder
   summary?: string;
   status?: string;
+  /** The page Kane was on when it took the screenshot. */
+  url?: string;
 }
 
 export interface EvidenceExtract {
@@ -401,6 +403,7 @@ export function extractEvidence(packOrSessionDir: string, assetsDir: string, ass
       file: assetsRel ? `${assetsRel}/${target}` : target,
       summary: typeof sj?.summary === 'string' ? sj.summary : undefined,
       status: typeof sj?.status === 'string' ? sj.status : undefined,
+      url: typeof sj?.url === 'string' ? sj.url : undefined,
     });
   }
 

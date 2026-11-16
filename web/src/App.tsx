@@ -294,7 +294,7 @@ function ReplayBar({ full, replay }: { full: CaseFile; replay: ReturnType<typeof
         <i className="rp-pos" style={{ left: `${pos * 100}%` }} aria-hidden />
       </div>
       <small className="rp-note">
-        {replay.t === null ? `Recorded ${recorded}, ${Math.round(total / 60000)} minutes of real Kane and Claude Code work.` : `Replaying at ${replay.speed}× speed.`}
+        {replay.t === null ? `Recorded on ${recorded}, over ${Math.round(total / 60000)} minutes of Kane and Claude Code runs.` : `Replaying at ${replay.speed}× speed.`}
       </small>
     </div>
   );

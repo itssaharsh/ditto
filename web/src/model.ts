@@ -26,7 +26,9 @@ export function framesByStep(run: RunSummary | undefined, steps: number): StepFr
     if (i === undefined || i >= steps) continue;
     out[i].reached = true;
     if (s.status === 'failed') out[i].failed = true;
-    if (s.kind === 'screenshot') out[i].shot = s;
+    // Kane's first frame can be its own start page, before it opened the app: never show that one.
+    const offApp = s.url !== undefined && !/^https?:\/\/(127\.0\.0\.1|localhost)/.test(s.url) && !s.url.includes('github.io');
+    if (s.kind === 'screenshot' && !offApp) out[i].shot = s;
     else if (s.status === 'failed') out[i].shot = s; // the annotated frame of a failing step wins
   }
   // Steps after the first failed one were never reached.
