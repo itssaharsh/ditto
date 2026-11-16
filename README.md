@@ -4,7 +4,7 @@
 
 [Live replay of the runs](https://itssaharsh.github.io/ditto/) · [The React port Claude wrote](https://github.com/itssaharsh/todomvc-react-port) · [The planted-bug commits](https://github.com/itssaharsh/todomvc-react-port/commits/ditto/mutation-check) · [How it works](docs/how-it-works.md) · [Testing](docs/testing.md)
 
-![Ditto console: a planted bug, Kane's verdict, Claude's fix and the same test passing, with Kane's screenshots of both apps](docs/console.png)
+![The live replay: a planted bug, Kane's verdict on the broken build, Claude's fix, and the same test passing (24 seconds, captions added)](docs/catch.gif)
 
 ## The closed loop, on bugs nobody told it about
 
