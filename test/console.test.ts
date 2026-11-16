@@ -24,7 +24,7 @@ const c: CaseFile = {
   status: 'parity',
   apps: { legacy: { label: 'old', url: 'u', framework: 'f' }, rewrite: { label: 'new', url: 'v', framework: 'g' } },
   suite: { name: 'x', designedBy: 'Kane', tests },
-  oracle: { a: run('pass', '2026-11-16T10:05:00Z'), b: run('pass', '2026-11-16T10:06:00Z'), c: run('mismatch', '2026-11-16T10:07:00Z') },
+  oracle: { a: run('pass', '2026-11-16T10:05:00Z'), b: run('pass', '2026-11-16T10:06:00Z'), c: { ...run('mismatch', '2026-11-16T10:07:00Z'), confirmed: true } },
   rounds: [
     { n: 0, results: { a: run('pass', '2026-11-16T10:20:00Z'), b: run('mismatch', '2026-11-16T10:21:00Z') } },
     { n: 1, results: { b: run('pass', '2026-11-16T10:40:00Z') } },

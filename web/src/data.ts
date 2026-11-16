@@ -56,7 +56,7 @@ export function derive(c: CaseFile): Derived {
       else if (sawFail && fixedInRound === undefined) fixedInRound = h.round;
     }
     let status: RowStatus = 'waiting';
-    if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail')) status = 'legacy-differs';
+    if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail') && legacy.confirmed) status = 'legacy-differs';
     else if (legacy && legacy.outcome !== 'pass') status = 'unverified';
     else if (latest?.outcome === 'pass') status = 'match';
     else if (latest) status = 'differs';

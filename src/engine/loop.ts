@@ -170,7 +170,7 @@ export class DittoLoop {
     // Only tests with no clean verdict yet run again: passes are recorded and legacy deviations are settled.
     const todo = this.tests.filter((t) => {
       const prev = this.rec.data.oracle[t.id];
-      return !prev || prev.outcome === 'error' || prev.outcome === 'test_issue';
+      return !prev || prev.outcome === 'error' || prev.outcome === 'test_issue' || ((prev.outcome === 'mismatch' || prev.outcome === 'fail') && !prev.confirmed);
     });
     await this.pool(todo, this.cfg.parallel, async (t) => {
       if (!this.creditsLeft()) return;
@@ -184,14 +184,33 @@ export class DittoLoop {
         s = await this.kane(t, 'legacy', 0, 'author');
       }
       if (s.outcome === 'mismatch' || s.outcome === 'fail') {
-        this.rec.event({
-          kind: 'decision',
-          round: 0,
-          test: t.id,
-          said: `The legacy app fails "${t.title}": ${s.oneLiner ?? s.reason ?? s.outcome}`,
-          did: 'Left out of parity and listed as a place where the legacy app already differs from its spec',
-        });
-      } else if (s.outcome !== 'pass') {
+        // A deviation of the old app must reproduce: run it once more before believing it.
+        const prevEntry = this.rec.data.oracle[t.id];
+        const first = prevEntry && (prevEntry.outcome === 'mismatch' || prevEntry.outcome === 'fail') && !prevEntry.confirmed ? prevEntry : s;
+        const second = first === s ? await this.kane(t, 'legacy', 0, 'author') : s;
+        if (second.outcome === 'pass') {
+          this.rec.event({
+            kind: 'decision',
+            round: 0,
+            test: t.id,
+            said: `Kane's first run said the old app fails "${t.title}" (${first.oneLiner ?? first.reason ?? ''}), but the second run passed`,
+            did: 'Kept it in the parity set: a deviation has to reproduce',
+          });
+          s = second;
+        } else if (second.outcome === 'mismatch' || second.outcome === 'fail') {
+          s = { ...second, confirmed: true };
+          this.rec.event({
+            kind: 'decision',
+            round: 0,
+            test: t.id,
+            said: `The old app fails "${t.title}" twice: ${second.oneLiner ?? second.reason ?? second.outcome}`,
+            did: 'Left out of parity and listed as a place where the old app already differs from its spec',
+          });
+        } else {
+          s = second;
+        }
+      }
+      if (s.outcome !== 'pass' && s.outcome !== 'mismatch' && s.outcome !== 'fail') {
         this.rec.event({
           kind: 'decision',
           round: 0,

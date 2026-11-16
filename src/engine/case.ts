@@ -22,6 +22,8 @@ export interface RunSummary {
   consoleErrors: string[];
   urls?: string[];
   failureMessage?: string;
+  /** On the old app, a failure only counts once Kane reproduces it on a second run. */
+  confirmed?: boolean;
   mode: 'author' | 'replay' | 'replay+heal';
   startedAt: string;
   endedAt: string;
