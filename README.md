@@ -34,6 +34,18 @@ On the broken build, Kane's replays of two tests the third bug breaks failed at 
 
 So Ditto changed one rule: when a replay fails at a check and healing then passes it, the pass only counts if a fresh Kane run, written from the plain-English test without the old recording, passes too. The console marks the old healed passes "healed past a failed check" so you can see which ones they were.
 
+Then we checked the same broken build (commit `a150b02`) again with the new rule ([live](https://itssaharsh.github.io/ditto/?case=todomvc-recheck)):
+
+| The broken build, first check | Old rule (planted-bug run) | New rule (re-check) |
+|---|---|---|
+| Confirmed differences | 2 | **6** |
+| Kane unsure | 3 | 1 |
+| Same | 13 | 11 |
+| Planted bugs confirmed in the first check | 2 of 3 | **3 of 3** |
+| Credits | 331 | 539 |
+
+Kane's verdicts now name the third bug directly: "Using Mark all as complete did not complete every todo in the All list." Where healing had been right (`mark-all-reactivates`, whose old recording trips on the new markup on every port), the fresh run passed, so the stricter rule added no false failures. It costs one fresh Kane run per doubtful heal.
+
 ## Everything we ran (16 Nov 2026, all real runs)
 
 | Run | Result |
@@ -45,8 +57,9 @@ So Ditto changed one rule: when a replay fails at a check and healing then passe
 | A refactor in a Claude Code session, guarded by the Stop hook | Claude said "it type-checks, but I haven't run it in a browser"; Kane replayed all 18 behaviours before it could stop: **18/18, stop allowed** |
 | Spec gaps: what the spec asks and the old app never did | Kane ran those tests on the port: **3 failed** (one a confirmed difference: "reloading does not restore the saved todo"). Claude Code added localStorage persistence from Kane's findings; Kane re-checked: **3/3 pass**, and the 18 parity behaviours still **18/18** |
 | Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
+| The same broken build, re-checked with the new heal rule | **6 confirmed differences** covering all 3 planted bugs in one check (was 2), 1 unsure, 539 credits |
 
-The three recorded cases together: 236 Kane runs and about 2,800 credits, most of it recording the old app once.
+The four recorded runs together: 273 Kane runs and about 3,300 credits, most of it recording the old app once.
 
 ## What Ditto can't see
 
@@ -58,7 +71,7 @@ The three recorded cases together: 236 Kane runs and about 2,800 credits, most o
 ## For judges (60 seconds)
 
 1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on a planted bug: Kane's verdict on the broken build, Claude's fix, and the same test passing, with Kane's screenshot of both apps at every step. Click a screenshot to enlarge it.
-2. Scroll to **3 bugs planted on purpose**: the breaker's list beside what Kane reported each round.
+2. Scroll to **3 bugs planted on purpose**: the breaker's list beside what Kane reported each round, and the rule this run made Ditto change. The **Broken build, re-checked** tab shows that rule at work on the same broken build.
 3. Press **Watch the whole run in 60 seconds** to see it happen in order.
 4. Switch to **Sonnet 5.5 port** for the first port, the Stop-hook round and the spec-gap fix, or **Haiku 5.5 port** for a second agent judged by the same tests.
 5. Try the apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/), [the Sonnet port](https://itssaharsh.github.io/ditto/port/) (reload it: your todos stay) and [the Haiku port](https://itssaharsh.github.io/ditto/port-haiku/).
@@ -84,6 +97,7 @@ Ditto turns "nothing changed for users" into something you can check:
 | `740` confirmed application difference on the rewrite | sends it to Claude Code (`claude -p --resume`) with the verdict, root cause, failing check, both screenshots and console errors |
 | `710` Kane blames the test | re-runs with healing, then has Kane author the test fresh on the rewrite; never sent to the agent as a confirmed bug (`ditto fix` can send it labelled "Kane unsure whose fault") |
 | `510` environment problem (e.g. the browser dropped) | re-runs; never counted |
+| the replay failed at a check, then healing passed it | a fresh Kane run, written from the plain-English test without the old recording, decides (healing can step around a real regression) |
 | the port does not build | sends the build error to Claude before spending Kane credits |
 
 Every decision is saved in the case file and shown in the console as **Kane said → Claude did**.

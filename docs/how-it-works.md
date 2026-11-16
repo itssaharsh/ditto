@@ -68,6 +68,7 @@ Every rewrite run is also checked for where it went: if any step's page was on t
 | `740` confirmed application issue on the rewrite | Sends it to the **same Claude Code session** (`--resume`) with Kane's verdict word for word, its root cause, the failing check, the rewrite's screenshot, the legacy app's screenshot and the console errors. |
 | `710` Kane blames the test | Re-runs with healing, then has Kane author the test fresh on the rewrite. Still unclear: shown as unclear and never counted. `ditto fix` can send it to the agent under a separate heading, "Kane unsure whose fault; the old app passes this test", never as a confirmed bug. |
 | `510` / environment issue (e.g. the browser dropped) | Re-runs; never counted as a difference. |
+| The replay failed at a check, then healing passed it | Doesn't take the healed pass on its own: Kane authors the test fresh on the rewrite, without the old recording, and that run decides. Healing is for markup that moved; the planted-bug run showed it can also step around a real regression. |
 | The build fails | Sends the build error to Claude before spending any Kane credits. |
 
 After each fix round Ditto re-checks only what failed, then replays everything once more to catch regressions (cheap, because passing tests replay from cache). It stops at parity or after `maxRounds`.
