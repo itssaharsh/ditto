@@ -12,7 +12,7 @@
 
 - **What:** an AI agent (Claude Code) rewrites a frontend; Kane CLI checks that users wouldn't notice, and every difference it confirms goes back to the agent until there are none.
 - **How:** Kane designs plain-English tests from the app's spec, the old app is the referee (only tests it passes count), and the old app's recordings replay on the rewrite.
-- **Proof:** a second agent planted 3 bugs and Kane's findings led Claude Code to all 3; that run exposed a flaw in Ditto's own rules, which was fixed and re-measured; every number on this page comes from a recorded run, and 300 of the 301 Kane evidence packs behind them pass Kane's own validator.
+- **Proof:** a second agent planted 3 bugs and Kane's findings led Claude Code to all 3; that run exposed a flaw in Ditto's own rules, which was fixed and re-measured; replayed on the official React TodoMVC, the same recordings confirmed a real bug that is open upstream ([#2309](https://github.com/tastejs/todomvc/issues/2309)); every number on this page comes from a recorded run.
 
 ## For judges (60 seconds)
 
@@ -57,6 +57,12 @@ Kane's verdicts now name the third bug directly: "Using Mark all as complete did
 On a build with nothing planted, the rule raised no false alarm: the clean Sonnet port, checked the same way, stayed at **18/18**. The one healed pass it doubted (`mark-all-reactivates`) passed its fresh run (24 Kane runs, 19 pure replays, 124 credits; [summary](docs/clean-recheck.json)).
 
 Read this as one re-run, not a measurement: Kane's verdicts vary between runs on the same build, and two tests moved from "unsure" to "different" through fresh authoring rather than the new rule. The rule doesn't cover a heal after a failed *action* (a click Kane re-targets), which Ditto still trusts because that is usually markup moving.
+
+## A real bug in code written by people
+
+The same 18 recordings Kane made on the jQuery app can judge anyone's TodoMVC. Replayed on the official React TodoMVC from tastejs/todomvc (unchanged, commit `ff43b02`), Kane confirmed one difference: **Escape doesn't leave edit mode**. The app's source handles only Enter (`if (e.key !== "Enter") return;` in `src/todo/components/input.jsx`), and the bug is an open upstream issue filed ten days earlier, [tastejs/todomvc#2309](https://github.com/tastejs/todomvc/issues/2309). Kane caught it with no knowledge of the issue, from recordings made on a different framework.
+
+Three more results were unclear: the React footer writes "2 items left!" without the `<strong>` the TodoMVC spec asks for, and Kane blamed its own check rather than the app. 14 of 18 the same; 35 Kane runs, 552 credits ([live](https://itssaharsh.github.io/ditto/?case=todomvc-impl-react)).
 
 ## Everything we ran (16 Nov 2026, all real runs)
 
