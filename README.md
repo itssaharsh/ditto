@@ -56,6 +56,7 @@ You need Node 22, [Kane CLI](https://www.testmuai.com/support/docs/kane-cli-intr
 
 ```bash
 git clone https://github.com/itssaharsh/ditto && cd ditto && npm install
+npm run ditto -- doctor     # checks Node, Kane CLI (signed in, credits), Chrome, Claude Code
 
 npm run ditto -- design     # Kane designs the tests from fixtures/app-spec.md (≈200 credits)
 npm run ditto -- record     # run them on the legacy app (the oracle)

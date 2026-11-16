@@ -305,6 +305,12 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
                 </p>
               )}
               {r.agent?.summary && <blockquote>{firstSentence(r.agent.summary)}</blockquote>}
+              {r.agent?.prompt && (
+                <details className="sent">
+                  <summary>{r.agent.kind === 'port' ? 'The port request Ditto sent Claude Code' : 'What Ditto sent Claude Code (Kane’s findings)'}</summary>
+                  <pre>{r.agent.prompt}</pre>
+                </details>
+              )}
               <p>
                 <b>Kane</b> ran {res.length} {res.length === 1 ? 'test' : 'tests'} on the rewrite: {pass} same, {res.length - pass} different
                 {credits ? ` · ${Math.round(credits)} credits` : ''} · {fmtDate(r.agent?.endedAt ?? res[0]?.endedAt)}

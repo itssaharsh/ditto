@@ -21,6 +21,7 @@ const has = (name: string) => argv.includes(`--${name}`);
 function help(): void {
   console.log(`ditto — rewrite your frontend with an AI agent; Kane CLI proves it behaves the same.
 
+  ditto doctor                  Check Node, Kane CLI (signed in, credits), Chrome, Claude Code and your config
   ditto init --legacy <dir> --spec <file> [--rewrite <repo>]   Write ditto.config.json for your app
   ditto design [--max 3]        Kane reads your spec and designs plain-English _test.md behaviours
   ditto record                  Run every behaviour on the legacy app (the oracle)
@@ -40,6 +41,7 @@ function help(): void {
 async function main(): Promise<void> {
   if (!cmd || cmd === 'help' || has('help')) return help();
   if (cmd === 'init') return init();
+  if (cmd === 'doctor') return doctor(flag('config') ?? 'ditto.config.json');
   const cfg = loadConfig(flag('config') ?? 'ditto.config.json');
   const only = flag('only')?.split(',').map((s) => s.trim()).filter(Boolean);
 
@@ -126,6 +128,37 @@ async function main(): Promise<void> {
   }
   help();
   process.exitCode = 2;
+}
+
+async function doctor(configFile: string): Promise<void> {
+  const { spawnSync } = await import('node:child_process');
+  const { kaneBin, kaneEnv } = await import('./engine/kane.js');
+  const { isUp } = await import('./engine/apps.js');
+  const env = kaneEnv();
+  const line = (ok: boolean, what: string, hint = '') => console.log(`${ok ? 'ok  ' : 'FIX '} ${what}${ok || !hint ? '' : `\n      ${hint}`}`);
+  const run = (cmd: string, args: string[]) => spawnSync(cmd, args, { env, encoding: 'utf8' });
+  const node = Number(process.versions.node.split('.')[0]);
+  line(node >= 22, `Node ${process.versions.node}`, 'Ditto needs Node 22 or newer.');
+  const kv = run(kaneBin(), ['--version']);
+  line(kv.status === 0, `Kane CLI ${kv.stdout?.trim() ?? ''}`.trim(), 'npm install -g @testmuai/kane-cli');
+  if (kv.status === 0) {
+    const who = run(kaneBin(), ['whoami']);
+    line(!/Not logged in/.test(who.stdout ?? ''), 'Kane CLI signed in', 'kane-cli login');
+    const bal = run(kaneBin(), ['balance']).stdout?.match(/credits:\s*([\d.]+)/i)?.[1];
+    line(bal !== undefined && Number(bal) > 0, `Kane credits: ${bal ? Math.round(Number(bal)) : 'unknown'}`, 'Claim credits at testmuai.com/kane-cli');
+  }
+  const chrome = env.KANE_CLI_CHROME_PATH ?? ['/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].find((p) => existsSync(p));
+  line(Boolean(chrome && existsSync(chrome)), `Chrome for Kane: ${chrome ?? 'not found'}`, 'Install Google Chrome, or set KANE_CLI_CHROME_PATH to a Chromium binary.');
+  const cv = spawnSync('claude', ['--version'], { encoding: 'utf8' });
+  line(cv.status === 0, `Claude Code ${cv.stdout?.trim() ?? ''}`.trim(), 'Install Claude Code and sign in (only needed for `ditto loop` and hook mode).');
+  if (existsSync(configFile)) {
+    const cfg = loadConfig(configFile);
+    line(existsSync(cfg.abs(cfg.suite)), `Suite folder ${cfg.suite}`, 'Run `ditto design` to have Kane write the tests from your spec.');
+    for (const [name, url] of [['legacy', cfg.legacyUrl], ['rewrite', cfg.rewriteUrl]] as const) {
+      const up = await isUp(url);
+      console.log(`info ${name} app ${url} ${up ? 'is up' : 'is not running (Ditto serves it when it runs)'}`);
+    }
+  } else line(false, `${configFile}`, 'Run `ditto init --legacy <dir> --spec <file>` first.');
 }
 
 function init(): void {
