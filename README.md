@@ -6,6 +6,22 @@
 
 ![The live replay: a planted bug, Kane's verdict on the broken build, Claude's fix, and the same test passing (24 seconds, captions added)](docs/catch.gif)
 
+**In 30 seconds**
+
+- **What:** an AI agent (Claude Code) rewrites a frontend; Kane CLI checks that users wouldn't notice, and every difference it confirms goes back to the agent until there are none.
+- **How:** Kane designs plain-English tests from the app's spec, the old app is the referee (only tests it passes count), and the old app's recordings replay on the rewrite.
+- **Proof:** a second agent planted 3 bugs and Kane's findings led Claude Code to all 3; that run exposed a flaw in Ditto's own rules, which was fixed and re-measured; every number on this page comes from a recorded run, and 300 of the 301 Kane evidence packs behind them pass Kane's own validator.
+
+## For judges (60 seconds)
+
+1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on a planted bug: Kane's verdict on the broken build, Claude's fix, and the same test passing, with Kane's screenshot of both apps at every step. Click a screenshot to enlarge it.
+2. Scroll to **3 bugs planted on purpose**: the breaker's list beside what Kane reported each round, and the rule this run made Ditto change. The **Broken build, re-checked** tab shows that rule at work on the same broken build.
+3. Press **Watch the whole run in 60 seconds** to see it happen in order.
+4. Switch to **Sonnet 5.5 port** for the first port, the Stop-hook round and the spec-gap fix, or **Haiku 5.5 port** for a second agent judged by the same tests.
+5. Try the apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/), [the Sonnet port](https://itssaharsh.github.io/ditto/port/) (reload it: your todos stay) and [the Haiku port](https://itssaharsh.github.io/ditto/port-haiku/).
+
+Without Kane or credits, you can also [read the recorded runs in a terminal](#look-around-without-kane-or-credits).
+
 ## The closed loop, on bugs nobody told it about
 
 A rewrite that matches first time doesn't show the tests would catch a regression. So a second Claude Code session broke the finished React port on purpose and wrote down what it did, outside the repository. A fresh Claude Code session then got only what Kane found:
@@ -62,16 +78,6 @@ The four recorded runs and the clean-port check together: 297 Kane runs and abou
 - **Tests Kane can't run cleanly on the old app** (9 of 28 here) are left out, never guessed. A wrong test can't blame the new code, but it can't protect it either.
 - **The old app has to run.** Ditto needs a working build of it to record the referee.
 - **Kane is sometimes unsure whose fault a failure is** (`710`). Ditto retries, heals, then has Kane author the test fresh on the rewrite; whatever is still unclear is shown as unclear, not counted as a pass or a fail.
-
-## For judges (60 seconds)
-
-1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on a planted bug: Kane's verdict on the broken build, Claude's fix, and the same test passing, with Kane's screenshot of both apps at every step. Click a screenshot to enlarge it.
-2. Scroll to **3 bugs planted on purpose**: the breaker's list beside what Kane reported each round, and the rule this run made Ditto change. The **Broken build, re-checked** tab shows that rule at work on the same broken build.
-3. Press **Watch the whole run in 60 seconds** to see it happen in order.
-4. Switch to **Sonnet 5.5 port** for the first port, the Stop-hook round and the spec-gap fix, or **Haiku 5.5 port** for a second agent judged by the same tests.
-5. Try the apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/), [the Sonnet port](https://itssaharsh.github.io/ditto/port/) (reload it: your todos stay) and [the Haiku port](https://itssaharsh.github.io/ditto/port-haiku/).
-
-To run it on your machine, see [Run it](#run-it).
 
 ## The idea: the old app is the test oracle
 
