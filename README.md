@@ -1,5 +1,7 @@
 # Ditto: Did the rewrite break anything?
 
+[![ci](https://github.com/itssaharsh/ditto/actions/workflows/ci.yml/badge.svg)](https://github.com/itssaharsh/ditto/actions/workflows/ci.yml) [![live replay](https://img.shields.io/badge/live-replay-147a52)](https://itssaharsh.github.io/ditto/) [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 **Let an AI agent rewrite your frontend. Kane CLI runs the same plain-English tests on the old app and on the rewrite, and sends every difference back to the agent until the two behave the same.**
 
 [Live replay of the runs](https://itssaharsh.github.io/ditto/) · [The React port Claude wrote](https://github.com/itssaharsh/todomvc-react-port) · [The planted-bug commits](https://github.com/itssaharsh/todomvc-react-port/commits/ditto/mutation-check) · [How it works](docs/how-it-works.md) · [Testing](docs/testing.md)

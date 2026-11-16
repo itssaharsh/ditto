@@ -1,0 +1,20 @@
+# Ditto's own checks on every push: types, unit tests (fed with real Kane CLI output) and the console build.
+# Kane CLI and Claude Code are not needed here; the recorded runs in cases/ are what the console replays.
+name: ci
+on:
+  push:
+    branches: [master]
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run web:build
