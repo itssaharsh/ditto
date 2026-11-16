@@ -4,7 +4,7 @@ import type { SuiteTest } from '../../src/engine/suite';
 
 export type { CaseEvent, CaseFile, Round, RunSummary, SuiteTest };
 
-export type RowStatus = 'match' | 'differs' | 'legacy-differs' | 'unverified' | 'checking' | 'waiting';
+export type RowStatus = 'match' | 'differs' | 'unclear' | 'legacy-differs' | 'unverified' | 'checking' | 'waiting';
 
 export interface BehaviourRow {
   test: SuiteTest;
@@ -57,9 +57,11 @@ export function derive(c: CaseFile): Derived {
     }
     let status: RowStatus = 'waiting';
     if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail') && legacy.confirmed) status = 'legacy-differs';
+    else if (legacy?.outcome === 'pass' && legacy.replayVerified === false) status = 'unverified';
     else if (legacy && legacy.outcome !== 'pass') status = 'unverified';
     else if (latest?.outcome === 'pass') status = 'match';
-    else if (latest) status = 'differs';
+    else if (latest && (latest.outcome === 'mismatch' || latest.outcome === 'fail')) status = 'differs';
+    else if (latest) status = 'unclear';
     const running = live ? open.get(test.id) : undefined;
     if (running) status = 'checking';
     return { test, legacy, history, latest, status, fixedInRound, running };

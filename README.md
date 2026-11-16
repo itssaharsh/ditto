@@ -26,7 +26,7 @@ Ditto turns "nothing changed for users" into something you can check:
 1. **Kane writes the tests from your spec.** `kane-cli context ingest` + `design tests` turn the spec into plain-English `_test.md` files, each step tagged with the acceptance criterion it verifies. No selectors.
 2. **The old app is the reference.** Every test runs on the legacy app first. Only tests the old app passes judge the rewrite, so a wrong test can never blame the new code. Kane records each passing test so it replays in seconds.
 3. **The same recording judges the rewrite.** Claude Code ports the app without seeing the tests. Kane replays the legacy recordings on the port (`--override-start-url --local`). Same behaviour and same markup: a pass in seconds for about zero credits. Different markup: Kane re-authors just those steps and judges again. Different behaviour: a confirmed difference with a verdict and screenshots.
-4. **Every difference goes back to the agent.** Ditto resumes the same Claude Code session with Kane's verdict word for word, the rewrite's screenshot, the legacy app's screenshot and the browser console. Claude fixes; Kane re-checks; repeat until parity, then one more full replay to catch regressions.
+4. **Every confirmed difference goes back to the agent.** Ditto resumes the same Claude Code session with that test's steps, Kane's verdict word for word, the rewrite's screenshot and the legacy app's screenshot at the same step, and the browser console. Results Kane can't call cleanly are never sent as failures. Claude fixes; Kane re-checks; repeat until parity, then one more full replay to catch regressions.
 
 ## How Kane and the agent talk
 

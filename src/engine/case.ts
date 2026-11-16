@@ -1,6 +1,7 @@
 // The case file is the single source of truth: the live console and the published replay both render it.
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { homedir } from 'node:os';
 import type { EvidenceShot, KaneRunResult, KaneVerdict, Outcome } from './kane.js';
 import type { SuiteTest } from './suite.js';
 
@@ -24,6 +25,9 @@ export interface RunSummary {
   failureMessage?: string;
   /** On the old app, a failure only counts once Kane reproduces it on a second run. */
   confirmed?: boolean;
+  /** On the old app, a pass only joins the parity set once its recording also replays cleanly. */
+  replayVerified?: boolean;
+  replaySeconds?: number;
   mode: 'author' | 'replay' | 'replay+heal';
   startedAt: string;
   endedAt: string;
@@ -80,7 +84,7 @@ export interface CaseFile {
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];
-  totals: { kaneRuns: number; credits: number; agentCostUsd: number; replays: number };
+  totals: { kaneRuns: number; credits: number; agentCostUsd: number; replays: number; heals?: number; authored?: number };
 }
 
 export function summarize(r: KaneRunResult, mode: RunSummary['mode']): RunSummary {
@@ -132,16 +136,22 @@ export class CaseRecorder {
   }
 
   addRun(summary: RunSummary): void {
-    this.data.totals.kaneRuns += 1;
-    this.data.totals.credits = Math.round((this.data.totals.credits + (summary.credits ?? 0)) * 100) / 100;
-    if (summary.mode === 'replay') this.data.totals.replays += 1;
+    const t = this.data.totals;
+    t.kaneRuns += 1;
+    t.credits = Math.round((t.credits + (summary.credits ?? 0)) * 100) / 100;
+    if (summary.mode === 'replay') t.replays += 1;
+    else if (summary.mode === 'replay+heal') t.heals = (t.heals ?? 0) + 1;
+    else t.authored = (t.authored ?? 0) + 1;
   }
 
   save(): void {
     this.data.updatedAt = new Date().toISOString();
     mkdirSync(dirname(this.file), { recursive: true });
     const tmp = `${this.file}.tmp`;
-    writeFileSync(tmp, JSON.stringify(this.data, null, 1));
+    // The case is published: never let a local home path (it names the account) into it.
+    const home = homedir();
+    const text = JSON.stringify(this.data, null, 1).split(home).join('~');
+    writeFileSync(tmp, text);
     renameSync(tmp, this.file);
   }
 }

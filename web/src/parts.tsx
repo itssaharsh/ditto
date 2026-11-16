@@ -158,6 +158,7 @@ function StatusLine({ row }: { row: BehaviourRow }) {
   const words: Record<BehaviourRow['status'], string> = {
     match: row.fixedInRound !== undefined ? `Same behaviour. Differed at first, matched after fix round ${row.fixedInRound}.` : 'Same behaviour on both apps.',
     differs: 'Still different on the rewrite.',
+    unclear: 'Kane could not get a clean verdict on the rewrite for this one, so it is not counted either way.',
     'legacy-differs': 'The old app itself fails this part of the spec, so it is not used to judge the rewrite.',
     unverified: 'Kane could not get a clean run of this test on the old app, so it is not counted.',
     checking: 'Kane is running this test now.',

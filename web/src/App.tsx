@@ -156,7 +156,10 @@ function CaseView({ c: full }: { c: CaseFile }) {
                 <b>{facts.rounds}</b> fix {facts.rounds === 1 ? 'round' : 'rounds'}
               </span>
               <span>
-                <b>{facts.runs}</b> Kane runs, <b>{facts.replays}</b> pure replays
+                <b>{facts.runs}</b> Kane runs: <b>{facts.replays}</b> pure replays, <b>{facts.heals}</b> healed, <b>{facts.authored}</b> authored
+              </span>
+              <span>
+                <b>{facts.credits}</b> credits
               </span>
             </p>
             {(d.legacyDiffers > 0 || d.unverified > 0) && (

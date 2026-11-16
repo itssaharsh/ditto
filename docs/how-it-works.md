@@ -7,7 +7,7 @@ It does that with three actors:
 | Actor | Job |
 |---|---|
 | **Kane CLI** (TestMu AI) | Turns the spec into plain-English tests, runs them in a real Chrome, and judges every result (pass, confirmed app difference, or "the test itself was wrong"). |
-| **Claude Code** (headless, `claude -p`) | Ports the app, then fixes whatever Kane says differs. It never sees the tests, only Kane's findings. |
+| **Claude Code** (headless, `claude -p`) | Ports the app without seeing the suite, then fixes whatever Kane says differs. For each difference it gets that test's steps, Kane's verdict and two screenshots, never the rest of the suite. |
 | **Ditto** | The loop between them: it schedules Kane runs, routes every Kane result to the right next step, and records everything in one case file. |
 
 ## 1. Design: Kane writes the tests from your spec
@@ -38,7 +38,7 @@ When the legacy app fails a test, Ditto runs it once more before believing it: K
 
 ## 3. Port: Claude Code rewrites the app
 
-`ditto loop` asks Claude Code to port the app (jQuery → React + TypeScript + Vite here). The prompt is what a developer would type: keep the look and the behaviour. The agent reads the legacy code; it never sees the tests.
+`ditto loop` asks Claude Code to port the app (jQuery → React + TypeScript + Vite here). The prompt is what a developer would type: keep the look and the behaviour. The agent reads the legacy code; it does not see the suite.
 
 ## 4. Check: the same recording, replayed on the rewrite
 

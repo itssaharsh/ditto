@@ -62,6 +62,7 @@ export function pickNamed(rows: BehaviourRow[]): BehaviourRow | undefined {
 export function tryOrder(rows: BehaviourRow[]): BehaviourRow[] {
   const rank = (r: BehaviourRow) =>
     r.fixedInRound !== undefined ? 0 : r.status === 'differs' ? 1 : r.status === 'legacy-differs' ? 2 : r.status === 'match' ? 3 : 4;
+
   return [...rows].sort((a, b) => rank(a) - rank(b) || (a.fixedInRound ?? 99) - (b.fixedInRound ?? 99));
 }
 
@@ -71,6 +72,8 @@ export function caseFacts(c: CaseFile) {
     rounds,
     runs: c.totals.kaneRuns,
     replays: c.totals.replays,
+    heals: c.totals.heals ?? 0,
+    authored: c.totals.authored ?? 0,
     credits: Math.round(c.totals.credits),
   };
 }

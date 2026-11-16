@@ -170,10 +170,22 @@ export class DittoLoop {
     // Only tests with no clean verdict yet run again: passes are recorded and legacy deviations are settled.
     const todo = this.tests.filter((t) => {
       const prev = this.rec.data.oracle[t.id];
-      return !prev || prev.outcome === 'error' || prev.outcome === 'test_issue' || ((prev.outcome === 'mismatch' || prev.outcome === 'fail') && !prev.confirmed);
+      return (
+        !prev ||
+        prev.outcome === 'error' ||
+        prev.outcome === 'test_issue' ||
+        ((prev.outcome === 'mismatch' || prev.outcome === 'fail') && !prev.confirmed) ||
+        (prev.outcome === 'pass' && !prev.replayVerified)
+      );
     });
     await this.pool(todo, this.cfg.parallel, async (t) => {
       if (!this.creditsLeft()) return;
+      const prevPass = this.rec.data.oracle[t.id];
+      if (prevPass?.outcome === 'pass' && !prevPass.replayVerified) {
+        this.rec.data.oracle[t.id] = await this.verifyReplay(t, prevPass);
+        this.rec.save();
+        return;
+      }
       let s = await this.kane(t, 'legacy', 0, 'author');
       if (s.outcome === 'error' || s.outcome === 'fail') {
         this.rec.event({ kind: 'decision', round: 0, test: t.id, said: `Kane could not finish: ${s.oneLiner ?? s.reason ?? s.outcome}`, did: 'Ran it again' });
@@ -219,11 +231,28 @@ export class DittoLoop {
           did: 'Left out of parity and marked as not verified',
         });
       }
+      if (s.outcome === 'pass' && !s.replayVerified) s = await this.verifyReplay(t, s);
       this.rec.data.oracle[t.id] = s;
       this.rec.save();
     });
     const pass = this.oraclePassing().length;
     this.rec.event({ kind: 'note', text: `Oracle ready: ${pass} of ${this.tests.length} behaviours hold on the legacy app.` });
+  }
+
+  /** A pass only counts if Kane's recording of it replays cleanly on the old app (no re-authoring). */
+  private async verifyReplay(t: SuiteTest, authored: RunSummary): Promise<RunSummary> {
+    const r = await this.kane(t, 'legacy', 0, 'replay');
+    if (r.outcome === 'pass' && (r.authorDecisions ?? 0) === 0) {
+      return { ...authored, replayVerified: true, replaySeconds: r.durationS };
+    }
+    this.rec.event({
+      kind: 'decision',
+      round: 0,
+      test: t.id,
+      said: `The recorded run of "${t.title}" did not replay cleanly on the old app: ${r.oneLiner ?? r.reason ?? r.outcome}`,
+      did: 'Left out of parity as not verified: an unstable recording cannot judge the rewrite',
+    });
+    return { ...authored, outcome: 'test_issue', reason: `Recording did not replay cleanly: ${r.oneLiner ?? r.reason ?? r.outcome}` };
   }
 
   oraclePassing(): SuiteTest[] {
@@ -357,10 +386,22 @@ export class DittoLoop {
       round.results[t.id] = await this.checkOne(t, n);
       this.rec.save();
     });
-    const failing = scope.filter((t) => round.results[t.id]?.outcome !== 'pass');
+    // Only differences Kane confirmed on the rewrite go to the agent; unclear results are never blamed on it.
+    const failing = scope.filter((t) => {
+      const o = round.results[t.id]?.outcome;
+      return o === 'mismatch' || o === 'fail';
+    });
     const matched = this.matchedCount(n);
     this.rec.event({ kind: 'parity', round: n, matched, total: this.oraclePassing().length });
     return failing;
+  }
+
+  /** Behaviours whose latest rewrite result is neither a pass nor a confirmed difference. */
+  unclear(upTo = Infinity): SuiteTest[] {
+    return this.oraclePassing().filter((t) => {
+      const o = this.latest(t.id, upTo)?.outcome;
+      return o === 'test_issue' || o === 'error' || o === undefined;
+    });
   }
 
   /** Latest result per oracle test across rounds up to n. */
@@ -378,6 +419,21 @@ export class DittoLoop {
   }
 
   // ---------- Stage 4: feed differences back to the agent ----------
+
+  /** Copies one screenshot into a per-round folder the agent may read (it never gets the case folder). */
+  private feedbackFile(n: number, testId: string, side: string, file: string): string {
+    const dir = this.feedbackDir(n);
+    const ext = file.endsWith('.png') ? 'png' : 'jpg';
+    const target = join(dir, `${testId}-${side}.${ext}`);
+    copyFileSync(join(this.rec.dir, file), target);
+    return target;
+  }
+
+  private feedbackDir(n: number): string {
+    const dir = this.cfg.abs(join(this.cfg.workDir, 'feedback', this.cfg.case, `round-${n + 1}`));
+    mkdirSync(dir, { recursive: true });
+    return dir;
+  }
 
   private fillVars(text: string): string {
     return text
@@ -409,8 +465,8 @@ export class DittoLoop {
         legacy?.shots.filter((x) => x.kind === 'screenshot' && Number(x.step.split('-')[1]) === mdStep).at(-1) ??
         legacy?.shots.filter((x) => x.kind === 'screenshot').at(-1);
       if (!Number.isNaN(mdStep)) lines.push(`   It went wrong in step ${mdStep + 1}.`);
-      if (shot) lines.push(`   Screenshot of your port at that step: ${join(this.rec.dir, shot.file)}`);
-      if (legacyShot) lines.push(`   Screenshot of the legacy app at the same step: ${join(this.rec.dir, legacyShot.file)}`);
+      if (shot) lines.push(`   Screenshot of your port at that step: ${this.feedbackFile(n, t.id, 'rewrite', shot.file)}`);
+      if (legacyShot) lines.push(`   Screenshot of the legacy app at the same step: ${this.feedbackFile(n, t.id, 'legacy', legacyShot.file)}`);
       if (s?.consoleErrors.length) lines.push(`   Browser console on your port: ${s.consoleErrors.slice(0, 4).join(' | ')}`);
       lines.push('');
     });
@@ -437,7 +493,7 @@ export class DittoLoop {
       prompt,
       model: this.cfg.agent.model,
       resume: this.agentSession,
-      addDirs: [...(this.cfg.legacy.dir ? [this.cfg.abs(this.cfg.legacy.dir)] : []), this.rec.dir],
+      addDirs: [...(this.cfg.legacy.dir ? [this.cfg.abs(this.cfg.legacy.dir)] : []), this.feedbackDir(n - 1)],
       maxTurns: this.cfg.agent.maxTurnsFix ?? 60,
       onTool: (tool, detail) => this.rec.event({ kind: 'agent_tool', round: n, tool, detail }),
       onText: (text) => this.rec.event({ kind: 'agent_text', round: n, text: text.slice(0, 600) }),
@@ -550,7 +606,11 @@ export class DittoLoop {
         return this.rec.data;
       }
       let failing = await this.check(n, scopeAll);
-      while (failing.length && n < this.cfg.maxRounds && this.creditsLeft()) {
+      while (failing.length && n < this.cfg.maxRounds) {
+        if (!this.creditsLeft()) {
+          this.rec.event({ kind: 'note', text: `Stopped: the credit cap (${this.cfg.creditCap}) was reached.` });
+          break;
+        }
         n += 1;
         await this.fix(n, failing);
         if (!(await this.build(n))) break;
@@ -561,13 +621,21 @@ export class DittoLoop {
           failing = await this.check(n, scopeAll.filter((t) => !justChecked.includes(t)));
         }
       }
-      if (!failing.length) await this.promote();
-      this.rec.data.status = failing.length ? 'stopped' : 'parity';
+      // Unclear results get one more chance before the verdict.
+      const unclear = this.unclear(n);
+      if (!failing.length && unclear.length && this.creditsLeft()) {
+        this.rec.event({ kind: 'note', text: `${unclear.length} behaviour(s) had no clean verdict on the rewrite; checking them once more.` });
+        failing = await this.check(n, unclear);
+      }
+      const stillUnclear = this.unclear(n);
+      const parity = !failing.length && !stillUnclear.length;
+      if (parity) await this.promote();
+      this.rec.data.status = parity ? 'parity' : 'stopped';
       this.rec.event({
         kind: 'note',
-        text: failing.length
-          ? `Stopped after round ${n} with ${failing.length} behaviour(s) still different.`
-          : `Parity: all ${scopeAll.length} behaviours that hold on the legacy app hold on the rewrite.`,
+        text: parity
+          ? `Parity: all ${scopeAll.length} behaviours that hold on the legacy app hold on the rewrite.`
+          : `Stopped after round ${n}: ${failing.length} behaviour(s) still differ and ${stillUnclear.length} have no clean verdict.`,
       });
       return this.rec.data;
     } finally {
