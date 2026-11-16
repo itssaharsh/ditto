@@ -1,6 +1,7 @@
 // Runs Kane CLI's own integrity check on every sealed evidence pack behind the recorded runs
 // (`kane-cli evidence validate --json`, profile L1; local and free) and writes a summary with no account data.
 // The packs themselves stay in .ditto-work (they hold account details); the console shows screenshots copied from them.
+// It also has Kane judge each pack against Ditto's policy (policies/ditto-parity.yaml) with `kane-cli evidence verdict`.
 // Usage: npx tsx scripts/validate-evidence.ts   → docs/evidence-validation.json
 import { execFile } from 'node:child_process';
 import { existsSync, readdirSync, writeFileSync } from 'node:fs';
@@ -17,7 +18,25 @@ for (const folder of existsSync(root) ? readdirSync(root) : []) {
   for (const f of readdirSync(dir)) if (f.endsWith('.evidence')) packs.push({ folder, file: join(dir, f) });
 }
 
-type Result = { folder: string; id: string; valid: boolean; status?: string; codes: string[]; error?: string };
+type Result = { folder: string; id: string; valid: boolean; status?: string; codes: string[]; error?: string; policy?: string; gates?: Record<string, string> };
+const POLICY = 'policies/ditto-parity.yaml';
+
+/** Kane's own verdict on the pack under Ditto's policy: overall result and each gate's status. */
+async function policyVerdict(file: string): Promise<{ result?: string; gates?: Record<string, string> }> {
+  try {
+    const { stdout } = await run(kaneBin(), ['evidence', 'verdict', file, '--policy', POLICY, '--json'], { env: kaneEnv(), maxBuffer: 1 << 24 });
+    return parseVerdict(stdout);
+  } catch (e) {
+    return parseVerdict((e as { stdout?: string }).stdout ?? '');
+  }
+}
+function parseVerdict(out: string): { result?: string; gates?: Record<string, string> } {
+  const line = out.split('\n').find((l) => l.trim().startsWith('{'));
+  if (!line) return {};
+  const j = JSON.parse(line) as { result?: string; verdicts?: { gates?: { id: string; status: string }[] }[] };
+  const gates = Object.fromEntries((j.verdicts?.[0]?.gates ?? []).map((g) => [g.id, g.status]));
+  return { result: j.result, gates };
+}
 const results: Result[] = [];
 let next = 0;
 async function worker() {
@@ -28,7 +47,8 @@ async function worker() {
       const { stdout } = await run(kaneBin(), ['evidence', 'validate', p.file, '--json'], { env: kaneEnv(), maxBuffer: 1 << 24 });
       const line = stdout.split('\n').find((l) => l.trim().startsWith('{'));
       const j = JSON.parse(line ?? '{}') as { valid?: boolean; status?: string; diagnostics?: { code: string; severity: string }[] };
-      results.push({ folder: p.folder, id, valid: j.valid === true, status: j.status, codes: (j.diagnostics ?? []).map((d) => `${d.severity}:${d.code}`) });
+      const v = await policyVerdict(p.file);
+      results.push({ folder: p.folder, id, valid: j.valid === true, status: j.status, codes: (j.diagnostics ?? []).map((d) => `${d.severity}:${d.code}`), policy: v.result, gates: v.gates });
     } catch (e) {
       const out = (e as { stdout?: string }).stdout ?? '';
       const line = out.split('\n').find((l) => l.trim().startsWith('{'));
@@ -67,6 +87,15 @@ const summary = {
   byFolder,
   diagnostics: count(results.flatMap((r) => r.codes)),
   invalid: results.filter((r) => !r.valid).map((r) => ({ folder: r.folder, id: r.id, status: r.status, codes: r.codes, error: r.error })),
+  policy: {
+    file: POLICY,
+    command: 'kane-cli evidence verdict <pack> --policy policies/ditto-parity.yaml --json',
+    results: count(results.map((r) => r.policy ?? 'no verdict')),
+    gates: Object.fromEntries(
+      [...new Set(results.flatMap((r) => Object.keys(r.gates ?? {})))].map((g) => [g, count(results.map((r) => r.gates?.[g] ?? 'n/a'))]),
+    ),
+  },
 };
 writeFileSync('docs/evidence-validation.json', JSON.stringify(summary, null, 2) + '\n');
 console.log(`${summary.valid}/${summary.packs} packs valid · statuses ${JSON.stringify(summary.statuses)} · diagnostics ${JSON.stringify(summary.diagnostics)}`);
+console.log(`policy ${POLICY}: ${JSON.stringify(summary.policy.results)} · gates ${JSON.stringify(summary.policy.gates)}`);

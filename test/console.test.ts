@@ -118,3 +118,18 @@ test('planted bugs are matched to the fix round that changed their file, with th
   assert.equal(bugs[0].text, 'Escape saves the edit');
   assert.equal(roundLabel(m.rounds[0]), 'Broken');
 });
+
+test('the pull-request report says No at parity and lists confirmed differences otherwise', async () => {
+  const { reportMarkdown } = await import('../src/engine/report.js');
+  const parity = reportMarkdown({ ...c, oracle: { a: run('pass', 'x'), b: run('pass', 'x'), c: c.oracle.c } });
+  assert.match(parity, /\*\*No\.\*\* 2 of 2 behaviours act the same/);
+  const broken: CaseFile = {
+    ...c,
+    oracle: { a: run('pass', 'x'), b: run('pass', 'x'), c: c.oracle.c },
+    rounds: [{ n: 0, results: { a: run('pass', 'x'), b: { ...run('mismatch', 'x'), oneLiner: 'Escape kept the edit' } } }],
+  };
+  const md = reportMarkdown(broken);
+  assert.match(md, /\*\*Yes\.\*\* Kane CLI confirmed 1 of 2 behaviours act differently/);
+  assert.match(md, /- \*\*B\*\*: Escape kept the edit/);
+  assert.match(md, /1 of the 3 tests Kane designed from the spec are not counted/);
+});

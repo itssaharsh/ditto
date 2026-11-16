@@ -1,0 +1,38 @@
+{
+  "case": "try",
+  "title": "Try it: the deployed jQuery app against the deployed broken build",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery",
+    "url": "https://itssaharsh.github.io/ditto/legacy/"
+  },
+  "rewrite": {
+    "label": "React (broken)",
+    "framework": "React port with 3 planted bugs (commit a150b02), deployed",
+    "repo": "../todomvc-react-port",
+    "build": "npm install --no-audit --no-fund && npm run build",
+    "dist": "dist",
+    "port": 7002,
+    "url": "https://itssaharsh.github.io/ditto/port-broken/"
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 2,
+  "maxRounds": 4,
+  "creditCap": 300,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "note": "Run on your machine against the two apps deployed with the site: no servers, no agent, just Kane."
+}

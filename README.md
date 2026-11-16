@@ -147,7 +147,10 @@ npm run ditto -- mutate --config ditto.mutation.config.json   # plant bugs in a 
 npm run ditto -- fix        # continue fixing from the last recorded check
 
 npm run web:build && npm run ditto -- ui    # the console, live while a loop runs
+npm run ditto -- report --out report.md     # a pull-request-ready parity report (gh pr comment <n> --body-file report.md)
 ```
+
+The report is plain Markdown for a pull request or a CI job summary: [on the fixed port](docs/report-example.md), and [on the broken build](docs/report-example-broken.md), where it lists the six behaviours Kane confirmed as different, in Kane's words.
 
 Point it at your own app by editing `ditto.config.json` (legacy folder or URL, spec, rewrite repo, build command, ports). On Linux without Google Chrome, set `KANE_CLI_CHROME_PATH` to any Chromium binary.
 

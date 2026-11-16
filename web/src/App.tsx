@@ -18,6 +18,8 @@ export interface CasesIndex {
     planted?: number;
     /** Oracle behaviours whose latest result is a confirmed difference. */
     differ?: number;
+    /** Reached from a link, not shown in the run switcher. */
+    unlisted?: boolean;
     rewrite: string;
     status: string;
     matched: number;
@@ -52,10 +54,11 @@ function CaseLoader({ id, index }: { id: string; index?: CasesIndex }) {
 }
 
 function CaseTabs({ index, current }: { index?: CasesIndex; current: string }) {
-  if (!index || index.cases.length < 2) return null;
+  const listed = index?.cases.filter((k) => !k.unlisted || k.id === current) ?? [];
+  if (listed.length < 2) return null;
   return (
     <nav className="cases" aria-label="Runs">
-      {index.cases.map((k) => (
+      {listed.map((k) => (
         <a key={k.id} href={`?case=${k.id}`} className={k.id === current ? 'on' : ''} aria-current={k.id === current ? 'page' : undefined}>
           <b>{k.tab ?? k.title.replace(/^.*ported by /, '')}</b>
           <span>

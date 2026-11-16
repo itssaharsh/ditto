@@ -16,7 +16,8 @@
     "repo": "../todomvc-react-port-broken",
     "build": "npm install --no-audit --no-fund && npm run build",
     "dist": "dist",
-    "port": 7005
+    "port": 7005,
+    "publishAs": "port-broken"
   },
   "agent": {
     "model": "sonnet",

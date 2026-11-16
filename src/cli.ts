@@ -7,6 +7,7 @@ import { designSuite } from './engine/design.js';
 import { DittoLoop, writeCasesIndex } from './engine/loop.js';
 import { serveConsole } from './engine/apps.js';
 import { findTargets, scan } from './engine/scan.js';
+import { reportMarkdown } from './engine/report.js';
 import { importDesigned, loadSuite } from './engine/suite.js';
 import type { CaseFile } from './engine/case.js';
 
@@ -32,6 +33,7 @@ function help(): void {
   ditto fix                     Continue from the recorded check: send what still differs to Claude Code, round by round
   ditto mutate [--count 3]      Mutation check: a second agent breaks the rewrite on purpose; does Kane catch it?
   ditto ui [--port 4747]        Open the console (live while a loop runs)
+  ditto report [--out f.md]               A pull-request-ready parity report (Markdown) for the current case
   ditto status [--loop]                  Print the parity table for the current case
   ditto scan [--targets a,b]    Replay the reference recordings on other builds (e.g. every TodoMVC framework)
   ditto hook install            Make your interactive Claude Code session in the rewrite repo
@@ -88,6 +90,15 @@ async function main(): Promise<void> {
   }
 
   // Read-only commands run before the loop opens (and saves) the case file.
+  if (cmd === 'report') {
+    const file = cfg.abs(join(cfg.casesDir, cfg.case, 'case.json'));
+    if (!existsSync(file)) return console.log('No case yet. Run `ditto record` or `ditto loop`.');
+    const md = reportMarkdown(JSON.parse(readFileSync(file, 'utf8')) as CaseFile);
+    const outFile = flag('out');
+    if (outFile) writeFileSync(outFile, md);
+    else process.stdout.write(md);
+    return;
+  }
   if (cmd === 'index') {
     writeCasesIndex(cfg.abs(cfg.casesDir));
     console.log(readFileSync(join(cfg.abs(cfg.casesDir), 'index.json'), 'utf8'));

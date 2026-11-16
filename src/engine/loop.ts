@@ -47,6 +47,7 @@ export class DittoLoop {
     if (cfg.namedExample) this.rec.data.named = cfg.namedExample;
     if (cfg.note) this.rec.data.note = cfg.note;
     if (cfg.tab) this.rec.data.tab = cfg.tab;
+    if (cfg.unlisted) this.rec.data.unlisted = true;
     this.rec.save();
     this.prepareRunCopies();
   }
@@ -106,14 +107,14 @@ export class DittoLoop {
       this.log(`serving legacy app on ${cfg.legacyUrl}`);
     }
     const dist = join(cfg.abs(cfg.rewrite.repo), cfg.rewrite.dist);
-    if (existsSync(dist) && !(await isUp(cfg.rewriteUrl))) {
+    if (!cfg.rewrite.url && existsSync(dist) && !(await isUp(cfg.rewriteUrl))) {
       this.servers.push(await serveStatic(dist, cfg.rewrite.port));
       this.log(`serving rewrite on ${cfg.rewriteUrl}`);
     }
   }
 
   async ensureRewriteServed(): Promise<void> {
-    if (await isUp(this.cfg.rewriteUrl)) return;
+    if (this.cfg.rewrite.url || (await isUp(this.cfg.rewriteUrl))) return;
     const dist = join(this.cfg.abs(this.cfg.rewrite.repo), this.cfg.rewrite.dist);
     this.servers.push(await serveStatic(dist, this.cfg.rewrite.port));
   }
@@ -904,6 +905,7 @@ export function writeCasesIndex(casesDir: string): void {
       title: c.title,
       tab: c.tab ?? (planted ? 'Bugs planted on purpose' : by ? `${by.replace(/^Claude /, '')} port` : c.title),
       planted: planted || undefined,
+      unlisted: c.unlisted || undefined,
       rewrite: c.apps.rewrite.framework,
       status: c.status,
       matched: oracle.filter((t) => latest(t.id)?.outcome === 'pass').length,
@@ -913,7 +915,7 @@ export function writeCasesIndex(casesDir: string): void {
       createdAt: c.createdAt,
     };
   });
-  const best = [...items].sort((a, b) => b.fixRounds - a.fixRounds)[0];
+  const best = [...items].filter((i) => !i.unlisted).sort((a, b) => b.fixRounds - a.fixRounds)[0];
   writeFileSync(join(casesDir, 'index.json'), JSON.stringify({ default: best?.id, cases: items }, null, 1));
 }
 

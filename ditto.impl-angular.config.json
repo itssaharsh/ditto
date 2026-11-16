@@ -1,0 +1,41 @@
+{
+  "case": "todomvc-impl-angular",
+  "title": "TodoMVC: the official Angular implementation, judged by the jQuery app’s recordings",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "dir": "fixtures/legacy-todomvc",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+    "label": "Angular (official)",
+    "framework": "Official TodoMVC Angular example (tastejs/todomvc, commit ff43b02)",
+    "repo": ".ditto-work/impls/todomvc/examples/angular",
+    "build": "true",
+    "dist": "dist/browser",
+    "port": 7204,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/angular"
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 0,
+  "creditCap": 600,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "tab": "Official Angular TodoMVC",
+  "unlisted": true,
+  "oracleCase": "todomvc",
+  "note": "Not written by an agent: the official Angular TodoMVC from tastejs/todomvc, checked with the 18 recordings Kane made on the jQuery app. A confirmed difference here is a real difference between two official implementations."
+}

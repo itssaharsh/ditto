@@ -1,0 +1,11 @@
+# Ditto's trust rules, written as a Kane CLI evidence policy.
+# Judge any sealed pack with:  kane-cli evidence verdict <pack> --policy policies/ditto-parity.yaml --json
+# Blocking gates decide whether a run can count at all; warning gates mark results Ditto confirms
+# with a fresh run before it believes them (see "What the planted bugs taught Ditto" in the README).
+policy: ditto-parity
+gates:
+  - { id: passed, metric: totals.failed, equals: 0, severity: blocking }
+  - { id: judged, metric: totals.broken, equals: 0, severity: blocking }
+  - { id: has-checks, metric: metrics.tests_without_checks, equals: 0, severity: blocking }
+  - { id: not-healed, metric: metrics.heal.healed_tests, equals: 0, severity: warning }
+  - { id: replayed, metric: metrics.non_replay_tests, equals: 0, severity: warning }
