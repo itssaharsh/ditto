@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font: 15px/1.5 Georgia, 'Times New Roman', serif;
+  color: #2b2b2b;
+  background: #f4f1ea;
+}
+header {
+  background: #23465c;
+  color: #fff;
+  padding: 18px 32px;
+}
+header h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+header .tag {
+  margin: 2px 0 0;
+  opacity: 0.85;
+}
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 24px 32px;
+}
+form {
+  flex: 1 1 320px;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid #d8d2c4;
+  padding: 18px 22px 22px;
+}
+h2 {
+  font-size: 18px;
+  margin: 10px 0 12px;
+  color: #23465c;
+}
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.row label {
+  width: 120px;
+}
+.row input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #b9b2a3;
+  font: inherit;
+}
+.nights {
+  margin: 4px 0 16px 120px;
+  color: #6b5d3f;
+  font-style: italic;
+}
+button {
+  margin-top: 8px;
+  padding: 8px 22px;
+  background: #23465c;
+  color: #fff;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.summary {
+  min-height: 1.5em;
+  margin: 14px 0 0;
+}
+.summary.error {
+  color: #a3261b;
+}
+aside {
+  flex: 0 0 auto;
+}
+.legend {
+  font-size: 13px;
+  color: #555;
+}
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: -1px;
+}
+.booked-swatch,
+.ui-datepicker td.booked span {
+  background: #e7c9c5 !important;
+  color: #8a3b33 !important;
+}

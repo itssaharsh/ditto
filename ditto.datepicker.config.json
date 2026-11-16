@@ -1,0 +1,34 @@
+{
+  "case": "datepicker",
+  "title": "Lakeside Inn booking page: jQuery UI Datepicker → React, ported by Claude Sonnet 5.5",
+  "tab": "jQuery UI → React",
+  "spec": "fixtures/datepicker-spec.md",
+  "suite": "suites/datepicker",
+  "legacy": {
+    "label": "jQuery UI",
+    "framework": "jQuery 3.7 + jQuery UI 1.13 Datepicker",
+    "dir": "fixtures/legacy-datepicker",
+    "port": 7011,
+    "source": "https://jqueryui.com/datepicker/"
+  },
+  "rewrite": {
+    "label": "React",
+    "framework": "React 19 + TypeScript + Vite, no jQuery (written by Claude Code)",
+    "repo": "../datepicker-react-port",
+    "build": "npm install --no-audit --no-fund && npm run build",
+    "dist": "dist",
+    "port": 7012
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Migrate the hotel booking page in {legacyDir} off jQuery and jQuery UI: rebuild it in React 19 + TypeScript with Vite in the current directory. It must look and behave the same for guests, including how its date pickers work, because people use it every day and will notice changes. Do not use jQuery or jQuery UI in the new app. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 4,
+  "creditCap": 3000,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "note": "A real migration chore, not TodoMVC: a booking page built on the jQuery UI 1.13 Datepicker, rebuilt in React by Claude Code without jQuery. The page around the widget is ours; the widget behaviour the port must match is jQuery UI's."
+}
