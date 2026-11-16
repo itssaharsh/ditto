@@ -7,13 +7,13 @@
 ![Ditto console: a planted bug, Kane's verdict, Claude's fix and the same test passing, with Kane's screenshots of both apps](docs/console.png)
 
 ```mermaid
-flowchart LR
+flowchart TD
   spec[App spec] -->|kane-cli design tests| tests[28 plain-English tests]
-  tests -->|Kane runs them on the old app| ref[18 the old app passes:<br/>the referee]
+  tests -->|Kane runs each one on the old app| ref[18 the old app passes: the referee]
   ref -->|Kane replays them on the rewrite| rw[Claude Code's rewrite]
-  rw -->|a difference: Kane's verdict<br/>and both screenshots| fix[Same Claude Code session fixes]
+  rw -->|a difference: Kane's verdict + both screenshots| fix[The same Claude Code session fixes it]
   fix -->|Kane checks again| rw
-  rw -->|18 of 18 the same| done[Parity]
+  rw -->|all 18 the same| done[Parity]
 ```
 
 ## The closed loop, on bugs nobody told it about
