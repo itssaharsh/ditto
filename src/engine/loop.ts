@@ -457,6 +457,11 @@ export class DittoLoop {
         '',
       ].join('\n'),
     );
+    const wf = this.cfg.abs('examples/ci/kane-behaviour-tests.yml');
+    if (existsSync(wf)) {
+      mkdirSync(join(repo, '.github', 'workflows'), { recursive: true });
+      copyFileSync(wf, join(repo, '.github', 'workflows', 'kane-behaviour-tests.yml'));
+    }
     const gi = join(repo, '.gitignore');
     const extra = '\n# Kane CLI: recordings and evidence hold account details\n.testmuai/evidence/\n**/output-*/.internal/\n*.evidence\n';
     const cur = existsSync(gi) ? readFileSync(gi, 'utf8') : '';

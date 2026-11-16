@@ -30,9 +30,9 @@ function StepText({ text, lit, vars }: { text: string; lit: boolean; vars?: Reco
   );
 }
 
-function Frame({ caseId, shot, label, tone }: { caseId: string; shot?: EvidenceShot; label: string; tone?: 'fail' | 'pass' }) {
+function Frame({ caseId, shot, label, tone, passed }: { caseId: string; shot?: EvidenceShot; label: string; tone?: 'fail' | 'pass'; passed?: boolean }) {
   const dlg = useRef<HTMLDialogElement>(null);
-  if (!shot) return <div className="fr none">{label}: not reached</div>;
+  if (!shot) return <div className="fr none">{passed ? 'No screenshot for this step' : `${label}: not reached`}</div>;
   const src = assetUrl(caseId, shot.file);
   return (
     <>
@@ -110,8 +110,8 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
           const lf = legacy[i];
           const rf = latest[i];
           const was = failed?.[i];
-          const rewriteOk = row.latest ? !rf.failed && (row.latest.outcome === 'pass' || rf.reached) : undefined;
-          const legacyOk = row.legacy ? !lf.failed && lf.reached : undefined;
+          const rewriteOk = row.latest ? row.latest.outcome === 'pass' || (!rf.failed && rf.reached) : undefined;
+          const legacyOk = row.legacy ? row.legacy.outcome === 'pass' || (!lf.failed && lf.reached) : undefined;
           const same = legacyOk !== undefined && rewriteOk !== undefined ? legacyOk === rewriteOk : undefined;
           const showWas = was?.failed && fixedRound !== undefined;
           return (
@@ -128,8 +128,8 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                 <StepText text={st.text} lit={sweep >= i} vars={c.suite.variables} />
               </div>
               <div className="lane">
-                <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} />
-                {row.legacy && <Tag ok={legacyOk}>{legacyOk ? 'pass' : lf.reached ? 'fail' : 'not reached'}</Tag>}
+                <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} passed={row.legacy?.outcome === 'pass'} />
+                {row.legacy && <Tag ok={legacyOk}>{legacyOk ? 'pass' : lf.failed ? 'fail' : 'not reached'}</Tag>}
               </div>
               <div className={`node ${same === undefined ? '' : same ? 'eq' : 'ne'}`} aria-label={same ? 'same' : same === false ? 'different' : 'pending'}>
                 {same === false ? '≠' : '='}
@@ -141,8 +141,8 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                     <Frame caseId={c.id} shot={was.shot} label={`${rewriteLabel}, step ${i + 1}, round ${firstFail!.round}`} tone="fail" />
                   </div>
                 )}
-                <Frame caseId={c.id} shot={rf.shot} label={`${rewriteLabel}, step ${i + 1}`} tone={showWas ? 'pass' : undefined} />
-                {row.latest && <Tag ok={rewriteOk}>{rewriteOk ? 'pass' : rf.reached ? 'fail' : 'not reached'}</Tag>}
+                <Frame caseId={c.id} shot={rf.shot} label={`${rewriteLabel}, step ${i + 1}`} tone={showWas ? 'pass' : undefined} passed={row.latest?.outcome === 'pass'} />
+                {row.latest && <Tag ok={rewriteOk}>{rewriteOk ? 'pass' : rf.failed ? 'fail' : 'not reached'}</Tag>}
                 {!row.latest && row.legacy?.outcome === 'pass' && <Tag ok={undefined}>waiting for Kane</Tag>}
               </div>
             </div>
