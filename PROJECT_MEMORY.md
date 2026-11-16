@@ -81,6 +81,12 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 ## Evidence integrity (16 Nov ~19:10 UTC)
 - `kane-cli evidence validate --json` is local and free (~2.5 s per pack). scripts/validate-evidence.ts: 300/301 packs valid (L1); the invalid one is the 13:06 UTC oracle run whose browser died before step 1 (logged as error, never counted). docs/evidence-validation.json.
 
+## Second app + official implementations (16 Nov ~19:40–20:40 UTC)
+- Datepicker: fixtures/legacy-datepicker (Lakeside Inn booking page on real jQuery UI 1.13.3 + jQuery 3.7.1, MIT, vendored; our page glue), spec fixtures/datepicker-spec.md (verified against the page; jQuery UI quirks: Today hidden when today < minDate → bookings open 11/10; minDate change clamps existing check-out). Kane designed 12 tests (70 cr; a second pass with --max 5 was refused, --force would redesign). Oracle 7/12 (5 test_issue: 'no reload' unverifiable, keyboard test misread). Claude Sonnet port (own datepicker, 15 files, $1.64): 7/7 first port; heal rule fired once (fresh run passed). 36 runs, 1,153 cr. Port repo public: github.com/itssaharsh/datepicker-react-port. Site publishes /datepicker-legacy/ and /datepicker-port/. Case has `frame` crop {left 0, top 0, width 234.1}.
+- Official React TodoMVC (case todomvc-impl-react, unlisted): 14/18; Kane confirmed Escape bug = upstream tastejs/todomvc#2309 (open, filed 6 Nov by someone using UIPilot); 3 unclear = footer "items left!" without <strong>. 552 cr.
+- Upstream answer key #2309–#2315 (filed 6 Nov, UIPilot): scripts/answer-key.ts maps 14 claims → suite tests (10 covered); docs/answer-key.json. Running: .ditto-work/run-scan2.sh → javascript-es6, svelte, web-components, lit (configs ditto.impl-*.config.json, creditCap 550 each), logs .ditto-work/scan-<name>.log.
+- After scans: answer-key.ts, prune each impl case, `ditto index`, validate-evidence.ts (validate + policy verdicts), README answer-key section + numbers, publish, re-record video, update drafts.
+
 ## Checkpoint (16 Nov ~19:05 UTC): ready for the user's hand-off
 - Video: qa/video/ditto-demo.mp4 (169 s; segments trimmed of page loads), thumbnail qa/video/thumbnail.png (git-ignored; re-record with `node scripts/video/record.mjs`).
 - TestMu Slack (#kane-cli-hacakathon C0BS5K131NU, #general) read with the user's OK: no Nov rule changes; previous edition used a SurveyMonkey form and extended its deadline once. Nothing posted.
