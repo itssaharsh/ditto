@@ -32,6 +32,9 @@ export interface Derived {
   legacyDiffers: number;
   unverified: number;
   specMet: number;
+  /** By the old app's own results, before any spec fix: confirmed spec failures, and tests Kane could not run cleanly. */
+  oracleFails: number;
+  oracleUnclear: number;
   rounds: Round[];
   loop: LoopEntry[];
   fixedRows: BehaviourRow[];
@@ -82,6 +85,13 @@ export function derive(c: CaseFile): Derived {
     legacyDiffers: rows.filter((r) => r.status === 'legacy-differs').length,
     unverified: rows.filter((r) => r.status === 'unverified').length,
     specMet: rows.filter((r) => r.status === 'spec-met').length,
+    oracleFails: rows.filter((r) => r.legacy && (r.legacy.outcome === 'mismatch' || r.legacy.outcome === 'fail') && r.legacy.confirmed).length,
+    oracleUnclear: rows.filter(
+      (r) =>
+        r.legacy &&
+        !(r.legacy.outcome === 'pass' && r.legacy.replayVerified !== false) &&
+        !((r.legacy.outcome === 'mismatch' || r.legacy.outcome === 'fail') && r.legacy.confirmed),
+    ).length,
     rounds,
     loop,
     fixedRows: rows.filter((r) => r.fixedInRound !== undefined),

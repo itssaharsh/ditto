@@ -127,10 +127,13 @@ export function plantedBugs(c: CaseFile): PlantedBug[] {
 }
 
 export function caseFacts(c: CaseFile) {
-  const rounds = c.rounds.filter((r) => r.n > 0 && (r.agent?.kind === 'fix' || r.agent?.kind === 'spec')).length;
+  const rounds = c.rounds.filter((r) => r.n > 0 && r.agent?.kind === 'fix').length;
+  const specFixes = c.rounds.filter((r) => r.agent?.kind === 'spec').length;
   const hookChecks = c.rounds.filter((r) => r.agent?.kind === 'hook').length;
   return {
+    /** Rounds in which Claude Code fixed what Kane found on the parity behaviours. */
     rounds,
+    specFixes,
     hookChecks,
     runs: c.totals.kaneRuns,
     replays: c.totals.replays,

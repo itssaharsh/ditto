@@ -1,4 +1,5 @@
-// Records the demo video from the real, deployed console and the real run logs, then assembles it with ffmpeg.
+// Records the demo video from the real console and the real run logs, then assembles it with ffmpeg.
+// It opens on the closed loop (a planted bug caught by Kane and fixed by Claude Code), because judges stop around 3:00.
 // Usage: node scripts/video/record.mjs [site url]   → qa/video/ditto-demo.mp4
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -42,72 +43,69 @@ async function caption(page, text) {
 
 const card = (h, p, l = '') => `${pathToFileURL(join(here, 'card.html'))}?h=${encodeURIComponent(h)}&p=${encodeURIComponent(p)}&l=${encodeURIComponent(l)}`;
 const wait = (page, ms) => page.waitForTimeout(ms);
+const open = async (page, query = '') => {
+  await page.goto(`${site}${query}`, { waitUntil: 'networkidle' });
+  await wait(page, 900);
+};
+const scrollTo = (page, sel, offset = -90) =>
+  page.evaluate(([s, o]) => {
+    const el = document.querySelector(s);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + o, behavior: 'smooth' });
+  }, [sel, offset]);
+
+// Numbers for the captions come from the recorded cases, not from memory.
+const mut = JSON.parse(readFileSync('cases/todomvc-mutation/case.json', 'utf8'));
+const planted = (mut.mutations.match(/^\s*\d+[.)]\s/gm) ?? []).length;
+const fixRounds = mut.rounds.filter((r) => r.agent?.kind === 'fix').length;
 
 // 1. Title
 await clip('title', async (page) => {
-  await page.goto(card('Did the rewrite break anything?', 'AI agents can rewrite your frontend in minutes. <b>Ditto</b> makes Kane CLI prove your users won’t notice.'));
-  await wait(page, 5500);
+  await page.goto(card('Did the rewrite break anything?', 'AI agents rewrite frontends in minutes. <b>Ditto</b> makes Kane CLI prove your users won’t notice, and sends every difference back to the agent.'));
+  await wait(page, 4500);
 });
 
-// 2. The closed loop on one behaviour, in Kane's own screenshots
-await clip('hero', async (page) => {
-  await page.goto(site, { waitUntil: 'networkidle' });
-  await wait(page, 1200);
-  await caption(page, 'The old jQuery app (left) and Claude Code’s React port (right), step by step, in Kane’s screenshots.');
+// 2. The closed loop on one behaviour: a planted bug, Kane's verdict, Claude's fix, the same test green
+await clip('catch', async (page) => {
+  await open(page);
+  await caption(page, `A second Claude Code session planted ${planted} bugs in Claude’s React port of TodoMVC, and wrote them down outside the repo.`);
   await wait(page, 5500);
-  await page.mouse.wheel(0, 520);
-  await caption(page, 'Kane caught a real gap on the port: reload the page and your todo is gone. A confirmed difference.');
-  await wait(page, 6000);
-  await page.mouse.wheel(0, 330);
-  await caption(page, 'Kane’s verdict went to Claude Code. Claude added persistence. Kane re-ran the same test: pass.');
+  await caption(page, 'Kane replayed the old app’s recordings on the broken build. Escape now kept the edit: a confirmed difference.');
+  await wait(page, 5500);
+  await page.mouse.wheel(0, 640);
+  await caption(page, 'A fresh Claude Code session got only Kane’s verdict and both screenshots. It fixed the code; Kane re-ran the test: pass.');
   await wait(page, 6500);
 });
 
-// 3. The tests: written by Kane from the spec
-await clip('tests', async (page) => {
-  await page.goto(`${site}?b=escape-discards-a-todo-title-edit`, { waitUntil: 'networkidle' });
-  await wait(page, 800);
-  await page.mouse.wheel(0, 260);
-  await caption(page, 'Kane wrote the tests from the TodoMVC spec: 28 of them, every step linked to an acceptance criterion. No selectors.');
-  await wait(page, 6500);
-  await caption(page, 'The same test file runs on both apps. Here: Escape discards an edit, on the old app and on the port.');
-  await wait(page, 5500);
+// 3. Every planted bug, and how Kane found it
+await clip('planted', async (page) => {
+  await open(page);
+  await scrollTo(page, '#mutations', -30);
+  await wait(page, 900);
+  await caption(page, `All ${planted} caught, fixed in ${fixRounds} rounds. The third hid behind the second: Kane kept flagging the counter until Claude found the mark-all bug.`);
+  await wait(page, 8000);
 });
 
-// 4. The oracle
-await clip('oracle', async (page) => {
-  await page.goto(site, { waitUntil: 'networkidle' });
-  await page.locator('#behaviours').scrollIntoViewIfNeeded();
-  await wait(page, 600);
-  await caption(page, 'First, every test runs on the old app. 18 pass and replay cleanly: they become the referee.');
-  await wait(page, 5500);
-  await page.mouse.wheel(0, 420);
-  await caption(page, 'One fails there too: the old jQuery app never kept todos across a reload. Ditto lists it instead of hiding it.');
-  await wait(page, 5500);
-});
-
-// 5. The whole run, replayed from the recorded case
-const c = JSON.parse(readFileSync('cases/todomvc/case.json', 'utf8'));
+// 4. The whole planted-bug run, replayed from the recorded case
 const t = (iso) => Date.parse(iso);
-const times = c.events.map((e) => t(e.t));
-const start = Math.min(...times);
+const times = mut.events.map((e) => t(e.t));
+const start = Math.min(...times, t(mut.createdAt));
 const end = Math.max(...times);
-const at = (iso) => ((t(iso) - start) / (end - start)) * 60000;
+const REPLAY = 30;
+const at = (iso) => ((t(iso) - start) / (end - start)) * REPLAY * 1000;
 const roundStart = (n) => {
-  const r = c.rounds.find((x) => x.n === n);
+  const r = mut.rounds.find((x) => x.n === n);
   const ts = [r?.agent?.startedAt, ...Object.values(r?.results ?? {}).map((x) => x.startedAt)].filter(Boolean).map(t);
   return new Date(Math.min(...ts)).toISOString();
 };
+const minutes = Math.round((end - start) / 60000);
 const cues = [
-  [0, 'Watch the whole run (116 minutes of real Kane and Claude Code work, sped up).'],
-  [at(roundStart(0)), 'Claude Code ports the app. Kane replays the old app’s recordings on the port: 18 of 18 the same.'],
-  [at(roundStart(1)), 'A refactor in a Claude Code session: the Stop hook makes Kane check before Claude may stop. 18/18, allowed.'],
-  [at(roundStart(2)), 'Spec check: behaviours the old app never met. 3 fail on the port too.'],
-  [at(roundStart(3)), 'Claude Code adds persistence from Kane’s findings. Kane: 3/3 pass, and 18/18 still the same.'],
+  [0, `The whole run, sped up: ${minutes} minutes of real Kane and Claude Code work.`],
+  [at(roundStart(0)), 'The breaker session changes 3 files. Kane checks all 18 behaviours on the broken build.'],
+  [at(roundStart(1)), 'Fix round 1: Claude repairs Escape and the counter. Kane: Escape matches again; the counter still differs.'],
+  [at(roundStart(2)), 'Fix round 2: Claude finds the mark-all bug. Kane re-checks all 18.'],
 ].sort((a, b) => a[0] - b[0]);
 await clip('replay', async (page) => {
-  await page.goto(site, { waitUntil: 'networkidle' });
-  await wait(page, 800);
+  await open(page, `?replay=${REPLAY}`);
   await page.getByRole('button', { name: /Watch the whole run/ }).click();
   const t0 = Date.now();
   for (const [ms, text] of cues) {
@@ -115,17 +113,72 @@ await clip('replay', async (page) => {
     if (delay > 0) await wait(page, delay);
     await caption(page, text);
   }
-  await wait(page, Math.max(0, 61500 - (Date.now() - t0)));
-  await caption(page, 'Parity: 18 of 18. Every result here is a real Kane run, with its screenshots.');
+  await wait(page, Math.max(0, REPLAY * 1000 + 1200 - (Date.now() - t0)));
+  await caption(page, '18 of 18 the same again. Every result here is a real Kane run, with its screenshots.');
   await wait(page, 3500);
 });
 
-// 6. The real logs
+// 5. The tests: written by Kane from the spec
+await clip('tests', async (page) => {
+  await open(page, '?case=todomvc&b=escape-discards-a-todo-title-edit');
+  await page.mouse.wheel(0, 300);
+  await caption(page, 'Kane wrote the tests itself from the TodoMVC spec: 28 of them, each step tied to an acceptance criterion. No selectors.');
+  await wait(page, 6500);
+  await caption(page, 'The same test file runs on both apps. Kane’s screenshot of every step: the old jQuery app left, the rewrite right.');
+  await wait(page, 5500);
+});
+
+// 6. The oracle
+await clip('oracle', async (page) => {
+  await open(page, '?case=todomvc');
+  await scrollTo(page, '#behaviours');
+  await wait(page, 700);
+  await caption(page, 'First, every test runs on the old app. The 18 it passes, and that replay cleanly, become the referee.');
+  await wait(page, 5500);
+  await page.mouse.wheel(0, 420);
+  await caption(page, 'Tests Kane could not run cleanly on the old app are listed, not counted. A wrong test can never blame the new code.');
+  await wait(page, 5500);
+});
+
+// 7. Two ports, same referee
+await clip('ports', async (page) => {
+  await open(page, '?case=todomvc');
+  await caption(page, 'Claude Sonnet 5.5’s React port: 18 of 18 the same on the first try. 17 of the 18 checks were pure replays, for 18.5 credits.');
+  await wait(page, 6500);
+  await open(page, '?case=todomvc-haiku');
+  await caption(page, 'Same referee, a second agent: Haiku 5.5’s port, 18 of 18 too. 22 of 24 Kane runs were replays: 7 credits.');
+  await wait(page, 6000);
+});
+
+// 8. A real gap: what the spec asks and the old app never did
+await clip('spec', async (page) => {
+  await open(page, '?case=todomvc&b=reload-retains-a-newly-created-active-todo');
+  await caption(page, 'Kane also caught what the spec asks and neither app did: todos must survive a reload. Claude Code added it from Kane’s findings. Kane: 3 of 3.');
+  await wait(page, 7500);
+});
+
+// 9. The real logs
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const home = homedir();
 const scrub = (l) => l.split(home).join('~').replace(/\/home\/[^/\s]+\//g, '~/');
-const hookRaw = readFileSync('qa/hook-demo.log', 'utf8').split('\n').map(scrub);
-const hookTools = hookRaw.filter((l) => /^\d\d:\d\d:\d\d tool/.test(l) && !/<<|cat >/.test(l)).slice(0, 8);
+const colour = (s) => {
+  if (/ pass /.test(s)) return s.replace(/ pass /, ' <span class="ok">pass</span> ');
+  if (/mismatch|test_issue|error| fail /.test(s)) return s.replace(/(mismatch|test_issue|error| fail )/, '<span class="bad">$1</span>');
+  return s;
+};
+const mutLines = readFileSync('.ditto-work/mutate.log', 'utf8')
+  .split('\n')
+  .map(scrub)
+  .filter((l) => /agent round|parity 18/.test(l) || (/escape-discards|counter-at-zero/.test(l) && /mismatch|pass/.test(l)))
+  .map((l) => {
+    const s = esc(l.trim());
+    if (/^agent round 0/.test(s)) return `<span class="dim">[breaker]</span> <span class="k">${s}</span>`;
+    if (/^agent round/.test(s)) return `<span class="dim">[fixer]</span> <span class="k">${s}</span>`;
+    if (/^parity/.test(s)) return `<span class="ok">${s}</span>`;
+    return colour(s);
+  });
+const hookRaw = existsSync('qa/hook-demo.log') ? readFileSync('qa/hook-demo.log', 'utf8').split('\n').map(scrub) : [];
+const hookTools = hookRaw.filter((l) => /^\d\d:\d\d:\d\d tool/.test(l) && !/<<|cat >/.test(l)).slice(0, 6);
 const hookClaude = hookRaw.filter((l) => /^\d\d:\d\d:\d\d claude/.test(l)).slice(-1);
 const hookStop = hookRaw.filter((l) => /Stop says/.test(l)).slice(-1);
 const hookLines = [...hookTools, ...hookClaude, ...hookStop].map((l) => {
@@ -135,50 +188,49 @@ const hookLines = [...hookTools, ...hookClaude, ...hookStop].map((l) => {
   if (kind === 'system' && /Stop says/.test(rest)) return `<span class="dim">${ts}</span> <span class="k">Stop hook</span> <span class="ok">${esc(rest.match(/Ditto:[^"]*/)?.[0] ?? rest)}</span>`;
   return `<span class="dim">${ts}</span> <span class="${kind === 'claude' ? 'c' : 'dim'}">${kind}</span> ${esc(rest.slice(0, 130))}`;
 });
-const specLines = readFileSync('.ditto-work/spec-gaps.log', 'utf8')
-  .split('\n')
-  .filter((l) => /kane rewrite|agent round|parity|Spec gaps/.test(l))
-  .slice(0, 16)
-  .map((l) => {
-    const s = esc(l.trim());
-    if (/ pass /.test(s)) return s.replace(/ pass /, ' <span class="ok">pass</span> ');
-    if (/mismatch|test_issue|error/.test(s)) return s.replace(/(mismatch|test_issue|error)/, '<span class="bad">$1</span>');
-    if (/agent round/.test(s)) return `<span class="k">${s}</span>`;
-    return s;
-  });
 await clip('terminal', async (page) => {
   await page.goto(pathToFileURL(join(here, 'terminal.html')).href);
   await wait(page, 500);
   await page.evaluate(
-    ([lines]) => window.play('claude -p · Stop hook → ditto hook stop', 'Your own Claude Code session: when it tries to stop, Ditto has Kane replay every legacy behaviour first.', lines, 420),
-    [hookLines],
-  );
-  await wait(page, 2000);
-  await page.evaluate(
-    ([lines]) => window.play('npm run ditto -- spec-gaps', 'The closed loop in the log: Kane fails 3 spec behaviours → Claude Code fixes → Kane passes them, then replays the rest.', lines, 520),
-    [specLines],
+    ([lines]) => window.play('npm run ditto -- mutate   (key lines of the real log)', 'The loop in the log: Kane flags, the fixer changes code, Kane re-checks, until all 18 match.', lines, 650),
+    [mutLines],
   );
   await wait(page, 2500);
+  if (hookLines.length) {
+    await page.evaluate(
+      ([lines]) => window.play('claude -p · Stop hook → ditto hook stop', 'Your own Claude Code session: before it can stop, Kane replays every legacy behaviour on its work.', lines, 520),
+      [hookLines],
+    );
+    await wait(page, 2500);
+  }
 });
 
-// 7. A second agent, same referee
-await clip('haiku', async (page) => {
-  await page.goto(`${site}?case=todomvc-haiku`, { waitUntil: 'networkidle' });
-  await wait(page, 800);
-  await caption(page, 'Same oracle, a second agent: Haiku 5.5’s port, 18/18 the same. 22 of 24 Kane runs were pure replays: 7 credits.');
+// 10. The limit, said plainly
+const edge = existsSync('docs/edge-check.json') ? JSON.parse(readFileSync('docs/edge-check.json', 'utf8')) : undefined;
+// Kane passed the old app (todo deleted) and did not pass the port (todo kept): it saw the difference on both apps.
+const edgeConfirmed = edge?.runs?.find((r) => r.side === 'legacy')?.outcome === 'pass' && edge?.runs?.find((r) => r.side === 'rewrite')?.outcome !== 'pass';
+await clip('limit', async (page) => {
+  await page.goto(
+    card(
+      'What Ditto can’t see',
+      edgeConfirmed
+        ? 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks: the old app deletes a todo on Escape after you empty it; the port keeps it. We found it in the diff; Kane saw it on both apps.'
+        : 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks. We found it reading the diff. It’s in the README.',
+    ),
+  );
   await wait(page, 6500);
 });
 
-// 8. End
+// 11. End
 await clip('end', async (page) => {
   await page.goto(
     card(
       'Rewrite with an agent. Kane makes sure nobody notices.',
-      'Kane designs the tests from your spec, the old app referees, every difference goes back to Claude Code until there are none.',
+      'Kane designs the tests from your spec, the old app referees, and every difference goes back to Claude Code until there are none.',
       'itssaharsh.github.io/ditto · github.com/itssaharsh/ditto',
     ),
   );
-  await wait(page, 6500);
+  await wait(page, 6000);
 });
 await browser.close();
 

@@ -15,7 +15,7 @@ if (cfg.legacy.dir) cpSync(cfg.legacy.dir, join(out, 'legacy'), { recursive: tru
 const portDist = join(cfg.rewrite.repo, cfg.rewrite.dist);
 if (existsSync(portDist)) cpSync(portDist, join(out, 'port'), { recursive: true });
 // Other recorded rewrites (e.g. a second agent's port), published beside the first.
-for (const extra of ['ditto.haiku.config.json']) {
+for (const extra of ['ditto.haiku.config.json', 'ditto.mutation.config.json']) {
   if (!existsSync(extra)) continue;
   const c2 = JSON.parse(readFileSync(extra, 'utf8'));
   const d2 = join(c2.rewrite.repo, c2.rewrite.dist);

@@ -109,7 +109,11 @@ function Mark() {
   );
 }
 
-const REPLAY_SECONDS = 60;
+/** How long the full-run replay lasts; ?replay=30 shortens it (used when recording the demo video). */
+const REPLAY_SECONDS = (() => {
+  const n = Number(new URLSearchParams(window.location.search).get('replay'));
+  return Number.isFinite(n) && n >= 10 && n <= 300 ? n : 60;
+})();
 
 /** Plays the recorded run back from the start in about a minute. */
 function useReplay(full: CaseFile) {
@@ -212,7 +216,13 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
               </span>
               <span>
                 <b>{facts.rounds}</b> fix {facts.rounds === 1 ? 'round' : 'rounds'}
+                {facts.rounds === 0 ? ' needed' : ''}
               </span>
+              {facts.specFixes > 0 && (
+                <span>
+                  <b>{facts.specFixes}</b> spec-gap {facts.specFixes === 1 ? 'fix' : 'fixes'}
+                </span>
+              )}
               {facts.hookChecks > 0 && (
                 <span>
                   <b>{facts.hookChecks}</b> Stop-hook {facts.hookChecks === 1 ? 'check' : 'checks'}
@@ -225,20 +235,12 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
                 <b>{facts.credits}</b> credits
               </span>
             </p>
-            {(d.legacyDiffers > 0 || d.unverified > 0) && (
+            {(d.oracleFails > 0 || d.oracleUnclear > 0) && (
               <p className="aside-note">
-                {d.legacyDiffers > 0 && (
-                  <>
-                    {d.legacyDiffers} {d.legacyDiffers === 1 ? 'behaviour from the spec already fails' : "of the spec's behaviours already fail"} on the old
-                    app, so {d.legacyDiffers === 1 ? 'it is' : 'they are'} left out.{' '}
-                  </>
-                )}
-                {d.unverified > 0 && (
-                  <>
-                    {d.unverified} {d.unverified === 1 ? 'test' : 'tests'} Kane could not run cleanly on the old app {d.unverified === 1 ? 'is' : 'are'} not
-                    counted.
-                  </>
-                )}
+                Not counted: {d.oracleFails > 0 && `${d.oracleFails} ${d.oracleFails === 1 ? 'behaviour' : 'behaviours'} from the spec the old app itself fails`}
+                {d.oracleFails > 0 && d.oracleUnclear > 0 && ', and '}
+                {d.oracleUnclear > 0 && `${d.oracleUnclear} ${d.oracleUnclear === 1 ? 'test' : 'tests'} Kane could not run cleanly on the old app`}.
+                {d.specMet > 0 && ` ${d.specMet} of them now pass on the rewrite after a spec fix.`}
               </p>
             )}
           </section>

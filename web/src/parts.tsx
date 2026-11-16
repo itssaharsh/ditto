@@ -604,7 +604,7 @@ export function MutationsBlock({ c, d }: { c: CaseFile; d: Derived }) {
       </div>
       {c.caveat && (
         <p className="caveat">
-          <b>What the tests could not see.</b> {c.caveat}
+          <b>What the tests could not see.</b> {c.caveat} <a href={`${REPO}/blob/master/docs/testing.md#5-a-behaviour-no-test-covers`}>Kane&rsquo;s two runs</a>
         </p>
       )}
     </section>
