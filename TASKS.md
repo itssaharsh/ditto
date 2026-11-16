@@ -11,7 +11,7 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Oracle (28 tests; 18 verified, 1 confirmed deviation, 9 not verified)
 - [x] Sonnet port 18/18; Haiku port 18/18 (7.4 credits); repos public
 - [x] Stop-hook demo (refactor, 18/18 allowed); spec gaps closed (3/3) with a real Kane→Claude→Kane loop
-- [x] Mutation check (16 Nov): 3 bugs planted by a second session, all caught, fixed in 2 rounds from Kane's findings alone, 18/18; branch ditto/mutation-check pushed to the port repo
+- [x] Mutation check (16 Nov): 3 bugs planted by a second session; Kane confirmed 2 on the broken build and the third after round 1; fixed in 2 rounds from Kane's findings alone, 18/18; branch ditto/mutation-check pushed to the port repo
 - [x] Edge check: the fixer's repair also changed an untested quirk (Escape on an emptied title); Kane saw it on both apps (docs/edge-check.json); shown as the run's caveat
 - [x] Console: opens on the planted-bug catch with Kane's red/green frames in the strip; honest counts; 390 px layout; mutation section; caveat
 - [x] README rewritten (closed loop first, mermaid pipeline, every run, what Ditto can't see, judges' path); docs/testing.md §4–5
