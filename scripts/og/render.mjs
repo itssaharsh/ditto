@@ -1,5 +1,5 @@
 // Renders the social preview card (web/public/og.png, 1200×630) from Kane's own screenshots in the planted-bug run.
-// Usage: node scripts/og/render.mjs
+// Usage: node scripts/og/render.mjs [out.png] [width] [height]   (default web/public/og.png, 1200×630; 1280×720 for a video thumbnail)
 import { readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -12,9 +12,10 @@ const shot = (n, status) => c.rounds.find((r) => r.n === n).results[t].shots.fin
 const file = (rel) => pathToFileURL(resolve('cases/todomvc-mutation', rel)).href;
 const url = `${pathToFileURL(resolve('scripts/og/card.html')).href}?bad=${encodeURIComponent(file(shot(0, 'failed')))}&ok=${encodeURIComponent(file(shot(1, 'passed')))}`;
 const browser = await chromium.launch({ executablePath: join(homedir(), '.local/lib/kane-chrome/chrome'), headless: true });
-const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
+const [outFile = 'web/public/og.png', w = '1200', h = '630'] = process.argv.slice(2);
+const page = await browser.newPage({ viewport: { width: Number(w), height: Number(h) }, deviceScaleFactor: 1 });
 await page.goto(url, { waitUntil: 'networkidle' });
 await page.waitForTimeout(800);
-await page.screenshot({ path: 'web/public/og.png' });
+await page.screenshot({ path: outFile });
 await browser.close();
-console.log('web/public/og.png');
+console.log(outFile);
