@@ -16689,5 +16689,9 @@
     "fixerToolCalls": 24,
     "touchedAnswerKey": 0,
     "checkedAt": "2026-11-16T18:07:41.483Z"
+  },
+  "followUp": {
+    "case": "todomvc-recheck",
+    "text": "On this broken build, Kane's replays of two tests the third bug breaks had failed at their checks, and healing then passed them. Ditto now takes a healed pass after a failed check only if a fresh Kane run agrees. Checked again with that rule, the same build gave 6 confirmed differences instead of 2 (and 1 unsure instead of 3), covering all 3 planted bugs in the first check."
   }
 }

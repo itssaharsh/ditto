@@ -2,8 +2,8 @@
  "id": "todomvc-recheck",
  "title": "TodoMVC: the broken build, re-checked after Ditto stopped trusting healed passes",
  "createdAt": "2026-11-16T18:04:37.084Z",
- "updatedAt": "2026-11-16T18:10:59.651Z",
- "status": "checking",
+ "updatedAt": "2026-11-16T18:30:33.077Z",
+ "status": "stopped",
  "apps": {
   "legacy": {
    "label": "jQuery",
@@ -2699,36 +2699,12 @@
        "url": "https://kaneai-playground.lambdatest.io/"
       },
       {
-       "step": "1-0-1",
-       "kind": "screenshot",
-       "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-heal/1-0-1-screenshot.jpg",
-       "summary": "navigate: Navigate to {{global.start_url}}",
-       "status": "passed",
-       "url": "https://kaneai-playground.lambdatest.io/"
-      },
-      {
        "step": "5-1-4",
        "kind": "screenshot",
        "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-heal/5-1-4-screenshot.jpg",
        "summary": "press_key: Pressing Enter to submit the new todo",
        "status": "passed",
        "url": "http://127.0.0.1:7005/#/all"
-      },
-      {
-       "step": "5-1-4",
-       "kind": "screenshot",
-       "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-heal/5-1-4-screenshot.jpg",
-       "summary": "press_key: Pressing Enter to submit the new todo",
-       "status": "passed",
-       "url": "http://127.0.0.1:7005/#/all"
-      },
-      {
-       "step": "10-2-5",
-       "kind": "screenshot",
-       "file": "assets/checking-an-active-todo-removes-it-from-the-active-list/rewrite-r0-heal/10-2-5-screenshot.jpg",
-       "summary": "wait: Waiting after verifying the Active filter state",
-       "status": "failed",
-       "url": "http://127.0.0.1:7005/#/active"
       },
       {
        "step": "10-2-5",
@@ -2863,8 +2839,858 @@
      "mode": "author",
      "startedAt": "2026-11-16T18:08:34.681Z",
      "endedAt": "2026-11-16T18:10:59.126Z"
+    },
+    "deleting-one-active-todo-preserves-its-neighbour": {
+     "outcome": "pass",
+     "durationS": 36.71,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 5,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "1-0-1",
+       "kind": "screenshot",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/1-0-1-screenshot.jpg",
+       "summary": "navigate: Navigate to {{global.start_url}}",
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
+      },
+      {
+       "step": "5-1-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/5-1-4-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "9-2-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/9-2-4-screenshot.jpg",
+       "summary": "assert: its `.destroy` remove button appears",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-3-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/13-3-4-screenshot.jpg",
+       "summary": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "17-4-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-one-active-todo-preserves-its-neighbour/rewrite-r0-replay/17-4-4-screenshot.jpg",
+       "summary": "assert: 'Assurance target alpha' is still absent from the list.",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:10:59.174Z",
+     "endedAt": "2026-11-16T18:11:49.524Z"
+    },
+    "completed-todos-leave-the-active-counter-at-zero": {
+     "outcome": "mismatch",
+     "durationS": 194.04000000000002,
+     "credits": 29.62,
+     "oneLiner": "With every todo completed, the footer does not meet the required zero-item counter format.",
+     "reason": "Final verification failed: \"the footer counter reads '0 items', its number is inside a <strong> element, and zero equals the independently counted unchecked todo rows in the All list\"",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "ui_data_defect",
+      "severity": "minor",
+      "rootCause": "After the todo was left completed, the footer displayed a zero count in a different format from the required “0 items” counter, and the required strong number markup was not present.",
+      "bugTitle": "Zero-item footer uses incorrect counter text and markup",
+      "suggestion": "Update the completed-zero footer to render exactly “0 items” with the numeric value inside a <strong> element, then rerun the check.",
+      "oneLiner": "With every todo completed, the footer does not meet the required zero-item counter format.",
+      "confidence": 0.93,
+      "culpritStep": "2-7"
+     },
+     "replayDecisions": 3,
+     "authorDecisions": 0,
+     "healTriggered": true,
+     "shots": [
+      {
+       "step": "1-0-1",
+       "kind": "screenshot",
+       "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-heal/1-0-1-screenshot.jpg",
+       "summary": "navigate: Navigate to {{global.start_url}}",
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
+      },
+      {
+       "step": "4-1-3",
+       "kind": "screenshot",
+       "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-heal/4-1-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter to create the todo from the new-todo input",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "11-2-7",
+       "kind": "screenshot",
+       "file": "assets/completed-todos-leave-the-active-counter-at-zero/rewrite-r0-heal/11-2-7-screenshot.jpg",
+       "summary": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
+       "status": "failed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "failureMessage": "Final verification failed: \"the footer counter reads ''0 items'', its number is inside a <strong> element, and zero equals the independently counted unchecked todo rows in the All list\"",
+     "mode": "replay+heal",
+     "startedAt": "2026-11-16T18:09:30.653Z",
+     "endedAt": "2026-11-16T18:13:07.279Z"
+    },
+    "deleting-the-last-todo-hides-the-empty-list-containers": {
+     "outcome": "pass",
+     "durationS": 93.58,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 5,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "1-0-1",
+       "kind": "screenshot",
+       "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/1-0-1-screenshot.jpg",
+       "summary": "navigate: Navigate to {{global.start_url}}",
+       "status": "passed",
+       "url": "https://kaneai-playground.lambdatest.io/"
+      },
+      {
+       "step": "4-1-3",
+       "kind": "screenshot",
+       "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/4-1-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter to submit the todo title",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "8-2-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/8-2-4-screenshot.jpg",
+       "summary": "assert: its `.destroy` remove button appears",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-3-5",
+       "kind": "screenshot",
+       "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/13-3-5-screenshot.jpg",
+       "summary": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "17-4-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-the-last-todo-hides-the-empty-list-containers/rewrite-r0-replay/17-4-4-screenshot.jpg",
+       "summary": "assert: 'Assurance sole gamma' remains absent.",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:11:49.582Z",
+     "endedAt": "2026-11-16T18:13:36.882Z"
+    },
+    "enter-appends-trimmed-todo-and-clears-new-todo-input": {
+     "outcome": "pass",
+     "durationS": 32.36,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 5,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "4-0-4",
+       "kind": "screenshot",
+       "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/4-0-4-screenshot.jpg",
+       "summary": "assert: the new-todo input at the top of the page is the active focused element",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "5-1-1",
+       "kind": "screenshot",
+       "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/5-1-1-screenshot.jpg",
+       "summary": "analyze: Counting todos in the all-todos list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "12-2-7",
+       "kind": "screenshot",
+       "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/12-2-7-screenshot.jpg",
+       "summary": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "14-3-2",
+       "kind": "screenshot",
+       "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/14-3-2-screenshot.jpg",
+       "summary": "analyze: Recording the baseline all-todos count",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "22-4-8",
+       "kind": "screenshot",
+       "file": "assets/enter-appends-trimmed-todo-and-clears-new-todo-input/rewrite-r0-replay/22-4-8-screenshot.jpg",
+       "summary": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:13:36.926Z",
+     "endedAt": "2026-11-16T18:14:24.331Z"
+    },
+    "enter-saves-a-trimmed-todo-title": {
+     "outcome": "pass",
+     "durationS": 5.369999999999999,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 3,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "3-0-3",
+       "kind": "screenshot",
+       "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/3-0-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "8-1-5",
+       "kind": "screenshot",
+       "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/8-1-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-2-5",
+       "kind": "screenshot",
+       "file": "assets/enter-saves-a-trimmed-todo-title/rewrite-r0-replay/13-2-5-screenshot.jpg",
+       "summary": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:14:24.379Z",
+     "endedAt": "2026-11-16T18:14:44.711Z"
+    },
+    "empty-edited-titles-destroy-the-todo-on-enter-or-blur": {
+     "outcome": "pass",
+     "durationS": 93.72999999999999,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 12,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "3-0-3",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/3-0-3-screenshot.jpg",
+       "summary": "press_key: Pressing the Enter key to create the todo from the new-todo input",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "8-1-5",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/8-1-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-2-5",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/13-2-5-screenshot.jpg",
+       "summary": "assert: the edited todo item no longer exists in the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "16-3-3",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/16-3-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "21-4-5",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/21-4-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "25-5-4",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/25-5-4-screenshot.jpg",
+       "summary": "assert: the edited todo item no longer exists in the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "28-6-3",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/28-6-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter in the new-todo input to submit the todo",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "33-7-5",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/33-7-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "37-8-4",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/37-8-4-screenshot.jpg",
+       "summary": "assert: the edited todo item no longer exists in the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "39-9-2",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/39-9-2-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "44-10-5",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/44-10-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "48-11-4",
+       "kind": "screenshot",
+       "file": "assets/empty-edited-titles-destroy-the-todo-on-enter-or-blur/rewrite-r0-replay/48-11-4-screenshot.jpg",
+       "summary": "assert: the edited todo item no longer exists in the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:13:07.350Z",
+     "endedAt": "2026-11-16T18:14:55.042Z"
+    },
+    "hide-clear-completed-without-completed-todos": {
+     "outcome": "pass",
+     "durationS": 36.980000000000004,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 3,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-heal/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting for the All list to open in the todo app",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "7-1-5",
+       "kind": "screenshot",
+       "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-heal/7-1-5-screenshot.jpg",
+       "summary": "assert: Clear completed is hidden",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "12-2-5",
+       "kind": "screenshot",
+       "file": "assets/hide-clear-completed-without-completed-todos/rewrite-r0-heal/12-2-5-screenshot.jpg",
+       "summary": "assert: Clear completed is hidden",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay+heal",
+     "startedAt": "2026-11-16T18:16:02.837Z",
+     "endedAt": "2026-11-16T18:16:53.858Z"
+    },
+    "deleting-a-completed-todo-removes-it-from-all-after-reload": {
+     "outcome": "pass",
+     "durationS": 231.00000000000003,
+     "credits": 79.68,
+     "oneLiner": "opened the All list on the todo app",
+     "reason": "Objective completed",
+     "resultCode": 100,
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JS1Q5PF7NRJ1RVN7PJ545A/dashboard/share/US_XGBNAO2F3V4KO92PKJM7INNJJZNSG1B7FYSIPO9KCWS6WGKZUZMKNY27LHU0B5OW?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 5,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-fresh/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting todo app's All list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "10-1-8",
+       "kind": "screenshot",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-fresh/10-1-8-screenshot.jpg",
+       "summary": "wait: Waiting briefly after confirming both required todos and completion state",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "14-2-4",
+       "kind": "screenshot",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-fresh/14-2-4-screenshot.jpg",
+       "summary": "assert: its `.destroy` remove button appears",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/completed"
+      },
+      {
+       "step": "17-3-3",
+       "kind": "screenshot",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-fresh/17-3-3-screenshot.jpg",
+       "summary": "assert: 'Assurance completed delta' is absent from that list.",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/completed"
+      },
+      {
+       "step": "22-4-5",
+       "kind": "screenshot",
+       "file": "assets/deleting-a-completed-todo-removes-it-from-all-after-reload/rewrite-r0-fresh/22-4-5-screenshot.jpg",
+       "summary": "assert: 'Assurance completed delta' remains absent from the list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7005/#/all",
+      "http://127.0.0.1:7005/#/completed"
+     ],
+     "mode": "author",
+     "startedAt": "2026-11-16T18:13:55.553Z",
+     "endedAt": "2026-11-16T18:18:16.427Z"
+    },
+    "escape-discards-a-todo-title-edit": {
+     "outcome": "mismatch",
+     "durationS": 186.70999999999998,
+     "credits": 39.42,
+     "oneLiner": "Pressing Escape closes todo editing but keeps “Review contract” instead of restoring “Review proposal.”",
+     "reason": "Final verification failed: \"the item's editing class is absent and its displayed title remains 'Review proposal'\"",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "functional_defect",
+      "severity": "major",
+      "rootCause": "The cancel key exits editing without throwing away the text that was typed.",
+      "bugTitle": "Escape saves edited todo title instead of cancelling it",
+      "suggestion": "Update the todo edit cancel behavior so Escape restores the title that was present when editing began, then exits edit mode.",
+      "oneLiner": "Pressing Escape closes todo editing but keeps “Review contract” instead of restoring “Review proposal.”",
+      "confidence": 0.94,
+      "culpritStep": "2-3"
+     },
+     "replayDecisions": 3,
+     "authorDecisions": 0,
+     "healTriggered": true,
+     "shots": [
+      {
+       "step": "3-0-3",
+       "kind": "screenshot",
+       "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-heal/3-0-3-screenshot.jpg",
+       "summary": "press_key: Pressing Enter key",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "8-1-5",
+       "kind": "screenshot",
+       "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-heal/8-1-5-screenshot.jpg",
+       "summary": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "14-2-6",
+       "kind": "screenshot",
+       "file": "assets/escape-discards-a-todo-title-edit/rewrite-r0-heal/14-2-6-screenshot.jpg",
+       "summary": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
+       "status": "failed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "failureMessage": "Final verification failed: \"the item''s editing class is absent and its displayed title remains ''Review proposal''\"",
+     "mode": "replay+heal",
+     "startedAt": "2026-11-16T18:15:47.353Z",
+     "endedAt": "2026-11-16T18:19:30.405Z"
+    },
+    "new-todo-input-receives-focus-on-page-load": {
+     "outcome": "pass",
+     "durationS": 1.61,
+     "reason": "replay completed",
+     "resultCode": 100,
+     "replayDecisions": 1,
+     "authorDecisions": 0,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "4-0-4",
+       "kind": "screenshot",
+       "file": "assets/new-todo-input-receives-focus-on-page-load/rewrite-r0-replay/4-0-4-screenshot.jpg",
+       "summary": "assert: the new-todo input at the top of the page is the active focused element",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "overrideApplied": true,
+     "mode": "replay",
+     "startedAt": "2026-11-16T18:19:30.488Z",
+     "endedAt": "2026-11-16T18:19:45.814Z"
+    },
+    "mark-all-checks-every-todo-in-all": {
+     "outcome": "mismatch",
+     "durationS": 176,
+     "credits": 66.62,
+     "oneLiner": "Using Mark all as complete did not complete every todo in the All list.",
+     "reason": "Final verification failed: \"every existing todo in All is completed and its item checkbox is checked\"",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "functional_defect",
+      "severity": "major",
+      "rootCause": "The mark-all control was used successfully, but the active todo “Bulk alpha” remained unchecked and the list still showed one item left.",
+      "bugTitle": "Mark-all checkbox leaves active todo unchecked",
+      "suggestion": "Fix the Mark all as complete control so it marks every current todo complete, then add a check with a mix of active and completed todos.",
+      "oneLiner": "Using Mark all as complete did not complete every todo in the All list.",
+      "confidence": 0.95,
+      "culpritStep": "3-1"
+     },
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JSDN8NNAV7JGP2F0AKJMDC/dashboard/share/US_YR1DZCSAQRSK3939P35M8P4OUDERMHRV49J2S4X5KPQ8YL8PIF8PS3SPBVVK08VB?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 4,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-fresh/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting Show the All todo list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "11-1-4",
+       "kind": "screenshot",
+       "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-fresh/11-1-4-screenshot.jpg",
+       "summary": "wait: Waiting briefly after conditional todo creation has completed",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-2-2",
+       "kind": "screenshot",
+       "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-fresh/13-2-2-screenshot.jpg",
+       "summary": "wait: Waiting after confirming Bulk alpha remains active and Bulk beta is completed",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "16-3-3",
+       "kind": "screenshot",
+       "file": "assets/mark-all-checks-every-todo-in-all/rewrite-r0-fresh/16-3-3-screenshot.jpg",
+       "summary": "assert: every existing todo in All is completed and its item checkbox is checked",
+       "status": "failed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "failureMessage": "Final verification failed: \"every existing todo in All is completed and its item checkbox is checked\"",
+     "mode": "author",
+     "startedAt": "2026-11-16T18:20:27.122Z",
+     "endedAt": "2026-11-16T18:23:46.062Z"
+    },
+    "mark-all-reactivates-every-completed-todo": {
+     "outcome": "pass",
+     "durationS": 202.5,
+     "credits": 48.28,
+     "oneLiner": "unchecked “Mark all as complete” on the All list",
+     "reason": "Objective completed",
+     "resultCode": 100,
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JSH3KQXCX36YD5RWFKJEYX/dashboard/share/US_Y8UQPR2PG62HXSTA89QM5QM0VZR9WEM9GLUQDI3L7UTBE5A31N8J9X92VBP4IWQO?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 4,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/mark-all-reactivates-every-completed-todo/rewrite-r0-fresh/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting Show the All todo list",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "12-1-4",
+       "kind": "screenshot",
+       "file": "assets/mark-all-reactivates-every-completed-todo/rewrite-r0-fresh/12-1-4-screenshot.jpg",
+       "summary": "wait: Waiting briefly after conditional todo creation",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-2-1",
+       "kind": "screenshot",
+       "file": "assets/mark-all-reactivates-every-completed-todo/rewrite-r0-fresh/13-2-1-screenshot.jpg",
+       "summary": "click: Clicking Mark all as complete checkbox to check it",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "16-3-3",
+       "kind": "screenshot",
+       "file": "assets/mark-all-reactivates-every-completed-todo/rewrite-r0-fresh/16-3-3-screenshot.jpg",
+       "summary": "assert: every existing todo in All is active and its item checkbox is unchecked",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "mode": "author",
+     "startedAt": "2026-11-16T18:22:19.852Z",
+     "endedAt": "2026-11-16T18:26:13.205Z"
+    },
+    "one-active-todo-displays-a-singular-counter": {
+     "outcome": "mismatch",
+     "durationS": 151,
+     "credits": 45.73,
+     "oneLiner": "Selecting the mark-all checkbox leaves “Book the dentist” active even though the control shows as checked.",
+     "reason": "The mark-all control stays checked while Book the dentist remains unchecked after click and keyboard activation.",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "functional_defect",
+      "severity": "major",
+      "rootCause": "The mark-all control changes its own checked appearance but does not apply completion to the remaining todo.",
+      "bugTitle": "Mark-all checkbox does not complete remaining todo",
+      "suggestion": "Fix the mark-all action so it updates every active todo, and add coverage for both mouse and keyboard activation.",
+      "oneLiner": "Selecting the mark-all checkbox leaves “Book the dentist” active even though the control shows as checked.",
+      "confidence": 0.97,
+      "culpritStep": "2-5"
+     },
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JSK7MFASM51ERTMV7KB799/dashboard/share/US_C80WAU9N8BQL0M3PIY6BMN9JRWIO4L3QHVLGOQMG7TZ3WUCGJOTFDTUW66BZED3G?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 4,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-fresh/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting open the todo app's All view so the complete todo list is visible",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "7-1-5",
+       "kind": "screenshot",
+       "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-fresh/7-1-5-screenshot.jpg",
+       "summary": "wait: Waiting after confirming the new todo is visible",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "13-2-6",
+       "kind": "screenshot",
+       "file": "assets/one-active-todo-displays-a-singular-counter/rewrite-r0-fresh/13-2-6-screenshot.jpg",
+       "summary": "wait: Waiting after attempting the mark-all checkbox",
+       "status": "failed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "failureMessage": "The mark-all control stays checked while Book the dentist remains unchecked after click and keyboard activation.",
+     "mode": "author",
+     "startedAt": "2026-11-16T18:23:29.222Z",
+     "endedAt": "2026-11-16T18:26:33.187Z"
+    },
+    "two-active-todos-display-a-plural-counter": {
+     "outcome": "mismatch",
+     "durationS": 145.4,
+     "credits": 32.01,
+     "oneLiner": "The mark-all control showed completion but did not complete the remaining “Pay rent” todo.",
+     "reason": "The mark-all checkbox is already checked while Pay rent remains unchecked; clicks and keyboard activation had no effect.",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "functional_defect",
+      "severity": "major",
+      "rootCause": "The app’s mark-all control was out of sync with the todo list and did not update the unfinished item when activated.",
+      "bugTitle": "Mark-all checkbox remains checked while active todo is incomplete",
+      "suggestion": "Fix the mark-all control so its checked state reflects whether every todo is complete, and make both mouse and keyboard activation complete all remaining todos.",
+      "oneLiner": "The mark-all control showed completion but did not complete the remaining “Pay rent” todo.",
+      "confidence": 0.98,
+      "culpritStep": "2-5"
+     },
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JSTT7CN48C4QWRD641QQ63/dashboard/share/US_CE3R9EZ2J23PUDDFW5KHOFKH2LBQR9JQFLGQ2SWF8DXZ077DQNMZDL8G4P9GYIJU?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 5,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "2-0-2",
+       "kind": "screenshot",
+       "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-fresh/2-0-2-screenshot.jpg",
+       "summary": "wait: Waiting todo app's All view",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "5-1-3",
+       "kind": "screenshot",
+       "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-fresh/5-1-3-screenshot.jpg",
+       "summary": "wait: Waiting after confirming the created todo is displayed",
+       "status": "passed",
+       "url": "http://127.0.0.1:7005/#/all"
+      },
+      {
+       "step": "11-2-6",
+       "kind": "screenshot",
+       "file": "assets/two-active-todos-display-a-plural-counter/rewrite-r0-fresh/11-2-6-screenshot.jpg",
+       "summary": "wait: Waiting after attempting the mark-all checkbox",
+       "status": "failed",
+       "url": "http://127.0.0.1:7005/#/all"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7005/#/all"
+     ],
+     "failureMessage": "The mark-all checkbox is already checked while Pay rent remains unchecked; clicks and keyboard activation had no effect.",
+     "mode": "author",
+     "startedAt": "2026-11-16T18:27:38.111Z",
+     "endedAt": "2026-11-16T18:30:33.030Z"
     }
-   }
+   },
+   "label": "Re-check"
   }
  ],
  "events": [
@@ -4639,15 +5465,5240 @@
    "status": "passed",
    "remark": "navigate: Opening the All list",
    "t": "2026-11-16T18:10:59.651Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:11:12.320Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Assurance target alpha into the todo textbox",
+   "t": "2026-11-16T18:11:13.081Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:11:13.717Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the list",
+   "t": "2026-11-16T18:11:14.026Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:11:14.179Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing Assurance neighbour beta",
+   "t": "2026-11-16T18:11:14.337Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:11:14.993Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "outcome": "error",
+   "oneLiner": "The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "t": "2026-11-16T18:11:15.863Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:11:15.868Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "hover: Hover over 'PRIMARY: On the All list, hover over 'Assurance target alpha'; role=",
+   "t": "2026-11-16T18:11:21.098Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Hovering over Assurance target alpha on the All list",
+   "t": "2026-11-16T18:11:21.326Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Assurance target alpha remove button is present",
+   "t": "2026-11-16T18:11:21.514Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:11:21.625Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: Removing Assurance target alpha using the revealed × button",
+   "t": "2026-11-16T18:11:22.561Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance neighbour beta is present",
+   "t": "2026-11-16T18:11:22.751Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "click: Clicking Mark all as complete checkbox in All view",
+   "t": "2026-11-16T18:11:24.611Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:11:28.255Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing into the todo input box",
+   "t": "2026-11-16T18:11:29.044Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:11:29.688Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing \"Assurance active epsilon\" in the todo input",
+   "t": "2026-11-16T18:11:30.247Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:11:30.890Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "click: Clicking Assurance completed delta checkbox",
+   "t": "2026-11-16T18:11:31.792Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "click: Clicking Completed filter in the footer",
+   "t": "2026-11-16T18:11:32.728Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance target alpha is present",
+   "t": "2026-11-16T18:11:34.501Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: 'Assurance target alpha' is absent from the list and 'Assurance neighbour beta' ",
+   "t": "2026-11-16T18:11:34.626Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "refresh: Navigate refresh",
+   "t": "2026-11-16T18:11:34.859Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "wait: Reloading the todo app's All list",
+   "t": "2026-11-16T18:11:35.547Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "click: Clicking the mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:11:37.751Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "hover: Hover over 'the completed todo list item labeled 'Assurance completed delta' in ",
+   "t": "2026-11-16T18:11:39.402Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Assurance completed delta remove button is present",
+   "t": "2026-11-16T18:11:39.580Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:11:39.688Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking the remove button for Assurance completed delta in Completed filter",
+   "t": "2026-11-16T18:11:40.596Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance target alpha is present in the todo list",
+   "t": "2026-11-16T18:11:47.045Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance target alpha' is still absent from the list.",
+   "t": "2026-11-16T18:11:47.167Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-one-active-todo-preserves-its-neighbour",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:11:49.560Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:11:49.578Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: focus the mark-all checkbox using keyboard navigation",
+   "t": "2026-11-16T18:11:51.813Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the Completed filter li",
+   "t": "2026-11-16T18:11:52.607Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' is absent from the Completed filter list",
+   "t": "2026-11-16T18:11:52.751Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "refresh: Navigate refresh",
+   "t": "2026-11-16T18:11:53.020Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "navigate: Opening the All list",
+   "t": "2026-11-16T18:11:53.432Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: In the All view, mark all todos complete with the mark-all checkbox; ro",
+   "t": "2026-11-16T18:12:00.928Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:12:03.205Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to be ready",
+   "t": "2026-11-16T18:12:04.558Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Type \"Assurance sole gamma\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:12:05.223Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the todo title",
+   "t": "2026-11-16T18:12:05.901Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the list",
+   "t": "2026-11-16T18:12:05.987Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:12:06.114Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "outcome": "error",
+   "oneLiner": "The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "t": "2026-11-16T18:12:08.621Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "said": "Replaying the legacy recording on the rewrite missed: The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:12:08.626Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:12:08.634Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Clicking the Book the dentist checkbox in the All view",
+   "t": "2026-11-16T18:12:12.995Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "hover: Hover over 'the todo item labeled 'Assurance sole gamma' in the All list'",
+   "t": "2026-11-16T18:12:14.115Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "wait: Hovering over Assurance sole gamma on the All list",
+   "t": "2026-11-16T18:12:14.432Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Assurance sole gamma remove button is present",
+   "t": "2026-11-16T18:12:14.616Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:12:14.728Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Clicking remove (×) for Assurance sole gamma",
+   "t": "2026-11-16T18:12:15.650Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:12:20.272Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing into the todo input box",
+   "t": "2026-11-16T18:12:21.094Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:12:21.727Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing \"Assurance active epsilon\" in the todo input",
+   "t": "2026-11-16T18:12:22.265Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:12:22.926Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "click: Clicking Assurance completed delta checkbox",
+   "t": "2026-11-16T18:12:23.821Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "click: Clicking Completed filter in the footer",
+   "t": "2026-11-16T18:12:24.773Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Checking whether a todo item is present",
+   "t": "2026-11-16T18:12:31.941Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "hover: Hover over 'the completed todo list item labeled 'Assurance completed delta' in ",
+   "t": "2026-11-16T18:12:34.405Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Assurance completed delta remove button is present",
+   "t": "2026-11-16T18:12:34.582Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:12:34.684Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking the remove button for Assurance completed delta in Completed filter",
+   "t": "2026-11-16T18:12:35.619Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the Completed filter li",
+   "t": "2026-11-16T18:12:47.226Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' is absent from the Completed filter list",
+   "t": "2026-11-16T18:12:47.361Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "refresh: Navigate refresh",
+   "t": "2026-11-16T18:12:47.626Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "navigate: Opening the All list",
+   "t": "2026-11-16T18:12:47.965Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: the footer counter reads '0 items'",
+   "t": "2026-11-16T18:12:50.174Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "step": 11,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '0 items', its number is inside a <strong> element, and",
+   "t": "2026-11-16T18:12:50.238Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether #main is visible",
+   "t": "2026-11-16T18:12:56.359Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the list",
+   "t": "2026-11-16T18:13:00.366Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:13:00.497Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "outcome": "error",
+   "oneLiner": "The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "t": "2026-11-16T18:13:02.947Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:13:02.953Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "completed-todos-leave-the-active-counter-at-zero",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "With every todo completed, the footer does not meet the required zero-item counter format.",
+   "t": "2026-11-16T18:13:07.335Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:13:07.345Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:13:16.508Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing into the todo input box",
+   "t": "2026-11-16T18:13:17.333Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:13:17.974Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing \"Assurance active epsilon\" in the todo input",
+   "t": "2026-11-16T18:13:18.515Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:13:19.154Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "click: Clicking Assurance completed delta checkbox",
+   "t": "2026-11-16T18:13:20.093Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:13:20.773Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "click: Clicking Completed filter in the footer",
+   "t": "2026-11-16T18:13:21.068Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether #footer is visible",
+   "t": "2026-11-16T18:13:21.225Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: the todo is absent, `#main` is hidden and `#footer` is hidden",
+   "t": "2026-11-16T18:13:21.347Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new todo input field",
+   "t": "2026-11-16T18:13:21.569Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "refresh: Navigate refresh",
+   "t": "2026-11-16T18:13:21.607Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "wait: Reloading the todo app's All list",
+   "t": "2026-11-16T18:13:22.082Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key to create the todo from the new-todo input",
+   "t": "2026-11-16T18:13:22.225Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal label to edit it",
+   "t": "2026-11-16T18:13:22.457Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking the Review proposal item's editing class",
+   "t": "2026-11-16T18:13:22.636Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Reading the focused Review proposal edit input content",
+   "t": "2026-11-16T18:13:22.819Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Review proposal item's other controls are present",
+   "t": "2026-11-16T18:13:23.029Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:13:23.138Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "wait: Waiting for the textbox to be ready",
+   "t": "2026-11-16T18:13:24.296Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "fill: Clear Review proposal edit input in the todo list",
+   "t": "2026-11-16T18:13:24.856Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter in the Review proposal input",
+   "t": "2026-11-16T18:13:25.496Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "hover: Hover over 'the completed todo list item labeled 'Assurance completed delta' in ",
+   "t": "2026-11-16T18:13:27.336Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Assurance completed delta remove button is present",
+   "t": "2026-11-16T18:13:27.556Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:13:27.674Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking the remove button for Assurance completed delta in Completed filter",
+   "t": "2026-11-16T18:13:28.612Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether the named todo is present",
+   "t": "2026-11-16T18:13:34.155Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance sole gamma' remains absent.",
+   "t": "2026-11-16T18:13:34.286Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:13:36.911Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:13:36.921Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether the edited todo item is present in the list",
+   "t": "2026-11-16T18:13:38.302Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: the edited todo item no longer exists in the list",
+   "t": "2026-11-16T18:13:38.424Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "wait: Waiting for the next step to appear",
+   "t": "2026-11-16T18:13:39.598Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "fill: Type \"Review proposal\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:13:40.177Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the Completed filter li",
+   "t": "2026-11-16T18:13:40.793Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:13:40.847Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' is absent from the Completed filter list",
+   "t": "2026-11-16T18:13:40.909Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "refresh: Navigate refresh",
+   "t": "2026-11-16T18:13:41.177Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "navigate: Opening the All list",
+   "t": "2026-11-16T18:13:41.567Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "click: Double-clicking the Review proposal label to edit it",
+   "t": "2026-11-16T18:13:41.852Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 18,
+   "status": "passed",
+   "remark": "analyze: Checking the new item's editing class",
+   "t": "2026-11-16T18:13:42.043Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 19,
+   "status": "passed",
+   "remark": "analyze: Reading the focused edit input value",
+   "t": "2026-11-16T18:13:42.236Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 20,
+   "status": "passed",
+   "remark": "analyze: Checking whether the new item's other controls are hidden",
+   "t": "2026-11-16T18:13:42.419Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 21,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:13:42.543Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 22,
+   "status": "passed",
+   "remark": "fill: Typing in the Review proposal input field",
+   "t": "2026-11-16T18:13:43.139Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 23,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:13:43.778Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:13:50.485Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the todo app to load",
+   "t": "2026-11-16T18:13:51.928Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking whether the new-todo input is focused",
+   "t": "2026-11-16T18:13:52.208Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "assert: the new-todo input at the top of the page is the active focused element",
+   "t": "2026-11-16T18:13:52.366Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: Checking whether Assurance completed delta is present in the list",
+   "t": "2026-11-16T18:13:53.612Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:13:53.741Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "outcome": "error",
+   "oneLiner": "The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "t": "2026-11-16T18:13:55.534Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "said": "Still no clean verdict: The replay left the rewrite and opened the legacy app (http://127.0.0.1:7001/#/all); not counted.",
+   "did": "Had Kane author the same test from scratch on the rewrite, without the legacy recording",
+   "t": "2026-11-16T18:13:55.539Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T18:13:55.548Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Counting todos in the all-todos list",
+   "t": "2026-11-16T18:13:57.450Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "wait: Waiting for the next step to load",
+   "t": "2026-11-16T18:13:58.616Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "fill: Type \"  Buy milk  \" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:13:59.318Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:14:00.001Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Reading the all-todos item count",
+   "t": "2026-11-16T18:14:00.206Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Reading the newly appended todo title",
+   "t": "2026-11-16T18:14:00.387Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 24,
+   "status": "passed",
+   "remark": "analyze: Checking whether the edited todo item is present in the list",
+   "t": "2026-11-16T18:14:03.464Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 25,
+   "status": "passed",
+   "remark": "assert: the edited todo item no longer exists in the list",
+   "t": "2026-11-16T18:14:03.583Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 26,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan steps to load",
+   "t": "2026-11-16T18:14:04.755Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 27,
+   "status": "passed",
+   "remark": "fill: Type \"Review proposal\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:14:05.300Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 28,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter in the new-todo input to submit the todo",
+   "t": "2026-11-16T18:14:05.938Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 29,
+   "status": "passed",
+   "remark": "click: Double-clicking the Review proposal item to edit its label",
+   "t": "2026-11-16T18:14:12.818Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 30,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Review proposal item has the editing class",
+   "t": "2026-11-16T18:14:13.076Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 31,
+   "status": "passed",
+   "remark": "analyze: Reading the focused edit input value",
+   "t": "2026-11-16T18:14:13.270Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 32,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Review proposal item's other controls are visible",
+   "t": "2026-11-16T18:14:13.448Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 33,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:14:13.559Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 34,
+   "status": "passed",
+   "remark": "fill: Clear 'Review proposal' edit input",
+   "t": "2026-11-16T18:14:14.101Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:14:14.900Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 35,
+   "status": "passed",
+   "remark": "click: Clicking outside the review title field to clear and blur it",
+   "t": "2026-11-16T18:14:14.985Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Reading the new-todo input character count",
+   "t": "2026-11-16T18:14:16.591Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "assert: the all-todos list has exactly one more item than {{todo_count}}, its newly appe",
+   "t": "2026-11-16T18:14:16.922Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter",
+   "t": "2026-11-16T18:14:17.640Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "analyze: Recording the baseline all-todos count",
+   "t": "2026-11-16T18:14:17.845Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "wait: Waiting for the next step to appear in the queued plan",
+   "t": "2026-11-16T18:14:19.024Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "fill: Type \"Call home\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:14:19.725Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:14:20.405Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 18,
+   "status": "passed",
+   "remark": "wait: Waiting for the todo list update to settle",
+   "t": "2026-11-16T18:14:20.754Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 19,
+   "status": "passed",
+   "remark": "analyze: Reading the all-todos item count from the footer",
+   "t": "2026-11-16T18:14:20.947Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 20,
+   "status": "passed",
+   "remark": "analyze: Reading the newly appended todo title",
+   "t": "2026-11-16T18:14:21.128Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 21,
+   "status": "passed",
+   "remark": "analyze: Reading the new-todo input character count",
+   "t": "2026-11-16T18:14:21.312Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "step": 22,
+   "status": "passed",
+   "remark": "assert: the all-todos list has exactly one more item than the latest captured baseline, ",
+   "t": "2026-11-16T18:14:21.430Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:14:24.363Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:14:24.374Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting todo app's All list",
+   "t": "2026-11-16T18:14:25.906Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 36,
+   "status": "passed",
+   "remark": "analyze: Checking whether the edited todo item is present in the list",
+   "t": "2026-11-16T18:14:28.569Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 37,
+   "status": "passed",
+   "remark": "assert: the edited todo item no longer exists in the list",
+   "t": "2026-11-16T18:14:28.693Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 38,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal into the new-todo input",
+   "t": "2026-11-16T18:14:29.220Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 39,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:14:29.862Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 40,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal label to edit item",
+   "t": "2026-11-16T18:14:30.768Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 41,
+   "status": "passed",
+   "remark": "analyze: Checking the editing class on the Review proposal todo item",
+   "t": "2026-11-16T18:14:30.953Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 42,
+   "status": "passed",
+   "remark": "analyze: Reading the focused edit input content",
+   "t": "2026-11-16T18:14:31.136Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 43,
+   "status": "passed",
+   "remark": "analyze: Checking visibility of the other controls on the Review proposal todo item",
+   "t": "2026-11-16T18:14:31.346Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 44,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:14:31.465Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 45,
+   "status": "passed",
+   "remark": "fill: Typing three spaces into the Review proposal title field",
+   "t": "2026-11-16T18:14:32.078Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 46,
+   "status": "passed",
+   "remark": "press_key: Pressing Tab to move focus away from the Review proposal input",
+   "t": "2026-11-16T18:14:32.729Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:14:37.308Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new todo input",
+   "t": "2026-11-16T18:14:38.148Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:14:38.789Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal to edit it",
+   "t": "2026-11-16T18:14:39.761Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking the edited Review proposal item's editing class",
+   "t": "2026-11-16T18:14:39.949Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Reading the focused edit input value",
+   "t": "2026-11-16T18:14:40.164Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether the edited Review proposal item's other controls are visible",
+   "t": "2026-11-16T18:14:40.334Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:14:40.462Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "fill: Typing Review contract in the todo edit box",
+   "t": "2026-11-16T18:14:41.065Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "wait: queued plan (4 steps): type \"What needs to be done?\"; press_key \"What needs to b",
+   "t": "2026-11-16T18:14:41.656Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter",
+   "t": "2026-11-16T18:14:41.715Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether the item editing class is present",
+   "t": "2026-11-16T18:14:41.905Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Reading the item's displayed title",
+   "t": "2026-11-16T18:14:42.088Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: the item no longer has the editing class and its displayed title equals 'Review ",
+   "t": "2026-11-16T18:14:42.204Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "type: Type \"Assurance completed delta\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:14:43.251Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "",
+   "t": "2026-11-16T18:14:44.291Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "enter-saves-a-trimmed-todo-title",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:14:44.739Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:14:44.751Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: establish two todos named 'Assurance completed delta' and 'Assurance ac",
+   "t": "2026-11-16T18:14:49.731Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 47,
+   "status": "passed",
+   "remark": "analyze: Checking whether the edited todo item is present in the todo list",
+   "t": "2026-11-16T18:14:51.877Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "step": 48,
+   "status": "passed",
+   "remark": "assert: the edited todo item no longer exists in the list",
+   "t": "2026-11-16T18:14:51.993Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:14:55.190Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:14:55.203Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "type: Typing Assurance active epsilon into What needs to be done textbox",
+   "t": "2026-11-16T18:14:55.577Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:14:58.397Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new to-do field",
+   "t": "2026-11-16T18:14:59.334Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: establish two todos named 'Assurance completed delta' and 'Assurance ac",
+   "t": "2026-11-16T18:14:59.906Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:14:59.983Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal to edit it",
+   "t": "2026-11-16T18:15:06.932Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking the Review proposal item's editing class",
+   "t": "2026-11-16T18:15:07.158Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Marking Assurance completed delta as complete",
+   "t": "2026-11-16T18:15:07.208Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Reading the focused Review proposal edit input",
+   "t": "2026-11-16T18:15:07.382Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Review proposal item's other controls are hidden",
+   "t": "2026-11-16T18:15:07.597Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:15:07.720Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "wait: Waiting for the next queued action to begin",
+   "t": "2026-11-16T18:15:08.915Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:15:09.401Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "fill: Type \"Review contract\" into \"textbox\"",
+   "t": "2026-11-16T18:15:09.586Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the All list to open in the todo app",
+   "t": "2026-11-16T18:15:10.190Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "press_key: Press Escape",
+   "t": "2026-11-16T18:15:10.253Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan steps to start",
+   "t": "2026-11-16T18:15:11.470Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:15:12.227Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the focused todo entry",
+   "t": "2026-11-16T18:15:12.886Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after confirming both required todos and completion state",
+   "t": "2026-11-16T18:15:14.196Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether the item's editing class is present",
+   "t": "2026-11-16T18:15:15.546Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Clear completed control is present",
+   "t": "2026-11-16T18:15:28.271Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "assert: Clear completed is hidden",
+   "t": "2026-11-16T18:15:28.393Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking Completed filter",
+   "t": "2026-11-16T18:15:31.584Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Reading the displayed item title",
+   "t": "2026-11-16T18:15:34.856Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
+   "t": "2026-11-16T18:15:35.027Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "hover: Hover over 'the active todo row containing the text Pay rent'",
+   "t": "2026-11-16T18:15:39.283Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "outcome": "fail",
+   "oneLiner": "Pressing Escape leaves the changed todo title in place instead of restoring “Review proposal.”",
+   "t": "2026-11-16T18:15:47.333Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "escape-discards-a-todo-title-edit",
+   "said": "Replaying the legacy recording on the rewrite missed: Pressing Escape leaves the changed todo title in place instead of restoring “Review proposal.”",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:15:47.341Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:15:47.348Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 9,
+   "status": "failed",
+   "remark": "click: Clicking × to remove the Pay rent todo so the list is empty",
+   "t": "2026-11-16T18:15:49.630Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "wait: PRIMARY: confirm the hover state after hovering over 'Assurance completed delta'",
+   "t": "2026-11-16T18:15:55.372Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:15:59.835Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new to-do field",
+   "t": "2026-11-16T18:16:00.567Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:16:01.209Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "outcome": "test_issue",
+   "oneLiner": "The replay could not click the recorded remove control for the visible “Pay rent” todo.",
+   "t": "2026-11-16T18:16:02.818Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "hide-clear-completed-without-completed-todos",
+   "said": "Replaying the legacy recording on the rewrite missed: The replay could not click the recorded remove control for the visible “Pay rent” todo.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:16:02.823Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:16:02.828Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal to edit it",
+   "t": "2026-11-16T18:16:15.604Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:16:15.660Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking the Review proposal item's editing class",
+   "t": "2026-11-16T18:16:15.805Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Reading the focused Review proposal edit input",
+   "t": "2026-11-16T18:16:16.024Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Review proposal item's other controls are hidden",
+   "t": "2026-11-16T18:16:16.231Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:16:16.341Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the All list to open in the todo app",
+   "t": "2026-11-16T18:16:16.411Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, \"the `.destroy` remove button for 'Assurance completed d",
+   "t": "2026-11-16T18:16:16.525Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "assert: its `.destroy` remove button appears",
+   "t": "2026-11-16T18:16:17.265Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "wait: Waiting for the next queued action to begin",
+   "t": "2026-11-16T18:16:17.504Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan steps to start",
+   "t": "2026-11-16T18:16:17.580Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "fill: Type \"Review contract\" into \"textbox\"",
+   "t": "2026-11-16T18:16:18.108Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:16:18.301Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "press_key: Press Escape",
+   "t": "2026-11-16T18:16:18.782Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the focused todo entry",
+   "t": "2026-11-16T18:16:18.975Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether the item's editing class is present",
+   "t": "2026-11-16T18:16:24.820Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Checking whether the Clear completed control is present",
+   "t": "2026-11-16T18:16:30.322Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "assert: Clear completed is hidden",
+   "t": "2026-11-16T18:16:30.445Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "click: Clicking the remove button for Assurance completed delta from Completed filter",
+   "t": "2026-11-16T18:16:33.041Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "hover: Hover over 'the active todo row containing the text Pay rent'",
+   "t": "2026-11-16T18:16:36.477Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Clicking × to remove the Pay rent todo so the list is empty",
+   "t": "2026-11-16T18:16:37.366Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: Confirming the All list is empty after removing all active todos",
+   "t": "2026-11-16T18:16:37.979Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Reading the displayed item title",
+   "t": "2026-11-16T18:16:44.644Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
+   "t": "2026-11-16T18:16:44.766Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether Clear completed is present",
+   "t": "2026-11-16T18:16:51.396Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "assert: Clear completed is hidden",
+   "t": "2026-11-16T18:16:51.523Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(visual, \"'Assurance completed delta' is absent from the Completed filter",
+   "t": "2026-11-16T18:16:53.002Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 17,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' is absent from that list.",
+   "t": "2026-11-16T18:16:53.774Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "hide-clear-completed-without-completed-todos",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:16:53.881Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:16:53.894Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:17:06.860Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk alpha",
+   "t": "2026-11-16T18:17:07.593Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk beta",
+   "t": "2026-11-16T18:17:07.780Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing Bulk alpha into the new todo field",
+   "t": "2026-11-16T18:17:08.380Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the Bulk alpha todo",
+   "t": "2026-11-16T18:17:09.040Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing Bulk beta into the todo input field",
+   "t": "2026-11-16T18:17:09.644Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key to create a todo named Bulk beta",
+   "t": "2026-11-16T18:17:10.298Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the checkbox for Bulk beta to mark it completed",
+   "t": "2026-11-16T18:17:11.348Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:17:11.394Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new to-do field",
+   "t": "2026-11-16T18:17:12.217Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Checking the Mark all as complete checkbox",
+   "t": "2026-11-16T18:17:12.338Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:17:12.887Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 4,
+   "status": "failed",
+   "remark": "click: Double-clicking Review proposal to edit it",
+   "t": "2026-11-16T18:17:20.219Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 18,
+   "status": "passed",
+   "remark": "wait: PRIMARY: Reload the todo app",
+   "t": "2026-11-16T18:17:22.907Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 19,
+   "status": "passed",
+   "remark": "click: Clicking All in the footer list",
+   "t": "2026-11-16T18:17:31.682Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo in All is completed",
+   "t": "2026-11-16T18:17:33.652Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:17:37.412Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Review proposal in the new to-do field",
+   "t": "2026-11-16T18:17:38.162Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:17:38.799Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 20,
+   "status": "passed",
+   "remark": "wait: PRIMARY: wait for the All list to load",
+   "t": "2026-11-16T18:17:40.938Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 21,
+   "status": "passed",
+   "remark": "analyze: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:17:53.739Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "step": 22,
+   "status": "passed",
+   "remark": "assert: 'Assurance completed delta' remains absent from the list",
+   "t": "2026-11-16T18:17:54.471Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo item checkbox in All is checked",
+   "t": "2026-11-16T18:17:54.648Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 12,
+   "status": "failed",
+   "remark": "assert: every existing todo in All is completed and its item checkbox is checked",
+   "t": "2026-11-16T18:17:54.765Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Double-clicking Review proposal to edit it",
+   "t": "2026-11-16T18:17:56.954Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "outcome": "fail",
+   "oneLiner": "Using the mark-all control did not complete the two todos in the All list.",
+   "t": "2026-11-16T18:18:06.699Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "mark-all-checks-every-todo-in-all",
+   "said": "Replaying the legacy recording on the rewrite missed: Using the mark-all control did not complete the two todos in the All list.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:18:06.705Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:18:06.710Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: The 'Review proposal' item's other controls are hidden.",
+   "t": "2026-11-16T18:18:16.363Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "opened the All list on the todo app",
+   "t": "2026-11-16T18:18:16.483Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:18:16.496Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "assert: its item has the editing class, its focused edit input contains 'Review proposal",
+   "t": "2026-11-16T18:18:17.115Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:18:19.934Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk alpha",
+   "t": "2026-11-16T18:18:20.669Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk beta",
+   "t": "2026-11-16T18:18:20.854Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing Bulk alpha into the new todo field",
+   "t": "2026-11-16T18:18:21.467Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the Bulk alpha todo",
+   "t": "2026-11-16T18:18:22.115Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing Bulk beta into the todo input field",
+   "t": "2026-11-16T18:18:22.642Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key to create a todo named Bulk beta",
+   "t": "2026-11-16T18:18:23.293Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the checkbox for Bulk beta to mark it completed",
+   "t": "2026-11-16T18:18:24.309Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Checking the Mark all as complete checkbox",
+   "t": "2026-11-16T18:18:25.233Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:18:29.744Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"textbox\"; press_key \"textbox\"",
+   "t": "2026-11-16T18:18:37.583Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "type: Type \"Review contract\" into \"textbox\"",
+   "t": "2026-11-16T18:18:38.726Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Escape",
+   "t": "2026-11-16T18:18:39.486Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore alpha is present in the todo list",
+   "t": "2026-11-16T18:18:41.387Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo in All is completed",
+   "t": "2026-11-16T18:18:47.736Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: PRIMARY: wait 500 ms after pressing Escape in that todo's edit input",
+   "t": "2026-11-16T18:18:51.093Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore beta is present in the todo list",
+   "t": "2026-11-16T18:18:53.447Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:18:54.585Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "fill: Type \"Restore alpha\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:18:55.192Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:18:55.837Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan to be processed",
+   "t": "2026-11-16T18:18:56.983Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "fill: Type \"Restore beta\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:18:57.465Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:18:58.094Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: Checking Mark all as complete checkbox",
+   "t": "2026-11-16T18:18:59.010Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking Mark all as complete checkbox to uncheck it",
+   "t": "2026-11-16T18:18:59.925Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo in All is active",
+   "t": "2026-11-16T18:19:05.924Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo item checkbox in All is checked",
+   "t": "2026-11-16T18:19:08.539Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 12,
+   "status": "failed",
+   "remark": "assert: every existing todo in All is completed and its item checkbox is checked",
+   "t": "2026-11-16T18:19:08.709Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: the item's displayed title remains 'Review proposal'",
+   "t": "2026-11-16T18:19:15.134Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "step": 12,
+   "status": "failed",
+   "remark": "assert: the item's editing class is absent and its displayed title remains 'Review propo",
+   "t": "2026-11-16T18:19:15.856Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo item checkbox is checked",
+   "t": "2026-11-16T18:19:27.203Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: every existing todo in All is active and its item checkbox is unchecked",
+   "t": "2026-11-16T18:19:27.342Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "escape-discards-a-todo-title-edit",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "Pressing Escape closes todo editing but keeps “Review contract” instead of restoring “Review proposal.”",
+   "t": "2026-11-16T18:19:30.468Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:19:30.482Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:19:30.494Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk alpha",
+   "t": "2026-11-16T18:19:31.169Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking the new-todo input for Bulk beta",
+   "t": "2026-11-16T18:19:31.355Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "fill: Typing Bulk alpha into the new todo field",
+   "t": "2026-11-16T18:19:31.902Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the Bulk alpha todo",
+   "t": "2026-11-16T18:19:32.555Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing Bulk beta into the todo input field",
+   "t": "2026-11-16T18:19:33.129Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key to create a todo named Bulk beta",
+   "t": "2026-11-16T18:19:33.762Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the checkbox for Bulk beta to mark it completed",
+   "t": "2026-11-16T18:19:34.706Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "outcome": "test_issue",
+   "oneLiner": "The page shows both existing todos active with unchecked item boxes, but the replay still reported an assertion failure.",
+   "t": "2026-11-16T18:19:37.013Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "mark-all-reactivates-every-completed-todo",
+   "said": "Replaying the legacy recording on the rewrite missed: The page shows both existing todos active with unchecked item boxes, but the replay still reported an assertion failure.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:19:37.020Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:19:37.025Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:19:42.481Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the todo app to load",
+   "t": "2026-11-16T18:19:43.241Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking whether the new-todo input is focused",
+   "t": "2026-11-16T18:19:43.514Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "assert: the new-todo input at the top of the page is the active focused element",
+   "t": "2026-11-16T18:19:43.659Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "new-todo-input-receives-focus-on-page-load",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "replay completed",
+   "t": "2026-11-16T18:19:45.821Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:19:45.832Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:19:49.274Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Checking Mark all as complete checkbox",
+   "t": "2026-11-16T18:19:56.265Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:20:00.624Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing the completed todo title into the new todo input",
+   "t": "2026-11-16T18:20:01.584Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-16T18:20:02.260Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore alpha is present in the todo list",
+   "t": "2026-11-16T18:20:02.556Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Clicking the mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:20:03.328Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: Checking Mark all as complete checkbox",
+   "t": "2026-11-16T18:20:04.225Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "wait: Waiting for the next step to be queued",
+   "t": "2026-11-16T18:20:04.497Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:20:05.045Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:20:05.750Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore beta is present in the todo list",
+   "t": "2026-11-16T18:20:16.236Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:20:17.408Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "fill: Type \"Restore alpha\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:20:18.108Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:20:18.787Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, 'Every existing todo in All has its item checkbox checke",
+   "t": "2026-11-16T18:20:19.414Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan to be processed",
+   "t": "2026-11-16T18:20:19.968Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "assert: Every existing todo in All is completed and its item checkbox is checked.",
+   "t": "2026-11-16T18:20:20.163Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "fill: Type \"Restore beta\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:20:20.516Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:20:21.158Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: Checking Mark all as complete checkbox",
+   "t": "2026-11-16T18:20:22.155Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Clicking Mark all as complete checkbox to uncheck it",
+   "t": "2026-11-16T18:20:23.382Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "analyze: Reading the footer item counter",
+   "t": "2026-11-16T18:20:25.643Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "Using the Mark all as complete control left both existing todos incomplete and unchecked.",
+   "t": "2026-11-16T18:20:27.104Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "mark-all-checks-every-todo-in-all",
+   "said": "The replay reached the check and it failed (Using the mark-all control did not complete the two todos in the All list.); healing then passed it",
+   "did": "Did not take the healed pass: had Kane author the test from scratch on the rewrite to settle it",
+   "t": "2026-11-16T18:20:27.110Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T18:20:27.116Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Checking whether the footer counter number is in a strong element",
+   "t": "2026-11-16T18:20:31.046Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo in All is active",
+   "t": "2026-11-16T18:20:31.459Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:20:48.822Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Counting unchecked todo rows in the All list",
+   "t": "2026-11-16T18:20:51.266Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 11,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
+   "t": "2026-11-16T18:20:51.420Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Checking whether every todo item checkbox is checked",
+   "t": "2026-11-16T18:20:51.927Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: every existing todo in All is active and its item checkbox is unchecked",
+   "t": "2026-11-16T18:20:52.054Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting Show the All todo list",
+   "t": "2026-11-16T18:20:58.117Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "outcome": "test_issue",
+   "oneLiner": "The replay reached an All list that already contained two unfinished todos, so its expected count of one was not valid.",
+   "t": "2026-11-16T18:21:02.015Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "one-active-todo-displays-a-singular-counter",
+   "said": "Replaying the legacy recording on the rewrite missed: The replay reached an All list that already contained two unfinished todos, so its expected count of one was not valid.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:21:02.022Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:21:02.027Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:21:12.301Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:21:14.983Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing the completed todo title into the new todo input",
+   "t": "2026-11-16T18:21:15.067Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-16T18:21:15.722Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Clicking the mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:21:16.673Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "wait: Waiting for the next step to be queued",
+   "t": "2026-11-16T18:21:17.826Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:21:18.327Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:21:18.961Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore alpha is present in the todo list",
+   "t": "2026-11-16T18:21:24.976Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: todo named 'Bulk beta' is not already present",
+   "t": "2026-11-16T18:21:27.944Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "type: Typing Bulk alpha into the todo textbox",
+   "t": "2026-11-16T18:21:34.471Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: Checking whether Restore beta is present in the todo list",
+   "t": "2026-11-16T18:21:36.973Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:21:38.148Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "fill: Type \"Restore alpha\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:21:38.808Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "analyze: Reading the footer item counter",
+   "t": "2026-11-16T18:21:39.260Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-16T18:21:39.465Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: press the Enter key to create the todo named 'Bulk alpha'",
+   "t": "2026-11-16T18:21:40.461Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan to be processed",
+   "t": "2026-11-16T18:21:40.613Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "fill: Type \"Restore beta\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:21:41.167Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:21:41.809Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: Checking Mark all as complete checkbox",
+   "t": "2026-11-16T18:21:42.758Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Checking whether the footer counter number is in a strong element",
+   "t": "2026-11-16T18:21:43.595Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "wait: Waiting after confirming the todo named 'Bulk alpha' is visible",
+   "t": "2026-11-16T18:21:48.735Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "click: Unchecking Mark all as complete checkbox",
+   "t": "2026-11-16T18:21:56.893Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
+   "t": "2026-11-16T18:22:03.397Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Counting unchecked todo rows in the All list",
+   "t": "2026-11-16T18:22:04.540Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "type: Type \"Bulk beta\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:22:04.547Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 11,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
+   "t": "2026-11-16T18:22:04.664Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:22:05.270Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, 'every existing todo in All has its item checkbox unchec",
+   "t": "2026-11-16T18:22:13.405Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "assert: every existing todo in All is active and its item checkbox is unchecked",
+   "t": "2026-11-16T18:22:14.120Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: Waiting after confirming the todo named 'Bulk beta' is present",
+   "t": "2026-11-16T18:22:14.364Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "The live page shows both todos active and unchecked, so the failed assertion does not match the recorded objective.",
+   "t": "2026-11-16T18:22:19.831Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "mark-all-reactivates-every-completed-todo",
+   "said": "The replay reached the check and it failed (The page shows both existing todos active with unchecked item boxes, but the replay still reported an assertion failure.); healing then passed it",
+   "did": "Did not take the healed pass: had Kane author the test from scratch on the rewrite to settle it",
+   "t": "2026-11-16T18:22:19.838Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T18:22:19.846Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:22:22.667Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing the completed todo title into the new todo input",
+   "t": "2026-11-16T18:22:23.516Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-16T18:22:24.160Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after conditional todo creation has completed",
+   "t": "2026-11-16T18:22:25.059Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "click: Clicking the mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:22:25.086Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:22:38.625Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
+   "t": "2026-11-16T18:22:39.378Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "type: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:22:40.684Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-16T18:22:41.422Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "click: Checking the Bulk beta item checkbox",
+   "t": "2026-11-16T18:22:42.439Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "wait: Waiting after confirming Bulk alpha remains active and Bulk beta is completed",
+   "t": "2026-11-16T18:22:48.195Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting Show the All todo list",
+   "t": "2026-11-16T18:22:48.374Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "wait: PRIMARY: wait 1000 ms after submitting the new-todo input",
+   "t": "2026-11-16T18:22:50.072Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "wait: PRIMARY: In the All list, check the 'Mark all as complete' checkbox; role=checkb",
+   "t": "2026-11-16T18:23:05.466Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, 'one equals the independently counted unchecked todo row",
+   "t": "2026-11-16T18:23:11.194Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 10,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '1 item', its number is inside a <strong> element, and ",
+   "t": "2026-11-16T18:23:12.015Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "analyze: 'Restore beta' is not already present",
+   "t": "2026-11-16T18:23:20.104Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, 'every existing todo in All has its item checkbox checke",
+   "t": "2026-11-16T18:23:26.776Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "step": 16,
+   "status": "failed",
+   "remark": "assert: every existing todo in All is completed and its item checkbox is checked",
+   "t": "2026-11-16T18:23:27.527Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
+   "t": "2026-11-16T18:23:29.029Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "outcome": "test_issue",
+   "oneLiner": "The check expected one unfinished todo, but the All list already contained an unfinished row before the requested todo was added.",
+   "t": "2026-11-16T18:23:29.199Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "one-active-todo-displays-a-singular-counter",
+   "said": "Still no clean verdict: The check expected one unfinished todo, but the All list already contained an unfinished row before the requested todo was added.",
+   "did": "Had Kane author the same test from scratch on the rewrite, without the legacy recording",
+   "t": "2026-11-16T18:23:29.206Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T18:23:29.215Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "type: Type \"Restore alpha\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:23:30.377Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "",
+   "t": "2026-11-16T18:23:31.478Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-checks-every-todo-in-all",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "Using Mark all as complete did not complete every todo in the All list.",
+   "t": "2026-11-16T18:23:46.093Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-16T18:23:46.106Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: create todo named 'Restore alpha'; role=textbox; text=\"What needs to be",
+   "t": "2026-11-16T18:23:51.206Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:23:52.009Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "wait: Waiting after creating todo named 'Restore alpha'",
+   "t": "2026-11-16T18:23:57.077Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:23:58.681Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:24:00.005Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:24:00.682Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the todo",
+   "t": "2026-11-16T18:24:01.338Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "click: Clicking the Mark all as complete checkbox to complete all todos",
+   "t": "2026-11-16T18:24:02.306Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting open the todo app's All view so the complete todo list is visible",
+   "t": "2026-11-16T18:24:02.523Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing the new to-do title into the input at the top of the app",
+   "t": "2026-11-16T18:24:02.889Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:24:03.533Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "type: Typing Restore beta into new-todo input",
+   "t": "2026-11-16T18:24:06.548Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the active todo’s item checkbox to reactivate it in All view",
+   "t": "2026-11-16T18:24:07.856Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: press the Enter key to create the todo in the new-todo input",
+   "t": "2026-11-16T18:24:12.836Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"What needs to be done?\"; press_key \"What needs to b",
+   "t": "2026-11-16T18:24:18.168Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "type: Type \"{{global.completed_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:24:19.745Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "",
+   "t": "2026-11-16T18:24:20.788Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after confirming the created todo",
+   "t": "2026-11-16T18:24:21.204Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: submit the new-todo input at the top of the app with the Enter key",
+   "t": "2026-11-16T18:24:26.875Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Reading the item-count text from the footer counter",
+   "t": "2026-11-16T18:24:27.131Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Checking whether the footer counter number is inside a strong element",
+   "t": "2026-11-16T18:24:31.012Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after conditional todo creation",
+   "t": "2026-11-16T18:24:31.026Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting after confirming the new todo is visible",
+   "t": "2026-11-16T18:24:34.267Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the mark all as complete checkbox",
+   "t": "2026-11-16T18:24:53.059Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Counting unchecked todo rows in the All list",
+   "t": "2026-11-16T18:24:54.032Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "click: Clicking Mark all as complete checkbox to check it",
+   "t": "2026-11-16T18:24:54.121Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 12,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
+   "t": "2026-11-16T18:24:54.148Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "click: Clicking the mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:25:02.441Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "outcome": "fail",
+   "oneLiner": "The completed todo remained completed, so the footer still showed one active item instead of two.",
+   "t": "2026-11-16T18:25:08.447Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "two-active-todos-display-a-plural-counter",
+   "said": "Replaying the legacy recording on the rewrite missed: The completed todo remained completed, so the footer still showed one active item instead of two.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-16T18:25:08.454Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-16T18:25:08.460Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 14,
+   "status": "passed",
+   "remark": "click: Unchecking Mark all as complete checkbox in the main todo list header",
+   "t": "2026-11-16T18:25:08.802Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:25:21.500Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:25:22.770Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "click: PRIMARY: In the All view, mark all todos complete with the mark-all checkbox; ro",
+   "t": "2026-11-16T18:25:23.279Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:25:23.419Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the todo",
+   "t": "2026-11-16T18:25:24.056Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "click: Clicking the Mark all as complete checkbox to complete all todos",
+   "t": "2026-11-16T18:25:25.060Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing the new to-do title into the input at the top of the app",
+   "t": "2026-11-16T18:25:25.609Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:25:26.247Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: Clicking the active todo’s item checkbox to reactivate it in All view",
+   "t": "2026-11-16T18:25:30.189Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: focus the mark-all checkbox using keyboard navigation",
+   "t": "2026-11-16T18:25:45.131Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 15,
+   "status": "passed",
+   "remark": "analyze: ANALYZE(textual_visual, 'every existing todo in All has its item checkbox unchec",
+   "t": "2026-11-16T18:25:48.716Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "step": 16,
+   "status": "passed",
+   "remark": "assert: every existing todo in All is active and its item checkbox is unchecked",
+   "t": "2026-11-16T18:25:49.437Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: In the All view, mark all todos complete with the mark-all checkbox; ro",
+   "t": "2026-11-16T18:25:51.178Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: Reading the item-count text from the footer counter",
+   "t": "2026-11-16T18:25:52.011Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: Checking whether the footer counter number is inside a strong element",
+   "t": "2026-11-16T18:25:56.193Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "step": 13,
+   "status": "failed",
+   "remark": "wait: Waiting after attempting the mark-all checkbox",
+   "t": "2026-11-16T18:26:03.640Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "mark-all-reactivates-every-completed-todo",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "unchecked “Mark all as complete” on the All list",
+   "t": "2026-11-16T18:26:13.240Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Counting unchecked todo rows in the All list",
+   "t": "2026-11-16T18:26:17.625Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 12,
+   "status": "failed",
+   "remark": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
+   "t": "2026-11-16T18:26:17.754Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "one-active-todo-displays-a-singular-counter",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "Selecting the mark-all checkbox leaves “Book the dentist” active even though the control shows as checked.",
+   "t": "2026-11-16T18:26:33.225Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:26:41.922Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the queued plan to load",
+   "t": "2026-11-16T18:26:43.278Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Type \"{{global.active_todo_title}}\" into \"What needs to be done?\"",
+   "t": "2026-11-16T18:26:43.881Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to create the todo",
+   "t": "2026-11-16T18:26:44.519Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "click: Clicking the Mark all as complete checkbox to complete all todos",
+   "t": "2026-11-16T18:26:45.464Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "fill: Typing the new to-do title into the input at the top of the app",
+   "t": "2026-11-16T18:26:46.011Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "press_key: Pressing the Enter key",
+   "t": "2026-11-16T18:26:46.648Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "wait: PRIMARY: In the All view, reactivate the just-completed todo named {{global.acti",
+   "t": "2026-11-16T18:27:04.266Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "analyze: the footer counter reads '2 items'",
+   "t": "2026-11-16T18:27:30.813Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "assert: the footer counter reads '2 items', its number is inside a <strong> element, and",
+   "t": "2026-11-16T18:27:31.557Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "The completed todo remained completed, leaving the All-view counter at 1 instead of 2.",
+   "t": "2026-11-16T18:27:38.089Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "two-active-todos-display-a-plural-counter",
+   "said": "The replay reached the check and it failed (The completed todo remained completed, so the footer still showed one active item instead of two.); healing then passed it",
+   "did": "Did not take the healed pass: had Kane author the test from scratch on the rewrite to settle it",
+   "t": "2026-11-16T18:27:38.097Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-16T18:27:38.104Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-16T18:27:57.030Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting todo app's All view",
+   "t": "2026-11-16T18:28:09.060Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "type: Typing the new to-do text into the input field",
+   "t": "2026-11-16T18:28:22.969Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: press the Enter key",
+   "t": "2026-11-16T18:28:28.525Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "wait: Waiting after confirming the created todo is displayed",
+   "t": "2026-11-16T18:28:35.536Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "click: Clicking the Mark all as complete checkbox to complete all todos",
+   "t": "2026-11-16T18:28:54.846Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "click: Clicking mark-all checkbox to complete all todos",
+   "t": "2026-11-16T18:29:04.768Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "click: PRIMARY: In the All view, mark all todos complete with the mark-all checkbox; ro",
+   "t": "2026-11-16T18:29:25.903Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: focus the mark-all checkbox using keyboard navigation",
+   "t": "2026-11-16T18:29:35.148Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: activate the mark-all checkbox with the Space key",
+   "t": "2026-11-16T18:29:40.131Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "step": 11,
+   "status": "failed",
+   "remark": "wait: Waiting after attempting the mark-all checkbox",
+   "t": "2026-11-16T18:30:06.795Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "two-active-todos-display-a-plural-counter",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "The mark-all control showed completion but did not complete the remaining “Pay rent” todo.",
+   "t": "2026-11-16T18:30:33.054Z"
+  },
+  {
+   "kind": "parity",
+   "round": 0,
+   "matched": 11,
+   "total": 18,
+   "t": "2026-11-16T18:30:33.070Z"
   }
  ],
  "totals": {
-  "kaneRuns": 9,
-  "credits": 122.36,
+  "kaneRuns": 37,
+  "credits": 539.28,
   "agentCostUsd": 0,
-  "replays": 5,
-  "heals": 3,
-  "authored": 1
+  "replays": 19,
+  "heals": 12,
+  "authored": 6
  },
  "named": "mark-all-checks-every-todo-in-all",
  "note": "The same broken build as the planted-bug run (commit a150b02), checked again with one rule changed: the planted-bug run showed that Kane's healing had passed two tests a planted bug broke, so a healed pass now needs a fresh Kane run to agree.",
