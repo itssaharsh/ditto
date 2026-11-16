@@ -20,6 +20,7 @@ const has = (name: string) => argv.includes(`--${name}`);
 function help(): void {
   console.log(`ditto — rewrite your frontend with an AI agent; Kane CLI proves it behaves the same.
 
+  ditto init --legacy <dir> --spec <file> [--rewrite <repo>]   Write ditto.config.json for your app
   ditto design [--max 3]        Kane reads your spec and designs plain-English _test.md behaviours
   ditto record                  Run every behaviour on the legacy app (the oracle)
   ditto loop [--only a,b]       Record, let Claude Code port the app, replay on the port, fix until parity
@@ -36,6 +37,7 @@ function help(): void {
 
 async function main(): Promise<void> {
   if (!cmd || cmd === 'help' || has('help')) return help();
+  if (cmd === 'init') return init();
   const cfg = loadConfig(flag('config') ?? 'ditto.config.json');
   const only = flag('only')?.split(',').map((s) => s.trim()).filter(Boolean);
 
@@ -105,6 +107,46 @@ async function main(): Promise<void> {
   }
   help();
   process.exitCode = 2;
+}
+
+function init(): void {
+  const file = flag('config') ?? 'ditto.config.json';
+  if (existsSync(file) && !has('force')) {
+    console.log(`${file} already exists (use --force to overwrite).`);
+    return;
+  }
+  const legacy = flag('legacy');
+  const spec = flag('spec');
+  const rewrite = flag('rewrite') ?? '../rewrite';
+  if (!legacy || !spec) {
+    console.log('Usage: ditto init --legacy <folder with the built old app> --spec <requirements .md> [--rewrite <repo folder>] [--name <case>]');
+    process.exitCode = 2;
+    return;
+  }
+  const name = flag('name') ?? 'app';
+  const cfg = {
+    case: name,
+    title: `${name}: old app → rewrite`,
+    spec,
+    suite: `suites/${name}`,
+    legacy: { label: 'Old app', framework: '', dir: legacy, port: 7001 },
+    rewrite: { label: 'Rewrite', framework: '', repo: rewrite, build: 'npm install --no-audit --no-fund && npm run build', dist: 'dist', port: 7002 },
+    agent: {
+      model: 'sonnet',
+      portPrompt:
+        'Port the app in {legacyDir} to <your target stack> in the current directory. Keep the same look and the same behaviour, so users do not notice the switch. Make `npm run build` write a static site to dist/ with relative asset paths. Do not add features.',
+      maxTurnsPort: 120,
+      maxTurnsFix: 60,
+    },
+    parallel: 3,
+    maxRounds: 4,
+    creditCap: 3000,
+    workDir: '.ditto-work',
+    casesDir: 'cases',
+    variables: {},
+  };
+  writeFileSync(file, JSON.stringify(cfg, null, 2) + '\n');
+  console.log(`Wrote ${file}. Edit the port prompt, then: ditto design → ditto record → ditto loop`);
 }
 
 function installHook(repo: string, root: string, configFile: string): void {

@@ -6,7 +6,8 @@ export interface DittoConfig {
   title: string;
   spec: string;
   suite: string;
-  legacy: { label: string; framework: string; dir: string; port: number; source?: string };
+  /** Either a folder Ditto serves on `port`, or the `url` of an app you already run. */
+  legacy: { label: string; framework: string; dir?: string; url?: string; port: number; source?: string };
   rewrite: { label: string; framework: string; repo: string; build: string; dist: string; port: number; source?: string };
   agent: { model?: string; portPrompt: string; maxTurnsPort?: number; maxTurnsFix?: number };
   /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */
@@ -35,7 +36,7 @@ export function loadConfig(file = 'ditto.config.json'): LoadedConfig {
     ...cfg,
     root,
     abs,
-    legacyUrl: `http://127.0.0.1:${cfg.legacy.port}/`,
+    legacyUrl: cfg.legacy.url ?? `http://127.0.0.1:${cfg.legacy.port}/`,
     rewriteUrl: `http://127.0.0.1:${cfg.rewrite.port}/`,
   };
 }

@@ -11,7 +11,7 @@ const cfg = JSON.parse(await import('node:fs').then((fs) => fs.readFileSync('dit
 execSync('npx vite build --config web/vite.config.ts', { stdio: 'inherit' });
 const out = 'web/dist';
 if (existsSync('cases')) cpSync('cases', join(out, 'cases'), { recursive: true });
-cpSync(cfg.legacy.dir, join(out, 'legacy'), { recursive: true });
+if (cfg.legacy.dir) cpSync(cfg.legacy.dir, join(out, 'legacy'), { recursive: true });
 const portDist = join(cfg.rewrite.repo, cfg.rewrite.dist);
 if (existsSync(portDist)) cpSync(portDist, join(out, 'port'), { recursive: true });
 writeFileSync(join(out, '.nojekyll'), '');

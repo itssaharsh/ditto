@@ -73,7 +73,7 @@ export class DittoLoop {
 
   async startApps(): Promise<void> {
     const { cfg } = this;
-    if (!(await isUp(cfg.legacyUrl))) {
+    if (cfg.legacy.dir && !(await isUp(cfg.legacyUrl))) {
       this.servers.push(await serveStatic(cfg.abs(cfg.legacy.dir), cfg.legacy.port));
       this.log(`serving legacy app on ${cfg.legacyUrl}`);
     }
@@ -167,12 +167,14 @@ export class DittoLoop {
   async recordOracle(): Promise<void> {
     this.rec.data.status = 'recording';
     this.rec.event({ kind: 'note', text: `Recording ${this.tests.length} behaviours on the legacy app (${this.cfg.legacy.label}).` });
-    await this.pool(this.tests, this.cfg.parallel, async (t) => {
-      if (!this.creditsLeft()) return;
+    // Only tests with no clean verdict yet run again: passes are recorded and legacy deviations are settled.
+    const todo = this.tests.filter((t) => {
       const prev = this.rec.data.oracle[t.id];
-      // A recorded pass replays from cache; anything else authors.
-      const phase = prev?.outcome === 'pass' ? 'replay' : 'author';
-      let s = await this.kane(t, 'legacy', 0, phase);
+      return !prev || prev.outcome === 'error' || prev.outcome === 'test_issue';
+    });
+    await this.pool(todo, this.cfg.parallel, async (t) => {
+      if (!this.creditsLeft()) return;
+      let s = await this.kane(t, 'legacy', 0, 'author');
       if (s.outcome === 'error' || s.outcome === 'fail') {
         this.rec.event({ kind: 'decision', round: 0, test: t.id, said: `Kane could not finish: ${s.oneLiner ?? s.reason ?? s.outcome}`, did: 'Ran it again' });
         s = await this.kane(t, 'legacy', 0, 'author');
@@ -215,17 +217,20 @@ export class DittoLoop {
     const { cfg } = this;
     const repo = cfg.abs(cfg.rewrite.repo);
     mkdirSync(repo, { recursive: true });
-    if (!existsSync(join(repo, '.git'))) await sh('git init -q && git commit -q --allow-empty -m "Empty repository for the port"', repo);
+    if (!existsSync(join(repo, '.git'))) {
+      writeFileSync(join(repo, '.gitignore'), 'node_modules/\ndist/\n');
+      await sh('git init -q && git add .gitignore && git commit -q -m "Empty repository for the port"', repo);
+    }
     this.rec.data.status = 'porting';
     const round = this.newRound(0);
-    const prompt = cfg.agent.portPrompt.replaceAll('{legacyDir}', cfg.abs(cfg.legacy.dir));
+    const prompt = cfg.agent.portPrompt.replaceAll('{legacyDir}', cfg.legacy.dir ? cfg.abs(cfg.legacy.dir) : cfg.legacyUrl);
     round.agent = { kind: 'port', round: 0, prompt, startedAt: now(), filesChanged: [] };
     this.rec.event({ kind: 'agent_start', round: 0, agentKind: 'port', prompt });
     const res = await runClaude({
       cwd: repo,
       prompt,
       model: cfg.agent.model,
-      addDirs: [cfg.abs(cfg.legacy.dir)],
+      addDirs: cfg.legacy.dir ? [cfg.abs(cfg.legacy.dir)] : [],
       maxTurns: cfg.agent.maxTurnsPort ?? 120,
       onTool: (tool, detail) => this.rec.event({ kind: 'agent_tool', round: 0, tool, detail }),
       onText: (text) => this.rec.event({ kind: 'agent_text', round: 0, text: text.slice(0, 600) }),
@@ -355,6 +360,12 @@ export class DittoLoop {
 
   // ---------- Stage 4: feed differences back to the agent ----------
 
+  private fillVars(text: string): string {
+    return text
+      .replace(/\{\{start_url\}\}/g, 'the app')
+      .replace(/\{\{([a-z_]+)\}\}/g, (m, k: string) => (this.cfg.variables?.[k] ? `'${this.cfg.variables[k]}'` : m));
+  }
+
   feedback(failing: SuiteTest[], n: number): string {
     const lines: string[] = [];
     lines.push(
@@ -367,15 +378,20 @@ export class DittoLoop {
       const legacy = this.rec.data.oracle[t.id];
       lines.push(`${i + 1}. ${t.title}${t.summary ? ` (${t.summary})` : ''}`);
       lines.push('   The test, step by step:');
-      t.steps.forEach((st, j) => lines.push(`   - Step ${j + 1}: ${st.text.replace(/\{\{start_url\}\}/g, 'the app')}`));
+      t.steps.forEach((st, j) => lines.push(`   - Step ${j + 1}: ${this.fillVars(st.text)}`));
       if (s?.verdict?.oneLiner || s?.oneLiner) lines.push(`   Kane's verdict on your port: ${s?.verdict?.oneLiner ?? s?.oneLiner}`);
       if (s?.verdict?.rootCause) lines.push(`   Kane's root cause: ${s.verdict.rootCause}`);
       if (s?.reason) lines.push(`   Failed check: ${s.reason}`);
       if (s?.failureMessage && s.failureMessage !== s.reason) lines.push(`   Failure record: ${s.failureMessage}`);
-      const shot = s?.shots.filter((x) => x.kind === 'screenshot').at(-1);
-      const legacyShot = legacy?.shots.filter((x) => x.kind === 'screenshot').at(-1);
-      if (shot) lines.push(`   Screenshot of your port when it failed: ${join(this.rec.dir, shot.file)}`);
-      if (legacyShot) lines.push(`   Screenshot of the legacy app at the end of the same test: ${join(this.rec.dir, legacyShot.file)}`);
+      const failedShot = s?.shots.find((x) => x.status === 'failed' && x.kind === 'annotated') ?? s?.shots.find((x) => x.status === 'failed');
+      const shot = failedShot ?? s?.shots.filter((x) => x.kind === 'screenshot').at(-1);
+      const mdStep = shot ? Number(shot.step.split('-')[1]) : NaN;
+      const legacyShot =
+        legacy?.shots.filter((x) => x.kind === 'screenshot' && Number(x.step.split('-')[1]) === mdStep).at(-1) ??
+        legacy?.shots.filter((x) => x.kind === 'screenshot').at(-1);
+      if (!Number.isNaN(mdStep)) lines.push(`   It went wrong in step ${mdStep + 1}.`);
+      if (shot) lines.push(`   Screenshot of your port at that step: ${join(this.rec.dir, shot.file)}`);
+      if (legacyShot) lines.push(`   Screenshot of the legacy app at the same step: ${join(this.rec.dir, legacyShot.file)}`);
       if (s?.consoleErrors.length) lines.push(`   Browser console on your port: ${s.consoleErrors.slice(0, 4).join(' | ')}`);
       lines.push('');
     });
@@ -402,7 +418,7 @@ export class DittoLoop {
       prompt,
       model: this.cfg.agent.model,
       resume: this.agentSession,
-      addDirs: [this.cfg.abs(this.cfg.legacy.dir), this.rec.dir],
+      addDirs: [...(this.cfg.legacy.dir ? [this.cfg.abs(this.cfg.legacy.dir)] : []), this.rec.dir],
       maxTurns: this.cfg.agent.maxTurnsFix ?? 60,
       onTool: (tool, detail) => this.rec.event({ kind: 'agent_tool', round: n, tool, detail }),
       onText: (text) => this.rec.event({ kind: 'agent_text', round: n, text: text.slice(0, 600) }),
@@ -514,12 +530,11 @@ export class DittoLoop {
         n += 1;
         await this.fix(n, failing);
         if (!(await this.build(n))) break;
-        const retest = await this.check(n, failing);
-        failing = retest;
+        const justChecked = failing;
+        failing = await this.check(n, justChecked);
         if (!failing.length) {
-          // A fix can break something that passed before: replay everything once more (cheap).
-          const regress = await this.check(n, scopeAll.filter((t) => !retest.includes(t)));
-          failing = regress;
+          // A fix can break something that passed before: replay everything else once more (cheap).
+          failing = await this.check(n, scopeAll.filter((t) => !justChecked.includes(t)));
         }
       }
       if (!failing.length) await this.promote();
