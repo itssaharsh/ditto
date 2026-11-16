@@ -156,10 +156,16 @@ function CaseView({ c: full }: { c: CaseFile }) {
               <p className="aside-note">
                 {d.legacyDiffers > 0 && (
                   <>
-                    {d.legacyDiffers} of the spec's behaviours already fail on the old app, so they're left out.{' '}
+                    {d.legacyDiffers} {d.legacyDiffers === 1 ? 'behaviour from the spec already fails' : "of the spec's behaviours already fail"} on the old
+                    app, so {d.legacyDiffers === 1 ? 'it is' : 'they are'} left out.{' '}
                   </>
                 )}
-                {d.unverified > 0 && <>{d.unverified} could not be run cleanly by Kane and are not counted.</>}
+                {d.unverified > 0 && (
+                  <>
+                    {d.unverified} {d.unverified === 1 ? 'test' : 'tests'} Kane could not run cleanly on the old app {d.unverified === 1 ? 'is' : 'are'} not
+                    counted.
+                  </>
+                )}
               </p>
             )}
           </section>
