@@ -1,8 +1,8 @@
 // The Ditto loop: record the legacy app's behaviour with Kane, let Claude Code port it,
 // replay the same tests on the port, and send every difference back to Claude until they match.
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import type { Server } from 'node:http';
-import { join, relative } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { runClaude } from './agent.js';
 import { isUp, serveStatic, sh } from './apps.js';
 import { CaseRecorder, summarize, type AppSide, type CaseFile, type Round, type RunSummary } from './case.js';
@@ -33,8 +33,9 @@ export class DittoLoop {
     const suiteDir = cfg.abs(cfg.suite);
     this.tests = loadSuite(suiteDir, relative(cfg.root, suiteDir));
     if (opts.only?.length) this.tests = this.tests.filter((t) => opts.only!.includes(t.id));
-    this.kaneDir = cfg.abs(join(cfg.workDir, 'kane', cfg.case));
+    this.kaneDir = cfg.abs(join(cfg.workDir, 'kane', cfg.oracleCase ?? cfg.case));
     this.rec = new CaseRecorder(cfg.abs(join(cfg.casesDir, cfg.case)), () => this.initCase());
+    if (cfg.oracleCase && !Object.keys(this.rec.data.oracle).length) this.adoptOracle(cfg.oracleCase);
     this.rec.data.suite.tests = this.tests;
     this.rec.data.suite.variables = cfg.variables;
     this.rec.data.suite.spec = cfg.spec;
@@ -60,6 +61,25 @@ export class DittoLoop {
       events: [],
       totals: { kaneRuns: 0, credits: 0, agentCostUsd: 0, replays: 0 },
     };
+  }
+
+  /** Start from another case's oracle: same legacy app, same suite, same Kane recordings. */
+  private adoptOracle(from: string): void {
+    const srcDir = this.cfg.abs(join(this.cfg.casesDir, from));
+    const src = JSON.parse(readFileSync(join(srcDir, 'case.json'), 'utf8')) as CaseFile;
+    for (const [id, run] of Object.entries(src.oracle)) {
+      for (const shot of run.shots) {
+        const from = join(srcDir, shot.file);
+        const to = join(this.rec.dir, shot.file);
+        if (existsSync(from)) {
+          mkdirSync(dirname(to), { recursive: true });
+          copyFileSync(from, to);
+        }
+      }
+      this.rec.data.oracle[id] = run;
+    }
+    this.rec.data.totals.credits = 0;
+    this.rec.event({ kind: 'note', text: `Using the oracle recorded for "${src.title}" (${src.createdAt.slice(0, 10)}): the same legacy app, tests and Kane recordings.` });
   }
 
   /** Kane keeps each test's recording next to the file it ran; keep those copies out of the repo. */
@@ -104,8 +124,10 @@ export class DittoLoop {
   private async kane(test: SuiteTest, side: AppSide, round: number, phase: 'author' | 'replay' | 'heal' | 'fresh'): Promise<RunSummary> {
     const url = side === 'legacy' ? this.cfg.legacyUrl : this.cfg.rewriteUrl;
     // 'fresh' authors the test from scratch on the rewrite, in its own copy, without the legacy recording.
-    const freshDir = join(this.kaneDir, 'rewrite-fresh');
+    // One folder per case and round, emptied first, so a fresh run can never replay an older recording.
+    const freshDir = join(this.kaneDir, 'rewrite-fresh', this.cfg.case, `r${round}`, test.id);
     if (phase === 'fresh') {
+      rmSync(freshDir, { recursive: true, force: true });
       mkdirSync(freshDir, { recursive: true });
       copyFileSync(this.cfg.abs(test.file), join(freshDir, `${test.id}_test.md`));
     }

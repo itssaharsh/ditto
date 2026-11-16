@@ -1,0 +1,37 @@
+{
+  "case": "todomvc-haiku",
+  "title": "TodoMVC: jQuery \u2192 React, ported by Claude Haiku 5.5",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "dir": "fixtures/legacy-todomvc",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+    "label": "React",
+    "framework": "React 19 + TypeScript + Vite (written by Claude Code, Haiku 5.5)",
+    "repo": "../todomvc-react-port-haiku",
+    "build": "npm install --no-audit --no-fund && npm run build",
+    "dist": "dist",
+    "port": 7003
+  },
+  "agent": {
+    "model": "haiku",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 4,
+  "creditCap": 4000,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "oracleCase": "todomvc"
+}

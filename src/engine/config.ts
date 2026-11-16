@@ -10,6 +10,8 @@ export interface DittoConfig {
   legacy: { label: string; framework: string; dir?: string; url?: string; port: number; source?: string };
   rewrite: { label: string; framework: string; repo: string; build: string; dist: string; port: number; source?: string };
   agent: { model?: string; portPrompt: string; maxTurnsPort?: number; maxTurnsFix?: number };
+  /** Reuse the oracle (recordings and results) of another case instead of recording the legacy app again. */
+  oracleCase?: string;
   /** Values for the {{placeholders}} Kane declared when it designed the tests (start_url is filled in per app). */
   variables?: Record<string, string>;
   parallel: number;
