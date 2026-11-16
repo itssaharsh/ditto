@@ -747,7 +747,7 @@ dialog.zoom::backdrop {
 
 @media (max-width: 1140px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .rail {
     display: contents;
@@ -807,8 +807,14 @@ dialog.zoom::backdrop {
     padding: 20px 16px;
   }
   .tr {
-    grid-template-columns: minmax(0, 1fr) repeat(var(--cols, 6), 58px);
+    grid-template-columns: minmax(0, 1fr) 58px 76px;
     font-size: 13.5px;
+  }
+  .tr .rc {
+    display: none;
+  }
+  .tr .nowc {
+    display: block;
   }
 }
 
@@ -876,8 +882,11 @@ dialog.zoom::backdrop {
 }
 @media (max-width: 760px) {
   .replay {
-    grid-template-columns: auto auto;
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-areas: 'btn btn2' 'track track' 'note note';
+  }
+  .rp-btn.ghost {
+    justify-self: start;
   }
 }
 
@@ -987,4 +996,139 @@ nav.cases a.on {
 .status.s-spec-met {
   background: #e6f0ff;
   color: #1d4ea8;
+}
+
+.case-note {
+  margin: -8px 0 14px;
+  max-width: 900px;
+  font-size: 15px;
+  color: var(--ink2);
+  border-left: 3px solid var(--hl);
+  padding-left: 10px;
+}
+
+.tr .nowc {
+  display: none;
+}
+
+/* the Kane → Claude → pass strip now sits above the steps */
+.steps-body {
+  padding-top: 4px;
+}
+.sheet-body + .strip {
+  margin: 0 22px 10px;
+}
+
+/* run switcher on phones: one scrollable row instead of a stack */
+@media (max-width: 760px) {
+  nav.cases {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: -6px -16px 14px;
+    padding: 2px 16px 6px;
+    scrollbar-width: none;
+  }
+  nav.cases a {
+    flex: 0 0 auto;
+    max-width: 78vw;
+  }
+  nav.cases a.on {
+    order: -1;
+  }
+  .case-note {
+    font-size: 14px;
+  }
+}
+
+/* planted bugs, and how Kane found them */
+.mut-list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 18px;
+  display: grid;
+  gap: 10px;
+}
+.mut-list li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-radius: var(--r-block);
+  background: var(--surf-2);
+}
+.mut-list b {
+  color: var(--ink);
+}
+.mut-list code {
+  font-size: 12.5px;
+  color: var(--ink2);
+  margin-left: 4px;
+}
+.mut-list small {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink2);
+}
+.mut-n {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bad);
+  color: #fff;
+  font: 800 15px/1 var(--body);
+}
+.mut-rounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+.mut-rounds h3 {
+  font: 700 15px var(--body);
+  margin-bottom: 4px;
+}
+.mut-rounds p,
+.mut-rounds ul {
+  color: var(--ink2);
+  font-size: 14.5px;
+}
+.mut-rounds ul {
+  padding-left: 18px;
+  margin-top: 6px;
+  display: grid;
+  gap: 6px;
+}
+.caveat {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: var(--r-block);
+  background: #fff8db;
+  color: var(--ink2);
+  font-size: 14.5px;
+  border-left: 3px solid var(--hl);
+}
+.caveat b {
+  color: var(--ink);
+}
+
+/* the tag under each frame, with what Kane was doing in it */
+.fr-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.fr-meta .tag {
+  flex: 0 0 auto;
+}
+.fr-meta small {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 11.5px;
+  color: var(--ink3);
 }

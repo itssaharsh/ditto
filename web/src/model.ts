@@ -60,7 +60,10 @@ export function fmtDate(iso: string | undefined): string {
 }
 
 export function pickNamed(rows: BehaviourRow[], named?: string): BehaviourRow | undefined {
-  const fixed = rows.filter((r) => r.fixedInRound !== undefined).sort((a, b) => (a.fixedInRound ?? 0) - (b.fixedInRound ?? 0));
+  // Only behaviours the old app passes judge the rewrite, so only those can be the first proof shown.
+  const fixed = rows
+    .filter((r) => r.fixedInRound !== undefined && r.legacy?.outcome === 'pass')
+    .sort((a, b) => (a.fixedInRound ?? 0) - (b.fixedInRound ?? 0));
   return (
     fixed[0] ??
     rows.find((r) => r.status === 'differs') ??
@@ -78,11 +81,49 @@ export function tryOrder(rows: BehaviourRow[], named?: string): BehaviourRow[] {
 }
 
 export function roundLabel(r: { n: number; label?: string; agent?: { kind: string } }): string {
+  if (r.agent?.kind === 'mutate') return 'Broken';
   if (r.n === 0) return 'Port';
   if (!r.agent && r.label) return r.label;
   if (r.agent?.kind === 'hook') return `Stop hook ${r.n}`;
   if (r.agent?.kind === 'spec') return `Spec ${r.n}`;
   return `Fix ${r.n}`;
+}
+
+/** How a round reads inside a sentence: "on the broken build", "on the first port", "in round 2". */
+export function roundPhrase(c: CaseFile, n: number): string {
+  const r = c.rounds.find((x) => x.n === n);
+  if (r?.agent?.kind === 'mutate') return 'on the broken build';
+  if (n === 0) return 'on the first port';
+  return `in round ${n}`;
+}
+
+export interface PlantedBug {
+  text: string;
+  file?: string;
+  /** The first fix round in which Claude Code changed the file this bug was planted in. */
+  fixRound?: number;
+  /** Tests Ditto sent to Claude Code in that round (Kane's findings). */
+  sentTests: string[];
+}
+
+/** The breaker's answer key, matched to the fix rounds that changed the same files. */
+export function plantedBugs(c: CaseFile): PlantedBug[] {
+  if (!c.mutations) return [];
+  const fixRounds = [...c.rounds].filter((r) => r.agent?.kind === 'fix').sort((a, b) => a.n - b.n);
+  return c.mutations
+    .split('\n')
+    .map((l) => l.replace(/^[-*\d.)\s]+/, '').trim())
+    .filter(Boolean)
+    .map((line) => {
+      const m = line.match(/^(.*?)\s*[—–-]+\s*((?:src\/)?[\w./-]+\.\w+)\s*$/);
+      const text = m ? m[1] : line;
+      const file = m?.[2];
+      const fix = file ? fixRounds.find((r) => r.agent!.filesChanged.some((f) => f.endsWith(file) || file.endsWith(f))) : undefined;
+      const sentTests = fix
+        ? c.events.filter((e) => e.kind === 'decision' && e.round === fix.n && e.did.startsWith('Sent to Claude')).map((e) => (e as { test: string }).test)
+        : [];
+      return { text, file, fixRound: fix?.n, sentTests: [...new Set(sentTests)] };
+    });
 }
 
 export function caseFacts(c: CaseFile) {

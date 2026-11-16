@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { derive, type BehaviourRow, type CaseFile, type Derived } from './data';
-import { caseFacts, pickNamed, tryOrder } from './model';
-import { Behaviours, HowItWorks, LoopRail, Rounds, ScanBlock, TestSheet, type ScanData } from './parts';
+import { caseFacts, pickNamed, plantedBugs, tryOrder } from './model';
+import { Behaviours, HowItWorks, LoopRail, MutationsBlock, Rounds, ScanBlock, TestSheet, type ScanData } from './parts';
 import { atTime, bounds, latestTest, phases } from './timeline';
 import { useCase, useParam } from './useCase';
 
@@ -9,7 +9,20 @@ const DEFAULT_CASE = 'todomvc';
 
 export interface CasesIndex {
   default?: string;
-  cases: { id: string; title: string; rewrite: string; status: string; matched: number; total: number; fixRounds: number; createdAt: string }[];
+  cases: {
+    id: string;
+    title: string;
+    /** Short name for the run switcher. */
+    tab?: string;
+    /** Bugs a breaker session planted (mutation check runs only). */
+    planted?: number;
+    rewrite: string;
+    status: string;
+    matched: number;
+    total: number;
+    fixRounds: number;
+    createdAt: string;
+  }[];
 }
 
 function useIndex(): { loaded: boolean; index?: CasesIndex } {
@@ -42,8 +55,9 @@ function CaseTabs({ index, current }: { index?: CasesIndex; current: string }) {
     <nav className="cases" aria-label="Runs">
       {index.cases.map((k) => (
         <a key={k.id} href={`?case=${k.id}`} className={k.id === current ? 'on' : ''} aria-current={k.id === current ? 'page' : undefined}>
-          <b>{k.title.replace(/^.*ported by /, '').replace('Claude Code', 'Claude Code')}</b>
+          <b>{k.tab ?? k.title.replace(/^.*ported by /, '')}</b>
           <span>
+            {k.planted ? `${k.planted} planted · ` : ''}
             {k.matched}/{k.total} same{k.fixRounds ? ` after ${k.fixRounds} fix ${k.fixRounds === 1 ? 'round' : 'rounds'}` : ' on the first port'}
           </span>
         </a>
@@ -164,6 +178,12 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
         <h1>Ditto: Did the rewrite break anything?</h1>
         <Answer c={c} d={d} />
         <CaseTabs index={index} current={full.id} />
+        {full.note && (
+          <p className="case-note">
+            {full.note}{' '}
+            {full.mutations && <a href="#mutations">See the list, and how Kane found each bug&nbsp;↓</a>}
+          </p>
+        )}
         <ReplayBar full={full} replay={replay} />
       </header>
 
@@ -255,6 +275,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
         setB(id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }} />
+      <MutationsBlock c={c} d={d} />
       <Rounds c={c} d={d} />
       {scan && <ScanBlock scan={scan} d={d} />}
       <HowItWorks c={c} d={d} />
@@ -301,10 +322,35 @@ function ReplayBar({ full, replay }: { full: CaseFile; replay: ReturnType<typeof
 }
 
 function Answer({ c, d }: { c: CaseFile; d: Derived }) {
+  const fixed = d.fixedRows.filter((r) => r.legacy?.outcome === 'pass');
+  const confirmed = fixed.filter((r) => r.history.some((h) => h.result.outcome === 'mismatch' || h.result.outcome === 'fail'));
+  const unsure = fixed.length - confirmed.length;
+  const planted = plantedBugs(c);
+  const rounds = caseFacts(c).rounds;
+  if (c.status === 'parity' && planted.length > 0) {
+    const found = planted.filter((b) => b.fixRound !== undefined).length;
+    return (
+      <p className="ans">
+        <b>It did, and now it doesn&rsquo;t.</b> A second Claude Code session planted {planted.length} bugs. Kane caught{' '}
+        {found === planted.length ? `all ${found}` : `${found} of ${planted.length}`}, and Claude Code fixed them from Kane&rsquo;s findings alone in{' '}
+        {rounds} {rounds === 1 ? 'round' : 'rounds'}. Now {d.matched} of {d.oracleTotal} act the same.
+      </p>
+    );
+  }
+  if (c.status === 'parity' && fixed.length > 0)
+    return (
+      <p className="ans">
+        <b>It did, and now it doesn&rsquo;t.</b> Kane confirmed {confirmed.length} {confirmed.length === 1 ? 'behaviour' : 'behaviours'} that changed, and
+        Claude Code fixed {confirmed.length === 1 ? 'it' : 'them'} from Kane&rsquo;s findings
+        {unsure > 0 ? `; ${unsure} more that Kane was unsure about pass now too` : ''}. Now {d.matched} of {d.oracleTotal} act the same.
+      </p>
+    );
   if (c.status === 'parity')
     return (
       <p className="ans">
         <b>No.</b> {d.matched} of {d.oracleTotal} behaviours act the same on the old app and the rewrite. Here is the proof for one of them.
+        {d.specMet > 0 &&
+          ` Kane also found ${d.specMet} ${d.specMet === 1 ? 'thing' : 'things'} the spec asks for that neither app did; Claude Code added ${d.specMet === 1 ? 'it' : 'them'} from Kane’s findings.`}
       </p>
     );
   if (c.status === 'stopped' || c.status === 'failed')

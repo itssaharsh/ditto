@@ -60,9 +60,11 @@ export function derive(c: CaseFile): Derived {
     if (legacy && (legacy.outcome === 'mismatch' || legacy.outcome === 'fail') && legacy.confirmed) status = 'legacy-differs';
     else if (legacy?.outcome === 'pass' && legacy.replayVerified === false) status = 'unverified';
     else if (legacy && legacy.outcome !== 'pass') status = 'unverified';
-    // A behaviour the old app never met, now met by the rewrite: a spec gap closed.
-    if ((status === 'legacy-differs' || status === 'unverified') && latest?.outcome === 'pass') status = 'spec-met';
-    else if (latest?.outcome === 'pass') status = 'match';
+    if (status === 'legacy-differs' || status === 'unverified') {
+      // Outside the parity set. Only a spec behaviour that Kane saw fail on the rewrite too, and pass after a fix, counts as a gap closed;
+      // anything else keeps its reason for being left out.
+      if (latest?.outcome === 'pass' && fixedInRound !== undefined) status = 'spec-met';
+    } else if (latest?.outcome === 'pass') status = 'match';
     else if (latest && (latest.outcome === 'mismatch' || latest.outcome === 'fail')) status = 'differs';
     else if (latest) status = 'unclear';
     const running = live ? open.get(test.id) : undefined;

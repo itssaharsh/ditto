@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { assetUrl, type BehaviourRow, type CaseFile, type Derived, type RunSummary } from './data';
-import { firstFailingRound, fmtDate, framesByStep, roundLabel, verdictText, type EvidenceShot, type StepFrame } from './model';
+import { firstFailingRound, fmtDate, framesByStep, plantedBugs, roundLabel, roundPhrase, verdictText, type EvidenceShot, type StepFrame } from './model';
 
 const REPO = 'https://github.com/itssaharsh/ditto';
 
@@ -54,6 +54,18 @@ function Frame({ caseId, shot, label, tone, passed }: { caseId: string; shot?: E
   );
 }
 
+/** What Kane was doing when it took the frame ("Pressing Enter key", "checks …"), so a mid-action frame reads right. */
+function FrameMeta({ shot, children }: { shot?: EvidenceShot; children: ReactNode }) {
+  const m = shot?.summary?.match(/^(\w+):\s*(.*)$/);
+  const words = m ? (m[1] === 'assert' ? `checks ${m[2]}` : m[2]) : shot?.summary;
+  return (
+    <div className="fr-meta">
+      {children}
+      {words && <small title={shot?.summary}>{words}</small>}
+    </div>
+  );
+}
+
 function Tag({ ok, children }: { ok: boolean | undefined; children: ReactNode }) {
   return <span className={`tag ${ok === undefined ? 'muted' : ok ? 'ok' : 'bad'}`}>{children}</span>;
 }
@@ -103,7 +115,10 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
           <span aria-hidden>#</span> {row.test.title}
         </h2>
         {row.test.summary && <p className="t-sum">&gt; {row.test.summary}</p>}
-        <StatusLine row={row} />
+        <StatusLine c={c} row={row} />
+      </div>
+      <LoopStrip c={c} row={row} />
+      <div className="sheet-body steps-body">
 
         <div className="cols" role="presentation">
           <span>Test steps</span>
@@ -139,7 +154,11 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
               </div>
               <div className="lane">
                 <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} passed={row.legacy?.outcome === 'pass' || lf.reached} />
-                {row.legacy && <Tag ok={legacyOk}>{legacyOk ? 'pass' : lf.failed ? 'fail' : 'not reached'}</Tag>}
+                {row.legacy && (
+                  <FrameMeta shot={lf.shot}>
+                    <Tag ok={legacyOk}>{legacyOk ? 'pass' : lf.failed ? 'fail' : 'not reached'}</Tag>
+                  </FrameMeta>
+                )}
               </div>
               <div className={`node ${same === undefined ? '' : same ? 'eq' : 'ne'}`} aria-label={same ? 'same' : same === false ? 'different' : 'pending'}>
                 {same === false ? '≠' : '='}
@@ -152,25 +171,37 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                   </div>
                 )}
                 <Frame caseId={c.id} shot={rf.shot} label={`${rewriteLabel}, step ${i + 1}`} tone={showWas ? 'pass' : undefined} passed={row.latest?.outcome === 'pass' || rf.reached} />
-                {row.latest && <Tag ok={rewriteOk}>{rewriteOk ? 'pass' : rf.failed ? 'fail' : 'not reached'}</Tag>}
+                {row.latest && (
+                  <FrameMeta shot={rf.shot}>
+                    <Tag ok={rewriteOk}>{rewriteOk ? 'pass' : rf.failed ? 'fail' : 'not reached'}</Tag>
+                  </FrameMeta>
+                )}
                 {!row.latest && row.legacy?.outcome === 'pass' && <Tag ok={undefined}>waiting for Kane</Tag>}
               </div>
             </div>
           );
         })}
       </div>
-      <LoopStrip c={c} row={row} />
     </section>
   );
 }
 
-function StatusLine({ row }: { row: BehaviourRow }) {
+function StatusLine({ c, row }: { c: CaseFile; row: BehaviourRow }) {
+  const brokenFirst = c.rounds.find((r) => r.n === row.history[0]?.round)?.agent?.kind === 'mutate';
   const words: Record<BehaviourRow['status'], string> = {
-    match: row.fixedInRound !== undefined ? `Same behaviour. Differed at first, matched after fix round ${row.fixedInRound}.` : 'Same behaviour on both apps.',
+    match:
+      row.fixedInRound === undefined
+        ? 'Same behaviour on both apps.'
+        : brokenFirst
+          ? `Same behaviour again. A planted bug changed it, Kane caught it, and it matched after fix round ${row.fixedInRound}.`
+          : `Same behaviour. Differed at first, matched after fix round ${row.fixedInRound}.`,
     differs: 'Still different on the rewrite.',
     unclear: 'Kane could not get a clean verdict on the rewrite for this one, so it is not counted either way.',
     'legacy-differs': 'The old app itself fails this part of the spec, so it is not used to judge the rewrite.',
-    unverified: 'Kane could not get a clean run of this test on the old app, so it is not counted.',
+    unverified:
+      row.latest?.outcome === 'pass'
+        ? 'Kane could not get a clean run of this test on the old app, so it is not counted. The rewrite passes it.'
+        : 'Kane could not get a clean run of this test on the old app, so it is not counted.',
     'spec-met': 'The old app never met this part of the spec. Kane found the gap on the rewrite too, and Claude closed it.',
     checking: 'Kane is running this test now.',
     waiting: 'Waiting for Kane.',
@@ -186,7 +217,10 @@ function LoopStrip({ c, row }: { c: CaseFile; row: BehaviourRow }) {
   return (
     <div className="strip">
       <div className="s-kane">
-        <small>Kane, round {fail.round} · {fail.result.outcome === 'mismatch' ? 'confirmed difference' : 'fail'}</small>
+        <small>
+          Kane, {roundPhrase(c, fail.round)} ·{' '}
+          {fail.result.outcome === 'mismatch' ? 'confirmed difference' : fail.result.outcome === 'fail' ? 'fail' : 'unsure whose fault'}
+        </small>
         <q>{verdictText(fail.result)}</q>
       </div>
       <span className="arrow" aria-hidden>
@@ -223,6 +257,7 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
       <h2>Kane said → Claude did</h2>
       {rounds.length === 0 && <p className="muted">Nothing to send back: every behaviour matched on the first port.</p>}
       {rounds.map((r) => {
+        if (r.agent?.kind === 'mutate') return null;
         if (r.agent?.kind === 'hook') {
           const res = Object.values(r.results);
           const same = res.filter((x) => x.outcome === 'pass').length;
@@ -295,10 +330,13 @@ export function Behaviours({ c, d, selected, onPick }: { c: CaseFile; d: Derived
           <span role="columnheader">Behaviour</span>
           <span role="columnheader">Old app</span>
           {rounds.map((n) => (
-            <span role="columnheader" key={n}>
+            <span role="columnheader" key={n} className="rc">
               {roundLabel(d.rounds.find((r) => r.n === n)!)}
             </span>
           ))}
+          <span role="columnheader" className="nowc">
+            Rewrite now
+          </span>
         </div>
         {d.rows.map((r) => (
           <button key={r.test.id} role="row" className={`tr ${selected === r.test.id ? 'sel' : ''} s-${r.status}`} onClick={() => onPick(r.test.id)}>
@@ -309,10 +347,13 @@ export function Behaviours({ c, d, selected, onPick }: { c: CaseFile; d: Derived
             <span role="cell" className={`o o-${r.legacy?.outcome ?? 'none'}`}>
               {outcomeWord(r.legacy)}
             </span>
+            <span role="cell" className={`o nowc o-${r.latest?.outcome ?? 'none'}`}>
+              {r.latest ? outcomeWord(r.latest) : ''}
+            </span>
             {rounds.map((n) => {
               const h = r.history.find((x) => x.round === n);
               return (
-                <span role="cell" key={n} className={`o o-${h?.result.outcome ?? 'none'}`}>
+                <span role="cell" key={n} className={`o rc o-${h?.result.outcome ?? 'none'}`}>
                   {h ? outcomeWord(h.result) : ''}
                   {h?.result.mode === 'replay' && h.result.outcome === 'pass' && <small> replay</small>}
                 </span>
@@ -333,12 +374,16 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
         {d.rounds.map((r) => {
           const res = Object.values(r.results);
           const pass = res.filter((x) => x.outcome === 'pass').length;
+          const differ = res.filter((x) => x.outcome === 'mismatch' || x.outcome === 'fail').length;
+          const unclear = res.length - pass - differ;
           const credits = res.reduce((a, x) => a + (x.credits ?? 0), 0);
           return (
             <li key={r.n}>
               <h3>
                 {!r.agent && r.label
                   ? `${r.label} (round ${r.n})`
+                  : r.agent?.kind === 'mutate'
+                  ? 'A second Claude Code session breaks the port on purpose'
                   : r.n === 0
                   ? 'Port'
                   : r.agent?.kind === 'hook'
@@ -351,7 +396,9 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
                 <p>
                   <b>Claude Code</b> ({r.agent.model ?? 'claude'}
                   {r.agent.turns ? `, ${r.agent.turns} turns` : ''}){' '}
-                  {r.agent.kind === 'port'
+                  {r.agent.kind === 'mutate'
+                    ? 'changed behaviour on purpose and wrote down what it did'
+                    : r.agent.kind === 'port'
                     ? 'ported the app'
                     : r.agent.kind === 'hook'
                       ? 'worked on your request, then tried to stop'
@@ -367,7 +414,9 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
               {r.agent?.prompt && (
                 <details className="sent">
                   <summary>
-                    {r.agent.kind === 'port'
+                    {r.agent.kind === 'mutate'
+                      ? 'What the breaker session was asked to do'
+                      : r.agent.kind === 'port'
                       ? 'The port request Ditto sent Claude Code'
                       : r.agent.kind === 'hook'
                         ? 'What you asked Claude Code'
@@ -377,7 +426,8 @@ export function Rounds({ c, d }: { c: CaseFile; d: Derived }) {
                 </details>
               )}
               <p>
-                <b>Kane</b> ran {res.length} {res.length === 1 ? 'test' : 'tests'} on the rewrite: {pass} same, {res.length - pass} different
+                <b>Kane</b> ran {res.length} {res.length === 1 ? 'test' : 'tests'} on the rewrite: {pass} same, {differ} different
+                {unclear ? `, ${unclear} unclear (Kane unsure whose fault)` : ''}
                 {credits ? ` · ${Math.round(credits)} credits` : ''} · {fmtDate(r.agent?.endedAt ?? res[0]?.endedAt)}
               </p>
             </li>
@@ -405,6 +455,12 @@ export function HowItWorks({ c, d }: { c: CaseFile; d: Derived }) {
           <b>The same tests judge the rewrite.</b> Claude Code ports the app without seeing the tests. Kane replays the old app's recordings on the
           port; every difference goes back to Claude with Kane's verdict and screenshots, until nothing differs.
         </li>
+        {c.mutations && (
+          <li>
+            <b>Then a second agent breaks it on purpose.</b> To check the tests would catch a real regression, a separate Claude Code session planted
+            bugs and wrote them down outside the repository. A fresh fixer session got only Kane&rsquo;s findings.
+          </li>
+        )}
       </ol>
       <p className="real">
         What's real: every run, verdict and screenshot here comes from Kane CLI, and every change from Claude Code, recorded {fmtDate(c.createdAt)}.{' '}
@@ -468,6 +524,89 @@ export function ScanBlock({ scan, d }: { scan: ScanData; d: Derived }) {
           );
         })}
       </div>
+    </section>
+  );
+}
+
+export function MutationsBlock({ c, d }: { c: CaseFile; d: Derived }) {
+  const bugs = plantedBugs(c);
+  if (!bugs.length) return null;
+  const titles = new Map(d.rows.map((r) => [r.test.id, r.test.title]));
+  const differs = (x: RunSummary) => x.outcome === 'mismatch' || x.outcome === 'fail';
+  const broken = d.rounds.find((r) => r.agent?.kind === 'mutate');
+  const res0 = Object.entries(broken?.results ?? {});
+  const confirmed0 = res0.filter(([, x]) => differs(x));
+  const unsure0 = res0.filter(([, x]) => x.outcome === 'test_issue');
+  const fixRounds = d.rounds.filter((r) => r.agent?.kind === 'fix');
+  return (
+    <section className="block mutations" id="mutations" aria-labelledby="mh">
+      <h2 id="mh">
+        {bugs.length} bugs planted on purpose, and how Kane found them
+      </h2>
+      <p className="lead">
+        A second Claude Code session broke the port and wrote this list outside the repository. The fixer never saw it: it only got Kane&rsquo;s
+        findings.
+      </p>
+      <ol className="mut-list">
+        {bugs.map((b, i) => (
+          <li key={i}>
+            <span className="mut-n" aria-hidden>
+              {i + 1}
+            </span>
+            <div>
+              <b>{b.text}</b> {b.file && <code>{b.file}</code>}
+              <small>
+                {b.fixRound !== undefined
+                  ? `Claude Code changed this file in fix round ${b.fixRound}, after Kane flagged: ${b.sentTests.map((t) => titles.get(t) ?? t).join('; ')}.`
+                  : 'No fix round changed this file.'}
+              </small>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="mut-rounds">
+        <div>
+          <h3>Kane on the broken build</h3>
+          <p>
+            {confirmed0.length} confirmed {confirmed0.length === 1 ? 'difference' : 'differences'}
+            {unsure0.length ? `, and ${unsure0.length} tests where Kane was unsure whose fault it was` : ''}.
+          </p>
+          <ul>
+            {confirmed0.map(([id, x]) => (
+              <li key={id}>
+                <b>{titles.get(id) ?? id}:</b> {verdictText(x)}
+              </li>
+            ))}
+          </ul>
+        </div>
+        {fixRounds.map((r) => {
+          const res = Object.entries(r.results);
+          const still = res.filter(([, x]) => differs(x));
+          const same = res.filter(([, x]) => x.outcome === 'pass').length;
+          return (
+            <div key={r.n}>
+              <h3>After fix round {r.n}</h3>
+              <p>
+                Kane re-ran {res.length} {res.length === 1 ? 'test' : 'tests'}: {same} the same{still.length ? `, ${still.length} still different` : ''}.
+              </p>
+              {still.length > 0 && (
+                <ul>
+                  {still.map(([id, x]) => (
+                    <li key={id}>
+                      <b>{titles.get(id) ?? id}:</b> {verdictText(x)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {c.caveat && (
+        <p className="caveat">
+          <b>What the tests could not see.</b> {c.caveat}
+        </p>
+      )}
     </section>
   );
 }
