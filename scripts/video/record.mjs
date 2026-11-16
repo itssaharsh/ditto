@@ -81,7 +81,7 @@ await clip('planted', async (page) => {
   await open(page);
   await scrollTo(page, '#mutations', -30);
   await wait(page, 900);
-  await caption(page, `All ${planted} caught, fixed in ${fixRounds} rounds. The third hid behind the second: Kane kept flagging the counter until Claude found the mark-all bug.`);
+  await caption(page, `Kane’s findings led Claude to all ${planted}, in ${fixRounds} rounds. The third hid behind the second: Kane kept flagging the counter until Claude found the mark-all bug.`);
   await wait(page, 8000);
 });
 

@@ -1148,3 +1148,11 @@ nav.cases a.on {
     grid-template-columns: 1fr;
   }
 }
+
+/* a pass that healing produced after the replay had failed at the test's check */
+.o small.warn {
+  display: block;
+  color: #9a6400;
+  font-weight: 600;
+  line-height: 1.2;
+}

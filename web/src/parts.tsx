@@ -374,7 +374,18 @@ export function Behaviours({ c, d, selected, onPick }: { c: CaseFile; d: Derived
               return (
                 <span role="cell" key={n} className={`o rc o-${h?.result.outcome ?? 'none'}`}>
                   {h ? outcomeWord(h.result) : ''}
-                  {h?.result.mode === 'replay' && h.result.outcome === 'pass' && <small> replay</small>}
+                  {h?.result.outcome === 'pass' && !h.result.healTriggered && h.result.mode !== 'author' && <small> replay</small>}
+                  {h?.result.outcome === 'pass' && h.result.healTriggered && (
+                    /assertion_failed/i.test(h.result.reason ?? '') ? (
+                      <small className="warn" title="Kane's replay failed at this test's check; healing then re-authored steps and passed it. Ditto now needs a fresh run to agree before it counts a pass like this.">
+                        {' '}
+                        healed past a failed check
+                      </small>
+                    ) : (
+                      <small title="Kane re-authored steps the old recording could not find on the new markup"> healed</small>
+                    )
+                  )}
+                  {h?.result.outcome === 'pass' && h.result.mode === 'author' && <small title="Kane wrote this run from the plain-English test, without the old recording"> fresh</small>}
                 </span>
               );
             })}

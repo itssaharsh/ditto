@@ -24,9 +24,15 @@ A rewrite that matches first time doesn't show the tests would catch a regressio
 |---|---|---|
 | Pressing Escape while editing a todo saves the edited text instead of discarding it | **Escape discards a todo title edit**, a confirmed difference on the broken build: "Pressing Escape left edit mode but kept the replacement title instead of restoring the original title." | round 1, `TodoItem.tsx` |
 | Counter reads "0 item left" instead of "0 items left" | **Completed todos leave the active counter at zero**, a confirmed difference: "After all todos are completed, the footer does not meet the required zero-item counter format." | round 1, `Footer.tsx` |
-| Toggle-all shows as checked while one todo is still active | The same counter test, still different after round 1: "The mark-all control does not complete the remaining 'Book the dentist' todo, so the list cannot reach zero items." | round 2, `App.tsx` |
+| Toggle-all shows as checked while one todo is still active | The same counter test, still different after round 1: "The mark-all control does not complete the remaining 'Book the dentist' todo, so the list cannot reach zero items." (On the broken build, Kane's replays of two other tests had already failed at their checks because of this bug, but healing passed them. See [what the run taught Ditto](#what-the-planted-bugs-taught-ditto).) | round 2, `App.tsx` |
 
 Kane then replayed all 18 behaviours on the fixed port: **18 of 18 the same**. 61 Kane runs (40 pure replays of the old app's recordings), 480 credits. The commits are on the [`ditto/mutation-check`](https://github.com/itssaharsh/todomvc-react-port/commits/ditto/mutation-check) branch: `a150b02` (breaker), `62752c5` and `40f2c99` (fixer).
+
+### What the planted bugs taught Ditto
+
+On the broken build, Kane's replays of two tests the third bug breaks failed at their checks. Kane said so in plain words: "After the mark-all action, the All list still shows two incomplete todos". Then Kane's adaptive healing re-authored the steps until those tests passed, and Ditto counted the healed passes. The bug still surfaced one round later, through the counter test, but a healed pass had hidden a real regression.
+
+So Ditto changed one rule: when a replay fails at a check and healing then passes it, the pass only counts if a fresh Kane run, written from the plain-English test without the old recording, passes too. The console marks the old healed passes "healed past a failed check" so you can see which ones they were.
 
 ## Everything we ran (16 Nov 2026, all real runs)
 
@@ -38,7 +44,7 @@ Kane then replayed all 18 behaviours on the fixed port: **18 of 18 the same**. 6
 | Claude Code (Haiku 5.5, 40-turn budget) ports it again | **18/18 the same**: 22 of 24 Kane runs were pure replays, **7.4 credits** for the whole check |
 | A refactor in a Claude Code session, guarded by the Stop hook | Claude said "it type-checks, but I haven't run it in a browser"; Kane replayed all 18 behaviours before it could stop: **18/18, stop allowed** |
 | Spec gaps: what the spec asks and the old app never did | Kane ran those tests on the port: **3 failed** (one a confirmed difference: "reloading does not restore the saved todo"). Claude Code added localStorage persistence from Kane's findings; Kane re-checked: **3/3 pass**, and the 18 parity behaviours still **18/18** |
-| Bugs planted on purpose (above) | **3 of 3 caught**, fixed in 2 rounds from Kane's findings alone, **18/18** again |
+| Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
 
 The three recorded cases together: 236 Kane runs and about 2,800 credits, most of it recording the old app once.
 
