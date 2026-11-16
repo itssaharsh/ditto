@@ -119,11 +119,15 @@ Also: `ditto hook install` puts the same check on your own interactive Claude Co
 
 ## Kane CLI features Ditto uses
 
+Take Kane out of Ditto and nothing is left. Kane writes the tests, records the referee, judges every rewrite, triggers every agent round, holds the Stop hook, vouches for its own evidence, and tests Ditto's own console.
+
 - **Assurance pipeline:** `context ingest` → `context review --approve` → `design tests` (use-cases cited to the spec, acceptance criteria, scenarios, one `_test.md` per scenario).
 - **`testmd run`** with variables (`{{start_url}}`), **replay from cache**, **`--override-start-url`** to retarget a recording at another build, **`--local`** so the legacy recording is never overwritten, **`--no-adaptive-heal`** for pure replays and adaptive healing when markup changed.
 - **`--bug-detection continue`** verdicts (740 vs 710 vs 510) to route each result.
 - **Evidence packs:** per-step screenshots, annotated frames, failure records and console logs, copied into the case (account details are never copied).
-- **Test Manager**: every authored run is uploaded; the case keeps its share link.
+- **Test Manager**: every authored run is uploaded; the case keeps its share link (they open without signing in).
+- **`evidence validate`**: Kane's own integrity check, run on every sealed pack behind the recorded runs (300 of 301 valid).
+- **`evidence verdict` with a policy**: Ditto's trust rules written as a Kane policy ([`policies/ditto-parity.yaml`](policies/ditto-parity.yaml)). It blocks failed or unjudged runs and tests without a check, and warns on healed or non-replay results, using Kane's own `heal.healed_tests` metric.
 
 ## Look around without Kane or credits
 
