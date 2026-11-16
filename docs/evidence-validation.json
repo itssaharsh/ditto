@@ -1,0 +1,35 @@
+{
+  "what": "kane-cli evidence validate --json (profile L1) on every sealed evidence pack Kane wrote during the recorded runs (folder todomvc: the TodoMVC runs; console: Kane checking Ditto’s own console).",
+  "checkedAt": "2026-11-16T19:03:39.436Z",
+  "packs": 301,
+  "valid": 300,
+  "statuses": {
+    "finalized": 301
+  },
+  "byFolder": {
+    "console": {
+      "packs": 12,
+      "valid": 12
+    },
+    "todomvc": {
+      "packs": 289,
+      "valid": 288
+    }
+  },
+  "diagnostics": {
+    "warning:l1.failure.status_disagrees": 81,
+    "warning:l1.failure.missing": 16,
+    "error:l1.steps.missing": 1,
+    "warning:l1.steps.screenshot_missing": 1
+  },
+  "invalid": [
+    {
+      "folder": "todomvc",
+      "id": "37fc6f16-9814-42f4-ae58-c06a377d1bb8",
+      "status": "finalized",
+      "codes": [
+        "error:l1.steps.missing"
+      ]
+    }
+  ]
+}
