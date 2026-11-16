@@ -78,6 +78,11 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - `ditto index` used to construct the loop (which saved cases/todomvc/case.json, bumping updatedAt); now runs before the loop opens a case.
 - Kane replays vary between runs on the same build (completed-route passed in round 0, failed on re-check replay).
 
+## Checkpoint (16 Nov ~21:15 UTC): ready for the user's hand-off
+- Video: qa/video/ditto-demo.mp4 (169 s; segments trimmed of page loads), thumbnail qa/video/thumbnail.png (git-ignored; re-record with `node scripts/video/record.mjs`).
+- TestMu Slack (#kane-cli-hacakathon C0BS5K131NU, #general) read with the user's OK: no Nov rule changes; previous edition used a SurveyMonkey form and extended its deadline once. Nothing posted.
+- Kane credits ≈ 5,900 left. Waiting on the user: YouTube upload, two posts, form, kaneclihack.sh registration; add the video link to README when given.
+
 ## Checkpoint (16 Nov ~19:30 UTC)
 - Everything committed and pushed; site redeployed with the mutation case as default; fold check PASS on the live URL.
 - Running: Kane self-test of the redeployed console (scripts/selftest-console.ts → qa/console-selftest.json, then copy to docs/).

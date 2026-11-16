@@ -24,9 +24,11 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Scorecard (scorecard.md), launch drafts updated with the re-check story
 - [x] Red-team re-audit (≈7.9/10) → wording fixes; clean-port validation of the heal rule: 18/18, no false alarm
 
+- [x] Video recorded from the live site: qa/video/ditto-demo.mp4 (2:49, opens on the catch), thumbnail qa/video/thumbnail.png
+- [x] TestMu Slack read (16 Nov): no new rules for this edition; one rival builds Playwright→Kane suite migration; last edition's plain agent→Kane→fix loops didn't place
+
 ## Now
-- [~] Record the video (scripts/video/record.mjs from the live site) and check it under 3:00
-- [ ] Hand-off message to the user
+- [x] Hand-off message to the user
 
 ## Hand-off to the user (only they can)
 - [ ] Upload the video to YouTube (unlisted is fine), add the link to README and the submission
