@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { derive, type BehaviourRow, type CaseFile, type Derived } from './data';
 import { caseFacts, pickNamed, tryOrder } from './model';
-import { Behaviours, HowItWorks, LoopRail, Rounds, TestSheet } from './parts';
+import { Behaviours, HowItWorks, LoopRail, Rounds, ScanBlock, TestSheet, type ScanData } from './parts';
 import { atTime, bounds, latestTest, phases } from './timeline';
 import { useCase, useParam } from './useCase';
 
@@ -107,6 +107,13 @@ function CaseView({ c: full }: { c: CaseFile }) {
   const selected: BehaviourRow | undefined = d.rows.find((r) => r.test.id === (following ?? bParam)) ?? named;
   const facts = caseFacts(c);
   const [focus, setFocus] = useState(0);
+  const [scan, setScan] = useState<ScanData>();
+  useEffect(() => {
+    fetch(`./cases/${full.id}-scan/scan.json`, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : undefined))
+      .then((j) => j && setScan(j as ScanData))
+      .catch(() => undefined);
+  }, [full.id]);
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('autoplay') === '1' && ['parity', 'stopped'].includes(full.status)) replay.start();
@@ -203,6 +210,7 @@ function CaseView({ c: full }: { c: CaseFile }) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }} />
       <Rounds c={c} d={d} />
+      {scan && <ScanBlock scan={scan} d={d} />}
       <HowItWorks c={c} d={d} />
     </div>
   );

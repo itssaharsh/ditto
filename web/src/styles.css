@@ -869,3 +869,52 @@ dialog.zoom::backdrop {
     grid-template-areas: 'btn btn2' 'track track' 'note note';
   }
 }
+
+/* scan of other implementations */
+.scan-rows {
+  display: grid;
+  gap: 10px;
+}
+.scan-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 4px 14px;
+  align-items: center;
+}
+.scan-name {
+  font: 600 14px var(--mono);
+  text-decoration: none;
+}
+.scan-bar {
+  position: relative;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--bad-soft);
+  overflow: hidden;
+}
+.scan-bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--ok-soft);
+  box-shadow: inset -2px 0 0 var(--ok);
+}
+.scan-bar span {
+  position: relative;
+  font: 600 13px/26px var(--body);
+  padding-left: 10px;
+}
+.scan-diff {
+  grid-column: 2;
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: var(--ink2);
+}
+@media (max-width: 760px) {
+  .scan-row {
+    grid-template-columns: 1fr;
+  }
+  .scan-diff {
+    grid-column: 1;
+  }
+}

@@ -344,3 +344,58 @@ export function HowItWorks({ c, d }: { c: CaseFile; d: Derived }) {
 }
 
 export type { StepFrame };
+
+export interface ScanData {
+  createdAt: string;
+  note: string;
+  tests: string[];
+  targets: { name: string; source: string; results: Record<string, RunSummary> }[];
+}
+
+export function ScanBlock({ scan, d }: { scan: ScanData; d: Derived }) {
+  const titles = new Map(d.rows.map((r) => [r.test.id, r.test.title]));
+  const done = scan.targets.filter((t) => Object.keys(t.results).length > 0);
+  if (!done.length) return null;
+  const runs = done.reduce((a, t) => a + Object.keys(t.results).length, 0);
+  const credits = Math.round(done.reduce((a, t) => a + Object.values(t.results).reduce((b, r) => b + (r.credits ?? 0), 0), 0));
+  return (
+    <section className="block scan" id="scan" aria-labelledby="sh">
+      <h2 id="sh">The same tests, on {done.length} other TodoMVCs</h2>
+      <p className="lead">
+        {scan.note} {runs} replays, {credits} credits in total: a recording made once on the old app judges any build that should behave
+        like it.
+      </p>
+      <div className="scan-rows">
+        {done.map((t) => {
+          const res = Object.entries(t.results);
+          const same = res.filter(([, r]) => r.outcome === 'pass').length;
+          const diff = res.filter(([, r]) => r.outcome === 'mismatch');
+          const unclear = res.length - same - diff.length;
+          return (
+            <div className="scan-row" key={t.name}>
+              <a className="scan-name" href={t.source}>
+                {t.name}
+              </a>
+              <div className="scan-bar" aria-label={`${same} of ${res.length} the same`}>
+                <i style={{ width: `${(same / res.length) * 100}%` }} />
+                <span>
+                  {same}/{res.length} same{diff.length ? ` · ${diff.length} differ` : ''}
+                  {unclear ? ` · ${unclear} unclear` : ''}
+                </span>
+              </div>
+              {diff.length > 0 && (
+                <ul className="scan-diff">
+                  {diff.map(([id, r]) => (
+                    <li key={id}>
+                      <b>{titles.get(id) ?? id}:</b> {verdictText(r)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
