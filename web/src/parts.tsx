@@ -195,7 +195,7 @@ function StatusLine({ c, row }: { c: CaseFile; row: BehaviourRow }) {
         : brokenFirst
           ? `Same behaviour again. A planted bug changed it, Kane caught it, and it matched after fix round ${row.fixedInRound}.`
           : `Same behaviour. Differed at first, matched after fix round ${row.fixedInRound}.`,
-    differs: 'Still different on the rewrite.',
+    differs: c.rounds.some((r) => r.agent?.kind === 'fix') ? 'Still different on the rewrite.' : 'Different on this build: Kane confirmed it.',
     unclear: 'Kane could not get a clean verdict on the rewrite for this one, so it is not counted either way.',
     'legacy-differs': 'The old app itself fails this part of the spec, so it is not used to judge the rewrite.',
     unverified:
@@ -222,6 +222,25 @@ function LoopStrip({ c, row }: { c: CaseFile; row: BehaviourRow }) {
   const fixedRun = row.history.find((h) => h.round === row.fixedInRound)?.result;
   const nowShot = at >= 0 && fixedRun ? framesByStep(fixedRun, steps)[at].shot : undefined;
   const rewrite = c.apps.rewrite.label;
+  const checkOnly = !agent && ['parity', 'stopped', 'failed'].includes(c.status) && !c.rounds.some((r) => r.agent?.kind === 'fix');
+  if (checkOnly)
+    return (
+      <div className={`strip solo ${failShot ? 'with-frames' : ''}`}>
+        <div className="s-kane">
+          <small>
+            Kane, {roundPhrase(c, fail.round)} ·{' '}
+            {fail.result.outcome === 'mismatch' ? 'confirmed difference' : fail.result.outcome === 'fail' ? 'fail' : 'unsure whose fault'}
+            {at >= 0 ? ` · step ${at + 1}` : ''}
+          </small>
+          {failShot && <Frame caseId={c.id} shot={failShot} label={`${rewrite} (rewrite), step ${at + 1}, ${roundPhrase(c, fail.round)}`} tone="fail" />}
+          <q>{verdictText(fail.result)}</q>
+        </div>
+        <div className="s-agent">
+          <small>Not sent to an agent</small>
+          <span>This run only checks a build. In a loop, this verdict and both screenshots would go to Claude Code.</span>
+        </div>
+      </div>
+    );
   return (
     <div className={`strip ${failShot ? 'with-frames' : ''}`}>
       <div className="s-kane">
@@ -267,6 +286,7 @@ function firstSentence(s?: string): string {
 export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (id: string) => void }) {
   const rounds = d.rounds.filter((r) => r.n > 0);
   const titles = new Map(d.rows.map((r) => [r.test.id, r.test.title]));
+  const refused = d.loop.filter((e) => e.did.startsWith('Did not take the healed pass'));
   return (
     <section className="card loop">
       <h2>Kane said → Claude did</h2>
@@ -274,6 +294,20 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
         <p className="muted">
           {d.matched === d.oracleTotal ? 'Nothing to send back: every behaviour matched on the first port.' : 'This run only checks: nothing was sent to an agent.'}
         </p>
+      )}
+      {rounds.length === 0 && refused.length > 0 && (
+        <div className="lr">
+          <h3>Healed passes Ditto didn&rsquo;t take</h3>
+          {refused.map((e) => {
+            const final = d.rows.find((r) => r.test.id === e.test)?.latest;
+            return (
+              <button className={final?.outcome === 'pass' ? 'cq' : 'kq'} key={e.test + e.t} onClick={() => onPick(e.test)}>
+                <b>Kane</b> <span className="ttl">{titles.get(e.test)}:</span> {e.said.replace(/; healing then passed it$/, '').replace(/\.\)$/, ')')}.{' '}
+                <b>Fresh run:</b> {final?.outcome === 'pass' ? 'pass' : final?.outcome === 'mismatch' ? 'confirmed difference' : final ? 'unclear' : 'not run'}
+              </button>
+            );
+          })}
+        </div>
       )}
       {rounds.map((r) => {
         if (r.agent?.kind === 'mutate') return null;
@@ -634,6 +668,11 @@ export function MutationsBlock({ c, d }: { c: CaseFile; d: Derived }) {
           );
         })}
       </div>
+      {c.followUp && (
+        <p className="followup">
+          <b>What it changed in Ditto.</b> {c.followUp.text} <a href={`?case=${c.followUp.case}`}>See the re-check&nbsp;→</a>
+        </p>
+      )}
       {c.caveat && (
         <p className="caveat">
           <b>What the tests could not see.</b> {c.caveat} <a href={`${REPO}/blob/master/docs/testing.md#5-a-behaviour-no-test-covers`}>Kane&rsquo;s two runs</a>

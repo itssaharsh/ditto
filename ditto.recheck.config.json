@@ -1,0 +1,40 @@
+{
+  "case": "todomvc-recheck",
+  "title": "TodoMVC: the broken build, re-checked after Ditto stopped trusting healed passes",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "dir": "fixtures/legacy-todomvc",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+    "label": "React",
+    "framework": "React 19 + TypeScript + Vite (the planted-bug build, commit a150b02)",
+    "repo": "../todomvc-react-port-broken",
+    "build": "npm install --no-audit --no-fund && npm run build",
+    "dist": "dist",
+    "port": 7005
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 3,
+  "creditCap": 1000,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "namedExample": "mark-all-checks-every-todo-in-all",
+  "oracleCase": "todomvc",
+  "note": "The same broken build as the planted-bug run (commit a150b02), checked again with one rule changed: the planted-bug run showed that Kane's healing had passed two tests a planted bug broke, so a healed pass now needs a fresh Kane run to agree.",
+  "tab": "Broken build, re-checked"
+}

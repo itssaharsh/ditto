@@ -8,6 +8,7 @@
    "rewrite": "React 19 + TypeScript + Vite (written by Claude Code)",
    "status": "parity",
    "matched": 18,
+   "differ": 0,
    "total": 18,
    "fixRounds": 0,
    "createdAt": "2026-11-16T13:04:51.048Z"
@@ -19,6 +20,7 @@
    "rewrite": "React 19 + TypeScript + Vite (written by Claude Code, Haiku 5.5)",
    "status": "parity",
    "matched": 18,
+   "differ": 0,
    "total": 18,
    "fixRounds": 0,
    "createdAt": "2026-11-16T14:11:53.480Z"
@@ -31,9 +33,22 @@
    "rewrite": "React 19 + TypeScript + Vite (Sonnet 5.5 port, then broken on purpose by a second session)",
    "status": "parity",
    "matched": 18,
+   "differ": 0,
    "total": 18,
    "fixRounds": 2,
    "createdAt": "2026-11-16T15:30:06.884Z"
+  },
+  {
+   "id": "todomvc-recheck",
+   "title": "TodoMVC: the broken build, re-checked after Ditto stopped trusting healed passes",
+   "tab": "Broken build, re-checked",
+   "rewrite": "React 19 + TypeScript + Vite (the planted-bug build, commit a150b02)",
+   "status": "stopped",
+   "matched": 11,
+   "differ": 6,
+   "total": 18,
+   "fixRounds": 0,
+   "createdAt": "2026-11-16T18:04:37.084Z"
   }
  ]
 }

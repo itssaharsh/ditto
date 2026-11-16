@@ -95,6 +95,8 @@ export interface CaseFile {
   caveat?: string;
   /** Short name for the console's run switcher. */
   tab?: string;
+  /** A later recorded run this one led to, with one line on what it showed (written by hand from that run's case file). */
+  followUp?: { case: string; text: string };
   /** Mutation runs: what the fixer's own transcript shows (scripts/audit-fixer.ts). */
   audit?: { fixerSessions: number; fixerToolCalls: number; touchedAnswerKey: number; checkedAt: string };
   oracle: Record<string, RunSummary>;

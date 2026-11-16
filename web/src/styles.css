@@ -1156,3 +1156,28 @@ nav.cases a.on {
   font-weight: 600;
   line-height: 1.2;
 }
+
+/* a check-only run: Kane's finding, and a note that nothing went to an agent */
+.strip.solo,
+.strip.solo.with-frames {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+}
+@media (max-width: 760px) {
+  .strip.solo,
+  .strip.solo.with-frames {
+    grid-template-columns: 1fr;
+  }
+}
+
+.followup {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: var(--r-block);
+  background: #e9f6ef;
+  color: var(--ink2);
+  font-size: 14.5px;
+  border-left: 3px solid var(--ok);
+}
+.followup b {
+  color: var(--ink);
+}

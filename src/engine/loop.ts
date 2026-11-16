@@ -907,6 +907,7 @@ export function writeCasesIndex(casesDir: string): void {
       rewrite: c.apps.rewrite.framework,
       status: c.status,
       matched: oracle.filter((t) => latest(t.id)?.outcome === 'pass').length,
+      differ: oracle.filter((t) => ['mismatch', 'fail'].includes(latest(t.id)?.outcome ?? '')).length,
       total: oracle.length,
       fixRounds: c.rounds.filter((r) => r.n > 0 && r.agent?.kind === 'fix').length,
       createdAt: c.createdAt,

@@ -16,6 +16,8 @@ export interface CasesIndex {
     tab?: string;
     /** Bugs a breaker session planted (mutation check runs only). */
     planted?: number;
+    /** Oracle behaviours whose latest result is a confirmed difference. */
+    differ?: number;
     rewrite: string;
     status: string;
     matched: number;
@@ -58,7 +60,9 @@ function CaseTabs({ index, current }: { index?: CasesIndex; current: string }) {
           <b>{k.tab ?? k.title.replace(/^.*ported by /, '')}</b>
           <span>
             {k.planted ? `${k.planted} planted · ` : ''}
-            {k.matched}/{k.total} same{k.fixRounds ? ` after ${k.fixRounds} fix ${k.fixRounds === 1 ? 'round' : 'rounds'}` : ' on the first port'}
+            {k.status !== 'parity'
+              ? `${k.matched}/${k.total} same · ${k.differ ?? k.total - k.matched} confirmed different`
+              : `${k.matched}/${k.total} same${k.fixRounds ? ` after ${k.fixRounds} fix ${k.fixRounds === 1 ? 'round' : 'rounds'}` : ' on the first port'}`}
           </span>
         </a>
       ))}
@@ -231,7 +235,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
               )}
               <span>
                 <b>{facts.rounds}</b> fix {facts.rounds === 1 ? 'round' : 'rounds'}
-                {facts.rounds === 0 ? ' needed' : ''}
+                {facts.rounds === 0 ? (c.status === 'parity' ? ' needed' : ' (this run only checks)') : ''}
               </span>
               {facts.specFixes > 0 && (
                 <span>
@@ -332,7 +336,9 @@ function ReplayBar({ full, replay }: { full: CaseFile; replay: ReturnType<typeof
         <i className="rp-pos" style={{ left: `${pos * 100}%` }} aria-hidden />
       </div>
       <small className="rp-note">
-        {replay.t === null ? `Recorded on ${recorded}, over ${Math.round(total / 60000)} minutes of Kane and Claude Code runs.` : `Replaying at ${replay.speed}× speed.`}
+        {replay.t === null
+          ? `Recorded on ${recorded}, over ${Math.round(total / 60000)} minutes of Kane${full.rounds.some((r) => r.agent) ? ' and Claude Code' : ''} runs.`
+          : `Replaying at ${replay.speed}× speed.`}
       </small>
     </div>
   );
@@ -344,6 +350,7 @@ function Answer({ c, d }: { c: CaseFile; d: Derived }) {
   const unsure = fixed.length - confirmed.length;
   const planted = plantedBugs(c);
   const rounds = caseFacts(c).rounds;
+  const differing = d.rows.filter((r) => r.legacy?.outcome === 'pass' && r.status === 'differs').length;
   if (c.status === 'parity' && planted.length > 0) {
     const found = planted.filter((b) => b.fixRound !== undefined).length;
     return (
@@ -373,8 +380,8 @@ function Answer({ c, d }: { c: CaseFile; d: Derived }) {
   if (c.status === 'stopped' || c.status === 'failed')
     return (
       <p className="ans">
-        <b>{rounds > 0 ? 'Yes, still.' : 'Yes.'}</b> {d.oracleTotal - d.matched} of {d.oracleTotal} behaviours act differently on the rewrite. Here is one
-        of them.
+        <b>{rounds > 0 ? 'Yes, still.' : 'Yes.'}</b> Kane confirmed {differing} of {d.oracleTotal} behaviours act differently on this build
+        {d.oracleTotal - d.matched - differing > 0 ? `, and was unsure about ${d.oracleTotal - d.matched - differing} more` : ''}. Here is one of them.
       </p>
     );
   if (c.status === 'recording') {
@@ -394,7 +401,11 @@ function Answer({ c, d }: { c: CaseFile; d: Derived }) {
 
 function Sticker({ c, d }: { c: CaseFile; d: Derived }) {
   if (c.status === 'parity') return <div className="sticker">Same behaviour</div>;
-  if (c.status === 'stopped' || c.status === 'failed') return <div className="sticker bad">{d.oracleTotal - d.matched} still differ</div>;
+  if (c.status === 'stopped' || c.status === 'failed') {
+    const differing = d.rows.filter((r) => r.legacy?.outcome === 'pass' && r.status === 'differs').length;
+    const fixed = c.rounds.some((r) => r.agent?.kind === 'fix');
+    return <div className="sticker bad">{differing} {fixed ? 'still differ' : 'differ'}</div>;
+  }
   return <div className="sticker live">{statusWords(c.status)}</div>;
 }
 
