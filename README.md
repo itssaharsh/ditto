@@ -8,16 +8,7 @@
 
 <!-- RESULTS -->
 
-## For judges (60 seconds)
-
-1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on the behaviour Claude Code got wrong first: Kane's red screenshot of the rewrite, Claude's fix, the same step green.
-2. Click any chip under **Try these**, or any row in **All behaviours**: every screenshot is Kane's, from the recorded run. Click a screenshot to enlarge it.
-3. **Kane said → Claude did** (right rail) is the closed loop, round by round. **What each round did** lists every commit.
-4. Try both apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/) and [Claude's React port](https://itssaharsh.github.io/ditto/port/).
-
-To run it on your machine, see [Run it](#run-it).
-
-## The idea
+## The idea: the old app is the test oracle
 
 Rewrites and big refactors are where users get hurt: the Escape key that used to cancel an edit now saves it, a filter forgets itself on reload. AI agents make rewrites cheap, so they happen more, and review can't keep up.
 
@@ -27,6 +18,15 @@ Ditto turns "nothing changed for users" into something you can check:
 2. **The old app is the reference.** Every test runs on the legacy app first. Only tests the old app passes judge the rewrite, so a wrong test can never blame the new code. Kane records each passing test so it replays in seconds.
 3. **The same recording judges the rewrite.** Claude Code ports the app without seeing the tests. Kane replays the legacy recordings on the port (`--override-start-url --local`). Same behaviour and same markup: a pass in seconds for about zero credits. Different markup: Kane re-authors just those steps and judges again. Different behaviour: a confirmed difference with a verdict and screenshots.
 4. **Every confirmed difference goes back to the agent.** Ditto resumes the same Claude Code session with that test's steps, Kane's verdict word for word, the rewrite's screenshot and the legacy app's screenshot at the same step, and the browser console. Results Kane can't call cleanly are never sent as failures. Claude fixes; Kane re-checks; repeat until parity, then one more full replay to catch regressions.
+
+## For judges (60 seconds)
+
+1. Open the [live replay](https://itssaharsh.github.io/ditto/). It opens on the behaviour Claude Code got wrong first: Kane's red screenshot of the rewrite, Claude's fix, the same step green.
+2. Click any chip under **Try these**, or any row in **All behaviours**: every screenshot is Kane's, from the recorded run. Click a screenshot to enlarge it.
+3. **Kane said → Claude did** (right rail) is the closed loop, round by round. **What each round did** lists every commit.
+4. Try both apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/) and [Claude's React port](https://itssaharsh.github.io/ditto/port/).
+
+To run it on your machine, see [Run it](#run-it).
 
 ## How Kane and the agent talk
 
@@ -40,7 +40,7 @@ Ditto turns "nothing changed for users" into something you can check:
 
 Every decision is saved in the case file and shown in the console as **Kane said → Claude did**.
 
-There is also an interactive mode: `ditto hook install` adds a **Stop hook** to the rewrite repo, so your own Claude Code session can't finish until Kane has replayed every legacy behaviour on it. A mismatch blocks the stop and the findings go straight back into the session.
+Also: `ditto hook install` puts the same check on your own interactive Claude Code session as a Stop hook.
 
 ## Kane CLI features Ditto uses
 
