@@ -8,8 +8,8 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": false,
+    "allowImportingTsExtensions": true,
     "types": ["vite/client", "node"]
   },
-  "include": ["src", "../src/engine/case.ts", "../src/engine/suite.ts", "../src/engine/kane.ts"]
+  "include": ["src", "../src/engine/case.ts", "../src/engine/suite.ts", "../src/engine/kane.ts", "../test/console.test.ts"]
 }

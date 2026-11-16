@@ -6,6 +6,7 @@ import { loadConfig } from './engine/config.js';
 import { designSuite } from './engine/design.js';
 import { DittoLoop } from './engine/loop.js';
 import { serveConsole } from './engine/apps.js';
+import { findTargets, scan } from './engine/scan.js';
 import { importDesigned, loadSuite } from './engine/suite.js';
 import type { CaseFile } from './engine/case.js';
 
@@ -28,6 +29,7 @@ function help(): void {
   ditto check                   Replay the suite on the current rewrite once (no agent)
   ditto ui [--port 4747]        Open the console (live while a loop runs)
   ditto status                  Print the parity table for the current case
+  ditto scan [--targets a,b]    Replay the reference recordings on other builds (e.g. every TodoMVC framework)
   ditto hook install            Make your interactive Claude Code session in the rewrite repo
                                 check with Ditto (Kane) before it is allowed to stop
   ditto hook stop               (called by the Stop hook) block the stop while behaviour differs
@@ -98,6 +100,23 @@ async function main(): Promise<void> {
       loop.stopApps();
     }
     printStatus(loop.rec.data);
+    return;
+  }
+  if (cmd === 'scan') {
+    const root = flag('impls') ?? cfg.abs(join(cfg.workDir, 'impls', 'todomvc', 'examples'));
+    const only = flag('targets')?.split(',');
+    const targets = findTargets(root).filter((t) => !only || only.includes(t.name));
+    if (!targets.length) return console.log(`No builds found under ${root}`);
+    await loop.startApps();
+    try {
+      const res = await scan(cfg, loop, targets, (l) => console.log(l));
+      for (const t of res.targets) {
+        const vals = Object.values(t.results);
+        console.log(`${t.name.padEnd(16)} ${vals.filter((v) => v.outcome === 'pass').length}/${vals.length} same as the reference`);
+      }
+    } finally {
+      loop.stopApps();
+    }
     return;
   }
   if (cmd === 'loop') {
