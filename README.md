@@ -6,16 +6,6 @@
 
 ![Ditto console: a planted bug, Kane's verdict, Claude's fix and the same test passing, with Kane's screenshots of both apps](docs/console.png)
 
-```mermaid
-flowchart TD
-  spec[App spec] -->|kane-cli design tests| tests[28 plain-English tests]
-  tests -->|Kane runs each one on the old app| ref[18 the old app passes: the referee]
-  ref -->|Kane replays them on the rewrite| rw[Claude Code's rewrite]
-  rw -->|a difference: Kane's verdict + both screenshots| fix[The same Claude Code session fixes it]
-  fix -->|Kane checks again| rw
-  rw -->|all 18 the same| done[Parity]
-```
-
 ## The closed loop, on bugs nobody told it about
 
 A rewrite that matches first time doesn't show the tests would catch a regression. So a second Claude Code session broke the finished React port on purpose and wrote down what it did, outside the repository. A fresh Claude Code session then got only what Kane found:
@@ -88,6 +78,16 @@ To run it on your machine, see [Run it](#run-it).
 Rewrites and big refactors are where users get hurt: the Escape key that used to cancel an edit now saves it, a filter forgets itself on reload. AI agents make rewrites cheap, so they happen more, and review can't keep up.
 
 Ditto turns "nothing changed for users" into something you can check:
+
+```mermaid
+flowchart TD
+  spec[App spec] -->|kane-cli design tests| tests[28 plain-English tests]
+  tests -->|Kane runs each one on the old app| ref[18 the old app passes: the referee]
+  ref -->|Kane replays them on the rewrite| rw[Claude Code's rewrite]
+  rw -->|a difference: Kane's verdict + both screenshots| fix[The same Claude Code session fixes it]
+  fix -->|Kane checks again| rw
+  rw -->|all 18 the same| done[Parity]
+```
 
 1. **Kane writes the tests from your spec.** `kane-cli context ingest` + `design tests` turn the spec into plain-English `_test.md` files, each step tagged with the acceptance criterion it verifies. No selectors.
 2. **The old app is the reference.** Every test runs on the legacy app first. Only tests the old app passes judge the rewrite, so a wrong test can never blame the new code. Kane records each passing test so it replays in seconds.
