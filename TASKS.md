@@ -18,11 +18,14 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Site deployed (gh-pages) with /legacy, /port, /port-haiku, /port-mutation; fold check PASS on the live URL
 - [x] 15 unit tests; typecheck clean; privacy scan clean
 
+- [x] Kane self-test of the redeployed console: 4/4 pass (docs/testing.md, docs/console-selftest.json)
+- [x] Red-team 2 (redteam-2.md) → fixes: honest claims, heal rule in the engine, fixer audit, status --loop, LICENSE, OG card
+- [x] Re-check of the broken build with the heal rule (case todomvc-recheck): 6 confirmed differences instead of 2, all 3 planted bugs in one check, 539 credits
+- [x] Scorecard (scorecard.md), launch drafts updated with the re-check story
+
 ## Now
-- [~] Kane self-test of the redeployed console (suites/console) → update docs/testing.md + docs/console-selftest.json
-- [ ] Re-record the video (scripts/video/record.mjs, opens on the catch) and check it under 3:00
-- [ ] Fresh red-team review + scorecard + limitations (hackathon-idea/kanecli-online-nov/)
-- [ ] Update launch drafts with the mutation numbers
+- [~] Record the video (scripts/video/record.mjs from the live site) and check it under 3:00
+- [ ] Hand-off message to the user
 
 ## Hand-off to the user (only they can)
 - [ ] Upload the video to YouTube (unlisted is fine), add the link to README and the submission

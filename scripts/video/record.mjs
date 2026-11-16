@@ -85,12 +85,24 @@ await clip('planted', async (page) => {
   await wait(page, 8000);
 });
 
+// 3b. What the run taught Ditto, and the re-check that measures it
+const rc = JSON.parse(readFileSync('cases/todomvc-recheck/case.json', 'utf8'));
+const rc0 = Object.values(rc.rounds.find((r) => r.n === 0).results);
+const rcDiffer = rc0.filter((x) => x.outcome === 'mismatch' || x.outcome === 'fail').length;
+await clip('lesson', async (page) => {
+  await open(page, '?case=todomvc-recheck');
+  await caption(page, 'The run also caught a flaw in Ditto: Kane’s healing had passed two tests the third bug broke. Now a fresh Kane run has to agree.');
+  await wait(page, 7000);
+  await caption(page, `Same broken build, re-checked with that rule: ${rcDiffer} confirmed differences instead of 2. All 3 planted bugs, in one check.`);
+  await wait(page, 6500);
+});
+
 // 4. The whole planted-bug run, replayed from the recorded case
 const t = (iso) => Date.parse(iso);
 const times = mut.events.map((e) => t(e.t));
 const start = Math.min(...times, t(mut.createdAt));
 const end = Math.max(...times);
-const REPLAY = 30;
+const REPLAY = 24;
 const at = (iso) => ((t(iso) - start) / (end - start)) * REPLAY * 1000;
 const roundStart = (n) => {
   const r = mut.rounds.find((x) => x.n === n);
