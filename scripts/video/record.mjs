@@ -16,15 +16,24 @@ const size = { width: 1600, height: 900 };
 const browser = await chromium.launch({ executablePath: join(homedir(), '.local/lib/kane-chrome/chrome'), headless: true });
 const here = resolve('scripts/video');
 let segment = 0;
+// Seconds to cut from the start of each clip: the time its page took to load, so no clip opens on a blank page.
+const trims = {};
+let current;
 
 async function clip(name, fn) {
-  const dir = join(out, `${String(++segment).padStart(2, '0')}-${name}`);
+  const id = `${String(++segment).padStart(2, '0')}-${name}`;
+  const dir = join(out, id);
+  current = { id, t0: Date.now(), ready: undefined };
   const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: 1, recordVideo: { dir, size } });
   const page = await ctx.newPage();
   await fn(page);
   await ctx.close();
-  console.log(`recorded ${name}`);
+  trims[id] = current.ready ? Math.max(0, (current.ready - current.t0) / 1000 - 0.2) : 0;
+  console.log(`recorded ${name} (trim ${trims[id].toFixed(1)} s)`);
 }
+const ready = () => {
+  current.ready ??= Date.now();
+};
 
 async function caption(page, text) {
   await page.evaluate((t) => {
@@ -45,7 +54,9 @@ const card = (h, p, l = '') => `${pathToFileURL(join(here, 'card.html'))}?h=${en
 const wait = (page, ms) => page.waitForTimeout(ms);
 const open = async (page, query = '') => {
   await page.goto(`${site}${query}`, { waitUntil: 'networkidle' });
-  await wait(page, 900);
+  await page.evaluate(() => Promise.all([...document.images].filter((i) => !i.complete && i.loading !== 'lazy').map((i) => new Promise((r) => (i.onload = i.onerror = r)))));
+  await wait(page, 400);
+  ready();
 };
 const scrollTo = (page, sel, offset = -90) =>
   page.evaluate(([s, o]) => {
@@ -61,7 +72,9 @@ const fixRounds = mut.rounds.filter((r) => r.agent?.kind === 'fix').length;
 // 1. Title
 await clip('title', async (page) => {
   await page.goto(card('Did the rewrite break anything?', 'AI agents rewrite frontends in minutes. <b>Ditto</b> makes Kane CLI prove your users won’t notice, and sends every difference back to the agent.'));
-  await wait(page, 4500);
+  await wait(page, 300);
+  ready();
+  await wait(page, 4200);
 });
 
 // 2. The closed loop on one behaviour: a planted bug, Kane's verdict, Claude's fix, the same test green
@@ -93,7 +106,7 @@ await clip('lesson', async (page) => {
   await open(page, '?case=todomvc-recheck');
   await caption(page, 'The run also caught a flaw in Ditto: Kane’s healing had passed two tests the third bug broke. Now a fresh Kane run has to agree.');
   await wait(page, 7000);
-  await caption(page, `Same broken build, re-checked with that rule: ${rcDiffer} confirmed differences instead of 2. All 3 planted bugs, in one check.`);
+  await caption(page, `Same broken build, re-checked with that rule: ${rcDiffer} behaviours confirmed different instead of 2. All 3 planted bugs, in one check.`);
   await wait(page, 6500);
 });
 
@@ -153,13 +166,15 @@ await clip('oracle', async (page) => {
 });
 
 // 7. Two ports, same referee
-await clip('ports', async (page) => {
+await clip('port-sonnet', async (page) => {
   await open(page, '?case=todomvc');
   await caption(page, 'Claude Sonnet 5.5’s React port: 18 of 18 the same on the first try. 17 of the 18 checks were pure replays, for 18.5 credits.');
   await wait(page, 6500);
+});
+await clip('port-haiku', async (page) => {
   await open(page, '?case=todomvc-haiku');
   await caption(page, 'Same referee, a second agent: Haiku 5.5’s port, 18 of 18 too. 22 of 24 Kane runs were replays: 7 credits.');
-  await wait(page, 6000);
+  await wait(page, 5500);
 });
 
 // 8. A real gap: what the spec asks and the old app never did
@@ -202,7 +217,8 @@ const hookLines = [...hookTools, ...hookClaude, ...hookStop].map((l) => {
 });
 await clip('terminal', async (page) => {
   await page.goto(pathToFileURL(join(here, 'terminal.html')).href);
-  await wait(page, 500);
+  await wait(page, 300);
+  ready();
   await page.evaluate(
     ([lines]) => window.play('npm run ditto -- mutate   (key lines of the real log)', 'The loop in the log: Kane flags, the fixer changes code, Kane re-checks, until all 18 match.', lines, 650),
     [mutLines],
@@ -230,7 +246,9 @@ await clip('limit', async (page) => {
         : 'Behaviour no test covers. Fixing bug 1, Claude also changed an edge the suite never checks. We found it reading the diff. It’s in the README.',
     ),
   );
-  await wait(page, 6500);
+  await wait(page, 300);
+  ready();
+  await wait(page, 6200);
 });
 
 // 11. End
@@ -242,7 +260,9 @@ await clip('end', async (page) => {
       'itssaharsh.github.io/ditto · github.com/itssaharsh/ditto',
     ),
   );
-  await wait(page, 6000);
+  await wait(page, 300);
+  ready();
+  await wait(page, 5700);
 });
 await browser.close();
 
@@ -252,7 +272,7 @@ for (const d of readdirSync(out).filter((x) => /^\d\d-/.test(x)).sort()) {
   const webm = readdirSync(join(out, d)).find((f) => f.endsWith('.webm'));
   if (!webm) continue;
   const mp4 = join(out, `${d}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', join(out, d, webm), '-vf', 'scale=1920:1080:flags=lanczos,fps=30', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', mp4]);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(trims[d] ?? 0), '-i', join(out, d, webm), '-vf', 'scale=1920:1080:flags=lanczos,fps=30', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', mp4]);
   parts.push(mp4);
 }
 writeFileSync(join(out, 'list.txt'), parts.map((p) => `file '${p}'`).join('\n'));

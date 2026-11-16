@@ -38,13 +38,15 @@ Then we checked the same broken build (commit `a150b02`) again with the new rule
 
 | The broken build, first check | Old rule (planted-bug run) | New rule (re-check) |
 |---|---|---|
-| Confirmed differences | 2 | **6** |
+| Behaviours confirmed different | 2 | **6** (4 of them from the third bug) |
 | Kane unsure | 3 | 1 |
 | Same | 13 | 11 |
 | Planted bugs confirmed in the first check | 2 of 3 | **3 of 3** |
 | Credits | 331 | 539 |
 
-Kane's verdicts now name the third bug directly: "Using Mark all as complete did not complete every todo in the All list." Where healing had been right (`mark-all-reactivates`, whose old recording trips on the new markup on every port), the fresh run passed, so the stricter rule added no false failures. It costs one fresh Kane run per doubtful heal.
+Kane's verdicts now name the third bug directly: "Using Mark all as complete did not complete every todo in the All list." The rule sent three healed passes to a fresh run: two came back as confirmed differences (both the third bug), and one, where healing had been right (`mark-all-reactivates`, whose old recording trips on the new markup on every port), passed. It costs one fresh Kane run per doubtful heal.
+
+Read this as one re-run, not a measurement: Kane's verdicts vary between runs on the same build, and two tests moved from "unsure" to "different" through fresh authoring rather than the new rule. The rule doesn't cover a heal after a failed *action* (a click Kane re-targets), which Ditto still trusts because that is usually markup moving.
 
 ## Everything we ran (16 Nov 2026, all real runs)
 
@@ -57,7 +59,7 @@ Kane's verdicts now name the third bug directly: "Using Mark all as complete did
 | A refactor in a Claude Code session, guarded by the Stop hook | Claude said "it type-checks, but I haven't run it in a browser"; Kane replayed all 18 behaviours before it could stop: **18/18, stop allowed** |
 | Spec gaps: what the spec asks and the old app never did | Kane ran those tests on the port: **3 failed** (one a confirmed difference: "reloading does not restore the saved todo"). Claude Code added localStorage persistence from Kane's findings; Kane re-checked: **3/3 pass**, and the 18 parity behaviours still **18/18** |
 | Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
-| The same broken build, re-checked with the new heal rule | **6 confirmed differences** covering all 3 planted bugs in one check (was 2), 1 unsure, 539 credits |
+| The same broken build, re-checked with the new heal rule | **6 behaviours confirmed different** (was 2), covering all 3 planted bugs in one check; 1 unsure; 539 credits |
 
 The four recorded runs together: 273 Kane runs and about 3,300 credits, most of it recording the old app once.
 

@@ -216,7 +216,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
                 <b>0</b> selectors
               </span>
               <span>
-                <b>Same test file</b> on both apps
+                <b>Same plain-English tests</b> on both apps
               </span>
               {d.matched > 0 && (
                 <span>
@@ -228,7 +228,7 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
                   )}
                   {d.lastCheck.fresh > 0 && (
                     <>
-                      , <b>{d.lastCheck.fresh}</b> written fresh by Kane
+                      , <b>{d.lastCheck.fresh}</b> written fresh by Kane from the same test
                     </>
                   )}
                 </span>

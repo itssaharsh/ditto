@@ -1,0 +1,39 @@
+{
+  "case": "todomvc-clean-recheck",
+  "title": "TodoMVC: the clean Sonnet port, re-checked with the new heal rule",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "dir": "fixtures/legacy-todomvc",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+    "label": "React",
+    "framework": "React 19 + TypeScript + Vite (written by Claude Code)",
+    "repo": "../todomvc-react-port",
+    "build": "npm install --no-audit --no-fund && npm run build",
+    "dist": "dist",
+    "port": 7006
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 4,
+  "creditCap": 600,
+  "workDir": ".ditto-work",
+  "casesDir": ".ditto-work/cases-validate",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "tab": "Clean port, re-checked",
+  "oracleCase": "todomvc",
+  "note": "Validation of the heal rule on a build with no planted bugs: any confirmed difference here would be a false alarm."
+}

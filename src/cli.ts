@@ -87,6 +87,12 @@ async function main(): Promise<void> {
     return;
   }
 
+  // Read-only commands run before the loop opens (and saves) the case file.
+  if (cmd === 'index') {
+    writeCasesIndex(cfg.abs(cfg.casesDir));
+    console.log(readFileSync(join(cfg.abs(cfg.casesDir), 'index.json'), 'utf8'));
+    return;
+  }
   const loop = new DittoLoop(cfg, { only });
   if (cmd === 'record') {
     await loop.startApps();
@@ -153,11 +159,6 @@ async function main(): Promise<void> {
     await loop.closeSpecGaps(Number(flag('rounds') ?? 3));
     writeCasesIndex(cfg.abs(cfg.casesDir));
     printStatus(loop.rec.data);
-    return;
-  }
-  if (cmd === 'index') {
-    writeCasesIndex(cfg.abs(cfg.casesDir));
-    console.log(readFileSync(join(cfg.abs(cfg.casesDir), 'index.json'), 'utf8'));
     return;
   }
   help();
