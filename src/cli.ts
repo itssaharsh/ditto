@@ -210,12 +210,16 @@ function init(): void {
 function installHook(repo: string, root: string, configFile: string): void {
   const dir = join(repo, '.claude');
   mkdirSync(dir, { recursive: true });
-  const file = join(dir, 'settings.json');
+  // Local settings: the command holds machine paths, so it must not be committed to the repo.
+  const file = join(dir, 'settings.local.json');
   const settings = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, any>) : {};
   const command = `cd ${JSON.stringify(root)} && npx tsx src/cli.ts hook stop --config ${JSON.stringify(configFile)}`;
   settings.hooks ??= {};
   settings.hooks.Stop = [{ hooks: [{ type: 'command', command, timeout: 1800 }] }];
   writeFileSync(file, JSON.stringify(settings, null, 2) + '\n');
+  const gi = join(repo, '.gitignore');
+  const cur = existsSync(gi) ? readFileSync(gi, 'utf8') : '';
+  if (!cur.includes('.claude/settings.local.json')) writeFileSync(gi, cur + (cur.endsWith('\n') || !cur ? '' : '\n') + '.claude/settings.local.json\n');
   console.log(`Stop hook written to ${file}.\nOpen Claude Code in ${repo}; each time it tries to finish, Kane replays the legacy behaviours first.`);
 }
 

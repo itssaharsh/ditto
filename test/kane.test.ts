@@ -72,3 +72,9 @@ test('a browser that dropped mid-run is an environment error, not an app differe
   );
   assert.equal(r.outcome, 'error');
 });
+
+test('a replay reports its evidence pack and the pages it visited', () => {
+  const r = foldStream(load('testmd-replay-pass.ndjson'), 0);
+  assert.match(r.pack ?? '', /\.evidence$/);
+  assert.ok(r.sessionDir);
+});

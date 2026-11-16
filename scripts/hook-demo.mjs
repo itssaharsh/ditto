@@ -18,7 +18,7 @@ const env = { ...process.env };
 delete env.ANTHROPIC_API_KEY;
 const args = ['-p', request, '--output-format', 'stream-json', '--verbose', '--permission-mode', 'acceptEdits', '--model', cfg.agent.model ?? 'sonnet',
   '--allowedTools', 'Read', 'Edit', 'Write', 'Glob', 'Grep', 'Bash(npm install:*)', 'Bash(npm run build:*)', 'Bash(npx tsc:*)',
-  '--setting-sources', 'project', '--strict-mcp-config', '--disable-slash-commands', '--max-turns', '80'];
+  '--setting-sources', 'project,local', '--strict-mcp-config', '--disable-slash-commands', '--max-turns', '80'];
 const child = spawn('claude', args, { cwd: repo, env, stdio: ['ignore', 'pipe', 'inherit'] });
 let buf = '';
 child.stdout.on('data', (c) => {

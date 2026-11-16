@@ -70,6 +70,12 @@ export interface KaneRunResult {
   committed?: boolean;
   steps: KaneStepLine[];
   evidence?: EvidenceExtract;
+  /** The sealed evidence pack (replays report it only on the coverage event). */
+  pack?: string;
+  /** Pages Kane was on, from the stream's screenshot events. */
+  urls?: string[];
+  /** True when Kane confirmed it opened the override start URL instead of the recorded one. */
+  overrideApplied?: boolean;
   startedAt: string;
   endedAt: string;
 }
@@ -165,6 +171,9 @@ export function foldStream(events: Record<string, unknown>[], exitCode: number):
   let credits = 0;
   let sawCredits = false;
   let duration = 0;
+  let pack: string | undefined;
+  let overrideApplied: boolean | undefined;
+  const urls = new Set<string>();
 
   for (const e of events) {
     const type = e.type;
@@ -184,6 +193,12 @@ export function foldStream(events: Record<string, unknown>[], exitCode: number):
       summary = e;
     } else if (type === 'test_md_done') {
       done = e;
+    } else if (type === 'coverage' && typeof e.pack === 'string') {
+      pack = e.pack;
+    } else if (type === 'run_start' && typeof e.override_applied === 'boolean') {
+      overrideApplied = overrideApplied === false ? false : e.override_applied;
+    } else if (type === 'step_event' && e.event === 'screenshot' && typeof e.detail === 'string' && /^https?:/.test(e.detail)) {
+      urls.add(e.detail);
     }
   }
 
@@ -219,7 +234,10 @@ export function foldStream(events: Record<string, unknown>[], exitCode: number):
     verdict,
     shareUrl: str(summary?.share_url) ?? str(done?.share_url) ?? str(end?.test_url),
     sessionId: str(done?.session_id) ?? str(end?.session_id),
-    sessionDir: str(end?.session_dir),
+    sessionDir: str(end?.session_dir) ?? (pack ? pack.replace(/\/evidence\/[^/]+$/, '') : undefined),
+    pack,
+    urls: urls.size ? [...urls] : undefined,
+    overrideApplied,
     replayDecisions: num(summarySteps.replay_decisions),
     authorDecisions: num(summarySteps.author_decisions),
     healTriggered: typeof heal.triggered === 'boolean' ? heal.triggered : undefined,
@@ -311,9 +329,9 @@ function spawnKane(args: string[], testFile: string, opts: RunOptions): Promise<
         const last = stderr.trim().split('\n').filter(Boolean).slice(-2).join(' ');
         result.reason = last || `kane-cli exited ${code}`;
       }
-      if (opts.assetsDir && result.sessionDir) {
+      if (opts.assetsDir && (result.pack || result.sessionDir)) {
         try {
-          result.evidence = extractEvidence(result.sessionDir, opts.assetsDir, opts.assetsRel ?? '');
+          result.evidence = extractEvidence(result.pack ?? result.sessionDir!, opts.assetsDir, opts.assetsRel ?? '');
         } catch {
           // Evidence is a bonus for the UI; a missing pack never fails the run.
         }
@@ -335,8 +353,8 @@ export function findPack(sessionDir: string): string | undefined {
  * Copy step screenshots, the failure record and console errors out of the pack.
  * Never copies result.yaml or any file with account details.
  */
-export function extractEvidence(sessionDir: string, assetsDir: string, assetsRel: string): EvidenceExtract {
-  const pack = findPack(sessionDir);
+export function extractEvidence(packOrSessionDir: string, assetsDir: string, assetsRel: string): EvidenceExtract {
+  const pack = packOrSessionDir.endsWith('.evidence') ? packOrSessionDir : findPack(packOrSessionDir);
   const out: EvidenceExtract = { shots: [], consoleErrors: [], urls: [] };
   if (!pack) return out;
   const files = unzipSync(readFileSync(pack));

@@ -72,7 +72,7 @@ Every decision is written to the case file as **"Kane said → Ditto did"**, and
 
 ## 6. Interactive mode: a Stop hook
 
-`ditto hook install` adds a Stop hook to the rewrite repo's `.claude/settings.json`. When your own Claude Code session tries to finish, Ditto builds the app and has Kane replay the legacy behaviours first. If anything differs, the stop is blocked and the findings go back into your session; after four blocks it lets go and asks for a person.
+`ditto hook install` adds a Stop hook to the rewrite repo's `.claude/settings.local.json` (local, never committed). When your own Claude Code session tries to finish, Ditto builds the app and has Kane replay the legacy behaviours first. If anything differs, the stop is blocked and the findings go back into your session; after four blocks it lets go and asks for a person.
 
 ## The case file
 

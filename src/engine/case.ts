@@ -22,6 +22,7 @@ export interface RunSummary {
   shots: EvidenceShot[];
   consoleErrors: string[];
   urls?: string[];
+  overrideApplied?: boolean;
   failureMessage?: string;
   /** On the old app, a failure only counts once Kane reproduces it on a second run. */
   confirmed?: boolean;
@@ -102,7 +103,8 @@ export function summarize(r: KaneRunResult, mode: RunSummary['mode']): RunSummar
     healTriggered: r.healTriggered,
     shots: r.evidence?.shots ?? [],
     consoleErrors: r.evidence?.consoleErrors ?? [],
-    urls: r.evidence?.urls,
+    urls: [...new Set([...(r.urls ?? []), ...(r.evidence?.urls ?? [])])],
+    overrideApplied: r.overrideApplied,
     failureMessage: r.evidence?.failureMessage,
     mode: mode === 'replay' && (r.authorDecisions ?? 0) > 0 ? 'replay+heal' : mode,
     startedAt: r.startedAt,
