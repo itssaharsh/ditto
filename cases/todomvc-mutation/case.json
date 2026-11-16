@@ -16692,6 +16692,6 @@
   },
   "followUp": {
     "case": "todomvc-recheck",
-    "text": "On this broken build, Kane's replays of two tests the third bug breaks had failed at their checks, and healing then passed them. Ditto now takes a healed pass after a failed check only if a fresh Kane run agrees. Checked again with that rule, the same build gave 6 confirmed differences instead of 2 (and 1 unsure instead of 3), covering all 3 planted bugs in the first check."
+    "text": "On this broken build, Kane's replays of two tests the third bug breaks had failed at their checks, and healing then passed them. Ditto now takes a healed pass after a failed check only if a fresh Kane run agrees. Checked once more with that rule, the same build gave 6 behaviours confirmed different instead of 2 (4 of them from the third bug), covering all 3 planted bugs in one check. One re-run of a tool whose verdicts vary is not a measurement, but it points the way the rule predicts."
   }
 }
