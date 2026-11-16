@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Albert+Sans:wght@600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#e9f0f8;font-family:'IBM Plex Mono',monospace}
+.win{position:absolute;inset:40px 60px 110px;background:#0f1722;border-radius:14px;box-shadow:0 30px 60px -20px rgba(20,50,90,.45);overflow:hidden;display:flex;flex-direction:column}
+.bar{height:40px;background:#1b2533;display:flex;align-items:center;gap:8px;padding:0 16px;color:#8aa0b8;font:600 15px 'Albert Sans',sans-serif}
+.bar i{width:12px;height:12px;border-radius:50%;background:#3b4a5c;display:inline-block}
+pre{margin:0;padding:22px 26px;color:#d7e2ee;font-size:19px;line-height:1.55;white-space:pre-wrap;flex:1;overflow:hidden}
+.k{color:#ffd84d}.ok{color:#4ade80}.bad{color:#f87171}.dim{color:#7d8fa3}.c{color:#93c5fd}
+.cap{position:absolute;left:60px;right:60px;bottom:28px;font:600 30px 'Albert Sans',sans-serif;color:#14202e}
+</style></head><body>
+<div class="win"><div class="bar"><i></i><i></i><i></i><span id="title"></span></div><pre id="out"></pre></div>
+<div class="cap" id="cap"></div>
+<script>
+// Lines come from the real logs (see scripts/video/record.mjs); only the pacing is sped up.
+window.play = async (title, caption, lines, msPerLine) => {
+  document.getElementById('title').textContent = title;
+  document.getElementById('cap').textContent = caption;
+  const out = document.getElementById('out');
+  out.innerHTML = '';
+  for (const l of lines) {
+    const span = document.createElement('div');
+    span.innerHTML = l;
+    out.appendChild(span);
+    while (out.scrollHeight > out.clientHeight && out.firstChild) out.removeChild(out.firstChild);
+    await new Promise((r) => setTimeout(r, msPerLine));
+  }
+};
+</script></body></html>

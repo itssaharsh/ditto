@@ -27,7 +27,10 @@ export function framesByStep(run: RunSummary | undefined, steps: number): StepFr
     out[i].reached = true;
     if (s.status === 'failed') out[i].failed = true;
     // Kane's first frame can be its own start page, before it opened the app: never show that one.
-    const offApp = s.url !== undefined && !/^https?:\/\/(127\.0\.0\.1|localhost)/.test(s.url) && !s.url.includes('github.io');
+    const offApp =
+      (s.url !== undefined && !/^https?:\/\/(127\.0\.0\.1|localhost)/.test(s.url) && !s.url.includes('github.io')) ||
+      // Kane screenshots a navigate step before the new page has loaded.
+      (s.summary?.startsWith('navigate:') ?? false);
     if (s.kind === 'screenshot' && !offApp) out[i].shot = s;
     else if (s.status === 'failed') out[i].shot = s; // the annotated frame of a failing step wins
   }

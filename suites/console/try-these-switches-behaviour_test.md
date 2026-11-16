@@ -5,8 +5,8 @@ tags: [console]
 
 # Try these switches the behaviour on show
 
-> Picking another behaviour from "Try these" replaces the test file and its screenshots.
+> Picking a behaviour from "Try these" replaces the test file and its screenshots.
 
-## Pick another behaviour
+## Pick a behaviour
 
-Open {{start_url}}. In the "Try these" card, note the text of the second chip and click it. Verify the test title at the top of the test file now matches the text of the chip you clicked, and that chip is now highlighted.
+Open {{start_url}}. In the "Try these" card on the right, click the chip labelled "Escape discards a todo title edit", wait two seconds, and verify the test file heading near the top of the page reads "Escape discards a todo title edit".

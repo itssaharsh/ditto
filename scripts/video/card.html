@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>card</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:linear-gradient(180deg,#f2f7fc,#e9f0f8);font-family:'Albert Sans',sans-serif;color:#14202e}
+.c{height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 120px;gap:22px}
+.mark{display:flex;align-items:center;gap:14px;font:800 34px 'Syne',sans-serif}
+.mark svg{width:46px;height:46px}
+h1{font:700 76px/1.05 'Syne',sans-serif;letter-spacing:-.03em;margin:0;max-width:1300px}
+p{font-size:30px;line-height:1.4;margin:0;color:#4b5a6c;max-width:1250px}
+p b{color:#14202e;background:linear-gradient(#ffd84d,#ffd84d) 0 90%/100% 45% no-repeat}
+.links{font-size:28px;color:#14202e;font-weight:600}
+.fade{animation:in .7s ease-out both}.fade2{animation:in .7s .8s ease-out both}.fade3{animation:in .7s 1.6s ease-out both}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+</style></head><body><div class="c">
+<div class="mark fade"><svg viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#147a52"/><path d="M19 13 L14 29 M33 13 L28 29" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/></svg>Ditto</div>
+<h1 class="fade" id="h"></h1><p class="fade2" id="p"></p><div class="links fade3" id="l"></div>
+</div><script>
+const q=new URLSearchParams(location.search);
+document.getElementById('h').textContent=q.get('h')||'';
+document.getElementById('p').innerHTML=q.get('p')||'';
+document.getElementById('l').innerHTML=q.get('l')||'';
+</script></body></html>
