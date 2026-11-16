@@ -16683,5 +16683,11 @@
   "named": "escape-discards-a-todo-title-edit",
   "mutations": "1. Pressing Escape while editing a todo saves the edited text instead of discarding it — src/components/TodoItem.tsx\n2. Counter reads \"0 item left\" instead of \"0 items left\" — src/components/Footer.tsx\n3. Toggle-all checkbox shows as checked when one todo is still active (should only be checked when none are) — src/App.tsx\n",
   "note": "The breaker wrote its list outside the repository, and the fixer was a fresh Claude Code session that never saw it.",
-  "caveat": "Fixing bug 1, Claude also dropped a quirk of the old app that no test covers: empty a title while editing and press Escape, and the old app deletes the todo, while the fixed port keeps it. We spotted it in the fixer’s diff, then ran Kane on both apps: it saw exactly that, and judged the port right by the spec. Ditto vouches only for behaviours its tests check."
+  "caveat": "Fixing bug 1, Claude also dropped a quirk of the old app that no test covers: empty a title while editing and press Escape, and the old app deletes the todo, while the fixed port keeps it. We spotted it in the fixer’s diff, then ran Kane on both apps: its runs show the old app deleting the todo and the port keeping it. Kane blamed the check rather than the port, since the spec says Escape discards changes. Ditto vouches only for behaviours its tests check.",
+  "audit": {
+    "fixerSessions": 1,
+    "fixerToolCalls": 24,
+    "touchedAnswerKey": 0,
+    "checkedAt": "2026-11-16T18:07:41.483Z"
+  }
 }
