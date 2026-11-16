@@ -59,6 +59,8 @@ The run also exposed a flaw in Ditto. On the broken build, Kane's replays of `ma
 
 To measure the change, the same broken build (commit `a150b02`, in a separate worktree) was checked again with `npm run ditto -- check --config ditto.recheck.config.json --label Re-check` (`cases/todomvc-recheck/case.json`): 6 behaviours confirmed different instead of 2 (4 of them from planted bug 3), 1 unsure instead of 3, 11 the same, and all 3 planted bugs confirmed in that one check. This is one re-run of a tool whose verdicts vary between runs: two of the extra differences came from tests that were "unsure" before and were settled by fresh authoring, not by the new rule. 37 Kane runs, 539 credits. Of the three healed passes the rule sent to a fresh run, two came back as confirmed differences (both bug 3) and one (`mark-all-reactivates-every-completed-todo`, whose recording trips on the React markup on every port) passed.
 
+A stricter rule is only useful if it doesn't cry wolf, so it was also run on a build with nothing planted: the clean Sonnet port (`npm run ditto -- check --config ditto.clean-recheck.config.json --label Re-check`, kept out of the console; summary in [`clean-recheck.json`](clean-recheck.json)). Result: 18/18 the same, 24 Kane runs (19 pure replays), 124 credits. The rule doubted one healed pass (`mark-all-reactivates-every-completed-todo`) and its fresh run passed.
+
 The fixer never saw the breaker's list: `npx tsx scripts/audit-fixer.ts cases/todomvc-mutation` reads Claude Code's own transcript of the fixer session and finds 24 tool calls, none of them touching the list or Ditto's work folder.
 
 ## 5. A behaviour no test covers

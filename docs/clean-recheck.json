@@ -1,0 +1,185 @@
+{
+  "what": "The clean Sonnet 5.5 port (todomvc-react-port master, commit c202eb6), checked with the healing rule added after the planted-bug run. No planted bugs: any confirmed difference would be a false alarm.",
+  "command": "npm run ditto -- check --config ditto.clean-recheck.config.json --label Re-check",
+  "checkedAt": "2026-11-16",
+  "status": "parity",
+  "totals": {
+    "kaneRuns": 24,
+    "credits": 123.95,
+    "agentCostUsd": 0,
+    "replays": 19,
+    "heals": 3,
+    "authored": 2
+  },
+  "refusedHeals": [
+    {
+      "test": "mark-all-reactivates-every-completed-todo",
+      "kaneSaid": "The replay reached the check and it failed (The live page already shows both todos as active with unchecked item boxes, so the failing recorded assertion is inconsistent with its objective.); healing then passed it",
+      "freshRun": "pass"
+    }
+  ],
+  "results": [
+    {
+      "test": "blank-new-todo-submissions-do-not-add-a-todo",
+      "title": "Blank new-todo submissions do not add a todo",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "checking-an-active-todo-removes-it-from-the-active-list",
+      "title": "Checking an Active todo removes it from the Active list",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "clear-completed-preserves-active-todos-in-a-mixed-list",
+      "title": "Clear completed preserves active todos in a mixed list",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "completed-route-displays-only-completed-todos",
+      "title": "Completed route displays only completed todos",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "completed-todos-leave-the-active-counter-at-zero",
+      "title": "Completed todos leave the active counter at zero",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "deleting-a-completed-todo-removes-it-from-all-after-reload",
+      "title": "Deleting a completed todo removes it from All after reload",
+      "outcome": "pass",
+      "mode": "author",
+      "healed": false,
+      "credits": 60.73,
+      "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JTNT3PYE081MAW7X1WXB5Y/dashboard/share/US_Q7C2QFORIPFPI8FZOZ098XCL4DLSZTECZFFYGNYB51RFYG6DLOW5M29BLBYRYLRJ?type=summary&agentView=true&fqdn=summary-page"
+    },
+    {
+      "test": "deleting-one-active-todo-preserves-its-neighbour",
+      "title": "Deleting one active todo preserves its neighbour",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "deleting-the-last-todo-hides-the-empty-list-containers",
+      "title": "Deleting the last todo hides the empty-list containers",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+      "title": "Empty edited titles destroy the todo on Enter or blur",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+      "title": "Enter appends trimmed todo and clears new-todo input",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "enter-saves-a-trimmed-todo-title",
+      "title": "Enter saves a trimmed todo title",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "escape-discards-a-todo-title-edit",
+      "title": "Escape discards a todo title edit",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "hide-clear-completed-without-completed-todos",
+      "title": "Hide Clear completed without completed todos",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "mark-all-checks-every-todo-in-all",
+      "title": "Mark-all checks every todo in All",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "mark-all-reactivates-every-completed-todo",
+      "title": "Mark-all reactivates every completed todo",
+      "outcome": "pass",
+      "mode": "author",
+      "healed": false,
+      "credits": 55.3,
+      "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7JTY1HM16AM5JVCZ1VYV6QS/dashboard/share/US_NP1L56KQM3L0XCD04DWA8PSDS4LNPQOVIZQ5P2W4JX030Z0I4G34GTNLX58TFL1X?type=summary&agentView=true&fqdn=summary-page"
+    },
+    {
+      "test": "new-todo-input-receives-focus-on-page-load",
+      "title": "New-todo input receives focus on page load",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "one-active-todo-displays-a-singular-counter",
+      "title": "One active todo displays a singular counter",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    },
+    {
+      "test": "two-active-todos-display-a-plural-counter",
+      "title": "Two active todos display a plural counter",
+      "outcome": "pass",
+      "mode": "replay",
+      "healed": false,
+      "credits": 0,
+      "shareUrl": null
+    }
+  ]
+}

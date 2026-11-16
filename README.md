@@ -46,6 +46,8 @@ Then we checked the same broken build (commit `a150b02`) again with the new rule
 
 Kane's verdicts now name the third bug directly: "Using Mark all as complete did not complete every todo in the All list." The rule sent three healed passes to a fresh run: two came back as confirmed differences (both the third bug), and one, where healing had been right (`mark-all-reactivates`, whose old recording trips on the new markup on every port), passed. It costs one fresh Kane run per doubtful heal.
 
+On a build with nothing planted, the rule raised no false alarm: the clean Sonnet port, checked the same way, stayed at **18/18**. The one healed pass it doubted (`mark-all-reactivates`) passed its fresh run (24 Kane runs, 19 pure replays, 124 credits; [summary](docs/clean-recheck.json)).
+
 Read this as one re-run, not a measurement: Kane's verdicts vary between runs on the same build, and two tests moved from "unsure" to "different" through fresh authoring rather than the new rule. The rule doesn't cover a heal after a failed *action* (a click Kane re-targets), which Ditto still trusts because that is usually markup moving.
 
 ## Everything we ran (16 Nov 2026, all real runs)
@@ -60,8 +62,9 @@ Read this as one re-run, not a measurement: Kane's verdicts vary between runs on
 | Spec gaps: what the spec asks and the old app never did | Kane ran those tests on the port: **3 failed** (one a confirmed difference: "reloading does not restore the saved todo"). Claude Code added localStorage persistence from Kane's findings; Kane re-checked: **3/3 pass**, and the 18 parity behaviours still **18/18** |
 | Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
 | The same broken build, re-checked with the new heal rule | **6 behaviours confirmed different** (was 2), covering all 3 planted bugs in one check; 1 unsure; 539 credits |
+| The clean Sonnet port, checked with the new heal rule | **18/18 the same**, no false alarm; the one doubted heal passed its fresh run; 124 credits |
 
-The four recorded runs together: 273 Kane runs and about 3,300 credits, most of it recording the old app once.
+The four recorded runs and the clean-port check together: 297 Kane runs and about 3,450 credits, most of it recording the old app once.
 
 ## What Ditto can't see
 
