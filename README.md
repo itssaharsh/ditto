@@ -101,7 +101,8 @@ git clone https://github.com/itssaharsh/ditto && cd ditto && npm install
 npm run ditto -- doctor     # checks Node, Kane CLI (signed in, credits), Chrome, Claude Code
 
 npm run ditto -- design     # Kane designs the tests from fixtures/app-spec.md (≈200 credits)
-npm run ditto -- record     # run them on the legacy app (the oracle)
+npm run ditto -- record     # run them on the legacy app (the oracle): the expensive step, done once
+                            #   (here 74 Kane runs, ≈1,000–2,000 credits); later checks mostly replay for ≈0
 npm run ditto -- loop       # Claude Code ports the app; Kane checks; differences go back until parity
 npm run ditto -- status     # the parity table in your terminal
 

@@ -69,9 +69,9 @@ await clip('catch', async (page) => {
   await open(page);
   await caption(page, `A second Claude Code session planted ${planted} bugs in Claude’s React port of TodoMVC, and wrote them down outside the repo.`);
   await wait(page, 5500);
-  await caption(page, 'Kane replayed the old app’s recordings on the broken build. Escape now kept the edit: a confirmed difference.');
-  await wait(page, 5500);
-  await page.mouse.wheel(0, 640);
+  await page.mouse.wheel(0, 260);
+  await caption(page, 'Kane replayed the old app’s recordings on the broken build. Escape kept the edited title: a confirmed difference.');
+  await wait(page, 6000);
   await caption(page, 'A fresh Claude Code session got only Kane’s verdict and both screenshots. It fixed the code; Kane re-ran the test: pass.');
   await wait(page, 6500);
 });

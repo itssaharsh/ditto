@@ -9,4 +9,4 @@ tags: [console]
 
 ## Pick a behaviour
 
-Open {{start_url}}. In the "Try these" card on the right, click the chip labelled "Escape discards a todo title edit", wait two seconds, and verify the test file heading near the top of the page reads "Escape discards a todo title edit".
+Open {{start_url}}. In the "Try these" card on the right, click the chip labelled "Completed todos leave the active counter at zero", wait two seconds, and verify the test file heading near the top of the page reads "Completed todos leave the active counter at zero".

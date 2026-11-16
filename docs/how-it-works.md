@@ -62,7 +62,7 @@ Every rewrite run is also checked for where it went: if any step's page was on t
 |---|---|
 | `pass` | Behaviour matches. Nothing to do. |
 | `740` confirmed application issue on the rewrite | Sends it to the **same Claude Code session** (`--resume`) with Kane's verdict word for word, its root cause, the failing check, the rewrite's screenshot, the legacy app's screenshot and the console errors. |
-| `710` Kane blames the test | Re-runs with healing; never sent to the agent as an app bug. |
+| `710` Kane blames the test | Re-runs with healing, then has Kane author the test fresh on the rewrite. Still unclear: shown as unclear and never counted. `ditto fix` can send it to the agent under a separate heading, "Kane unsure whose fault; the old app passes this test", never as a confirmed bug. |
 | `510` / environment issue (e.g. the browser dropped) | Re-runs; never counted as a difference. |
 | The build fails | Sends the build error to Claude before spending any Kane credits. |
 
@@ -73,6 +73,12 @@ Every decision is written to the case file as **"Kane said → Ditto did"**, and
 ## 6. Interactive mode: a Stop hook
 
 `ditto hook install` adds a Stop hook to the rewrite repo's `.claude/settings.local.json` (local, never committed). When your own Claude Code session tries to finish, Ditto builds the app and has Kane replay the legacy behaviours first. If anything differs, the stop is blocked and the findings go back into your session; after four blocks it lets go and asks for a person.
+
+## 7. Checking the checker: plant bugs on purpose
+
+A port that matches first time doesn't show the tests would notice a regression. `ditto mutate` asks a second Claude Code session to break a copy of the finished port in a few ways a user would notice, and to write down what it changed in `.ditto-work/` (outside the repository, so the fixer can't read it). Ditto then runs the normal check and fix rounds with a fresh Claude Code session that sees only Kane's findings. In the recorded run Kane caught all 3 planted bugs and the fixer repaired them in 2 rounds; the console shows the breaker's list beside what Kane reported each round.
+
+The same run showed the method's edge: the fixer's repair also changed a behaviour no test covers. See [Testing §5](testing.md#5-a-behaviour-no-test-covers).
 
 ## The case file
 
