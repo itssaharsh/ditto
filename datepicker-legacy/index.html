@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lakeside Inn · Book a room</title>
+  <link rel="stylesheet" href="vendor/jquery-ui.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Lakeside Inn</h1>
+    <p class="tag">Book a room</p>
+  </header>
+  <main>
+    <form id="booking" autocomplete="off">
+      <h2>Your stay</h2>
+      <div class="row">
+        <label for="checkin">Check-in</label>
+        <input id="checkin" name="checkin" type="text" placeholder="mm/dd/yyyy">
+      </div>
+      <div class="row">
+        <label for="checkout">Check-out</label>
+        <input id="checkout" name="checkout" type="text" placeholder="mm/dd/yyyy">
+      </div>
+      <p id="nights" class="nights">Choose your dates</p>
+      <h2>About you</h2>
+      <div class="row">
+        <label for="guest">Full name</label>
+        <input id="guest" name="guest" type="text">
+      </div>
+      <div class="row">
+        <label for="dob">Date of birth</label>
+        <input id="dob" name="dob" type="text" placeholder="dd/mm/yyyy">
+      </div>
+      <button id="book" type="submit">Book</button>
+      <p id="summary" class="summary" role="status"></p>
+    </form>
+    <aside>
+      <h2>Availability</h2>
+      <div id="availability"></div>
+      <p class="legend"><span class="swatch booked-swatch"></span> Fully booked</p>
+    </aside>
+  </main>
+  <script src="vendor/jquery.min.js"></script>
+  <script src="vendor/jquery-ui.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
