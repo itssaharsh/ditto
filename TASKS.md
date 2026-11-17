@@ -39,8 +39,9 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] Rewritten sentences (suites/todomvc-strict): WC caught by replay+heal; ES6 replay passed again, fresh run caught it
 - [x] Replay audit (src/engine/replay-audit.ts, default on; check --fresh, --new-round): measured on ES6, Lit, clean port (no false "different"; fresh runs 14–82 credits; some "unclear")
 - [x] README section + docs/testing.md §7–8; launch drafts updated; upstream issue draft for ES6 mark-all (private, needs the user's OK)
-- [~] Re-record the video (adds the audit segment), check length and frames
-- [ ] `npx tsx scripts/validate-evidence.ts` over the new packs (local, free, ~20 min) and update the README count
+- [x] Video re-recorded (179 s, audit segment), frames checked; thumbnail re-rendered
+- [x] Evidence validation incl. fresh-run packs: 527/528 valid (same invalid pack as before); README updated
+- [x] Console: per-step replay-audit notes; check-only rounds labelled correctly; no 404 on scan.json; site republished and verified live
 - [ ] Try-it flow (ditto.try.config.json): skipped unless credits allow (441 left at 01:10 UTC 17 Nov); not documented
 
 ## Hand-off to the user (only they can)
