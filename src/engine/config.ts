@@ -28,6 +28,8 @@ export interface DittoConfig {
   parallel: number;
   maxRounds: number;
   creditCap: number;
+  /** Before counting a replay's pass on a test whose recording can't check all it says, run it fresh (default on). */
+  replayAudit?: boolean;
   /** Folder Kane runs in; recordings and evidence copies stay out of your repos. */
   workDir: string;
   casesDir: string;

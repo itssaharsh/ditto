@@ -8,11 +8,14 @@ import { isUp, serveStatic, sh } from './apps.js';
 import { CaseRecorder, summarize, type AppSide, type CaseFile, type Round, type RunSummary } from './case.js';
 import type { LoadedConfig } from './config.js';
 import { runTestmd, type KaneRunResult } from './kane.js';
+import { auditReplay, type ReplayAudit } from './replay-audit.js';
 import { loadSuite, type SuiteTest } from './suite.js';
 
 export interface LoopOptions {
   only?: string[]; // limit to these test ids (development)
   skipPort?: boolean; // rewrite already exists (resume a case)
+  /** Judge the rewrite with runs Kane authors from the plain-English test, never the legacy recording (costs credits). */
+  fresh?: boolean;
   log?: (line: string) => void;
 }
 
@@ -31,17 +34,20 @@ export class DittoLoop {
   private servers: Server[] = [];
   private agentSession?: string;
   private log: (line: string) => void;
+  private fresh: boolean;
 
   constructor(cfg: LoadedConfig, opts: LoopOptions = {}) {
     this.cfg = cfg;
+    this.fresh = !!opts.fresh;
     this.log = opts.log ?? ((l) => console.log(l));
     const suiteDir = cfg.abs(cfg.suite);
-    this.tests = loadSuite(suiteDir, relative(cfg.root, suiteDir));
-    if (opts.only?.length) this.tests = this.tests.filter((t) => opts.only!.includes(t.id));
+    const allTests = loadSuite(suiteDir, relative(cfg.root, suiteDir));
+    // --only narrows what runs now; the case file always keeps the whole suite.
+    this.tests = opts.only?.length ? allTests.filter((t) => opts.only!.includes(t.id)) : allTests;
     this.kaneDir = cfg.abs(join(cfg.workDir, 'kane', cfg.oracleCase ?? cfg.case));
     this.rec = new CaseRecorder(cfg.abs(join(cfg.casesDir, cfg.case)), () => this.initCase());
     if (cfg.oracleCase && !Object.keys(this.rec.data.oracle).length) this.adoptOracle(cfg.oracleCase);
-    this.rec.data.suite.tests = this.tests;
+    this.rec.data.suite.tests = allTests;
     this.rec.data.suite.variables = cfg.variables;
     this.rec.data.suite.spec = cfg.spec;
     if (cfg.namedExample) this.rec.data.named = cfg.namedExample;
@@ -388,6 +394,12 @@ export class DittoLoop {
 
   /** Replay the legacy recording on the rewrite; only re-author (heal) when the pure replay misses. */
   private async checkOne(t: SuiteTest, n: number): Promise<RunSummary> {
+    if (this.fresh) {
+      // A pure replay re-runs the legacy recording's checks; a fresh run reads the sentence again on the rewrite.
+      let f = await this.kane(t, 'rewrite', n, 'fresh');
+      if (f.outcome === 'error' && this.creditsLeft()) f = await this.kane(t, 'rewrite', n, 'fresh');
+      return f;
+    }
     let s = await this.kane(t, 'rewrite', n, 'replay');
     // A replay that never reached the rewrite (or crashed) says nothing about it: run it again before healing.
     const origin = this.cfg.rewriteUrl.replace(/\/$/, '');
@@ -430,7 +442,34 @@ export class DittoLoop {
         s = fresh.outcome === 'pass' || fresh.outcome === 'mismatch' || fresh.outcome === 'fail' ? fresh : { ...fresh, outcome: 'test_issue' };
       }
     }
+    // A replay re-runs the checks Kane compiled on the old app, not the sentence. When one of those checks can't
+    // fail in the way the sentence means (it finds the element by the text it expects, strips the spaces a trimming
+    // test is about, or never reads the focus the sentence names), the replay's pass doesn't count until a fresh
+    // run, authored from the sentence on the rewrite, agrees. On the official ES6 TodoMVC a replay passed
+    // "the newly appended item displays 'Call home'" with Call home at the top of the list.
+    const audit = s.outcome === 'pass' && s.mode !== 'author' && this.cfg.replayAudit !== false ? this.replayAudit(t) : undefined;
+    if (audit?.weak.length && this.creditsLeft()) {
+      this.rec.event({
+        kind: 'decision',
+        round: n,
+        test: t.id,
+        said: `The replay passed, but its recording can't check all the test says: step ${audit.weak[0].step} ${audit.weak[0].why}`,
+        did: 'Did not take the replay\'s pass: had Kane author the test from scratch on the rewrite to settle it',
+      });
+      const fresh = await this.kane(t, 'rewrite', n, 'fresh');
+      s = fresh.outcome === 'pass' || fresh.outcome === 'mismatch' || fresh.outcome === 'fail' ? fresh : { ...fresh, outcome: 'test_issue' };
+    }
     return s;
+  }
+
+  /** What the test's legacy recording can't check when replayed; kept in the case so the console can show it. */
+  private replayAudit(t: SuiteTest): ReplayAudit | undefined {
+    const known = this.rec.data.replayAudit?.[t.id];
+    if (known) return known;
+    const a = auditReplay(this.kaneDir, t);
+    if (!a) return undefined;
+    (this.rec.data.replayAudit ??= {})[t.id] = a;
+    return a;
   }
 
   async check(n: number, scope: SuiteTest[]): Promise<SuiteTest[]> {

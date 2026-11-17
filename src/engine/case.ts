@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { dirname, join } from 'node:path';
 import { homedir } from 'node:os';
 import type { EvidenceShot, KaneRunResult, KaneVerdict, Outcome } from './kane.js';
+import type { ReplayAudit } from './replay-audit.js';
 import type { SuiteTest } from './suite.js';
 
 export type AppSide = 'legacy' | 'rewrite';
@@ -103,6 +104,8 @@ export interface CaseFile {
   followUp?: { case: string; text: string };
   /** Mutation runs: what the fixer's own transcript shows (scripts/audit-fixer.ts). */
   audit?: { fixerSessions: number; fixerToolCalls: number; touchedAnswerKey: number; checkedAt: string };
+  /** Per test: what its legacy recording's checks can't see when replayed (src/engine/replay-audit.ts). */
+  replayAudit?: Record<string, ReplayAudit>;
   oracle: Record<string, RunSummary>;
   rounds: Round[];
   events: CaseEvent[];

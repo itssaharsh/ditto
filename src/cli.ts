@@ -29,6 +29,7 @@ function help(): void {
   ditto loop [--only a,b]       Record, let Claude Code port the app, replay on the port, fix until parity
        [--skip-port]            ...resume with the port that already exists
   ditto check [--label L]                   Replay the suite on the current rewrite once (no agent)
+  ditto check --fresh [--label L]           Same, but Kane authors each test anew on the rewrite (no recordings; costs credits)
   ditto spec-gaps               Behaviours the old app never met: Kane checks them on the rewrite, Claude implements them
   ditto fix                     Continue from the recorded check: send what still differs to Claude Code, round by round
   ditto mutate [--count 3]      Mutation check: a second agent breaks the rewrite on purpose; does Kane catch it?
@@ -104,7 +105,7 @@ async function main(): Promise<void> {
     console.log(readFileSync(join(cfg.abs(cfg.casesDir), 'index.json'), 'utf8'));
     return;
   }
-  const loop = new DittoLoop(cfg, { only });
+  const loop = new DittoLoop(cfg, { only, fresh: has('fresh') });
   if (cmd === 'record') {
     await loop.startApps();
     try {
@@ -118,12 +119,15 @@ async function main(): Promise<void> {
   if (cmd === 'check') {
     await loop.startApps();
     try {
-      const n = Math.max(0, ...loop.rec.data.rounds.map((r) => r.n));
+      // A fresh check is a different kind of evidence from the replays before it: it gets its own round.
+      const last = Math.max(0, ...loop.rec.data.rounds.map((r) => r.n));
+      const n = has('fresh') && loop.rec.data.rounds.some((r) => Object.keys(r.results).length) ? last + 1 : last;
       await loop.check(n, loop.oraclePassing());
       const round = loop.rec.data.rounds.find((r) => r.n === n);
       if (round && flag('label')) round.label = flag('label');
-      // A check on its own ends the case: parity if every oracle behaviour matches, otherwise stopped with the differences listed.
-      loop.rec.data.status = loop.matchedCount(n) === loop.oraclePassing().length ? 'parity' : 'stopped';
+      // A check on its own ends the case: parity only if every oracle behaviour of the whole suite (not just --only) matches.
+      const all = loop.rec.data.suite.tests.filter((t) => loop.rec.data.oracle[t.id]?.outcome === 'pass');
+      loop.rec.data.status = all.every((t) => loop.latest(t.id)?.outcome === 'pass') ? 'parity' : 'stopped';
       loop.rec.save();
     } finally {
       loop.stopApps();
