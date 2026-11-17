@@ -9201,5 +9201,97 @@
  },
  "note": "Not written by an agent: the official Web Components TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app until its credit cap. Kane confirmed two bugs filed upstream (#2314: Clear completed shows with nothing completed; a spaces-only edit keeps the todo); “Completed filter” is a false alarm (it works), and the counter test is the footer’s “0 items left!”.",
  "tab": "Official Web Components TodoMVC",
- "unlisted": true
+ "unlisted": true,
+ "replayAudit": {
+  "blur-saves-a-trimmed-todo-title": {
+   "checks": 5,
+   "weak": [
+    {
+     "step": 3,
+     "query": "the displayed title of the todo item",
+     "why": "a check finds the element by the text it then checks (\"Review contract\"), so a replay can't tell where it is; it also strips spaces before comparing, in a step about trimming"
+    },
+    {
+     "step": 2,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    }
+   ]
+  },
+  "empty-edited-titles-destroy-the-todo-on-enter-or-blur": {
+   "checks": 16,
+   "weak": [
+    {
+     "step": 2,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    },
+    {
+     "step": 5,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    },
+    {
+     "step": 8,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    },
+    {
+     "step": 11,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    }
+   ]
+  },
+  "enter-appends-trimmed-todo-and-clears-new-todo-input": {
+   "checks": 6,
+   "weak": [
+    {
+     "step": 3,
+     "query": "the title text of the newly appended todo item",
+     "why": "a check finds the element by the text it then checks (\"Buy milk\"), so a replay can't tell where it is; it also strips spaces before comparing, in a step about trimming"
+    },
+    {
+     "step": 5,
+     "query": "the reported number of items in the all-todos footer",
+     "why": "a check finds the element by the text it then checks (\"2\"), so a replay can't tell where it is"
+    },
+    {
+     "step": 5,
+     "query": "the title text of the newly appended todo item",
+     "why": "a check finds the element by the text it then checks (\"Call home\"), so a replay can't tell where it is; it also strips spaces before comparing, in a step about trimming"
+    }
+   ]
+  },
+  "enter-saves-a-trimmed-todo-title": {
+   "checks": 5,
+   "weak": [
+    {
+     "step": 3,
+     "query": "the item's displayed title in the todo list",
+     "why": "a check finds the element by the text it then checks (\"Review contract\"), so a replay can't tell where it is; it also strips spaces before comparing, in a step about trimming"
+    },
+    {
+     "step": 2,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    }
+   ]
+  },
+  "escape-discards-a-todo-title-edit": {
+   "checks": 5,
+   "weak": [
+    {
+     "step": 3,
+     "query": "the displayed title of the Review proposal item",
+     "why": "a check finds the element by the text it then checks (\"Review proposal\"), so a replay can't tell where it is"
+    },
+    {
+     "step": 2,
+     "query": "focus",
+     "why": "the step says \"focused\", but no recorded check reads focus"
+    }
+   ]
+  }
+ }
 }

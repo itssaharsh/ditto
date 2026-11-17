@@ -8974,5 +8974,42 @@
   "left": 0,
   "top": 0,
   "width": 234.1
+ },
+ "replayAudit": {
+  "availability-advances-checkout-for-later-free-arrival": {
+   "checks": 8,
+   "weak": [
+    {
+     "step": 1,
+     "query": "the month and year displayed in the Availability calendar header",
+     "why": "a check finds the element by the text it then checks (\"November 2026\"), so a replay can't tell where it is"
+    }
+   ]
+  },
+  "availability-fills-free-arrival-while-checkout-is-empty": {
+   "checks": 9,
+   "weak": [
+    {
+     "step": 1,
+     "query": "the month and year displayed in the Availability calendar header",
+     "why": "a check finds the element by the text it then checks (\"November 2026\"), so a replay can't tell where it is"
+    },
+    {
+     "step": 2,
+     "query": "the stay-length line beneath the date fields in the Your stay form",
+     "why": "a check finds the element by the text it then checks (\"Choose your dates\"), so a replay can't tell where it is"
+    }
+   ]
+  },
+  "availability-rejects-fully-booked-november-nights": {
+   "checks": 8,
+   "weak": [
+    {
+     "step": 1,
+     "query": "the month and year displayed in the Availability calendar header",
+     "why": "a check finds the element by the text it then checks (\"November 2026\"), so a replay can't tell where it is"
+    }
+   ]
+  }
  }
 }

@@ -1254,5 +1254,27 @@
  },
  "note": "Kane passed two of the jQuery app's tests on builds that break them, although its own screenshots show the bugs: the ES6 build puts new todos at the top (#2311), and the Web Components build adds an empty row with “1 item left!” for a spaces-only entry (#2314). The sentences named the item and counted titles, so a wrong position and an untitled row slipped through. These two rewritten sentences say where the new todo goes and that no row or counter appears; each must pass on the jQuery app first.",
  "tab": "Rewritten sentences: ES6",
- "unlisted": true
+ "unlisted": true,
+ "replayAudit": {
+  "new-todos-go-to-the-bottom-of-the-list": {
+   "checks": 5,
+   "weak": [
+    {
+     "step": 1,
+     "query": "the text of the todo list row",
+     "why": "a check finds the element by the text it then checks (\"Buy milk\"), so a replay can't tell where it is"
+    },
+    {
+     "step": 2,
+     "query": "the text of the upper todo row",
+     "why": "a check finds the element by the text it then checks (\"Buy milk\"), so a replay can't tell where it is"
+    },
+    {
+     "step": 2,
+     "query": "the text of the lower todo row",
+     "why": "a check finds the element by the text it then checks (\"Call home\"), so a replay can't tell where it is"
+    }
+   ]
+  }
+ }
 }
