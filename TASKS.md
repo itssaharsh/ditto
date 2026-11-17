@@ -45,8 +45,8 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [ ] Try-it flow (ditto.try.config.json): skipped unless credits allow (441 left at 01:10 UTC 17 Nov); not documented
 
 ## Hand-off to the user (only they can)
-- [ ] Upload the video to YouTube (unlisted is fine), add the link to README and the submission
-- [ ] Two public posts (drafts in hackathon-idea/kanecli-online-nov/launch-drafts.md)
+- [x] Video on YouTube (https://youtu.be/orZB1XW5XwQ), linked in README
+- [x] Two public posts on X (17 Nov; links in launch-drafts.md)
 - [ ] Submit the form (repo, live URL, video, description); confirm kaneclihack.sh registration
 
 ## Stretch
