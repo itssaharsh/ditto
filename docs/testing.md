@@ -83,3 +83,32 @@ Kane's runs show the difference: the old app deleted the todo, the port kept it.
 ## 6. Kane's own check of the evidence
 
 Every screenshot on the site was copied out of a sealed Kane evidence pack. `npx tsx scripts/validate-evidence.ts` runs `kane-cli evidence validate --json` (profile L1, local, no credits) on every pack Kane wrote during the recorded runs and writes [`evidence-validation.json`](evidence-validation.json): 300 of 301 packs valid. The invalid one (16 Nov 13:06 UTC, `blank-new-todo-submissions-do-not-add-a-todo` on the old app) has no steps: Kane's browser stopped before the first one. Ditto recorded that run as an error ("Kane could not finish"), ran the test again, and never counted it. The warnings Kane lists (mostly `l1.failure.status_disagrees`: a failure record says "broken" where the step says "failed") are about how Kane labels failed steps, not about missing evidence.
+
+## 7. An answer key from someone else
+
+The tests above only use bugs we planted. To score Kane on bugs nobody planted, we took the issues someone else filed against the official TodoMVC implementations on 6 Nov 2026 ([tastejs/todomvc #2309–#2315](https://github.com/tastejs/todomvc/issues/2309), found with a different AI browser agent and re-checked by its author with Playwright). Kane never saw them. Ditto replayed the 18 jQuery recordings on five of those implementations, unchanged at commit `ff43b02` (configs `ditto.impl-*.config.json`, cases `cases/todomvc-impl-*`).
+
+[`scripts/answer-key.ts`](../scripts/answer-key.ts) maps each of the 14 bug claims in the issues to the tests that exercise it and scores Kane's recorded result ([`answer-key.json`](answer-key.json)). Each row also carries a note written by hand after reading Kane's verdict and screenshots; the script refuses to run if a case's outcome no longer matches the note it was written for.
+
+[`scripts/recheck-impls.mjs`](../scripts/recheck-impls.mjs) is the second opinion: 17 plain Playwright checks, no AI, on the same builds ([`impl-recheck.json`](impl-recheck.json)). The jQuery app passes all 17. 13 of the 14 claims reproduce; the 14th ("double-click enters editing only intermittently") entered edit mode 10 times out of 10.
+
+Of the 10 claims the 18 tests reach, Kane confirmed 4 with a matching reason, missed 5, and stopped at an earlier step on a false alarm for 1. It also reported one bug that is not in the issues: in the ES6 build, clicking the mark-all checkbox itself, or pressing Space on it, ticks the box and completes nothing, because the build listens for clicks on the label only. The Playwright check confirms it. Two of Kane's differences were false alarms (Web Components' Completed filter works; Lit's new-todo field is focused, inside its shadow DOM).
+
+## 8. What a replay can't see: the replay audit
+
+Two of Kane's misses on the official builds are visible in its own screenshots (ES6 puts "Call home" above "Buy milk" in the append test; Web Components shows an empty row and "1 item left!" after a spaces-only entry). Rewriting the two sentences to say exactly what to look at ([`suites/todomvc-strict/`](../suites/todomvc-strict), configs `ditto.strict-es6.config.json` and `ditto.strict-wc.config.json`) caught the Web Components bug, but on ES6 the replay passed again: "the upper row reads 'Buy milk' and the lower row reads 'Call home'", with Call home on top.
+
+A replay re-runs the checks Kane compiled when it recorded the test, not the sentence. In the recording (`output-<test>/.internal/steps/*/flows/*/actions.ndjson`, analyze actions), "the lower todo row" was saved with the locator `internal:role=listitem >> internal:has-text="Call home"i` and the expected value "Call home": the row is found by the text the check then compares, so the check can't fail on order. Trimming checks carry a `strip` transform, so they can't fail on untrimmed text. "Its focused edit input contains 'Review proposal'" compiled to `el(10).value`, which never reads focus.
+
+[`src/engine/replay-audit.ts`](../src/engine/replay-audit.ts) reads those compiled checks and flags three patterns: a locator that matches the check's own expected text; `strip` in a step about trimming (it says "trim", or types a value with spaces at either end); a step that says "focused" with no check reading `:focus` or `activeElement`. `npx tsx scripts/replay-audit.ts` prints them: 4 of the 18 parity tests have one (`enter-appends-…`, `enter-saves-a-trimmed-…`, `escape-discards-…`, `empty-edited-titles-…`). Unit tests: [`test/replay-audit.test.ts`](../test/replay-audit.test.ts), with checks copied from the real recordings.
+
+In `checkOne`, a replay's pass on a flagged test only counts once a fresh Kane run, authored from the sentence on the rewrite, agrees (`replayAudit` in the config, on by default). `ditto check --fresh` skips replays altogether, and `--new-round` keeps earlier results in the case.
+
+| Run | Replay | Fresh run | Credits (fresh) |
+|---|---|---|---|
+| ES6, rewritten order sentence (`check --fresh`) | pass | mismatch: "Adding 'Call home' put it above 'Buy milk' instead of below it." | 18 |
+| ES6, original append sentence (audit) | pass | pass | 82 |
+| Lit, the 4 flagged tests (audit) | 4 pass | Escape pass; 3 test_issue (Kane blamed its own steps around edit mode) | 162 |
+| Clean Sonnet port, 2 flagged edit tests (audit, [`clean-recheck.json`](clean-recheck.json)) | 2 pass | trimmed-title pass; empty-edit test_issue (also test_issue on Lit) | 43 |
+
+No fresh run produced a false "different". The rule costs a fresh run per flagged test and can turn a pass into "unclear"; it finds a wrong order only when the sentence names the order. Untrimmed titles and an unfocused field passed every Kane run, replayed or fresh; the Playwright checks in §7 found them.

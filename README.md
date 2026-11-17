@@ -12,7 +12,7 @@
 
 - **What:** an AI agent (Claude Code) rewrites a frontend; Kane CLI checks that users wouldn't notice, and every difference it confirms goes back to the agent until there are none.
 - **How:** Kane designs plain-English tests from the app's spec, the old app is the referee (only tests it passes count), and the old app's recordings replay on the rewrite.
-- **Proof:** a second agent planted 3 bugs and Kane's findings led Claude Code to all 3; that run exposed a flaw in Ditto's own rules, which was fixed and re-measured; replayed on the official React TodoMVC, the same recordings confirmed a real bug that is open upstream ([#2309](https://github.com/tastejs/todomvc/issues/2309)); every number on this page comes from a recorded run.
+- **Proof:** a second agent planted 3 bugs and Kane's findings led Claude Code to all 3; that run exposed a flaw in Ditto's own rules, which was fixed and re-measured. Replayed on five official TodoMVC builds and scored against 14 bugs someone else had reported upstream, Kane confirmed 4 of the 10 its tests reach and found 1 nobody had reported. Its misses showed what a replay can't see, and Ditto now checks for that too. Every number on this page comes from a recorded run.
 
 ## For judges (60 seconds)
 
@@ -21,6 +21,7 @@
 3. Press **Watch the whole run in 60 seconds** to see it happen in order.
 4. Switch to **Sonnet 5.5 port** for the first port, the Stop-hook round and the spec-gap fix, or **Haiku 5.5 port** for a second agent judged by the same tests.
 5. Try the apps yourself: [the original jQuery app](https://itssaharsh.github.io/ditto/legacy/), [the Sonnet port](https://itssaharsh.github.io/ditto/port/) (reload it: your todos stay) and [the Haiku port](https://itssaharsh.github.io/ditto/port-haiku/).
+6. Read [Checked against bugs someone else reported](#checked-against-bugs-someone-else-reported): Kane scored against 14 upstream bug claims, with its misses and false alarms, and the rule they led to.
 
 Without Kane or credits, you can also [read the recorded runs in a terminal](#look-around-without-kane-or-credits).
 
@@ -66,13 +67,49 @@ TodoMVC is in every model's training data, so Ditto was also run on a migration 
 - Claude Code (Sonnet 5.5) rebuilt the page in React without jQuery, writing its own datepicker ([`datepicker-react-port`](https://github.com/itssaharsh/datepicker-react-port)), down to jQuery UI's habit of moving an existing check-out forward when a later check-in is chosen.
 - Kane: **7 of 7 the same on the first port**. One test healed past a failed check, so the new rule sent it to a fresh run, which passed. 36 Kane runs, 1,153 credits, $1.64 of Claude Code ([live](https://itssaharsh.github.io/ditto/?case=datepicker); try [the jQuery UI page](https://itssaharsh.github.io/ditto/datepicker-legacy/) and [the React port](https://itssaharsh.github.io/ditto/datepicker-port/)).
 
-## A real bug in code written by people
+## Checked against bugs someone else reported
 
-The same 18 recordings Kane made on the jQuery app can judge anyone's TodoMVC. Replayed on the official React TodoMVC from tastejs/todomvc (unchanged, commit `ff43b02`), Kane confirmed one difference: **Escape doesn't leave edit mode**. The app's source handles only Enter (`if (e.key !== "Enter") return;` in `src/todo/components/input.jsx`), and the bug is an open upstream issue filed ten days earlier, [tastejs/todomvc#2309](https://github.com/tastejs/todomvc/issues/2309). Kane caught it with no knowledge of the issue, from recordings made on a different framework.
+The 18 recordings Kane made on the jQuery app can judge anyone's TodoMVC. We replayed them on five official implementations from tastejs/todomvc, unchanged (commit `ff43b02`). Ten days earlier, on 6 Nov 2026, someone else had filed seven issues against these implementations ([#2309–#2315](https://github.com/tastejs/todomvc/issues/2309)), found with a different AI browser agent. Kane never saw them, so their 14 bug claims work as an answer key ([`scripts/answer-key.ts`](scripts/answer-key.ts), [`docs/answer-key.json`](docs/answer-key.json)). For a second opinion without AI, a Playwright script runs 17 single-behaviour checks on the same builds; the jQuery app passes all 17 ([`scripts/recheck-impls.mjs`](scripts/recheck-impls.mjs), [`docs/impl-recheck.json`](docs/impl-recheck.json)).
 
-Three more results were unclear: the React footer writes "2 items left!" without the `<strong>` the TodoMVC spec asks for, and Kane blamed its own check rather than the app. 14 of 18 the same; 35 Kane runs, 552 credits ([live](https://itssaharsh.github.io/ditto/?case=todomvc-impl-react)).
+| Official build | The 18 behaviours: same / different / unclear / not run | Kane runs · credits |
+|---|---|---|
+| [React](https://itssaharsh.github.io/ditto/?case=todomvc-impl-react) | 14 / 1 / 3 / 0 | 35 · 552 |
+| [JavaScript ES6](https://itssaharsh.github.io/ditto/?case=todomvc-impl-javascript-es6) | 16 / 2 / 0 / 0 | 37 · 534 |
+| [Svelte](https://itssaharsh.github.io/ditto/?case=todomvc-impl-svelte) | 17 / 1 / 0 / 0 | 29 · 184 |
+| [Web Components](https://itssaharsh.github.io/ditto/?case=todomvc-impl-web-components) | 2 / 5 / 3 / 8 | 27 · 864 |
+| [Lit](https://itssaharsh.github.io/ditto/?case=todomvc-impl-lit) | 4 / 1 / 3 / 10 | 23 · 270 |
 
-## Everything we ran (16 Nov 2026, all real runs)
+Web Components and Lit stopped at their credit caps; the tests the answer key needs were then run on their own.
+
+- **Without AI, 13 of the 14 claims reproduce.** The 14th, "double-click enters editing only intermittently", entered edit mode 10 times out of 10.
+- **10 claims fall inside the 18 tests. Kane confirmed 4**, giving the same reason as the issue: React's Escape doesn't leave edit mode (the source handles only Enter: `if (e.key !== "Enter") return;` in `src/todo/components/input.jsx`); a spaces-only edit keeps the todo on Svelte and on Web Components; Web Components shows Clear completed with nothing completed. **It missed 5**, and on 1 it stopped at an earlier step on a false alarm.
+- **Kane found a bug nobody had reported.** In the ES6 build, clicking the "Mark all as complete" checkbox itself, or pressing Space on it, ticks the box and completes nothing. Kane: "The mark-all control changes its own appearance but does not apply the completed state to the todo." The build listens for clicks on the checkbox's label only; the Playwright check confirms it.
+- **Two of Kane's differences were false alarms:** Web Components' Completed filter works, and Lit's new-todo field is focused (inside its shadow DOM).
+
+### What a replay can't see
+
+Two of the five misses are in Kane's own screenshots:
+
+<img src="docs/replay-passed-wrong-order.jpg" width="380" alt="ES6 build after the append test: Call home is above Buy milk"> <img src="docs/fresh-passed-blank-row.jpg" width="380" alt="Web Components build after a spaces-only entry: an empty row and 1 item left!">
+
+Left, ES6 after a test about appending: "Call home" sits above "Buy milk". Right, Web Components after a spaces-only entry: an empty row and "1 item left!". Kane passed both.
+
+We rewrote the two sentences to say exactly what to look at ([`suites/todomvc-strict`](suites/todomvc-strict)) and recorded them on the jQuery app. On Web Components the new sentence caught it: "Submitting three spaces creates an invisible todo and leaves the item counter on screen." On ES6 the replay passed again, with "the upper row reads 'Buy milk' and the lower row reads 'Call home'" and Call home on top.
+
+The recording shows why. When Kane records a test, it turns each check into a locator, a small read and an expected value, and a replay re-runs those, not the sentence. "The lower row" was saved as `internal:role=listitem >> internal:has-text="Call home"i`: the row that contains Call home, wherever it is. The other misses follow the same pattern. Checks in trimming tests strip spaces before comparing. "Its focused edit input contains 'Review proposal'" became a read of the field's value, and the replay's typing focuses the field anyway.
+
+So Ditto now reads the checks in every recording ([`src/engine/replay-audit.ts`](src/engine/replay-audit.ts); `npx tsx scripts/replay-audit.ts` prints them) and flags the ones a replay can't fail the way the sentence means. 4 of the 18 tests have one. A replay's pass on those counts only if a fresh Kane run, written from the sentence on the rewrite, agrees:
+
+| Build | Test | Replay | Fresh run |
+|---|---|---|---|
+| ES6 (new todos go to the top) | rewritten: "the upper row reads 'Buy milk' and the lower row reads 'Call home'" | pass | **different**: "Adding 'Call home' put it above 'Buy milk' instead of below it." (18 credits) |
+| ES6 | original: "its newly appended item displays 'Call home'" | pass | pass (82 credits): the sentence never says where |
+| Lit (edit field not focused after a double-click) | the 4 flagged tests | 4 pass | 1 pass, 3 unclear: Kane blamed its own steps around edit mode (162 credits) |
+| Clean Sonnet port | the 2 flagged edit tests | 2 pass | 1 pass, 1 unclear: that test is also unclear on Lit, so its Lit result says nothing about Lit (43 credits) |
+
+The rule raised no false "different". It costs one fresh run per flagged test (14–82 credits here), and sometimes buys an "unclear" instead of a pass. It catches a wrong order only when the sentence names the order, so the audit's list doubles as a list of sentences to sharpen. Things a screenshot can't show stay hidden: no Kane run, replayed or fresh, confirmed the untrimmed titles or the unfocused field. The Playwright checks did.
+
+## Everything we ran (16–17 Nov 2026, all real runs)
 
 | Run | Result |
 |---|---|
@@ -85,14 +122,17 @@ Three more results were unclear: the React footer writes "2 items left!" without
 | Bugs planted on purpose (above) | Kane confirmed 2 on the broken build and the third after the first fix; Claude Code fixed all 3 from Kane's findings alone in 2 rounds, **18/18** again |
 | The same broken build, re-checked with the new heal rule | **6 behaviours confirmed different** (was 2), covering all 3 planted bugs in one check; 1 unsure; 539 credits |
 | The clean Sonnet port, checked with the new heal rule | **18/18 the same**, no false alarm; the one doubted heal passed its fresh run; 124 credits |
-| The official React TodoMVC (written by people), judged by the jQuery recordings | **14/18 the same**; Kane confirmed the Escape bug that is open upstream as [#2309](https://github.com/tastejs/todomvc/issues/2309); 3 unclear on the footer wording; 552 credits |
+| Five official TodoMVC builds (written by people), judged by the jQuery recordings | Against 14 bug claims filed upstream ([#2309–#2315](https://github.com/tastejs/todomvc/issues/2309)): 13 reproduce without AI; of the 10 the tests reach, Kane **confirmed 4**, missed 5, stopped early on 1; plus **1 bug nobody had reported** (ES6 mark-all) and 2 false alarms; 151 Kane runs, 2,404 credits |
+| Two sentences rewritten after misses Kane's own screenshots showed | Recorded on the jQuery app; Web Components: **caught** the empty row; ES6: the replay passed the wrong order again, a fresh run **caught** it; 121 credits |
+| The replay audit (new rule: a pass from a recording whose check can't fail as written needs a fresh run) | ES6 original append test: replay pass → fresh pass; Lit: 4 replay passes → 1 pass, 3 unclear; clean port: 2 → 1 pass, 1 unclear; no false "different"; fresh runs cost 14–82 credits each |
 | A jQuery UI booking page, migrated to React by Claude Code | Kane designed 12 tests; 7 judge the port: **7/7 the same** on the first port; 1,153 credits |
 
-The four recorded runs and the clean-port check together: 297 Kane runs and about 3,450 credits, most of it recording the old app once.
+Every recorded case together: 501 Kane runs and about 7,180 credits (as Kane reported them per run), most of it authoring: recording the old apps once, and the official builds whose markup differs.
 
 ## What Ditto can't see
 
 - **Behaviour no test covers.** Fixing planted bug 1, Claude also dropped a quirk of the old app: empty a title while editing and press Escape, and the jQuery app deletes the todo, while the fixed port keeps it. No test does that, so Kane reported 18/18. We spotted it reading the fixer's diff, then ran Kane on both apps: its two runs show the old app deleting the todo and the port keeping it, and Kane blamed the check rather than the port, since the spec says Escape discards changes ([both runs, with screenshots](docs/testing.md#5-a-behaviour-no-test-covers)). Parity is only as wide as the suite.
+- **Things a screenshot can't show.** Spaces at the ends of a title and which field has keyboard focus are invisible in a screenshot, and Kane's recorded checks strip spaces and read values, not focus. Three upstream bugs of that kind passed every Kane run; only the Playwright checks found them ([what a replay can't see](#what-a-replay-cant-see)).
 - **Tests Kane can't run cleanly on the old app** (9 of 28 here) are left out, never guessed. A wrong test can't blame the new code, but it can't protect it either.
 - **The old app has to run.** Ditto needs a working build of it to record the referee.
 - **Kane is sometimes unsure whose fault a failure is** (`710`). Ditto retries, heals, then has Kane author the test fresh on the rewrite; whatever is still unclear is shown as unclear, not counted as a pass or a fail.
@@ -127,6 +167,7 @@ flowchart TD
 | `710` Kane blames the test | re-runs with healing, then has Kane author the test fresh on the rewrite; never sent to the agent as a confirmed bug (`ditto fix` can send it labelled "Kane unsure whose fault") |
 | `510` environment problem (e.g. the browser dropped) | re-runs; never counted |
 | the replay failed at a check, then healing passed it | a fresh Kane run, written from the plain-English test without the old recording, decides (healing can step around a real regression) |
+| the replay passed, but the recording's check can't fail the way the sentence means (found by its own expected text, spaces stripped in a trimming test, "focused" never read) | a fresh Kane run decides (the replay audit) |
 | the port does not build | sends the build error to Claude before spending Kane credits |
 
 Every decision is saved in the case file and shown in the console as **Kane said → Claude did**.
@@ -141,6 +182,7 @@ Take Kane out of Ditto and nothing is left. Kane writes the tests, records the r
 - **`testmd run`** with variables (`{{start_url}}`), **replay from cache**, **`--override-start-url`** to retarget a recording at another build, **`--local`** so the legacy recording is never overwritten, **`--no-adaptive-heal`** for pure replays and adaptive healing when markup changed.
 - **`--bug-detection continue`** verdicts (740 vs 710 vs 510) to route each result.
 - **Evidence packs:** per-step screenshots, annotated frames, failure records and console logs, copied into the case (account details are never copied).
+- **Recordings:** the replay audit reads the checks Kane compiled when it recorded each test (locator, read, expected value, transforms) to find the ones a replay can't fail as written.
 - **Test Manager**: every authored run is uploaded; the case keeps its share link (they open without signing in).
 - **`evidence validate`**: Kane's own integrity check, run on every sealed pack behind the recorded runs (300 of 301 valid).
 - **`evidence verdict` with a policy**: Ditto's trust rules written as a Kane policy ([`policies/ditto-parity.yaml`](policies/ditto-parity.yaml)). It blocks failed or unjudged runs and tests without a check, and warns on healed or non-replay results, using Kane's own `heal.healed_tests` metric.
@@ -197,6 +239,8 @@ At parity Ditto copies the tests into the rewrite repo (`tests/kane/`), writes t
 | The planted bugs | Written by a separate Claude Code session; its list was kept outside the repository until the run ended |
 | Every pass, fail, verdict and screenshot | Real Kane CLI runs, recorded in `cases/*/case.json` |
 | Kane's evidence packs | 300 of the 301 sealed packs Kane wrote during these runs pass Kane's own `kane-cli evidence validate` (profile L1). The one that doesn't is a run whose browser died before its first step; Ditto logged it as an error, ran it again and never counted it ([summary](docs/evidence-validation.json)). The packs stay local because they hold account details; the site shows screenshots copied from them |
+| The answer key | Real issues filed upstream by someone else on 6 Nov 2026 ([#2309–#2315](https://github.com/tastejs/todomvc/issues/2309)); each claim mapped to tests by hand, with a note written after reading Kane's verdict and screenshots; the scorer refuses to run if a recorded outcome no longer matches its note |
+| The second opinion | Plain Playwright checks, no AI, on the same builds ([`scripts/recheck-impls.mjs`](scripts/recheck-impls.mjs)) |
 | The note about the untested Escape quirk | Found by a person reading the diff, then looked at with two Kane runs ([`docs/edge-check.json`](docs/edge-check.json)): a pass on the old app, and a `710` on the port, where Kane blamed the check |
 | Live mode on the website | Not hosted: the site replays the recorded runs. Live runs need Kane and Claude Code on your machine. |
 
