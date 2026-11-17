@@ -4,7 +4,7 @@
 // It also has Kane judge each pack against Ditto's policy (policies/ditto-parity.yaml) with `kane-cli evidence verdict`.
 // Usage: npx tsx scripts/validate-evidence.ts   → docs/evidence-validation.json
 import { execFile } from 'node:child_process';
-import { existsSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { kaneBin, kaneEnv } from '../src/engine/kane.js';
@@ -12,11 +12,18 @@ import { kaneBin, kaneEnv } from '../src/engine/kane.js';
 const run = promisify(execFile);
 const root = '.ditto-work/kane';
 const packs: { folder: string; file: string }[] = [];
-for (const folder of existsSync(root) ? readdirSync(root) : []) {
-  const dir = join(root, folder, '.testmuai', 'evidence');
-  if (!existsSync(dir)) continue;
-  for (const f of readdirSync(dir)) if (f.endsWith('.evidence')) packs.push({ folder, file: join(dir, f) });
+// Each Kane working folder keeps its packs in .testmuai/evidence; fresh runs on a rewrite have their own folders
+// further down (rewrite-fresh/<case>/r<n>/<test>/), so walk the whole tree.
+function collect(dir: string, folder: string): void {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name === 'node_modules' || e.name.startsWith('output-')) continue;
+    const sub = join(dir, e.name);
+    if (e.name === 'evidence' && dir.endsWith('.testmuai')) {
+      for (const f of readdirSync(sub)) if (f.endsWith('.evidence')) packs.push({ folder, file: join(sub, f) });
+    } else collect(sub, folder);
+  }
 }
+for (const folder of existsSync(root) ? readdirSync(root) : []) if (statSync(join(root, folder)).isDirectory()) collect(join(root, folder), folder);
 
 type Result = { folder: string; id: string; valid: boolean; status?: string; codes: string[]; error?: string; policy?: string; gates?: Record<string, string> };
 const POLICY = 'policies/ditto-parity.yaml';
@@ -79,7 +86,7 @@ for (const r of results) {
   if (r.valid) f.valid += 1;
 }
 const summary = {
-  what: 'kane-cli evidence validate --json (profile L1) on every sealed evidence pack Kane wrote during the recorded runs (folder todomvc: the TodoMVC runs; console: Kane checking Ditto’s own console).',
+  what: 'kane-cli evidence validate --json (profile L1) on every sealed evidence pack Kane wrote during the recorded runs, including fresh runs on rewrites (folder todomvc: the TodoMVC runs and the official builds; datepicker; todomvc-strict-*: the rewritten sentences; console: Kane checking Ditto’s own console).',
   checkedAt: new Date().toISOString(),
   packs: results.length,
   valid: results.filter((r) => r.valid).length,

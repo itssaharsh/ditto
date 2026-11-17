@@ -122,14 +122,28 @@ if (existsSync('cases/todomvc-impl-react/case.json')) {
   await clip('real-bug', async (page) => {
     await open(page, '?case=todomvc-impl-react');
     await caption(page, 'Written by people, not an agent: the official React TodoMVC. Replaying the jQuery recordings on it, Kane confirmed Escape doesn’t leave edit mode.');
-    await wait(page, 7000);
+    await wait(page, 6500);
     await caption(
       page,
-      key && !key.notCheckedYet
-        ? `Someone else had filed that bug upstream (#2309). Of the ${key.coveredBySuite} reported bugs Kane’s tests cover, across ${new Set(key.rows.filter((r) => r.tests.length).map((r) => r.impl)).size} official apps, Kane confirmed ${key.confirmed}.`
+      key
+        ? `Someone else had filed that bug upstream (#2309), among ${key.claims} bug claims on ${new Set(key.rows.map((r) => r.impl)).size} official builds. Kane never saw them: it confirmed ${key.confirmed} of the ${key.coveredBySuite} its tests reach, and found ${key.beyondTheKey.filter((x) => x.kind === 'new bug').length} nobody had reported.`
         : 'Someone else had filed that exact bug upstream ten days earlier (#2309). Kane never saw the issue.',
     );
-    await wait(page, 7000);
+    await wait(page, 7500);
+  });
+}
+
+// 3c-2. What a replay can't see, and the rule it led to
+const strict = existsSync('cases/todomvc-strict-javascript-es6/case.json') ? JSON.parse(readFileSync('cases/todomvc-strict-javascript-es6/case.json', 'utf8')) : undefined;
+const strictFresh = strict?.rounds.find((r) => r.label === 'Fresh runs')?.results['new-todos-go-to-the-bottom-of-the-list'];
+if (strictFresh?.outcome === 'mismatch') {
+  await clip('audit', async (page) => {
+    await open(page, '?case=todomvc-strict-javascript-es6&b=new-todos-go-to-the-bottom-of-the-list');
+    await page.mouse.wheel(0, 120);
+    await caption(page, 'It missed some too. This build puts new todos at the top, and Kane’s replay passed: the recorded check finds “Call home” by its own text, wherever it sits.');
+    await wait(page, 8000);
+    await caption(page, 'So Ditto now reads every recorded check. A pass on one that can’t fail as written needs a fresh Kane run, and with a sentence that names the order, the fresh run caught it.');
+    await wait(page, 8000);
   });
 }
 
@@ -138,7 +152,7 @@ if (existsSync('cases/datepicker/case.json')) {
   await clip('migration', async (page) => {
     await open(page, '?case=datepicker');
     await caption(page, 'A real migration: a jQuery UI Datepicker booking page, rebuilt in React by Claude Code without jQuery. Kane designed the tests from its spec: 7 of 7 the same.');
-    await wait(page, 7500);
+    await wait(page, 6500);
   });
 }
 
@@ -180,19 +194,19 @@ await clip('tests', async (page) => {
   await open(page, '?case=todomvc&b=escape-discards-a-todo-title-edit');
   await page.mouse.wheel(0, 300);
   await caption(page, 'Kane wrote the tests from the spec: plain English, each step tied to an acceptance criterion, no selectors. The same file runs on both apps.');
-  await wait(page, 7000);
+  await wait(page, 6000);
 });
 await clip('oracle', async (page) => {
   await open(page, '?case=todomvc');
   await scrollTo(page, '#behaviours');
   await wait(page, 600);
   await caption(page, 'The old app referees: only tests it passes, and that replay cleanly, judge the rewrite. A wrong test can never blame the new code.');
-  await wait(page, 6500);
+  await wait(page, 6000);
 });
 await clip('ports', async (page) => {
   await open(page, '?case=todomvc');
   await caption(page, 'Claude Sonnet 5.5’s TodoMVC port: 18 of 18 on the first try, mostly pure replays for 18.5 credits. Haiku 5.5’s port: 18 of 18 for 7.');
-  await wait(page, 6500);
+  await wait(page, 5500);
 });
 
 // 9. The real logs
@@ -290,3 +304,5 @@ writeFileSync(join(out, 'list.txt'), parts.map((p) => `file '${p}'`).join('\n'))
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', join(out, 'list.txt'), '-c', 'copy', join(out, 'ditto-demo.mp4')]);
 const dur = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', join(out, 'ditto-demo.mp4')]).toString().trim();
 console.log(`qa/video/ditto-demo.mp4 · ${Math.round(Number(dur))} s`);
+// The folder was emptied at the start: render the YouTube thumbnail again next to the video.
+execFileSync('node', ['scripts/og/render.mjs', join(out, 'thumbnail.png'), '1280', '720'], { stdio: 'inherit' });

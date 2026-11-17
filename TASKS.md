@@ -34,10 +34,14 @@ Legend: [x] done and verified · [~] in progress · [ ] to do
 - [x] README: 24 s GIF hero, 30-second summary, judges' path first, CI badge (GitHub Actions: typecheck + 17 tests + build, green)
 - [x] `ditto report` (PR-ready Markdown; docs/report-example*.md); Ditto's trust rules as a Kane policy (policies/ditto-parity.yaml, lints clean)
 - [x] Console: 'Every recorded run' section; unlisted cases; rewrites can be a deployed URL (`rewrite.url`); /port-broken/ published via publishAs
-- [~] Scan of official TodoMVCs (react → vue → svelte → angular) via `ditto check` with ditto.impl-*.config.json; runner .ditto-work/run-scan.sh, logs .ditto-work/scan-*.log
-- [ ] After the scan: `ditto index`, prune-case on each impl case, `npx tsx scripts/validate-evidence.ts` (validate + policy verdicts), README section on the official implementations, publish
-- [ ] Try-it flow (ditto.try.config.json: deployed jQuery vs deployed broken build, `--only` escape + counter tests): run it, then add the README section only if it works
-- [ ] Re-record the video (adds the 'official' segment from the index), update drafts, memory, hand-off
+- [x] Official TodoMVC builds (React, ES6, Svelte, Web Components, Lit) judged by the jQuery recordings; pruned, indexed, published
+- [x] Answer key (#2309–#2315, 14 claims): hand-reviewed notes checked against recorded outcomes; 13/14 reproduce with Playwright (scripts/recheck-impls.mjs, 17 checks); Kane confirmed 4/10, missed 5, stopped early 1; 1 unreported bug (ES6 mark-all); 2 false alarms
+- [x] Rewritten sentences (suites/todomvc-strict): WC caught by replay+heal; ES6 replay passed again, fresh run caught it
+- [x] Replay audit (src/engine/replay-audit.ts, default on; check --fresh, --new-round): measured on ES6, Lit, clean port (no false "different"; fresh runs 14–82 credits; some "unclear")
+- [x] README section + docs/testing.md §7–8; launch drafts updated; upstream issue draft for ES6 mark-all (private, needs the user's OK)
+- [~] Re-record the video (adds the audit segment), check length and frames
+- [ ] `npx tsx scripts/validate-evidence.ts` over the new packs (local, free, ~20 min) and update the README count
+- [ ] Try-it flow (ditto.try.config.json): skipped unless credits allow (441 left at 01:10 UTC 17 Nov); not documented
 
 ## Hand-off to the user (only they can)
 - [ ] Upload the video to YouTube (unlisted is fine), add the link to README and the submission
