@@ -1,0 +1,40 @@
+{
+  "case": "todomvc-strict-javascript-es6",
+  "title": "TodoMVC: two test sentences rewritten after Kane missed bugs its own screenshots showed (official ES6 build)",
+  "spec": "fixtures/app-spec.md",
+  "suite": "suites/todomvc-strict",
+  "legacy": {
+    "label": "jQuery",
+    "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+    "dir": "fixtures/legacy-todomvc",
+    "port": 7001,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+    "label": "JavaScript ES6 (official)",
+    "framework": "Official TodoMVC JavaScript ES6 example (tastejs/todomvc, commit ff43b02)",
+    "repo": ".ditto-work/impls/todomvc/examples/javascript-es6",
+    "build": "true",
+    "dist": "dist",
+    "port": 7206,
+    "source": "https://github.com/tastejs/todomvc/tree/master/examples/javascript-es6"
+  },
+  "agent": {
+    "model": "sonnet",
+    "portPrompt": "Port the legacy TodoMVC app in {legacyDir} (jQuery + Handlebars) to React 19 + TypeScript, built with Vite, in the current directory. Keep the same look (reuse its CSS) and the same behaviour, so users don't notice the switch. Set Vite's base to './' so `npm run build` writes a static site to dist/. Don't add features. Finish when `npm install` and `npm run build` succeed.",
+    "maxTurnsPort": 120,
+    "maxTurnsFix": 60
+  },
+  "parallel": 3,
+  "maxRounds": 0,
+  "creditCap": 200,
+  "workDir": ".ditto-work",
+  "casesDir": "cases",
+  "variables": {
+    "active_todo_title": "Pay rent",
+    "completed_todo_title": "Book the dentist"
+  },
+  "tab": "Rewritten sentences: ES6",
+  "unlisted": true,
+  "note": "Kane passed two of the jQuery app's tests on builds that break them, although its own screenshots show the bugs: the ES6 build puts new todos at the top (#2311), and the Web Components build adds an empty row with “1 item left!” for a spaces-only entry (#2314). The sentences named the item and counted titles, so a wrong position and an untitled row slipped through. These two rewritten sentences say where the new todo goes and that no row or counter appears; each must pass on the jQuery app first."
+}

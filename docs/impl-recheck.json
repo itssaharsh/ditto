@@ -1,0 +1,486 @@
+{
+  "what": "Deterministic Playwright checks (no AI) of single TodoMVC-spec behaviours on the same builds Kane checked.",
+  "checkedAt": "2026-11-17T00:41:07.507Z",
+  "results": {
+    "jquery": {
+      "new-todo focused on load": {
+        "active": "input.new-todo",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "a",
+          "b"
+        ],
+        "ok": true
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 0,
+        "ok": true
+      },
+      "new todo is trimmed": {
+        "label": "\"lead\"",
+        "ok": true
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 1,
+        "markAllChecked": true,
+        "ok": true
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 1,
+        "ok": true
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": false,
+        "ok": true
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 0,
+        "label": "buy milk",
+        "ok": true
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 0,
+        "ok": true
+      },
+      "edit is trimmed": {
+        "label": "\"spaced\"",
+        "ok": true
+      },
+      "edit is saved on blur": {
+        "label": "blurred",
+        "ok": true
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "input.edit",
+        "ok": true
+      },
+      "Escape then blur keeps the old title": {
+        "label": "buy milk",
+        "ok": true
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "Completed",
+        "ok": true
+      }
+    },
+    "react": {
+      "new-todo focused on load": {
+        "active": "input.new-todo",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "a",
+          "b"
+        ],
+        "ok": true
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 0,
+        "ok": true
+      },
+      "new todo is trimmed": {
+        "label": "\"lead\"",
+        "ok": true
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 1,
+        "markAllChecked": true,
+        "ok": true
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 1,
+        "ok": true
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": false,
+        "ok": true
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 1,
+        "label": "buy milk",
+        "ok": false
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 0,
+        "ok": true
+      },
+      "edit is trimmed": {
+        "label": "\"spaced\"",
+        "ok": true
+      },
+      "edit is saved on blur": {
+        "label": "blurred",
+        "ok": true
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "input.edit",
+        "ok": true
+      },
+      "Escape then blur keeps the old title": {
+        "label": "changed",
+        "ok": false
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "Completed",
+        "ok": true
+      }
+    },
+    "javascript-es6": {
+      "new-todo focused on load": {
+        "active": "input.new-todo",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "b",
+          "a"
+        ],
+        "ok": false
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 0,
+        "ok": true
+      },
+      "new todo is trimmed": {
+        "label": "\"lead\"",
+        "ok": true
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 0,
+        "markAllChecked": true,
+        "ok": false
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 0,
+        "ok": false
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": false,
+        "ok": true
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 0,
+        "label": "buy milk",
+        "ok": true
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 0,
+        "ok": true
+      },
+      "edit is trimmed": {
+        "label": "\"spaced\"",
+        "ok": true
+      },
+      "edit is saved on blur": {
+        "label": "blurred",
+        "ok": true
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "input.edit",
+        "ok": true
+      },
+      "Escape then blur keeps the old title": {
+        "label": "buy milk",
+        "ok": true
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "Completed",
+        "ok": true
+      }
+    },
+    "svelte": {
+      "new-todo focused on load": {
+        "active": "input.new-todo",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "a",
+          "b"
+        ],
+        "ok": true
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 0,
+        "ok": true
+      },
+      "new todo is trimmed": {
+        "label": "\"lead\"",
+        "ok": true
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 1,
+        "markAllChecked": true,
+        "ok": true
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 1,
+        "ok": true
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": false,
+        "ok": true
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 0,
+        "label": "buy milk",
+        "ok": true
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 1,
+        "ok": false
+      },
+      "edit is trimmed": {
+        "label": "\"  spaced  \"",
+        "ok": false
+      },
+      "edit is saved on blur": {
+        "label": "blurred",
+        "ok": true
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "input.edit",
+        "ok": true
+      },
+      "Escape then blur keeps the old title": {
+        "label": "buy milk",
+        "ok": true
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "All",
+        "ok": false
+      }
+    },
+    "web-components": {
+      "new-todo focused on load": {
+        "active": "input.new-todo-input",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "a",
+          "b"
+        ],
+        "ok": true
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 1,
+        "ok": false
+      },
+      "new todo is trimmed": {
+        "label": "\"  lead  \"",
+        "ok": false
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 1,
+        "markAllChecked": true,
+        "ok": true
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 1,
+        "ok": true
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": true,
+        "ok": false
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 0,
+        "label": "buy milk",
+        "ok": true
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 1,
+        "ok": false
+      },
+      "edit is trimmed": {
+        "label": "\"  spaced  \"",
+        "ok": false
+      },
+      "edit is saved on blur": {
+        "label": "a",
+        "ok": false
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "input.edit-todo-input",
+        "ok": true
+      },
+      "Escape then blur keeps the old title": {
+        "label": "buy milk",
+        "ok": true
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "Completed",
+        "ok": true
+      }
+    },
+    "lit": {
+      "new-todo focused on load": {
+        "active": "input.new-todo",
+        "ok": true
+      },
+      "new todos are appended": {
+        "labels": [
+          "a",
+          "b"
+        ],
+        "ok": true
+      },
+      "whitespace-only new todo is not added": {
+        "todos": 1,
+        "ok": false
+      },
+      "new todo is trimmed": {
+        "label": "\"  lead  \"",
+        "ok": false
+      },
+      "mark-all (clicking its visible control) completes the only todo": {
+        "completed": 1,
+        "ok": true
+      },
+      "mark-all by clicking the checkbox itself": {
+        "completed": 1,
+        "markAllChecked": true,
+        "ok": true
+      },
+      "mark-all by keyboard (Space on the checkbox)": {
+        "completed": 1,
+        "ok": true
+      },
+      "Clear completed hidden with nothing completed": {
+        "visible": false,
+        "ok": true
+      },
+      "Escape leaves edit mode and keeps the title": {
+        "editing": 1,
+        "label": "buy milk",
+        "ok": false
+      },
+      "whitespace-only edit removes the todo": {
+        "todos": 1,
+        "ok": false
+      },
+      "edit is trimmed": {
+        "label": "\"a\"",
+        "ok": false
+      },
+      "edit is saved on blur": {
+        "label": "a",
+        "ok": false
+      },
+      "Completed filter shows only completed": {
+        "shown": [
+          "done"
+        ],
+        "selected": "Completed",
+        "ok": true
+      },
+      "double-click focuses the edit input": {
+        "active": "body.",
+        "ok": false
+      },
+      "Escape then blur keeps the old title": {
+        "label": "buy milk",
+        "ok": true
+      },
+      "double-click enters editing (10 tries)": {
+        "entered": 10,
+        "tries": 10,
+        "ok": true
+      },
+      "Completed filter kept on reload": {
+        "url": "/#/completed",
+        "selected": "Completed",
+        "ok": true
+      }
+    }
+  }
+}

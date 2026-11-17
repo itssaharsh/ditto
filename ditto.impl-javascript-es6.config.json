@@ -27,7 +27,7 @@
   },
   "parallel": 3,
   "maxRounds": 0,
-  "creditCap": 550,
+  "creditCap": 560,
   "workDir": ".ditto-work",
   "casesDir": "cases",
   "variables": {

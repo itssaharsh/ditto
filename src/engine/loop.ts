@@ -453,7 +453,7 @@ export class DittoLoop {
         kind: 'decision',
         round: n,
         test: t.id,
-        said: `The replay passed, but its recording can't check all the test says: step ${audit.weak[0].step} ${audit.weak[0].why}`,
+        said: `The replay passed, but its recording can't check all the test says: ${audit.weak[0].why} (step ${audit.weak[0].step})`,
         did: 'Did not take the replay\'s pass: had Kane author the test from scratch on the rewrite to settle it',
       });
       const fresh = await this.kane(t, 'rewrite', n, 'fresh');

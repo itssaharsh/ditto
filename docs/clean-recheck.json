@@ -181,5 +181,30 @@
       "credits": 0,
       "shareUrl": null
     }
-  ]
+  ],
+  "replayAudit": {
+    "what": "17 Nov: the replay-audit rule (src/engine/replay-audit.ts) on the same clean port. Two tests whose recorded checks a replay cannot fail as written were replayed, then authored fresh on the port before their pass could count.",
+    "command": "npm run ditto -- check --config ditto.clean-recheck.config.json --new-round --label \"Replay audit\" --only empty-edited-titles-destroy-the-todo-on-enter-or-blur,enter-saves-a-trimmed-todo-title",
+    "checkedAt": "2026-11-17",
+    "results": [
+      {
+        "test": "enter-saves-a-trimmed-todo-title",
+        "replay": "pass",
+        "fresh": "pass",
+        "credits": 29.14,
+        "kane": "updated a todo item on the todo app"
+      },
+      {
+        "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+        "replay": "pass",
+        "fresh": "test_issue",
+        "credits": 14.14,
+        "kane": "The todo visibly entered edit mode, but the final automated check reported that the expected edit state was missing."
+      }
+    ],
+    "kaneSaid": [
+      "The replay passed, but its recording can't check all the test says: step 3 finds the element by the text it then checks (\"Review contract\"), so a replay can't tell where it is; it also strips spaces before comparing, in a step about trimming",
+      "The replay passed, but its recording can't check all the test says: step 2 the step says \"focused\", but no recorded check reads focus"
+    ]
+  }
 }

@@ -1,0 +1,1097 @@
+{
+ "id": "todomvc-strict-web-components",
+ "title": "TodoMVC: two test sentences rewritten after Kane missed bugs its own screenshots showed (official Web Components build)",
+ "createdAt": "2026-11-17T00:38:41.089Z",
+ "updatedAt": "2026-11-17T00:45:27.304Z",
+ "status": "stopped",
+ "apps": {
+  "legacy": {
+   "label": "jQuery",
+   "url": "http://127.0.0.1:7001/",
+   "framework": "jQuery 3 + Handlebars (official TodoMVC example)",
+   "source": "https://github.com/tastejs/todomvc/tree/master/examples/jquery"
+  },
+  "rewrite": {
+   "label": "Web Components (official)",
+   "url": "http://127.0.0.1:7207/",
+   "framework": "Official TodoMVC Web Components example (tastejs/todomvc, commit ff43b02)",
+   "source": "https://github.com/tastejs/todomvc/tree/master/examples/web-components"
+  }
+ },
+ "suite": {
+  "name": "todomvc-strict-web-components",
+  "designedBy": "Kane CLI (context ingest → extract → design tests)",
+  "spec": "fixtures/app-spec.md",
+  "tests": [
+   {
+    "id": "new-todos-go-to-the-bottom-of-the-list",
+    "file": "suites/todomvc-strict/new-todos-go-to-the-bottom-of-the-list_test.md",
+    "title": "New todos go to the bottom of the list",
+    "summary": "Rewritten from \"Enter appends trimmed todo and clears new-todo input\", which passed on a build that puts new todos at the top: the old sentence named the new item but not where it goes.",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and load the todo app, then, in the new-todo input at the top, type 'Buy milk' and press Enter, then assert the todo list shows exactly one row and it reads 'Buy milk'.",
+      "verifies": []
+     },
+     {
+      "heading": "Step 2",
+      "text": "In the same new-todo input, type 'Call home' and press Enter, then assert the todo list shows exactly two rows, the upper row reads 'Buy milk' and the lower row reads 'Call home'.",
+      "verifies": []
+     }
+    ],
+    "sha256": "dcf34c174ad107bf1ccfbbe9abfd82610cce34e56219c2df37527f866a6aa5ea"
+   },
+   {
+    "id": "spaces-only-entry-adds-no-row-and-no-counter",
+    "file": "suites/todomvc-strict/spaces-only-entry-adds-no-row-and-no-counter_test.md",
+    "title": "A spaces-only entry adds no row and no counter",
+    "summary": "Rewritten from \"Blank new-todo submissions do not add a todo\", which passed on a build that adds an empty row: the old sentence counted todos, and an empty row has no title to count.",
+    "steps": [
+     {
+      "heading": "Step 1",
+      "text": "Open {{start_url}} in the browser and load the todo app, then, in the new-todo input at the top, type three spaces and press Enter, then assert the page shows no todo rows at all, not even an empty one, and no \"item left\" or \"items left\" counter is shown.",
+      "verifies": []
+     }
+    ],
+    "sha256": "c89c6eef199450a95040fd859c5f0da72eea314f29634232217b51245340a752"
+   }
+  ],
+  "variables": {
+   "active_todo_title": "Pay rent",
+   "completed_todo_title": "Book the dentist"
+  }
+ },
+ "oracle": {
+  "new-todos-go-to-the-bottom-of-the-list": {
+   "outcome": "pass",
+   "durationS": 79,
+   "credits": 34.64,
+   "oneLiner": "added a todo item on the todo list",
+   "reason": "Objective completed",
+   "resultCode": 100,
+   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KEVE9F95BG8A6FHS7V7K3N/dashboard/share/US_G67S26ZGS0Q1Z6CVSWJS2NRK3V403D1YDSK3RP03HKOTOO3LROQ0EUC4DLIX2TDD?type=summary&agentView=true&fqdn=summary-page",
+   "replayDecisions": 0,
+   "authorDecisions": 2,
+   "healTriggered": false,
+   "shots": [
+    {
+     "step": "5-0-5",
+     "kind": "screenshot",
+     "file": "assets/new-todos-go-to-the-bottom-of-the-list/legacy-r0-author/5-0-5-screenshot.jpg",
+     "summary": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
+    },
+    {
+     "step": "11-1-6",
+     "kind": "screenshot",
+     "file": "assets/new-todos-go-to-the-bottom-of-the-list/legacy-r0-author/11-1-6-screenshot.jpg",
+     "summary": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
+    }
+   ],
+   "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "urls": [
+    "http://127.0.0.1:7001/#/all"
+   ],
+   "mode": "author",
+   "startedAt": "2026-11-17T00:34:57.628Z",
+   "endedAt": "2026-11-17T00:36:51.022Z",
+   "replayVerified": true,
+   "replaySeconds": 5.9
+  },
+  "spaces-only-entry-adds-no-row-and-no-counter": {
+   "outcome": "pass",
+   "durationS": 53.5,
+   "credits": 19.33,
+   "oneLiner": "submitted a blank todo entry on the todo app",
+   "reason": "Objective completed",
+   "resultCode": 100,
+   "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KEVRZ8EYP0GEWMKNKB5NFM/dashboard/share/US_6AMXJQHCISTSHXPUA7VU8KAKJ659923VTF0YPUBPU2XHJN71ZLMOSLCPDLDSQKAF?type=summary&agentView=true&fqdn=summary-page",
+   "replayDecisions": 0,
+   "authorDecisions": 1,
+   "healTriggered": false,
+   "shots": [
+    {
+     "step": "6-0-6",
+     "kind": "screenshot",
+     "file": "assets/spaces-only-entry-adds-no-row-and-no-counter/legacy-r0-author/6-0-6-screenshot.jpg",
+     "summary": "assert: the page shows no todo rows at all, not even an empty one, and no \"item left\" or",
+     "status": "passed",
+     "url": "http://127.0.0.1:7001/#/all"
+    }
+   ],
+   "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "urls": [
+    "http://127.0.0.1:7001/#/all"
+   ],
+   "mode": "author",
+   "startedAt": "2026-11-17T00:35:09.643Z",
+   "endedAt": "2026-11-17T00:36:34.895Z",
+   "replayVerified": true,
+   "replaySeconds": 33.98
+  }
+ },
+ "rounds": [
+  {
+   "n": 0,
+   "results": {
+    "spaces-only-entry-adds-no-row-and-no-counter": {
+     "outcome": "mismatch",
+     "durationS": 105.9,
+     "credits": 11.76,
+     "oneLiner": "Submitting three spaces creates an invisible todo and leaves the item counter on screen.",
+     "reason": "Final verification failed: \"the page shows no todo rows at all, not even an empty one, and no \"item left\" or \"items left\" counter is shown\"",
+     "resultCode": 740,
+     "verdict": {
+      "confirmed": true,
+      "family": "application_issue",
+      "category": "validation_defect",
+      "severity": "major",
+      "rootCause": "The todo form treats spaces as a real todo instead of ignoring text that contains only spaces.",
+      "bugTitle": "Whitespace-only todo creates an invisible active item",
+      "suggestion": "Trim the entered text before saving. If nothing remains after trimming, do not create a todo and keep the list footer and item counter hidden.",
+      "oneLiner": "Submitting three spaces creates an invisible todo and leaves the item counter on screen.",
+      "confidence": 0.96,
+      "culpritStep": "0-5"
+     },
+     "replayDecisions": 1,
+     "authorDecisions": 0,
+     "healTriggered": true,
+     "shots": [
+      {
+       "step": "8-0-8",
+       "kind": "screenshot",
+       "file": "assets/spaces-only-entry-adds-no-row-and-no-counter/rewrite-r0-heal/8-0-8-screenshot.jpg",
+       "summary": "assert: the page shows no todo rows at all, not even an empty one, and no \"item left\" or",
+       "status": "failed",
+       "url": "http://127.0.0.1:7207/"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "https://kaneai-playground.lambdatest.io/",
+      "http://127.0.0.1:7207/"
+     ],
+     "overrideApplied": true,
+     "failureMessage": "Final verification failed: \"the page shows no todo rows at all, not even an empty one, and no \"item left\" or \"items left\" counter is shown\"",
+     "mode": "replay+heal",
+     "startedAt": "2026-11-17T00:39:55.860Z",
+     "endedAt": "2026-11-17T00:42:21.431Z"
+    },
+    "new-todos-go-to-the-bottom-of-the-list": {
+     "outcome": "pass",
+     "durationS": 112.30000000000001,
+     "credits": 20.72,
+     "oneLiner": "added a to-do item on the local to-do app",
+     "reason": "Objective completed",
+     "resultCode": 100,
+     "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KFAA3WNGESYK9GD0MZ55RX/dashboard/share/US_B03XEAD0A8OE4NVKVFDOU9LSO4PVIJ1G5EWZSYZ9G2PM71DB8S5MP7LHN905IEHW?type=summary&agentView=true&fqdn=summary-page",
+     "replayDecisions": 0,
+     "authorDecisions": 2,
+     "healTriggered": false,
+     "shots": [
+      {
+       "step": "5-0-5",
+       "kind": "screenshot",
+       "file": "assets/new-todos-go-to-the-bottom-of-the-list/rewrite-r0-fresh/5-0-5-screenshot.jpg",
+       "summary": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+       "status": "passed",
+       "url": "http://127.0.0.1:7207/"
+      },
+      {
+       "step": "11-1-6",
+       "kind": "screenshot",
+       "file": "assets/new-todos-go-to-the-bottom-of-the-list/rewrite-r0-fresh/11-1-6-screenshot.jpg",
+       "summary": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+       "status": "passed",
+       "url": "http://127.0.0.1:7207/"
+      }
+     ],
+     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+     ],
+     "urls": [
+      "http://127.0.0.1:7207/"
+     ],
+     "mode": "author",
+     "startedAt": "2026-11-17T00:43:05.350Z",
+     "endedAt": "2026-11-17T00:45:27.272Z"
+    }
+   },
+   "label": "Rewritten sentences"
+  }
+ ],
+ "events": [
+  {
+   "kind": "note",
+   "text": "Using the oracle recorded for \"TodoMVC: two test sentences rewritten after Kane missed bugs its own screenshots showed (official ES6 build)\" (2026-11-17): the same legacy app, tests and Kane recordings.",
+   "t": "2026-11-17T00:38:41.099Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-17T00:38:41.177Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "mode": "replay",
+   "t": "2026-11-17T00:38:53.201Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:39:00.705Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Buy milk into the new-todo input",
+   "t": "2026-11-17T00:39:10.021Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-17T00:39:10.740Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "analyze: Reading the todo list row text",
+   "t": "2026-11-17T00:39:11.028Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:39:11.841Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the todo app to finish loading",
+   "t": "2026-11-17T00:39:12.222Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Reading the number of todo rows",
+   "t": "2026-11-17T00:39:15.599Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+   "t": "2026-11-17T00:39:15.788Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan to finish queuing",
+   "t": "2026-11-17T00:39:17.037Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Typing into the new-todo input field",
+   "t": "2026-11-17T00:39:20.945Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-17T00:39:21.644Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "fill: Type \"Call home\" into \"What needs to be done?\"",
+   "t": "2026-11-17T00:39:25.302Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-17T00:39:25.226Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after submitting the new to-do input",
+   "t": "2026-11-17T00:39:25.596Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Reading the number of rows in the todo list",
+   "t": "2026-11-17T00:39:29.473Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking whether todo rows are present",
+   "t": "2026-11-17T00:39:33.085Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Checking whether an empty todo row is present",
+   "t": "2026-11-17T00:39:40.146Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Reading the text of the upper todo row",
+   "t": "2026-11-17T00:39:45.370Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether an item left counter is present",
+   "t": "2026-11-17T00:39:45.523Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 8,
+   "status": "failed",
+   "remark": "assert: the page shows no todo rows at all, not even an empty one, and no \"item left\" or",
+   "t": "2026-11-17T00:39:45.670Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "outcome": "fail",
+   "oneLiner": "Submitting three spaces creates an empty todo and shows an item counter instead of leaving the list empty.",
+   "t": "2026-11-17T00:39:55.848Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "said": "Replaying the legacy recording on the rewrite missed: Submitting three spaces creates an empty todo and shows an item counter instead of leaving the list empty.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-17T00:39:55.851Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-17T00:39:55.855Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Reading the text of the lower todo row",
+   "t": "2026-11-17T00:40:00.367Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+   "t": "2026-11-17T00:40:00.527Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "outcome": "test_issue",
+   "oneLiner": "The visible todo list matches the recorded expected result, so the failure comes from the replay assertion rather than the product.",
+   "t": "2026-11-17T00:40:11.616Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "said": "Replaying the legacy recording on the rewrite missed: The visible todo list matches the recorded expected result, so the failure comes from the replay assertion rather than the product.",
+   "did": "Let Kane re-author the missed steps on the new markup and judge again",
+   "t": "2026-11-17T00:40:11.618Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "mode": "replay+heal",
+   "t": "2026-11-17T00:40:11.619Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:40:22.091Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: Waiting for the todo app to finish loading",
+   "t": "2026-11-17T00:40:22.455Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:40:28.638Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "fill: Typing into the new-todo input field",
+   "t": "2026-11-17T00:40:31.120Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter key",
+   "t": "2026-11-17T00:40:31.853Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Buy milk into the new-todo input",
+   "t": "2026-11-17T00:40:37.812Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-17T00:40:38.478Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "analyze: Reading the todo list row text",
+   "t": "2026-11-17T00:40:38.750Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Reading the number of todo rows",
+   "t": "2026-11-17T00:40:43.308Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+   "t": "2026-11-17T00:40:43.441Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: Waiting for the plan to finish queuing",
+   "t": "2026-11-17T00:40:44.663Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Checking whether todo rows are present",
+   "t": "2026-11-17T00:40:45.326Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: Checking whether an empty todo row is present",
+   "t": "2026-11-17T00:40:51.967Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "fill: Type \"Call home\" into \"What needs to be done?\"",
+   "t": "2026-11-17T00:40:54.072Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-17T00:40:54.747Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "wait: Waiting briefly after submitting the new to-do input",
+   "t": "2026-11-17T00:40:55.133Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "analyze: Checking whether an item left counter is present",
+   "t": "2026-11-17T00:40:57.465Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 8,
+   "status": "failed",
+   "remark": "assert: the page shows no todo rows at all, not even an empty one, and no \"item left\" or",
+   "t": "2026-11-17T00:40:57.607Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "analyze: Reading the number of rows in the todo list",
+   "t": "2026-11-17T00:40:59.330Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 12,
+   "status": "passed",
+   "remark": "analyze: Reading the text of the upper todo row",
+   "t": "2026-11-17T00:41:13.975Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to http://127.0.0.1:7207/",
+   "t": "2026-11-17T00:41:21.976Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 13,
+   "status": "passed",
+   "remark": "analyze: Reading the text of the lower todo row",
+   "t": "2026-11-17T00:41:30.188Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 14,
+   "status": "failed",
+   "remark": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+   "t": "2026-11-17T00:41:30.308Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"Enter a new todo.\"; press_key \"Enter a new todo.\"",
+   "t": "2026-11-17T00:41:33.145Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "type: Type \"   \" into \"Enter a new todo.\"",
+   "t": "2026-11-17T00:41:34.492Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "",
+   "t": "2026-11-17T00:41:35.492Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: In the new-todo input at the top, press Enter",
+   "t": "2026-11-17T00:41:41.398Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:41:47.511Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "fill: Typing Buy milk into the new-todo input",
+   "t": "2026-11-17T00:41:56.202Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: Pressing Enter to submit the new todo",
+   "t": "2026-11-17T00:41:56.849Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "analyze: Reading the todo list row text",
+   "t": "2026-11-17T00:41:57.053Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "analyze: no \"items left\" counter is shown",
+   "t": "2026-11-17T00:42:01.600Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "analyze: Reading the number of todo rows",
+   "t": "2026-11-17T00:42:01.930Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+   "t": "2026-11-17T00:42:02.051Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "step": 7,
+   "status": "failed",
+   "remark": "assert: the page shows no todo rows at all, not even an empty one, and no \"item left\" or",
+   "t": "2026-11-17T00:42:02.325Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"Enter a new todo.\"; press_key \"Enter a new todo.\"",
+   "t": "2026-11-17T00:42:16.541Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "type: Type \"Call home\" into \"Enter a new todo.\"",
+   "t": "2026-11-17T00:42:17.637Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-17T00:42:18.423Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "spaces-only-entry-adds-no-row-and-no-counter",
+   "round": 0,
+   "outcome": "mismatch",
+   "oneLiner": "Submitting three spaces creates an invisible todo and leaves the item counter on screen.",
+   "t": "2026-11-17T00:42:21.452Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: the lower todo row reads 'Call home'",
+   "t": "2026-11-17T00:42:59.404Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+   "t": "2026-11-17T00:43:00.124Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "The page shows “Buy milk” above “Call home” with two items, but the replay assertion still failed.",
+   "t": "2026-11-17T00:43:05.329Z"
+  },
+  {
+   "kind": "decision",
+   "round": 0,
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "said": "The replay reached the check and it failed (The visible todo list matches the recorded expected result, so the failure comes from the replay assertion rather than the product.); healing then passed it",
+   "did": "Did not take the healed pass: had Kane author the test from scratch on the rewrite to settle it",
+   "t": "2026-11-17T00:43:05.332Z"
+  },
+  {
+   "kind": "kane_start",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "mode": "author",
+   "t": "2026-11-17T00:43:05.349Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 1,
+   "status": "passed",
+   "remark": "navigate: Navigate to {{global.start_url}}",
+   "t": "2026-11-17T00:43:24.774Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 2,
+   "status": "passed",
+   "remark": "type: Typing Buy milk into the new-todo input field",
+   "t": "2026-11-17T00:43:34.420Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 3,
+   "status": "passed",
+   "remark": "press_key: PRIMARY: press the Enter key",
+   "t": "2026-11-17T00:43:38.175Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 4,
+   "status": "passed",
+   "remark": "analyze: the todo list row reads 'Buy milk'",
+   "t": "2026-11-17T00:44:04.274Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 5,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly one row and it reads 'Buy milk'",
+   "t": "2026-11-17T00:44:04.992Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 6,
+   "status": "passed",
+   "remark": "wait: queued plan (2 steps): type \"Enter a new todo.\"; press_key \"Enter a new todo.\"",
+   "t": "2026-11-17T00:44:20.167Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 7,
+   "status": "passed",
+   "remark": "type: Type \"Call home\" into \"Enter a new todo.\"",
+   "t": "2026-11-17T00:44:21.273Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 8,
+   "status": "passed",
+   "remark": "press_key: Press Enter",
+   "t": "2026-11-17T00:44:22.021Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 9,
+   "status": "passed",
+   "remark": "wait: PRIMARY: record completion of typing 'Call home' and pressing Enter in the same ",
+   "t": "2026-11-17T00:44:30.977Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 10,
+   "status": "passed",
+   "remark": "analyze: the lower row reads 'Call home'",
+   "t": "2026-11-17T00:45:06.802Z"
+  },
+  {
+   "kind": "kane_step",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "step": 11,
+   "status": "passed",
+   "remark": "assert: the todo list shows exactly two rows, the upper row reads 'Buy milk' and the low",
+   "t": "2026-11-17T00:45:07.565Z"
+  },
+  {
+   "kind": "kane_end",
+   "side": "rewrite",
+   "test": "new-todos-go-to-the-bottom-of-the-list",
+   "round": 0,
+   "outcome": "pass",
+   "oneLiner": "added a to-do item on the local to-do app",
+   "t": "2026-11-17T00:45:27.295Z"
+  },
+  {
+   "kind": "parity",
+   "round": 0,
+   "matched": 1,
+   "total": 2,
+   "t": "2026-11-17T00:45:27.303Z"
+  }
+ ],
+ "totals": {
+  "kaneRuns": 5,
+  "credits": 42.26,
+  "agentCostUsd": 0,
+  "replays": 2,
+  "heals": 2,
+  "authored": 1
+ },
+ "note": "Kane passed two of the jQuery app's tests on builds that break them, although its own screenshots show the bugs: the ES6 build puts new todos at the top (#2311), and the Web Components build adds an empty row with “1 item left!” for a spaces-only entry (#2314). The sentences named the item and counted titles, so a wrong position and an untitled row slipped through. These two rewritten sentences say where the new todo goes and that no row or counter appears; each must pass on the jQuery app first.",
+ "tab": "Rewritten sentences: Web Components",
+ "unlisted": true
+}

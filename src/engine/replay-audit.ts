@@ -89,12 +89,12 @@ export function auditChecks(test: SuiteTest, checks: CompiledCheck[]): ReplayAud
     valueChecks++;
     const why: string[] = [];
     if (c.locator && new RegExp(`text=\\\\?"${escapeRe(exp)}\\\\?"`, 'i').test(c.locator)) {
-      why.push(`finds the element by the text it then checks ("${exp}"), so a replay can't tell where it is`);
+      why.push(`a check finds the element by the text it then checks ("${exp}"), so a replay can't tell where it is`);
     }
     // A step about trimming: it says so, or it types a value with spaces at either end.
     const aboutTrim = /\btrim/i.test(stepText(c.step)) || quoted(stepText(c.step)).some((v) => v !== v.trim());
     if (c.transforms?.includes('strip') && aboutTrim) {
-      why.push('strips spaces before comparing, in a step about trimming');
+      why.push(why.length ? 'strips spaces before comparing, in a step about trimming' : 'a check strips spaces before comparing, in a step about trimming');
     }
     if (why.length) weak.push({ step: c.step, query: c.query, why: why.join('; it also ') });
   }

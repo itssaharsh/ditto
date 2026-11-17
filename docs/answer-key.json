@@ -1,0 +1,492 @@
+{
+  "what": "Bug claims from upstream issues tastejs/todomvc #2309–#2315 (filed 6 Nov 2026 by someone else, with a different AI browser agent, re-checked with Playwright), scored against what Kane reported when replaying the jQuery recordings on each official implementation. Kane never saw the issues. Each claim is also re-checked without AI (docs/impl-recheck.json).",
+  "recheckedAt": "2026-11-17T00:41:07.507Z",
+  "claims": 14,
+  "reproducedWithoutAI": 13,
+  "coveredBySuite": 10,
+  "confirmed": 4,
+  "missed": 5,
+  "stoppedEarlier": 1,
+  "notRun": 0,
+  "notCovered": 4,
+  "caughtAfterRewrite": 2,
+  "rows": [
+    {
+      "issue": 2309,
+      "impl": "react",
+      "claim": "Escape does not leave editing mode",
+      "tests": [
+        "escape-discards-a-todo-title-edit"
+      ],
+      "kaneOutcome": "mismatch",
+      "verdict": "confirmed",
+      "note": "Kane: \"Pressing Escape does not leave edit mode or restore the todo's original title.\" Same bug, same reason.",
+      "recheck": "Escape leaves edit mode and keeps the title",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "escape-discards-a-todo-title-edit",
+          "outcome": "mismatch",
+          "kane": "Pressing Escape does not leave edit mode or restore the todo's original title.",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "mismatch",
+              "kane": "Pressing Escape does not leave edit mode or restore the todo's original title."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2309,
+      "impl": "react",
+      "claim": "after Escape, the discarded edit is saved on blur",
+      "tests": [],
+      "kaneOutcome": "",
+      "verdict": "not covered by the suite",
+      "note": "No parity test blurs after Escape.",
+      "recheck": "Escape then blur keeps the old title",
+      "reproducedWithoutAI": true,
+      "evidence": []
+    },
+    {
+      "issue": 2311,
+      "impl": "javascript-es6",
+      "claim": "new todos are prepended instead of appended",
+      "tests": [
+        "enter-appends-trimmed-todo-and-clears-new-todo-input"
+      ],
+      "kaneOutcome": "pass",
+      "verdict": "missed",
+      "note": "Visible in Kane's own last screenshot: \"Call home\" sits above \"Buy milk\". The sentence says \"its newly appended item displays 'Call home'\" without saying where, and the recorded check finds the item by its text. A fresh run of the same sentence (the replay audit) passed too. Rewritten to name the order, the sentence caught it in a fresh run: \"Adding 'Call home' put it above 'Buy milk' instead of below it.\"",
+      "recheck": "new todos are appended",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+          "outcome": "pass",
+          "kane": "added a todo item on the todo app",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KFQP28ZDW5X48BWRPA7QG2/dashboard/share/US_6RJULLT1IIMYWW52PRS5KA1TXNILAMQG2DMGOSHMNEKVSUHJMZBTOEMSVQZAMKYJ?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay",
+              "outcome": "pass"
+            },
+            {
+              "round": "Replay audit",
+              "mode": "author",
+              "outcome": "pass",
+              "kane": "added a todo item on the todo app"
+            }
+          ]
+        }
+      ],
+      "followUp": {
+        "case": "todomvc-strict-javascript-es6",
+        "test": "new-todos-go-to-the-bottom-of-the-list",
+        "outcome": "mismatch",
+        "kane": "Adding “Call home” put it above “Buy milk” instead of below it."
+      }
+    },
+    {
+      "issue": 2313,
+      "impl": "lit",
+      "claim": "the edit input is not focused after double-click",
+      "tests": [
+        "escape-discards-a-todo-title-edit",
+        "enter-saves-a-trimmed-todo-title",
+        "empty-edited-titles-destroy-the-todo-on-enter-or-blur"
+      ],
+      "kaneOutcome": "pass",
+      "verdict": "missed",
+      "note": "Focus does not show in a screenshot, and the recorded check for \"its focused edit input contains 'Review proposal'\" reads only the field's value; the replay's typing focuses the field itself. Fresh runs (the replay audit): Escape passed; the other two came back unclear, Kane blaming its own steps around edit mode.",
+      "recheck": "double-click focuses the edit input",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "escape-discards-a-todo-title-edit",
+          "outcome": "pass",
+          "kane": "canceled a todo title edit on the todo page",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KG4W40SQ8CKCB5HEJZWEC7/dashboard/share/US_2JI72LXHFA3ILA8EV73B7UZ7VFJ575F1AVAHVSU51IEUFORX1IMNQ7SFAQC9N08P?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay",
+              "outcome": "pass"
+            },
+            {
+              "round": "Replay audit",
+              "mode": "author",
+              "outcome": "pass",
+              "kane": "canceled a todo title edit on the todo page"
+            }
+          ]
+        },
+        {
+          "test": "enter-saves-a-trimmed-todo-title",
+          "outcome": "test_issue",
+          "kane": "The run did not reliably establish and verify the todo's edit state before its final check.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KFZGFE9ZE7YX06JRYEP62J/dashboard/share/US_XJK2WRCBU4JLNNZKEHBY5DSE2TGHIXV2F07KYLG8CL6IVY5EKYLWB8NY6TZK6COW?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay",
+              "outcome": "pass"
+            },
+            {
+              "round": "Replay audit",
+              "mode": "author",
+              "outcome": "test_issue",
+              "kane": "The run did not reliably establish and verify the todo's edit state before its final check."
+            }
+          ]
+        },
+        {
+          "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+          "outcome": "test_issue",
+          "kane": "The todo briefly entered edit mode, then an unnecessary extra click returned it to its normal view.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KG1Z2P2B8ZNAZWZP5BZSH6/dashboard/share/US_TF7A5XI4IALR13M92UGSSNVB3F8WC12LS550AQN6ATA1B4DPJTW958DMFB43ESA6?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay",
+              "outcome": "pass"
+            },
+            {
+              "round": "Replay audit",
+              "mode": "author",
+              "outcome": "test_issue",
+              "kane": "The todo briefly entered edit mode, then an unnecessary extra click returned it to its normal view."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2313,
+      "impl": "lit",
+      "claim": "a whitespace-only new todo is created",
+      "tests": [
+        "blank-new-todo-submissions-do-not-add-a-todo"
+      ],
+      "kaneOutcome": "mismatch",
+      "verdict": "stopped earlier on a false alarm",
+      "note": "Kane flagged step 1 (\"the new-todo field … is not the active field\"), so it never reached the whitespace step. The field is focused, inside Lit's shadow DOM (deterministic check: input.new-todo is the active element).",
+      "recheck": "whitespace-only new todo is not added",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "blank-new-todo-submissions-do-not-add-a-todo",
+          "outcome": "mismatch",
+          "kane": "After the todo app loads, the new-todo field is visible but is not the active field.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7K54MQXSRQHKVF36A102F3F/dashboard/share/US_2D7MBFCJ1UDN1QYEHOLM30AW4CCD6PUZ3CT0C3WNZ080BE0TF8O3FH85YGY6XJ33?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "author",
+              "outcome": "mismatch",
+              "kane": "After the todo app loads, the new-todo field is visible but is not the active field."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2313,
+      "impl": "lit",
+      "claim": "new todos are not trimmed",
+      "tests": [
+        "enter-appends-trimmed-todo-and-clears-new-todo-input"
+      ],
+      "kaneOutcome": "unclear",
+      "verdict": "missed",
+      "note": "Spaces at the ends of a title do not show on screen (\"  Buy milk  \" renders as \"Buy milk\"), and the recorded check strips them before comparing. The replay passed; a fresh run (the replay audit) came back unclear for an unrelated reason (a missing baseline count).",
+      "recheck": "new todo is trimmed",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "enter-appends-trimmed-todo-and-clears-new-todo-input",
+          "outcome": "test_issue",
+          "kane": "The todo was added correctly, but the final check used an unavailable or incorrect baseline count.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7KFZN7Y05FCPYM0S07F98AV/dashboard/share/US_PHD0WVFCR20WFT4HJ66HBIG38JGFK8ZE9RY3FYQ158FV2DM71103HR9M2EC8S1ZP?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay",
+              "outcome": "pass"
+            },
+            {
+              "round": "Replay audit",
+              "mode": "author",
+              "outcome": "test_issue",
+              "kane": "The todo was added correctly, but the final check used an unavailable or incorrect baseline count."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2314,
+      "impl": "web-components",
+      "claim": "a whitespace-only new todo is created",
+      "tests": [
+        "blank-new-todo-submissions-do-not-add-a-todo"
+      ],
+      "kaneOutcome": "pass",
+      "verdict": "missed",
+      "note": "Visible in Kane's own screenshot after the step: an empty row and \"1 item left!\". Kane counted rows with a title and found none. Rewritten to say \"no todo rows at all, not even an empty one, and no 'item left' counter\", the sentence caught it: \"Submitting three spaces creates an invisible todo and leaves the item counter on screen.\"",
+      "recheck": "whitespace-only new todo is not added",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "blank-new-todo-submissions-do-not-add-a-todo",
+          "outcome": "pass",
+          "kane": "cleared the new-to-do input on the todo app",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7K34EP2FB4VKF9YTQ7HVR2T/dashboard/share/US_39B9M94B1Y8X045Q2WZBGV6P3C0V3X18AC6YX9UJ8HB4UJH12ZFSJ3B28LV37MNS?type=summary&agentView=true&fqdn=summary-page",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "author",
+              "outcome": "pass",
+              "kane": "cleared the new-to-do input on the todo app"
+            }
+          ]
+        }
+      ],
+      "followUp": {
+        "case": "todomvc-strict-web-components",
+        "test": "spaces-only-entry-adds-no-row-and-no-counter",
+        "outcome": "mismatch",
+        "kane": "Submitting three spaces creates an invisible todo and leaves the item counter on screen."
+      }
+    },
+    {
+      "issue": 2314,
+      "impl": "web-components",
+      "claim": "Clear completed shows with nothing completed",
+      "tests": [
+        "hide-clear-completed-without-completed-todos",
+        "clear-completed-preserves-active-todos-in-a-mixed-list"
+      ],
+      "kaneOutcome": "mismatch",
+      "verdict": "confirmed",
+      "note": "Kane: \"After completed todos are cleared, the Clear completed control still appears even though there are no completed items left.\" Same bug, found by the Clear-completed test.",
+      "recheck": "Clear completed hidden with nothing completed",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "hide-clear-completed-without-completed-todos",
+          "outcome": "mismatch",
+          "kane": "The Clear completed control is shown even though the list contains only an active todo.",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "mismatch",
+              "kane": "The Clear completed control is shown even though the list contains only an active todo."
+            }
+          ]
+        },
+        {
+          "test": "clear-completed-preserves-active-todos-in-a-mixed-list",
+          "outcome": "mismatch",
+          "kane": "After completed todos are cleared, the Clear completed control still appears even though there are no completed items left.",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "mismatch",
+              "kane": "After completed todos are cleared, the Clear completed control still appears even though there are no completed items left."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2314,
+      "impl": "web-components",
+      "claim": "an edit is lost on blur",
+      "tests": [],
+      "kaneOutcome": "",
+      "verdict": "not covered by the suite",
+      "note": "The blur-saves test is not in the parity set: Kane could not run it cleanly on the jQuery app.",
+      "recheck": "edit is saved on blur",
+      "reproducedWithoutAI": true,
+      "evidence": []
+    },
+    {
+      "issue": 2314,
+      "impl": "web-components",
+      "claim": "a whitespace-only edit leaves an empty todo",
+      "tests": [
+        "empty-edited-titles-destroy-the-todo-on-enter-or-blur"
+      ],
+      "kaneOutcome": "mismatch",
+      "verdict": "confirmed",
+      "note": "Kane: \"Changing 'Review proposal' to spaces and leaving the field did not remove the todo; it remained in the list with its old title.\" The todo is not removed, as claimed; the old title is the blur bug in the same issue.",
+      "recheck": "whitespace-only edit removes the todo",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+          "outcome": "mismatch",
+          "kane": "Changing “Review proposal” to spaces and leaving the field did not remove the todo; it remained in the list with its old title.",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "mismatch",
+              "kane": "Changing “Review proposal” to spaces and leaving the field did not remove the todo; it remained in the list with its old title."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2314,
+      "impl": "web-components",
+      "claim": "double-click enters editing only intermittently",
+      "tests": [],
+      "kaneOutcome": "",
+      "verdict": "not covered by the suite",
+      "note": "A flaky behaviour, not a single check.",
+      "recheck": "double-click enters editing (10 tries)",
+      "reproducedWithoutAI": false,
+      "evidence": []
+    },
+    {
+      "issue": 2315,
+      "impl": "svelte",
+      "claim": "a whitespace-only edit leaves an empty todo",
+      "tests": [
+        "empty-edited-titles-destroy-the-todo-on-enter-or-blur"
+      ],
+      "kaneOutcome": "mismatch",
+      "verdict": "confirmed",
+      "note": "Kane: \"Submitting an edited todo containing only spaces leaves an active item with no visible title.\" Same bug, same reason.",
+      "recheck": "whitespace-only edit removes the todo",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "empty-edited-titles-destroy-the-todo-on-enter-or-blur",
+          "outcome": "mismatch",
+          "kane": "Submitting an edited todo containing only spaces leaves an active item with no visible title.",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "mismatch",
+              "kane": "Submitting an edited todo containing only spaces leaves an active item with no visible title."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2315,
+      "impl": "svelte",
+      "claim": "edits are not trimmed",
+      "tests": [
+        "enter-saves-a-trimmed-todo-title"
+      ],
+      "kaneOutcome": "pass",
+      "verdict": "missed",
+      "note": "Trailing spaces do not show on screen, and the recorded check strips them before comparing. The replay audit flags this test; its fresh run on Svelte was not done (credit budget).",
+      "recheck": "edit is trimmed",
+      "reproducedWithoutAI": true,
+      "evidence": [
+        {
+          "test": "enter-saves-a-trimmed-todo-title",
+          "outcome": "pass",
+          "history": [
+            {
+              "round": "Replay of the jQuery recordings",
+              "mode": "replay+heal",
+              "outcome": "pass"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "issue": 2315,
+      "impl": "svelte",
+      "claim": "the filter is not restored on reload",
+      "tests": [],
+      "kaneOutcome": "",
+      "verdict": "not covered by the suite",
+      "note": "No parity test reloads a filtered view.",
+      "recheck": "Completed filter kept on reload",
+      "reproducedWithoutAI": true,
+      "evidence": []
+    }
+  ],
+  "beyondTheKey": [
+    {
+      "impl": "javascript-es6",
+      "kind": "new bug",
+      "note": "Not in the upstream reports. Kane: \"The mark-all control changes its own appearance but does not apply the completed state to the todo.\" The build binds its click handler to the label (`$toggleAll = $(\".toggle-all-label\")`), so clicking the checkbox itself, or pressing Space on it, ticks the box and leaves every todo active.",
+      "recheck": "mark-all by clicking the checkbox itself",
+      "recheckAgrees": true,
+      "evidence": [
+        {
+          "test": "mark-all-checks-every-todo-in-all",
+          "outcome": "mismatch",
+          "kane": "Selecting “Mark all as complete” left one existing todo active and unchecked."
+        },
+        {
+          "test": "completed-todos-leave-the-active-counter-at-zero",
+          "outcome": "mismatch",
+          "kane": "Using the mark-all control leaves the only todo unchecked and the footer still shows 1 item left."
+        }
+      ]
+    },
+    {
+      "impl": "web-components",
+      "kind": "false alarm",
+      "note": "Kane: \"Selecting Completed leaves the Todo list on the All filter instead of activating Completed.\" Clicking Completed selects it and shows only the completed todo.",
+      "recheck": "Completed filter shows only completed",
+      "recheckAgrees": true,
+      "evidence": [
+        {
+          "test": "completed-route-displays-only-completed-todos",
+          "outcome": "mismatch",
+          "kane": "Selecting Completed leaves the Todo list on the All filter instead of activating Completed.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7K3FYEWHTSVRZZN11DFKR5T/dashboard/share/US_MOR3L4PLDMSZ4JNABG9RZOAHPLFM3PDOWS38SY3IR8RLQEEE239OIFD33VWF7ZA7?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "impl": "lit",
+      "kind": "false alarm",
+      "note": "Kane: \"the new-todo field is visible but is not the active field.\" It is the active field, inside Lit's shadow DOM.",
+      "recheck": "new-todo focused on load",
+      "recheckAgrees": true,
+      "evidence": [
+        {
+          "test": "blank-new-todo-submissions-do-not-add-a-todo",
+          "outcome": "mismatch",
+          "kane": "After the todo app loads, the new-todo field is visible but is not the active field.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7K54MQXSRQHKVF36A102F3F/dashboard/share/US_2D7MBFCJ1UDN1QYEHOLM30AW4CCD6PUZ3CT0C3WNZ080BE0TF8O3FH85YGY6XJ33?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "impl": "web-components",
+      "kind": "wording difference",
+      "note": "The footer reads \"0 items left!\" where the jQuery app reads \"0 items left\". (The React build writes the same \"!\"; there Kane called its own check unclear.)",
+      "recheckAgrees": null,
+      "evidence": [
+        {
+          "test": "completed-todos-leave-the-active-counter-at-zero",
+          "outcome": "mismatch",
+          "kane": "After all todos were completed, the footer verification found that the counter did not meet the required structure.",
+          "shareUrl": "https://test-manager.lambdatest.com/projects/01M7J44ETEJYXEFAW5SJKMM79D/test-cases/01M7K3GQ6YSE9CHPHTQ3ZHKWKQ/dashboard/share/US_R4N00LTR5U8I82GS7ABILAYD7L82SFAUNF8ZQTDF7WYR70QC2F6DQNRMWDCO7WXZ?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    }
+  ]
+}
