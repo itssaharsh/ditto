@@ -160,6 +160,7 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
                   {st.verifies.length > 0 && <span className="ver"> @verifies {st.verifies.join(', ')}</span>}
                 </div>
                 <StepText text={st.text} lit={sweep >= i} vars={c.suite.variables} />
+                <AuditNote whys={(c.replayAudit?.[row.test.id]?.weak ?? []).filter((w) => w.step === i + 1).map((w) => w.why)} />
               </div>
               <div className="lane">
                 <Frame caseId={c.id} shot={lf.shot} label={`${legacyLabel}, step ${i + 1}`} passed={row.legacy?.outcome === 'pass' || lf.reached} />
@@ -338,15 +339,37 @@ export function LoopRail({ c, d, onPick }: { c: CaseFile; d: Derived; onPick: (i
           );
         }
         if (!r.agent) {
-          const res = Object.values(r.results);
-          const met = res.filter((x) => x.outcome === 'pass').length;
+          const res = Object.entries(r.results);
+          const met = res.filter(([, x]) => x.outcome === 'pass').length;
+          // A spec-gap check runs behaviours the old app never met; any other round without an agent is a plain check.
+          if (res.length && res.every(([id]) => c.oracle[id]?.outcome !== 'pass')) {
+            return (
+              <div className="lr" key={r.n}>
+                <h3>
+                  Round {r.n} · {r.label ?? 'Check'}
+                </h3>
+                <div className={met < res.length ? 'kq' : 'cq'}>
+                  <b>Kane</b> ran {res.length} behaviours the old app never met, straight from the spec: {met} met, {res.length - met} not.
+                </div>
+              </div>
+            );
+          }
+          const differ = res.filter(([, x]) => x.outcome === 'mismatch' || x.outcome === 'fail').length;
+          const unclear = res.length - met - differ;
+          const audited = d.loop.filter((e) => e.round === r.n && e.did.startsWith("Did not take the replay's pass"));
           return (
             <div className="lr" key={r.n}>
               <h3>
                 Round {r.n} · {r.label ?? 'Check'}
               </h3>
-              <div className={met < res.length ? 'kq' : 'cq'}>
-                <b>Kane</b> ran {res.length} behaviours the old app never met, straight from the spec: {met} met, {res.length - met} not.
+              {audited.map((e) => (
+                <button className="kq" key={e.test} onClick={() => onPick(e.test)}>
+                  <b>Ditto</b> <span className="ttl">{titles.get(e.test)}:</span> {e.said.replace(/^The replay passed, but /, 'the replay passed, but ')}. Kane ran it fresh.
+                </button>
+              ))}
+              <div className={differ ? 'kq' : 'cq'}>
+                <b>Kane</b> checked {res.length} behaviour{res.length === 1 ? '' : 's'}: {met} the same{differ ? `, ${differ} different` : ''}
+                {unclear ? `, ${unclear} unclear` : ''}.
               </div>
             </div>
           );
@@ -750,5 +773,16 @@ export function RunsBlock({ runs: all, current }: { runs: RunIndexEntry[]; curre
         </>
       )}
     </section>
+  );
+}
+
+/** Ditto's replay audit for one step: what the old app's recording checks can't see when replayed (src/engine/replay-audit.ts). */
+function AuditNote({ whys }: { whys: string[] }) {
+  const unique = [...new Set(whys)];
+  if (!unique.length) return null;
+  return (
+    <p className="st-audit">
+      <b>What a replay can't see here:</b> {unique.join('; ')}. Since 17 Nov, Ditto has Kane run such a test fresh before it counts a replay's pass.
+    </p>
   );
 }
