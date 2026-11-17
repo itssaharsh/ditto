@@ -30,6 +30,7 @@ function help(): void {
        [--skip-port]            ...resume with the port that already exists
   ditto check [--label L]                   Replay the suite on the current rewrite once (no agent)
   ditto check --fresh [--label L]           Same, but Kane authors each test anew on the rewrite (no recordings; costs credits)
+  ditto check --new-round [--label L]       Keep earlier results: record this check as a new round
   ditto spec-gaps               Behaviours the old app never met: Kane checks them on the rewrite, Claude implements them
   ditto fix                     Continue from the recorded check: send what still differs to Claude Code, round by round
   ditto mutate [--count 3]      Mutation check: a second agent breaks the rewrite on purpose; does Kane catch it?
@@ -121,7 +122,7 @@ async function main(): Promise<void> {
     try {
       // A fresh check is a different kind of evidence from the replays before it: it gets its own round.
       const last = Math.max(0, ...loop.rec.data.rounds.map((r) => r.n));
-      const n = has('fresh') && loop.rec.data.rounds.some((r) => Object.keys(r.results).length) ? last + 1 : last;
+      const n = (has('fresh') || has('new-round')) && loop.rec.data.rounds.some((r) => Object.keys(r.results).length) ? last + 1 : last;
       await loop.check(n, loop.oraclePassing());
       const round = loop.rec.data.rounds.find((r) => r.n === n);
       if (round && flag('label')) round.label = flag('label');
