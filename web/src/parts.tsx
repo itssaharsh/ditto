@@ -108,7 +108,7 @@ export function TestSheet({ c, row, focus, onFocus }: { c: CaseFile; row: Behavi
       <div className="sheet-head">
         <code>{row.test.id}_test.md</code>
         <span>
-          Written by Kane from the spec · same file on both apps
+          {row.test.assuranceId ? 'Written by Kane from the spec' : 'Written by hand'} · same file on both apps
           {row.legacy?.shareUrl && (
             <>
               {' · '}

@@ -37,5 +37,5 @@
   "tab": "Official Svelte TodoMVC",
   "unlisted": true,
   "oracleCase": "todomvc",
-  "note": "Not written by an agent: the official Svelte TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. This implementation has an open upstream bug report (#2315, filed 6 Nov 2026); Kane never sees it, it only replays the jQuery recordings."
+  "note": "Not written by an agent: the official Svelte TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. Kane confirmed one of the bugs someone else had filed upstream (#2315: a spaces-only edit keeps the todo) without seeing the issue; it missed the untrimmed edit, which doesn't show on screen."
 }

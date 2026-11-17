@@ -954,6 +954,8 @@ export function writeCasesIndex(casesDir: string): void {
       total: oracle.length,
       fixRounds: c.rounds.filter((r) => r.n > 0 && r.agent?.kind === 'fix').length,
       createdAt: c.createdAt,
+      /** `ditto scan` results sit next to the case; the console only asks for them when they exist. */
+      scan: existsSync(join(casesDir, `${id}-scan`, 'scan.json')) || undefined,
     };
   });
   items.sort((a, b) => a.createdAt.localeCompare(b.createdAt));

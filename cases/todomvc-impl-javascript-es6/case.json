@@ -10931,7 +10931,7 @@
   "heals": 10,
   "authored": 7
  },
- "note": "Not written by an agent: the official JavaScript ES6 TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. This implementation has an open upstream bug report (#2311, filed 6 Nov 2026); Kane never sees it, it only replays the jQuery recordings.",
+ "note": "Not written by an agent: the official JavaScript ES6 TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. Both differences are one bug nobody had reported: clicking the mark-all checkbox itself completes nothing (the build listens on its label). Kane missed the reported one (#2311, new todos go to the top): its recorded check finds the new todo by its text, so the replay audit had Kane run that test fresh, and the original sentence passed again.",
  "tab": "Official JavaScript ES6 TodoMVC",
  "unlisted": true,
  "replayAudit": {

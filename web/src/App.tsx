@@ -27,6 +27,8 @@ export interface CasesIndex {
     total: number;
     fixRounds: number;
     createdAt: string;
+    /** A `ditto scan` result exists for this case. */
+    scan?: boolean;
   }[];
 }
 
@@ -171,12 +173,14 @@ function CaseView({ c: full, index }: { c: CaseFile; index?: CasesIndex }) {
   const facts = caseFacts(c);
   const [focus, setFocus] = useState(0);
   const [scan, setScan] = useState<ScanData>();
+  const hasScan = !!index?.cases.find((k) => k.id === full.id)?.scan;
   useEffect(() => {
+    if (!hasScan) return;
     fetch(`./cases/${full.id}-scan/scan.json`, { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : undefined))
       .then((j) => j && setScan(j as ScanData))
       .catch(() => undefined);
-  }, [full.id]);
+  }, [full.id, hasScan]);
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('autoplay') === '1' && ['parity', 'stopped'].includes(full.status)) replay.start();

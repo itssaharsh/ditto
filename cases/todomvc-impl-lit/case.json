@@ -8142,7 +8142,7 @@
   "heals": 3,
   "authored": 5
  },
- "note": "Not written by an agent: the official Lit TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. This implementation has an open upstream bug report (#2313, filed 6 Nov 2026); Kane never sees it, it only replays the jQuery recordings.",
+ "note": "Not written by an agent: the official Lit TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app, with the tests the upstream report (#2313) touches run first. Kane's one difference is a false alarm (the new-todo field is focused, inside the shadow DOM). The replays passed the edit tests although the edit field isn't focused after a double-click; fresh runs from the replay audit gave 1 pass and 3 unclear.",
  "tab": "Official Lit TodoMVC",
  "unlisted": true,
  "replayAudit": {

@@ -10094,7 +10094,7 @@
   "heals": 11,
   "authored": 5
  },
- "note": "Not written by an agent: the official React TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. Kane confirmed one difference: Escape doesn't leave edit mode. The app's source only handles Enter, and the same bug is an open upstream issue, tastejs/todomvc#2309, filed 6 Nov 2026. The 3 unclear results are the footer counter: this app writes “2 items left!” without the <strong> the TodoMVC spec asks for, and Kane blamed its own check rather than the app.",
+ "note": "Not written by an agent: the official React TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. Kane confirmed the Escape bug someone else had filed upstream (#2309) without seeing the issue; the 3 unclear results are the footer's “items left!” wording, where Kane blamed its own check.",
  "tab": "Official React TodoMVC",
  "unlisted": true
 }

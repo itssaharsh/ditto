@@ -37,5 +37,5 @@
   "tab": "Official Web Components TodoMVC",
   "unlisted": true,
   "oracleCase": "todomvc",
-  "note": "Not written by an agent: the official Web Components TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. This implementation has an open upstream bug report (#2314, filed 6 Nov 2026); Kane never sees it, it only replays the jQuery recordings."
+  "note": "Not written by an agent: the official Web Components TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app until its credit cap. Kane confirmed two bugs filed upstream (#2314: Clear completed shows with nothing completed; a spaces-only edit keeps the todo); “Completed filter” is a false alarm (it works), and the counter test is the footer’s “0 items left!”."
 }

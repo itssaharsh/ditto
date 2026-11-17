@@ -37,5 +37,5 @@
   "tab": "Official React TodoMVC",
   "unlisted": true,
   "oracleCase": "todomvc",
-  "note": "Not written by an agent: the official React TodoMVC from tastejs/todomvc, checked with the 18 recordings Kane made on the jQuery app. A confirmed difference here is a real difference between two official implementations."
+  "note": "Not written by an agent: the official React TodoMVC from tastejs/todomvc (commit ff43b02), checked with the 18 recordings Kane made on the jQuery app. Kane confirmed the Escape bug someone else had filed upstream (#2309) without seeing the issue; the 3 unclear results are the footer's “items left!” wording, where Kane blamed its own check."
 }
