@@ -99,6 +99,14 @@ Entry for the KaneCLI Online Hackathon (TestMu AI), deadline 19 Nov 2026 23:59 I
 - WHY replays miss (read from the recording .internal/steps/*/flows/*/actions.ndjson, analyze actions): Kane compiles each check at record time into locator + code_js + expected_value + transforms. "the lower todo row" → locator `internal:role=listitem >> internal:has-text="Call home"i` (found by the text it then checks); trimming checks carry transforms ['strip']; "its focused edit input contains X" → `el(10).value` only (no focus read; the replay's fill focuses the field anyway).
 - New engine rule (commit 28d8026): src/engine/replay-audit.ts flags such checks (locator by expected text; strip in a trimming step; "focused" with no :focus/activeElement read). 4 of 18 parity tests flagged (enter-appends, enter-saves, escape-discards, empty-edited). In checkOne a replay pass on a flagged test needs a fresh authored run (config replayAudit, default on). `check --fresh` authors every test anew in its own round. scripts/replay-audit.ts prints the audit. 21 unit tests.
 
+## Checkpoint (17 Nov ~01:25 UTC): answer key + replay audit shipped
+- Results: answer key (docs/answer-key.json): 14 claims, 13 reproduce with Playwright (17 checks, docs/impl-recheck.json); Kane confirmed 4/10 covered, missed 5, stopped early 1; rewritten sentences caught 2 of the 5 misses (WC via replay+heal; ES6 only via a fresh run). Beyond the key: ES6 mark-all checkbox bug (new; bundle binds click on `.toggle-all-label`), 2 false alarms (WC Completed filter, Lit focus), WC "0 items left!" wording.
+- Replay audit measured: ES6 original append sentence fresh → pass (82 cr); Lit 4 flagged → 1 pass + 3 test_issue (162 cr); clean port 2 → enter-saves pass, empty-edited test_issue (43 cr; also test_issue on Lit). No false "different". Console shows per-step audit notes (case.replayAudit, written by `npx tsx scripts/replay-audit.ts --write`).
+- Kane's per-run credits undercount the balance drop by ~20–30% (balance 1,056 → 441 this session; runs reported ~470).
+- Commits 28d8026 … c573155 pushed; site republished; video re-recorded 179 s (qa/video/ditto-demo.mp4 + thumbnail.png, git-ignored).
+- Private drafts: launch-drafts.md updated (thread now 7 posts), upstream-issue-es6-mark-all.md (needs the user's OK to post), scorecard.md (self-assessment ≈8.1).
+- Credits: 441 left at ~01:10 UTC 17 Nov. No more Kane spend planned; keep as reserve.
+
 ## Checkpoint (16 Nov ~19:05 UTC): ready for the user's hand-off
 - Video: qa/video/ditto-demo.mp4 (169 s; segments trimmed of page loads), thumbnail qa/video/thumbnail.png (git-ignored; re-record with `node scripts/video/record.mjs`).
 - TestMu Slack (#kane-cli-hacakathon C0BS5K131NU, #general) read with the user's OK: no Nov rule changes; previous edition used a SurveyMonkey form and extended its deadline once. Nothing posted.

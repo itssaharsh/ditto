@@ -184,7 +184,7 @@ Take Kane out of Ditto and nothing is left. Kane writes the tests, records the r
 - **Evidence packs:** per-step screenshots, annotated frames, failure records and console logs, copied into the case (account details are never copied).
 - **Recordings:** the replay audit reads the checks Kane compiled when it recorded each test (locator, read, expected value, transforms) to find the ones a replay can't fail as written.
 - **Test Manager**: every authored run is uploaded; the case keeps its share link (they open without signing in).
-- **`evidence validate`**: Kane's own integrity check, run on every sealed pack behind the recorded runs (300 of 301 valid).
+- **`evidence validate`**: Kane's own integrity check, run on every sealed pack behind the recorded runs (527 of 528 valid).
 - **`evidence verdict` with a policy**: Ditto's trust rules written as a Kane policy ([`policies/ditto-parity.yaml`](policies/ditto-parity.yaml)). It blocks failed or unjudged runs and tests without a check, and warns on healed or non-replay results, using Kane's own `heal.healed_tests` metric.
 
 ## Look around without Kane or credits
@@ -238,7 +238,7 @@ At parity Ditto copies the tests into the rewrite repo (`tests/kane/`), writes t
 | The ports and every fix | Written by Claude Code (Sonnet 5.5, and Haiku 5.5 for the second port) in [todomvc-react-port](https://github.com/itssaharsh/todomvc-react-port); one commit per round |
 | The planted bugs | Written by a separate Claude Code session; its list was kept outside the repository until the run ended |
 | Every pass, fail, verdict and screenshot | Real Kane CLI runs, recorded in `cases/*/case.json` |
-| Kane's evidence packs | 300 of the 301 sealed packs Kane wrote during these runs pass Kane's own `kane-cli evidence validate` (profile L1). The one that doesn't is a run whose browser died before its first step; Ditto logged it as an error, ran it again and never counted it ([summary](docs/evidence-validation.json)). The packs stay local because they hold account details; the site shows screenshots copied from them |
+| Kane's evidence packs | 527 of the 528 sealed packs Kane wrote during these runs (fresh runs on rewrites included) pass Kane's own `kane-cli evidence validate` (profile L1). The one that doesn't is a run whose browser died before its first step; Ditto logged it as an error, ran it again and never counted it ([summary](docs/evidence-validation.json)). The packs stay local because they hold account details; the site shows screenshots copied from them |
 | The answer key | Real issues filed upstream by someone else on 6 Nov 2026 ([#2309–#2315](https://github.com/tastejs/todomvc/issues/2309)); each claim mapped to tests by hand, with a note written after reading Kane's verdict and screenshots; the scorer refuses to run if a recorded outcome no longer matches its note |
 | The second opinion | Plain Playwright checks, no AI, on the same builds ([`scripts/recheck-impls.mjs`](scripts/recheck-impls.mjs)) |
 | The note about the untested Escape quirk | Found by a person reading the diff, then looked at with two Kane runs ([`docs/edge-check.json`](docs/edge-check.json)): a pass on the old app, and a `710` on the port, where Kane blamed the check |

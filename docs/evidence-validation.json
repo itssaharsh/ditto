@@ -1,24 +1,32 @@
 {
-  "what": "kane-cli evidence validate --json (profile L1) on every sealed evidence pack Kane wrote during the recorded runs (folder todomvc: the TodoMVC runs; console: Kane checking Ditto’s own console).",
-  "checkedAt": "2026-11-16T19:03:39.436Z",
-  "packs": 301,
-  "valid": 300,
+  "what": "kane-cli evidence validate --json (profile L1) on every sealed evidence pack Kane wrote during the recorded runs, including fresh runs on rewrites (folder todomvc: the TodoMVC runs and the official builds; datepicker; todomvc-strict-*: the rewritten sentences; console: Kane checking Ditto’s own console).",
+  "checkedAt": "2026-11-17T01:27:28.499Z",
+  "packs": 528,
+  "valid": 527,
   "statuses": {
-    "finalized": 301
+    "finalized": 528
   },
   "byFolder": {
     "console": {
       "packs": 12,
       "valid": 12
     },
+    "datepicker": {
+      "packs": 36,
+      "valid": 36
+    },
     "todomvc": {
-      "packs": 289,
-      "valid": 288
+      "packs": 467,
+      "valid": 466
+    },
+    "todomvc-strict-javascript-es6": {
+      "packs": 13,
+      "valid": 13
     }
   },
   "diagnostics": {
-    "warning:l1.failure.status_disagrees": 81,
-    "warning:l1.failure.missing": 16,
+    "warning:l1.failure.status_disagrees": 166,
+    "warning:l1.failure.missing": 41,
     "error:l1.steps.missing": 1,
     "warning:l1.steps.screenshot_missing": 1
   },
@@ -31,5 +39,41 @@
         "error:l1.steps.missing"
       ]
     }
-  ]
+  ],
+  "policy": {
+    "file": "policies/ditto-parity.yaml",
+    "command": "kane-cli evidence verdict <pack> --policy policies/ditto-parity.yaml --json",
+    "results": {
+      "fail": 177,
+      "pass": 350,
+      "no verdict": 1
+    },
+    "gates": {
+      "passed": {
+        "fail": 87,
+        "pass": 440,
+        "n/a": 1
+      },
+      "judged": {
+        "pass": 437,
+        "fail": 90,
+        "n/a": 1
+      },
+      "has-checks": {
+        "pass": 495,
+        "fail": 32,
+        "n/a": 1
+      },
+      "not-healed": {
+        "pass": 483,
+        "warn": 44,
+        "n/a": 1
+      },
+      "replayed": {
+        "warn": 197,
+        "pass": 330,
+        "n/a": 1
+      }
+    }
+  }
 }
